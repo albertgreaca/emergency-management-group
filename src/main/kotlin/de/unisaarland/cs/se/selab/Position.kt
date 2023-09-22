@@ -1,7 +1,7 @@
-class Position(private var roadList: List<Road>, private var roadIndex: Int, private var positionOnRoad: Int,
+class Position(private var roadList: MutableList<Road>, private var roadIndex: Int, private var positionOnRoad: Int,
                private var destinyVertex: Vertex, private var arrivalTicks: Int, private var startedThisTick: Boolean) {
 
-    fun getRoadList(): List<Road> {
+    fun getRoadList(): MutableList<Road> {
         return roadList
     }
 
