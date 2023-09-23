@@ -61,13 +61,19 @@ object EMCC {
         for (em in startingEmergencies) {
 
             // get the base assigned to the emergency
-            var emBase = em.getBase()
+            var emBase = em.getBase()!!
 
             // base tries to allocate resources for emergency, returns what is left
             var resourcesAfterAllocating  = emBase.requestResources(em)
 
-            // base tries to reallocate resources from other emergencies to current emergency, returns what is left
+            // update the resources in the emergency
+            em.getResources().updateDifference(resourcesAfterAllocating)
+
+            // base tries to reallocate resources from other emergencies, returns what is left
             var resourcesAfterReallocating = emBase.reallocateResources(em)
+
+            // update the resources in the emergency
+            em.getResources().updateDifference(resourcesAfterReallocating)
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!resourcesAfterReallocating.isEmpty()) {
