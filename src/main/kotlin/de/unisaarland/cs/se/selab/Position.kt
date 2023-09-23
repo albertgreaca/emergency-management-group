@@ -21,7 +21,7 @@ class Position(private var roadList: MutableList<Road>, private var roadIndex: I
         return arrivalTicks
     }
 
-    fun getStartedThisTick(): Int {
+    fun getStartedThisTick(): Boolean {
         return startedThisTick
     }
 
