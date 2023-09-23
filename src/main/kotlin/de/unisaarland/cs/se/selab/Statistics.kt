@@ -1,7 +1,6 @@
-class Statistics(private var receivedEmergencies: Int = 0,
-                 private var ongoingEmergencies: Int = 0,
-                 private var failedEmergencies: Int = 0,
-                 private var resolvedEmergencies: Int = 0) {
+class Statistics(private var receivedEmergencies: Int = 0, private var ongoingEmergencies: Int = 0,
+                 private var failedEmergencies: Int = 0, private var resolvedEmergencies: Int = 0,
+                 private var reroutedAssets: Int = 0) {
 
     fun getReceived(): Int {
         return receivedEmergencies
@@ -17,6 +16,10 @@ class Statistics(private var receivedEmergencies: Int = 0,
 
     fun getResolved(): Int {
         return resolvedEmergencies
+    }
+
+    fun getRerouted(): Int {
+        return reroutedAssets
     }
 
     fun increaseReceived() {
@@ -37,5 +40,9 @@ class Statistics(private var receivedEmergencies: Int = 0,
 
     fun increaseResolved() {
         resolvedEmergencies++
+    }
+
+    fun increaseRerouted(n: Int) {
+        reroutedAssets+=n
     }
 }
