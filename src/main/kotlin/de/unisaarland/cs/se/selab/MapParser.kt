@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+import PrimaryRoadType
+import SecondaryRoadType
 import java.io.File
 
 class MapParser( private val gm:GraphMap, private val file:File) {
@@ -41,9 +43,10 @@ class MapParser( private val gm:GraphMap, private val file:File) {
      * @return Parsing Successful or not
      */
     private fun parseVertices(): Boolean {
-        var sep = getNextSeperator()
+        var split = getNextSeparator()
+        var sep = split.second
         while(sep == ';') {
-            val id = getNextWord(true).toIntOrNull() ?: return false
+            val id = split.first.toIntOrNull() ?: return false
             val vertex = Vertex(id)
             gm.add(vertex)
             if(!validateVertex(vertex)) {
@@ -51,7 +54,8 @@ class MapParser( private val gm:GraphMap, private val file:File) {
             }
             charcounter++
             skipSpaces(false)
-            sep = getNextSeperator();
+            split = getNextSeparator()
+            sep = split.second
         }
         return sep == '-'
     }
@@ -61,9 +65,10 @@ class MapParser( private val gm:GraphMap, private val file:File) {
      * @return Parsing Successful or not
      */
     private fun parseEdges(): Boolean {
-        var sep = getNextSeperator()
+        var split = getNextSeparator()
+        var sep = split.second
         while(sep == '-') {
-            val start = getNextWord(true)
+            val start = split.first
             skipSpaces(false)
             if(chars[0] != '-' || chars[1] != '>') {
                 return false
@@ -76,9 +81,11 @@ class MapParser( private val gm:GraphMap, private val file:File) {
             if(chars[0] != ';') {
                 return false;
             }
-            sep = getNextSeperator()
+            validateRoad(road)
+            split = getNextSeparator()
+            sep = split.second
         }
-        return true
+        return sep == '}'
     }
     /**
      * Parsing Attributes of the edge
@@ -99,6 +106,7 @@ class MapParser( private val gm:GraphMap, private val file:File) {
         if(chars[0] != '=') {
             return false
         }
+        charcounter++
         skipSpaces(false)
         val village = getNextWord(true)
         validateId(village)
@@ -106,12 +114,56 @@ class MapParser( private val gm:GraphMap, private val file:File) {
         if(chars[0] != ';') {
             return false
         }
+        charcounter++
         if(getNextWord(true) != "name") {
             return false;
         }
         skipSpaces(false)
+        if(chars[0] != '=') {
+            return false
+        }
+        charcounter++
+        skipSpaces(false)
+        val name = getNextWord(true)
+        validateId(name)
+        skipSpaces(false)
+        if(chars[0] != ';') {
+            return false
+        }
+        charcounter++
+        if(getNextWord(true) != "primaryType") {
+            return false
+        }
+        skipSpaces(false)
+        if(chars[0] != '=') {
+            return false
+        }
+        charcounter++
+        val primary = getNextWord(true)
+        val pty = validatePrimaryType(primary) ?: return false
+        skipSpaces(false)
+        if(chars[0] != ';') {
+            return false
+        }
+        charcounter++
+        if(getNextWord(true) != "secondaryType") {
+            return false
+        }
+        skipSpaces(false)
+        if(chars[0] != '=') {
+            return false
+        }
+        charcounter++
+        val secondary = getNextWord(true)
+        val sty = validateSecondaryType(secondary) ?: return false
 
-        return true
+        skipSpaces(false)
+        if(chars[0] != ';')  {
+            return false
+        }
+        charcounter++
+        skipSpaces(false)
+        return chars[0] == ']'
     }
 
     private fun validateId(id: String): Boolean {
@@ -131,14 +183,11 @@ class MapParser( private val gm:GraphMap, private val file:File) {
 
 
     }
-    private fun validateRoad(): Boolean {
+    private fun validateRoad(r: Road): Boolean {
 
     }
 
     private fun validateGraphMap(): Boolean {
-
-    }
-    private fun getNum(): Int {
 
     }
 
@@ -159,11 +208,11 @@ class MapParser( private val gm:GraphMap, private val file:File) {
         return res
     }
 
-    private fun getNextSeperator(): Char {
+    private fun getNextSeparator(): Pair<String,Char> {
         skipSpaces(false)
-        val next = getNextWord(false)
+        val next = getNextWord(true)
         skipSpaces(false)
-        return chars[0]
+        return Pair(next,chars[0])
     }
 
     private fun skipSpaces(spaceNec: Boolean): Boolean {
@@ -179,6 +228,26 @@ class MapParser( private val gm:GraphMap, private val file:File) {
             charcounter++
         }
         return true
+    }
+    private fun validatePrimaryType(ty: String): PrimaryRoadType? {
+        return when(ty) {
+            "mainStreet" -> PrimaryRoadType.MAINSTREET
+            "sideStreet" -> PrimaryRoadType.SIDESTREET
+            "countyRoad" -> PrimaryRoadType.COUNTYROAD
+            else -> {
+                null
+            }
+        }
+    }
+    private fun validateSecondaryType(ty: String): SecondaryRoadType? {
+        return when(ty) {
+            "oneWayStreet" -> SecondaryRoadType.ONEWAYSTREET
+            "tunnel" -> SecondaryRoadType.TUNNEL
+            "none" -> SecondaryRoadType.NONE
+            else -> {
+                null
+            }
+        }
     }
 
 }

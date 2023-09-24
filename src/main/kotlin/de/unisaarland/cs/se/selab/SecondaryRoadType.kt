@@ -1,3 +1,3 @@
 enum class SecondaryRoadType {
-    TUNNEL, ONEWAYSTREET
+    TUNNEL, ONEWAYSTREET, NONE
 }
