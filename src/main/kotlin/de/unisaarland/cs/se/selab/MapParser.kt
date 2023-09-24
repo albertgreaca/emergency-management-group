@@ -19,17 +19,18 @@ import java.io.File
 class MapParser(private val gm:GraphMap, private val file:File) {
     private var charcounter = 0
     private val chars = file.readText().toCharArray()
-
+    var next = Pair("",' ');
     /**
      * Starting function for parsing
      * @return Parsing Successful or not
      */
     public fun parseMap(): Boolean {
-        if(getNextWord(true) != "digraph")  {
+        val next = getNextWord();
+        if(next != "digraph")  {
             return false
         }
-        skipSpaces(true)
-        val name = getNextWord(true)
+        skipSpaces(false)
+        val name = getNextWord()
         if(!validateId(name)) {
             return false
         }
@@ -37,6 +38,7 @@ class MapParser(private val gm:GraphMap, private val file:File) {
         if(chars[charcounter] != '{') {
             return false
         }
+        charcounter++
         return parseSgtStmtList() && validateGraphMap()
     }
     /**
@@ -65,6 +67,7 @@ class MapParser(private val gm:GraphMap, private val file:File) {
             charcounter++
             skipSpaces(false)
             split = getNextSeparator()
+            next = split
             sep = split.second
         }
         return sep == '-'
@@ -75,19 +78,20 @@ class MapParser(private val gm:GraphMap, private val file:File) {
      * @return Parsing Successful or not
      */
     private fun parseEdges(): Boolean {
-        var split = getNextSeparator()
+        var split = next
         var sep = split.second
         while(sep == '-') {
             val start = split.first.toIntOrNull() ?: return false
             skipSpaces(false)
-            if(chars[0] != '-' || chars[1] != '>') {
+            if(chars[charcounter] != '-' || chars[charcounter+1] != '>') {
                 return false
             }
             charcounter+= 2;
-            val end = getNextWord(true).toIntOrNull() ?: return false
-            if(!parseAttributes(start,end) || chars[0] != ';') {
+            val end = getNextWord().toIntOrNull() ?: return false
+            if(!parseAttributes(start,end) || chars[charcounter] != ';') {
                 return false;
             }
+            charcounter++;
             split = getNextSeparator()
             sep = split.second
         }
@@ -104,101 +108,103 @@ class MapParser(private val gm:GraphMap, private val file:File) {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '[') {
+        if(chars[charcounter] != '[') {
             return false
         }
         charcounter++
-        if(getNextWord(true) != "village") {
+        if(getNextWord() != "village") {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false
         }
         charcounter++
         skipSpaces(false)
-        val village = getNextWord(true)
+        val village = getNextWord()
         if(!validateId(village)) {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != ';') {
+        if(chars[charcounter] != ';') {
             return false
         }
         charcounter++
-        if(getNextWord(true) != "name") {
+        if(getNextWord() != "name") {
             return false;
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false
         }
         charcounter++
         skipSpaces(false)
-        val name = getNextWord(true)
+        val name = getNextWord()
         if(!validateId(name)) {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != ';') {
+        if(chars[charcounter] != ';') {
             return false
         }
 
         charcounter++
-        if(getNextWord(true) != "heightLimit") {
+        if(getNextWord() != "heightLimit") {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false;
         }
-        val heightLimit = getNextWord(true).toIntOrNull() ?: return false
+        charcounter++;
+        val heightLimit = getNextWord().toIntOrNull() ?: return false
         skipSpaces(false)
-        if(chars[0] != ';') {
+        if(chars[charcounter] != ';') {
             return false
         }
         charcounter++;
-        if(getNextWord(true) != "weight") {
+        if(getNextWord() != "weight") {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false;
         }
-        val weight = getNextWord(true).toIntOrNull() ?: return false
+        charcounter++;
+        val weight = getNextWord().toIntOrNull() ?: return false
         skipSpaces(false)
-        if(chars[0] != ';') {
+        if(chars[charcounter] != ';') {
             return false
         }
         charcounter++;
-        if(getNextWord(true) != "primaryType") {
+        if(getNextWord() != "primaryType") {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false
         }
         charcounter++
-        val primary = getNextWord(true)
+        val primary = getNextWord()
         val pty = validatePrimaryType(primary) ?: return false
         skipSpaces(false)
-        if(chars[0] != ';') {
+        if(chars[charcounter] != ';') {
             return false
         }
         charcounter++
-        if(getNextWord(true) != "secondaryType") {
+        if(getNextWord() != "secondaryType") {
             return false
         }
         skipSpaces(false)
-        if(chars[0] != '=') {
+        if(chars[charcounter] != '=') {
             return false
         }
         charcounter++
-        val secondary = getNextWord(true)
+        val secondary = getNextWord()
         val sty = validateSecondaryType(secondary) ?: return false
 
         skipSpaces(false)
-        if(chars[0] != ';')  {
+        if(chars[charcounter] != ';')  {
             return false
         }
         charcounter++
@@ -209,7 +215,7 @@ class MapParser(private val gm:GraphMap, private val file:File) {
         if(!validateRoad(road)) {
             return false
         }
-        return gm.addRoad(road,start,end) && chars[0] == ']'
+        return gm.addRoad(road,start,end) && chars[charcounter++] == ']'
     }
 
     private fun validateId(id: String): Boolean {
@@ -240,28 +246,26 @@ class MapParser(private val gm:GraphMap, private val file:File) {
         return true
     }
 
-    private fun getNextWord(count: Boolean): String {
+    private fun getNextWord(): String {
         skipSpaces(false)
         var res = ""
-        while(chars[charcounter] != ' ' || chars[charcounter] != '{'  || chars[charcounter] != '}'
-            || chars[charcounter] != '[' || chars[charcounter] != ']' || chars[charcounter] != ',' ||
-            chars[charcounter] != '-' || chars[charcounter] != '>' || chars[charcounter] != '='
-            || chars[charcounter] != '\n' || chars[charcounter] != '\t' || chars[charcounter] != '\u000c'
-            || chars[charcounter] != '\r' || chars[charcounter] != '\u00A0' || chars[charcounter] != '\u240b') {
+        while(chars[charcounter] != ' ' && chars[charcounter] != '{'  && chars[charcounter] != '}'
+            && chars[charcounter] != '[' && chars[charcounter] != ']' && chars[charcounter] != ';' &&
+            chars[charcounter] != '-' && chars[charcounter] != '>' && chars[charcounter] != '='
+            && chars[charcounter] != '\n' && chars[charcounter] != '\t' && chars[charcounter] != '\u000c'
+            && chars[charcounter] != '\r' && chars[charcounter] != '\u00A0' && chars[charcounter] != '\u240b') {
 
             res += chars[charcounter]
-            if(count) {
                 charcounter++;
-            }
         }
         return res
     }
 
     private fun getNextSeparator(): Pair<String,Char> {
         skipSpaces(false)
-        val next = getNextWord(true)
+        val next = getNextWord()
         skipSpaces(false)
-        return Pair(next,chars[0])
+        return Pair(next,chars[charcounter])
     }
 
     private fun skipSpaces(spaceNec: Boolean): Boolean {
