@@ -13,9 +13,9 @@ object Logger {
     }
     fun logInitInfo(filename: String, isValid: Boolean) {
         if (isValid)
-            pw.print("$filename successfully parsed and validated")
+            pw.print("Initialization Info: $filename successfully parsed and validated")
         else
-            pw.print("$filename invalid")
+            pw.print("Initialization Info: $filename invalid")
     }
 
     fun logSimulationStart() {
@@ -78,7 +78,8 @@ object Logger {
         pw.print("Simulation End")
     }
 
-    fun logStatistics(received: Int, ongoing: Int, failed: Int, resolved: Int) {
+    fun logStatistics(rerouted: Int, received: Int, ongoing: Int, failed: Int, resolved: Int) {
+        pw.print("Simulation Statistics: $rerouted assets rerouted.")
         pw.print("Simulation Statistics: $received received emergencies.")
         pw.print("Simulation Statistics: $ongoing ongoing emergencies.")
         pw.print("Simulation Statistics: $failed failed emergencies.")
