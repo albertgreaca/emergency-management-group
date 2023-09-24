@@ -26,8 +26,6 @@ class GraphMap (private var adjacencyList: MutableList<MutableMap<Vertex,Road>>,
         val ve: Vertex? = getVertex(end)
         if (vs == null || ve == null)
             return false
-        road.setStart(vs)
-        road.setEnd(ve)
         roadList.add(road)
         adjacencyList[vs.getId()][ve] = road
         adjacencyList[ve.getId()][vs] = road

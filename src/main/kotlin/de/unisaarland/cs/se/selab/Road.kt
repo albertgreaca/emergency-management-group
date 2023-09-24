@@ -5,8 +5,12 @@ import SecondaryRoadType
 import Event
 
 class Road (private var primType: PrimaryRoadType, private var secType: SecondaryRoadType, private var village: String,
-            private var name: String, private var start: Vertex, private var end: Vertex, private var weight: Int,
-            private var height: Int, private var eventList: MutableList<Event>) {
+            private var name: String, private var weight: Int,
+            private var height: Int, private var start: Vertex, private var end: Vertex) {
+
+    private var eventList: MutableList<Event> = mutableListOf()
+
+
     fun getPrimType(): PrimaryRoadType {
         return primType
     }
