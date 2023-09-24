@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab
 
-import Base
 class Vertex (private val id: Int, private var base: Base?){
     fun getId(): Int {
         return id

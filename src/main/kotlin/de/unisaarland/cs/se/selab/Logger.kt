@@ -27,7 +27,7 @@ object Logger {
     }
 
     fun logEmergencyAssignment(eid: Int, bid: Int) {
-        pw.print("Emergency Assignment: $eid assigned to $bid")
+        pw.print("de.unisaarland.cs.se.selab.Emergency Assignment: $eid assigned to $bid")
     }
 
     fun logAssetAllocation(aid: Int, eid: Int, t: Int) {
@@ -39,11 +39,11 @@ object Logger {
     }
 
     fun logAssetRequest(rid: Int, bid: Int, eid:Int) {
-        pw.print("Asset Request: $rid sent to $bid for $eid.")
+        pw.print("Asset de.unisaarland.cs.se.selab.Request: $rid sent to $bid for $eid.")
     }
 
     fun logRequestFailed(eid: Int) {
-        pw.print("Request Failed: $eid failed.")
+        pw.print("de.unisaarland.cs.se.selab.Request Failed: $eid failed.")
     }
 
     fun logAssetArrival(aid: Int, vid: Int) {
@@ -51,23 +51,23 @@ object Logger {
     }
 
     fun logEmergencyHandlingStart(eid: Int) {
-        pw.print("Emergency Handling Start: $eid handling started.")
+        pw.print("de.unisaarland.cs.se.selab.Emergency Handling Start: $eid handling started.")
     }
 
     fun logEmergencyResolved(eid: Int) {
-        pw.print("Emergency Resolved: $eid resolved.")
+        pw.print("de.unisaarland.cs.se.selab.Emergency Resolved: $eid resolved.")
     }
 
     fun logEmergencyFailed(eid: Int) {
-        pw.print("Emergency Failed: $eid failed.")
+        pw.print("de.unisaarland.cs.se.selab.Emergency Failed: $eid failed.")
     }
 
     fun logEventEnded(evid: Int) {
-        pw.print("Event Ended: $evid ended.")
+        pw.print("de.unisaarland.cs.se.selab.Event Ended: $evid ended.")
     }
 
     fun logEventTriggered(evid: Int) {
-        pw.print("Event Triggered: $evid triggered.")
+        pw.print("de.unisaarland.cs.se.selab.Event Triggered: $evid triggered.")
     }
 
     fun logAssetsRerouted(numOfAssets: Int) {

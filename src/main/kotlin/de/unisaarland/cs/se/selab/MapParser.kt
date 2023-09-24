@@ -1,8 +1,14 @@
 package de.unisaarland.cs.se.selab
 
-import PrimaryRoadType
-import SecondaryRoadType
+import org.everit.json.schema.Schema
+import org.json.JSONObject
 import java.io.File
+
+/*
+     val schem = getSchema(MapParser::class.java,"simulation")
+     val json : JSONObject = JSONObject(file.readText())
+     schem?.validate(json)
+  */
 
 /** Class for Parsing dot Files
  * digraph Id {
@@ -137,6 +143,7 @@ class MapParser(private val gm:GraphMap, private val file:File) {
         if(chars[0] != ';') {
             return false
         }
+
         charcounter++
         if(getNextWord(true) != "heightLimit") {
             return false
@@ -265,8 +272,8 @@ class MapParser(private val gm:GraphMap, private val file:File) {
                 return false
             }
         }
-        while(chars[charcounter] != ' ' ||chars[charcounter] != '\n' || chars[charcounter] != '\t' || chars[charcounter] != '\u000c'
-            || chars[charcounter] != '\r' || chars[charcounter] != '\u00A0' || chars[charcounter] != '\u240b') {
+        while(chars[charcounter] == ' ' ||chars[charcounter] == '\n' || chars[charcounter] == '\t' || chars[charcounter] == '\u000c'
+            || chars[charcounter] == '\r' || chars[charcounter] == '\u00A0' || chars[charcounter] == '\u240b') {
             charcounter++
         }
         return true

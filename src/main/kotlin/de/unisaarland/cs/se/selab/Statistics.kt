@@ -1,3 +1,5 @@
+package de.unisaarland.cs.se.selab
+
 class Statistics(private var receivedEmergencies: Int = 0, private var ongoingEmergencies: Int = 0,
                  private var failedEmergencies: Int = 0, private var resolvedEmergencies: Int = 0,
                  private var reroutedAssets: Int = 0) {

@@ -1,4 +1,5 @@
 digraph Test {
 1;
 2;
+1->2[village = Saarbrücken; name = Campus; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
 }

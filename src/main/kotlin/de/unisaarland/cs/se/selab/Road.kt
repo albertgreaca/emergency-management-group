@@ -1,8 +1,5 @@
 package de.unisaarland.cs.se.selab
 
-import PrimaryRoadType
-import SecondaryRoadType
-import Event
 
 class Road (private var primType: PrimaryRoadType, private var secType: SecondaryRoadType, private var village: String,
             private var name: String, private var weight: Int,

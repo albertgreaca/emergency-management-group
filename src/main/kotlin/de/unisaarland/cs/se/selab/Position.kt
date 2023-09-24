@@ -1,3 +1,6 @@
+package de.unisaarland.cs.se.selab
+
+
 class Position(private var roadList: MutableList<Road>, private var roadIndex: Int, private var positionOnRoad: Int,
                private var destinyVertex: Vertex, private var arrivalTicks: Int, private var startedThisTick: Boolean) {
 

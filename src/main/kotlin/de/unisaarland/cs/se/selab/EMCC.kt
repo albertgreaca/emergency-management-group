@@ -1,4 +1,4 @@
-import java.lang.Exception
+package de.unisaarland.cs.se.selab
 
 object EMCC {
 
