@@ -1,10 +1,16 @@
+package de.unisaarland.cs.se.selab
+
+import java.io.File
+import java.io.OutputStream
 import java.io.PrintWriter
 
 object Logger {
 
-    //TODO(how do we create the output file?)
-    private val pw: PrintWriter = PrintWriter("")
+    private var pw: PrintWriter = PrintWriter(System.out)
 
+    fun setPrintWriter(o: OutputStream) {
+        pw = PrintWriter(o)
+    }
     fun logInitInfo(filename: String, isValid: Boolean) {
         if (isValid)
             pw.print("$filename successfully parsed and validated")

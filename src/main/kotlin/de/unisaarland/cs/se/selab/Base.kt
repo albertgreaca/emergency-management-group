@@ -1,3 +1,5 @@
+import de.unisaarland.cs.se.selab.Logger
+
 class Base(private val id: Int, private var staff: Int, private val location: Vertex,
            private val vehicles: MutableList<Vehicle>) {
 
