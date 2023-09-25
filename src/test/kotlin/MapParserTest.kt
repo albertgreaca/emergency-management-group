@@ -13,4 +13,8 @@ class MapParserTest {
        assertTrue(parser.parseMap())
 
     }
+
+
+    // compare sizes of parsed elements with expected values
+    // check individual field values of parsed objects
 }
