@@ -1,8 +1,13 @@
 package de.unisaarland.cs.se.selab
 
-
-class Position(private var roadList: MutableList<Road>, private var roadIndex: Int, private var positionOnRoad: Int,
-               private var destinyVertex: Vertex, private var arrivalTicks: Int, private var startedThisTick: Boolean) {
+class Position(
+    private var roadList: MutableList<Road>,
+    private var roadIndex: Int,
+    private var positionOnRoad: Int,
+    private var destinyVertex: Vertex,
+    private var arrivalTicks: Int,
+    private var startedThisTick: Boolean
+) {
 
     fun getRoadList(): MutableList<Road> {
         return roadList
@@ -28,17 +33,21 @@ class Position(private var roadList: MutableList<Road>, private var roadIndex: I
         return startedThisTick
     }
 
+    fun setArrivalTicks(ticks: Int){
+        arrivalTicks = ticks
+    }
+
     fun advance() {
-        //TODO
+        // TODO
     }
 
     override fun equals(o: Any?): Boolean {
         if (o is Position) {
-            return this.getRoadList() == o.getRoadList()
-                    && this.roadIndex == o.getRoadIndex()
-                    && this.getPositionOnRoad() == o.getPositionOnRoad()
-                    && this.getDestinyVertex() == o.getDestinyVertex()
-                    && this.getArrivalTicks() == o.getArrivalTicks()
+            return this.getRoadList() == o.getRoadList() &&
+                this.roadIndex == o.getRoadIndex() &&
+                this.getPositionOnRoad() == o.getPositionOnRoad() &&
+                this.getDestinyVertex() == o.getDestinyVertex() &&
+                this.getArrivalTicks() == o.getArrivalTicks()
         }
         return false
     }
