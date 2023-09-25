@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+/** Class for the Fire Truck Ladder
+ */
 class FireTruckLadder(
     private val id: Int,
     private val base: Base,
@@ -15,8 +17,12 @@ class FireTruckLadder(
     vehicleHeight,
     position
 ) {
+
+    /**
+     * getter for the ladder length
+     * @return true if ladder length is 40, else false
+     */
     fun getLadderLength40(): Boolean {
         return ladderLength40
     }
-
 }
