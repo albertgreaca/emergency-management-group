@@ -50,7 +50,7 @@ class Resource(
      */
     fun isEmpty(): Boolean {
         // how about the ladder length here?
-        return vehicles.isEmpty() && (waterAmount == 0) && (criminalAmount == 0) && (patientAmount == 0)
+        return vehicles.isEmpty() && waterAmount == 0 && criminalAmount == 0 && patientAmount == 0
     }
 
     /**
