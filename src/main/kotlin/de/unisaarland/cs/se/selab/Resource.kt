@@ -77,8 +77,8 @@ class Resource(
         // abs fix?
         val patientDifference = this.getPatientAmount() - resource.getPatientAmount()
         // compare Ladder Length
-        // TODO: implement ladder difference
-        // val ladderDifference = this.
+        // the weird let thing was a detekt fix I have no clue what it does
+        val ladderDifference = resource.getLadderLength()?.let { this.getLadderLength()?.minus(it) }
         // compare List of needed Vehicles
         // am I supposed to create a new resource?
         // what is the Int for?
@@ -90,7 +90,7 @@ class Resource(
         } else {
             diffNeededVehicles = listDifference(newNeededVehicles, originalNeededVehicles)
         }
-        return Resource(diffNeededVehicles, waterDifference, criminalDifference, patientDifference, null)
+        return Resource(diffNeededVehicles, waterDifference, criminalDifference, patientDifference, ladderDifference)
     }
 
     /**
