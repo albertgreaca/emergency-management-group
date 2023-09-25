@@ -1,0 +1,44 @@
+{
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "Campus",
+      "roadName": "Medieninformatik",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 7
+    },
+    {
+      "id": 1,
+      "tick": 4,
+      "village": "Campus",
+      "roadName": "Cheminfo",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 8
+    },
+    {
+      "id": 2,
+      "tick": 6,
+      "village": "Campus",
+      "roadName": "Art",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 6
+    },
+    {
+      "id": 3,
+      "tick": 7,
+      "village": "Campus",
+      "roadName": "Biochemie",
+      "emergencyType": "MEDICAL",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 8
+    }
+  ]
+}
