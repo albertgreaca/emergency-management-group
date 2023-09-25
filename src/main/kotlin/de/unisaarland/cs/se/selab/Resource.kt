@@ -1,5 +1,9 @@
-class Resource(private val vehicles: MutableList<Pair<VehicleType, Int?>>, private var waterAmount: Int,
-               private var criminalAmount: Int, private var patientAmount: Int) {
+class Resource(
+    private val vehicles: MutableList<Pair<VehicleType, Int?>>,
+    private var waterAmount: Int,
+    private var criminalAmount: Int,
+    private var patientAmount: Int
+) {
 
     fun getVehicles(): MutableList<Pair<VehicleType, Int?>> {
         return vehicles
@@ -26,6 +30,21 @@ class Resource(private val vehicles: MutableList<Pair<VehicleType, Int?>>, priva
     }
 
     fun updateDifference(resource: Resource) {
-//TODO
+        // TODO
+        // compare WaterAmount
+        // this assumes first resource always has more?
+        // abs fix?
+        val waterDifference = this.getWaterAmount() - resource.getWaterAmount()
+        // compare CriminalAmount
+        // abs fix?
+        val criminalDifference = this.getCriminalAmount() - resource.getCriminalAmount()
+        // compare patientAmount
+        // abs fix?
+        val patientDifference = this.getPatientAmount() - resource.getPatientAmount()
+        // compare List of needed Vehicles
+        // am I supposed to create a new resource?
+        // what is the Int for?
+        var originalNeededVehicles = this.getVehicles()
+        var newNeededVehicles = resource.getVehicles()
     }
 }
