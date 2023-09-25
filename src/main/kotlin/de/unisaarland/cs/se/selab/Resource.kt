@@ -1,11 +1,14 @@
+package de.unisaarland.cs.se.selab
+
 class Resource(
-    private val vehicles: MutableList<Pair<VehicleType, Int?>>,
+    private val vehicles: MutableList<VehicleType>,
     private var waterAmount: Int,
     private var criminalAmount: Int,
-    private var patientAmount: Int
+    private var patientAmount: Int,
+    private var ladderLength: Int?
 ) {
 
-    fun getVehicles(): MutableList<Pair<VehicleType, Int?>> {
+    fun getVehicles(): MutableList<VehicleType> {
         return vehicles
     }
 
