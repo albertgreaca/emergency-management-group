@@ -1,3 +1,7 @@
+package de.unisaarland.cs.se.selab
+
+import de.unisaarland.cs.se.selab.*
+
 class Base(private val id: Int, private var staff: Int, private val location: Vertex,
            private val vehicles: MutableList<Vehicle>) {
 
@@ -40,10 +44,13 @@ class Base(private val id: Int, private var staff: Int, private val location: Ve
         var neededVehiclesCopy = neededVehicles.toMutableList()
 
         //TODO: implement
+        return Resource(mutableListOf(),0,0,0)
     }
 
     fun reallocateResources(em: Emergency): Resource {
         //TODO: implement
+        return Resource(mutableListOf(),0,0,0)
+
     }
 
     fun calculateNextBases() {
@@ -56,6 +63,7 @@ class Base(private val id: Int, private var staff: Int, private val location: Ve
 
     fun getNextBase(b: Base): Base? {
         //TODO: implement
+        return null
     }
 
     fun makeRequest(em: Emergency, nextBase: Base) {

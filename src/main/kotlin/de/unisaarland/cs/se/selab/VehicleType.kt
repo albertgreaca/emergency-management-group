@@ -1,3 +1,5 @@
+package de.unisaarland.cs.se.selab
+
 enum class VehicleType {
     POLICE_CAR,
     K9_POLICE_CAR,

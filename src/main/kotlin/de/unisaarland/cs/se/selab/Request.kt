@@ -1,5 +1,8 @@
+package de.unisaarland.cs.se.selab
+
 class Request(private val id: Int, private val emergency: Emergency,
-              private val processingBase: Base) {
+              private val processingBase: Base
+) {
 
     fun getId(): Int {
         return id

@@ -1,3 +1,5 @@
+package de.unisaarland.cs.se.selab
+
 abstract class Event(private val id: Int,
                      private var tick: Int,
                      private var duration: Int) {
