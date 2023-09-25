@@ -1,7 +1,9 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * This is the class responsible for simulating the different phases of a tick
+ */
 object EMCC {
-
     private val observers: MutableList<EmergencyObserver> = mutableListOf()
     private val startingEmergencies: MutableList<Emergency> = mutableListOf()
     private val handledEmergencies: MutableList<Emergency> = mutableListOf()
@@ -10,61 +12,96 @@ object EMCC {
     private var nextRequestId: Int = 1
     private val requests: MutableList<Request> = mutableListOf()
 
+    /**
+     *
+     */
     fun getNextRequestId(): Int {
         return nextRequestId
     }
 
+    /**
+     *
+     */
     fun getStartingEmergencies(): MutableList<Emergency> {
         return startingEmergencies
     }
 
+    /**
+     *
+     */
     fun getHandledEmergencies(): MutableList<Emergency> {
         return handledEmergencies
     }
 
+    /**
+     *
+     */
     fun getStartingEvents(): MutableList<Event> {
         return startingEvents
     }
 
+    /**
+     *
+     */
     fun getActiveEvents(): MutableList<Event> {
         return activeEvents
     }
 
+    /**
+     *
+     */
     fun getRequests(): MutableList<Request> {
         return requests
     }
 
+    /**
+     *
+     */
     fun increaseNextRequestId() {
         nextRequestId++
     }
 
+    /**
+     * notifies all observers about new emergencies, this initiates the emergency phase
+     */
     fun notifyObservers() {
         for (o in observers) {
             o.update(startingEmergencies)
         }
     }
 
+    /**
+     * adds a department to the list of observers
+     */
     fun addObserver(ob: EmergencyObserver) {
         observers.add(ob)
     }
 
+    /**
+     * adds an emergency to the startingEmergencies list
+     */
     fun addStartingEmergency(em: Emergency) {
         startingEmergencies.add(em)
     }
 
+    /**
+     * orders the starting emergencies by severity, then by ID
+     */
     fun orderEmergencies() {
         startingEmergencies.sortWith(compareBy({ it.getSeverity() }, { it.getId() }))
     }
 
+    /**
+     * allocates assets for each starting emergency
+     */
     fun allocateAssets() {
         // iterate over emergencies
         for (em in startingEmergencies) {
-
             // get the base assigned to the emergency
             var emBase = em.getBase()!!
 
             // base tries to allocate resources for emergency, returns what is left
-            var resourcesAfterAllocating  = emBase.requestResources(em)
+            var resourcesAfterAllocating = emBase.requestResources(em)
 
             // update the resources in the emergency
             em.getResources().updateDifference(resourcesAfterAllocating)
@@ -82,44 +119,67 @@ object EMCC {
         }
     }
 
+    /**
+     * handles all requests made in the allocation phase of the current tick
+     */
     fun processRequests() {
-        // iterate over requests
-        for (request in getRequests()) {
-
-        }
         TODO("not implemented yet")
     }
 
+    /**
+     * adds an event to the startingEvents list
+     */
     fun addStartingEvent(event: Event) {
         startingEvents.add(event)
     }
 
+    /**
+     * removes an event from the startingEvents list
+     */
     fun removeStartingEvent(event: Event) {
         startingEvents.remove(event)
     }
 
+    /**
+     * adds an event to the activeEvents list
+     */
     fun addActiveEvent(event: Event) {
         activeEvents.add(event)
     }
 
+    /**
+     * removes an event from the activeEvents list
+     */
     fun removeActiveEvent(event: Event) {
         activeEvents.remove(event)
     }
 
+    /**
+     * moves an event from the startingEvents list to the activeEvents list
+     */
     fun moveFromStartingToActive(event: Event) {
         removeStartingEvent(event)
         addActiveEvent(event)
     }
 
+    /**
+     * moves an event from the activeEvents list to the startingEvents list
+     */
     fun moveFromActiveToStarting(event: Event) {
         removeActiveEvent(event)
         addStartingEvent(event)
     }
 
+    /**
+     * updates starting and ending events
+     */
     fun updateEvents(): Boolean {
         TODO("not implemented")
     }
 
+    /**
+     * reroutes all vehicles that are currently driving
+     */
     fun rerouteVehicles() {
         TODO("not implemented")
     }
