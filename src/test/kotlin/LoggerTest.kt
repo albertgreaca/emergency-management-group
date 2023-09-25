@@ -1,6 +1,5 @@
 import de.unisaarland.cs.se.selab.Logger
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class LoggerTest {
@@ -88,5 +87,48 @@ class LoggerTest {
         assertEquals(expected, actual)
     }
 
+    @Test
+    fun testLogEmergencyFailed() {
+        val expected = "Emergency Failed: 45 failed."
+        val actual = Logger.logEmergencyFailed(45)
+        assertEquals(expected, actual)
+    }
 
+    @Test
+    fun testLogEventEnded() {
+        val expected = "Event Ended: 57 ended."
+        val actual = Logger.logEventEnded(57)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun testLogEventTriggered() {
+        val expected = "Event Triggered: 11 triggered."
+        val actual = Logger.logEventTriggered(11)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun testLogAssetsRerouted() {
+        val expected = "Assets Rerouted: 33"
+        val actual = Logger.logAssetsRerouted(33)
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun testLogSimulationEnd() {
+        val expected = "Simulation End"
+        val actual = Logger.logSimulationEnd()
+        assertEquals(expected, actual)
+    }
+
+    @Test
+    fun testLogStatistics() {
+        // TODO : check how exactly the expected output should look
+        val expected = "Simulation Statistics: 2 assets rerouted.\nSimulation Statistics: 9 received emergencies.\n" +
+            "Simulation Statistics: 8 ongoing emergencies.\nSimulation Statistics: 5 failed emergencies.\n" +
+            "Simulation Statistics: 17 resolved emergencies."
+        val actual = Logger.logStatistics(2, 9, 8, 5, 17)
+        assertEquals(expected, actual)
+    }
 }
