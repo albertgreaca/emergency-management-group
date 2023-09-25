@@ -12,12 +12,20 @@ class MapParserTest {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapvalid1.dot"))
         assertTrue(parser.parseMap())
+        assertTrue(graphMap.getVertexList().size == 2)
     }
 
     @Test
     public fun invalidDotFile1() {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapinvalid1.dot"))
+        assertFalse(parser.parseMap())
+    }
+
+    @Test
+    public fun invalidDotFile2() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/mapinvalid2.dot"))
         assertFalse(parser.parseMap())
     }
 
