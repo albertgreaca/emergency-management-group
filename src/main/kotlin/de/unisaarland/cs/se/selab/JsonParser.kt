@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab
 
+import PoliceDepartment
 import org.json.JSONObject
 import java.io.File
 
@@ -13,18 +14,28 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val id = currVehicle.getInt(id)
             if (id < 0) return false
             val baseId = currVehicle.getInt("baseID")
-            val vehicleType = currVehicle.getString("VehicleType")
+            val vehicleType:VehicleType = currVehicle.get("VehicleType") as VehicleType
             val vehicleHeight = currVehicle.getInt("vehicleHeight")
             val staffCapacity = currVehicle.getInt("staffCapacity")
             when (vehicleType) {
-                "POLICE_CAR" -> {
+                VehicleType.POLICE_CAR -> {
                     val crimCapacity = currVehicle.getInt("criminalCapacity")
-                } // create PoliceCar and add to BAse
-                "FIRE_TRUCK_WATER" -> {
+                    PoliceCar(id, baseId, staffCapacity, vehicleHeight, null, crimCapacity, 0)
+                } // add to BAse and findBase is needed
+                VehicleType.FIRE_TRUCK_WATER -> {
                     val waterCapacity = currVehicle.getInt("waterCapacity")
+                    FireTruckWater(id, baseId, staffCapacity, vehicleHeight, null, waterCapacity, waterCapacity)
                 }
                 // create FireTruckWater
-                "FIRE_TRUCK_LADDER" -> { val ladderLength = currVehicle.getInt("ladderLength") } // create FireTruck
+                VehicleType.FIRE_TRUCK_LADDER -> {
+                    val ladderLength = currVehicle.getInt("ladderLength") == 40
+                    FireTruckLadder(id, baseId, staffCapacity, vehicleHeight, null, ladderLength) } // create FireTruck
+                VehicleType.AMBULANCE -> {
+                    Ambulance(id, baseId, staffCapacity, vehicleHeight, null, false)
+                } else -> {
+                    Vehicle(id, vehicleType, baseId, staffCapacity, vehicleHeight, null)
+                }
+
             }
             // create Vehicle
         }
@@ -32,6 +43,9 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     }
 
     fun parseBases(): Boolean {
+        val fireDepartment = FireDepartment()
+        val policeDepartment = PoliceDepartment()
+        val hospital = Hospital()
         val jsonObject: JSONObject = JSONObject(file1.readText())
         val basesObject = jsonObject.getJSONArray("Bases")
         for (i in 0 until basesObject.length()) {
@@ -45,7 +59,11 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val staffs = currBase.getInt("staffs")
             if (staffs < 1) return false
             when (baseType) {
-                "FIRE_STATION" -> Base(id, staffs, location, mutableListOf())
+                "FIRE_STATION" -> {
+                    Base(id, staffs, location, mutableListOf())
+                    //TODO: add Department
+                }
+
                 "POLICE_STATION" -> {
                     val dogs = currBase.getInt("dogs") // create Police Station
                 }
@@ -53,7 +71,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 "HOSPITAL" -> {
                     val doctor = currBase.getInt("doctors") // create Hospital}
                 }
-            }
+            }//TODO: add Department
         }
         return true
     }
@@ -64,17 +82,75 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
             val id = currEmer.getInt(id)
+            if (id < 0) return false
             val tick = currEmer.getInt("tick")
+            if (tick<1) return false
             val village = currEmer.getString("village")
             val roadName = currEmer.getString("roadName")
             val road = gm.getRoad(village, roadName) ?: return false
             val type: EmergencyType = currEmer.get("emergencyType") as EmergencyType
             val severity = currEmer.getInt("severity")
+            if (severity<1 || severity>3) return false
             val handleTime = currEmer.getInt("handleTime")
+            if (handleTime<1) return false
             val maxDuration = currEmer.getInt("maxDuration")
+            if (maxDuration<2) return false
             val resources = Resource(mutableListOf(), 0, 0, 0, 0) // resourceFactory
 
-            Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources)
+            Simulation.addEmergency(Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources))
+        }
+        return true
+    }
+
+    fun parseEvents():Boolean {
+        val jsonObject: JSONObject = JSONObject(file2.readText())
+        val eventArray = jsonObject.getJSONArray("events")
+        for (i in 0 until eventArray.length()) {
+            val currEvent = eventArray.getJSONObject(i)
+            val id = currEvent.getInt(id)
+            if (id < 0) return false
+            val type = currEvent.getString("type")
+            val tick = currEvent.getInt("tick")
+            if (tick<0) return false
+            val duration = currEvent.getInt("duration")
+            if (duration<1) return false
+            when (type) {
+                "VEHICLE_UNAVAILABLE" -> {
+                    val vehicleId = currEvent.getInt("vehicleID")
+                    if (vehicleId<0) return false
+                //need list of bases
+                }
+                "ROAD_CLOSURE" -> {
+                    val sourceVertex = currEvent.getInt("source")
+                    val targetVertex = currEvent.getInt("target")
+                    if (sourceVertex<0 || targetVertex<0) return false
+                    //find road via a new find function with source and target
+
+                }
+                "CONSTRUCTION_SITE" -> {
+                    val sourceVertex = currEvent.getInt("source")
+                    val targetVertex = currEvent.getInt("target")
+                    if (sourceVertex<0 || targetVertex<0) return false
+                    //find road via a new find function with source and target
+                    val oneWayStreet = currEvent.getBoolean("oneWayStreet")
+                    val factor = currEvent.getInt("factor")
+                    if (factor<1) return false
+                    //create
+                }
+                "TRAFFIC_JAM" -> {
+                    val factor = currEvent.getInt("factor")
+                    if (factor<1) return false
+                    val sourceVertex = currEvent.getInt("source")
+                    val targetVertex = currEvent.getInt("target")
+                    if (sourceVertex<0 || targetVertex<0) return false
+                    //find Road
+                    //create
+                }
+                "RUSH_HOUR" -> {
+                    val roadTypes:MutableList<VehicleType> = currEvent.get("roadTypes") as MutableList<VehicleType>
+                    //getRoads from GraphMap with types
+                }
+            }
         }
         return true
     }
