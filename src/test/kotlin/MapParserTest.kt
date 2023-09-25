@@ -29,6 +29,13 @@ class MapParserTest {
         assertFalse(parser.parseMap())
     }
 
+    @Test
+    public fun invalidDotFile3() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/mapinvalid3.dot"))
+        assertFalse(parser.parseMap())
+    }
+
     // compare sizes of parsed elements with expected values
     // check individual field values of parsed objects
 }

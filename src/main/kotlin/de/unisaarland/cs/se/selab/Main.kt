@@ -7,20 +7,18 @@ import java.io.File
  */
 fun main(args: Array<String>) {
     val argsMap = args.toList().chunked(2).associate { it[0] to it[1] }
-    var map = argsMap["--map"] ?: return
-    var assets = argsMap["--assets"] ?: return
-    var scenario = argsMap["--scenario"] ?: return
-    var ticks = argsMap["--ticks"]?.toIntOrNull()
-    var out = argsMap["--out"]
-    if(out != null) {
+    val map = argsMap["--map"] ?: return
+    val assets = argsMap["--assets"] ?: return
+    val scenario = argsMap["--scenario"] ?: return
+    val ticks = argsMap["--ticks"]?.toIntOrNull()
+    val out = argsMap["--out"]
+    if (out != null) {
         Logger.setPrintWriter(File(out).outputStream())
     } else {
         Logger.setPrintWriter(System.out)
     }
     var f1 = File(map)
     var f2 = File(assets)
-    var f3  = File(scenario)
-
-
-
+    var f3 = File(scenario)
+    val s = Simulation()
 }
