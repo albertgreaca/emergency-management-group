@@ -1,5 +1,8 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * Resource class to save needs for emergency
+ */
 class Resource(
     private val vehicles: MutableList<VehicleType>,
     private var waterAmount: Int,
@@ -7,31 +10,60 @@ class Resource(
     private var patientAmount: Int,
     private var ladderLength: Int?
 ) {
-
+    /**
+     * @returns Vehicles
+     */
     fun getVehicles(): MutableList<VehicleType> {
         return vehicles
     }
 
+    /**
+     * @return WaterAmount
+     */
     fun getWaterAmount(): Int {
         return waterAmount
     }
 
+    /**
+     * @return CriminalAmount
+     */
     fun getCriminalAmount(): Int {
         return criminalAmount
     }
 
+    /**
+     * @return PatientAmount
+     */
     fun getPatientAmount(): Int {
         return patientAmount
     }
 
+    /**
+     * @return ladderLength
+     */
+    fun getLadderLength(): Int? {
+        return ladderLength
+    }
+
+    /**
+     * check if Resource is empty
+     */
     fun isEmpty(): Boolean {
+        // how about the ladder length here?
         return vehicles.isEmpty() && (waterAmount == 0) && (criminalAmount == 0) && (patientAmount == 0)
     }
 
+    /**
+     * add Vehicles to List of Vehicles
+     */
     fun addVehicle(v: VehicleType) {
         vehicles.add(v)
     }
 
+    /**
+     * comparison of two resources,
+     * @return the stuff that is still missing
+     */
     fun updateDifference(resource: Resource): Resource {
         // TODO
         // compare WaterAmount
@@ -61,6 +93,9 @@ class Resource(
         return Resource(diffNeededVehicles, waterDifference, criminalDifference, patientDifference, null)
     }
 
+    /**
+     * helper function returning the difference of two lists
+     */
     fun listDifference(
         firstList: MutableList<VehicleType>,
         secondList: MutableList<VehicleType>
