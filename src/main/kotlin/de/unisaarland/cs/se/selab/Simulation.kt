@@ -30,7 +30,7 @@ object Simulation {
             return false
         }
         val eventsParsed: Boolean = jsonParser.parseEvents() //initialize events and emergencies and check for validity
-        val emergenciesParsed: Boolean = jsonParser.parseEmergency()
+        val emergenciesParsed: Boolean = jsonParser.parseEmergencies()
         Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
         if (!(eventsParsed && emergenciesParsed)) {
             return false
@@ -104,7 +104,7 @@ object Simulation {
                 simulateTick()
             }
         } else {
-            while (currentTick <= maximumTicks) {
+            while (currentTick <= maximumTicks!!) {
                 simulateTick()
             }
         }
