@@ -14,24 +14,28 @@ import java.io.File
  * Id -> Id [attributes'];
  * }
  */
-class MapParser(private val gm: GraphMap, private val file: File) {
+class MapParser(private val gm: GraphMap, file: File) {
     private var charcounter = 0
     private val chars = file.readText().toCharArray()
-    var next = Pair("", ' ')
-    var name = ""
+    private var graphName = ""
+    private var vilRoadSet = mutableSetOf<Pair<String, String>>()
+    private var verToVer = mutableSetOf<Pair<Int, Int>>()
+    private var sideStreetCount = false
+    private var mapVilMain = mutableMapOf<String, Boolean>()
+    private var mapVilVer = mutableMapOf<Int, String>()
 
     /**
      * Starting function for parsing
      * @return Parsing Successful or not
      */
-    public fun parseMap(): Boolean {
+    fun parseMap(): Boolean {
         val next = getNextWord()
         if (next != "digraph") {
             return false
         }
-        skipSpaces(false)
-        name = getNextWord()
-        if (!validateId(name)) {
+        skipSpaces(true)
+        graphName = getNextWord()
+        if (!validateId(graphName)) {
             return false
         }
         skipSpaces(false)
@@ -91,15 +95,18 @@ class MapParser(private val gm: GraphMap, private val file: File) {
             }
             charcounter += 2
             val end = getNextInt()
-            if (end == null || !parseAttributes(start, end) || chars[charcounter] != ';') {
+            var ret = end == null || verToVer.contains(Pair(start, end)) || !parseAttributes(start, end)
+            ret = ret || chars[charcounter] != ';'
+            if (ret) {
                 return false
             }
             charcounter++
+            verToVer.add(Pair(start, end!!))
             start = getNextInt() ?: return false
             skipSpaces(false)
             sep = chars[charcounter]
         }
-        return sep == '}'
+        return sep == '}' && sideStreetCount
     }
 
     /**
@@ -109,8 +116,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
      * @return Parsing Successful or not
      */
     private fun parseAttributes(start: Int, end: Int): Boolean {
-        var ret = true
-        ret = start == end
+        var ret: Boolean = start == end
         skipSpaces(false)
         ret = ret && chars[charcounter] == '['
         charcounter++
@@ -120,7 +126,10 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         charcounter++
         skipSpaces(false)
         val village = getNextWord()
-        ret = ret && validateId(village) && (village != name)
+        ret = ret && validateId(village) && village != graphName
+        if (!mapVilMain.contains(village)) {
+            mapVilMain[village] = false
+        }
         skipSpaces(false)
         ret = ret && chars[charcounter] != ';'
         charcounter++
@@ -130,14 +139,8 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         charcounter++
         skipSpaces(false)
         val name = getNextWord()
-        ret = ret && validateId(name)
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == ';'
-        charcounter++
-        ret = ret && getNextWordEquals("heightLimit")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
+        ret = ret && validateId(name) && !vilRoadSet.contains(Pair(village, name))
+        vilRoadSet.add(Pair(village, name))
         return ret && parseAttributes2(start, end, village, name)
     }
 
@@ -148,6 +151,13 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         name: String,
     ): Boolean {
         var ret = true
+        skipSpaces(false)
+        ret = ret && chars[charcounter] == ';'
+        charcounter++
+        ret = ret && getNextWordEquals("heightLimit")
+        skipSpaces(false)
+        ret = ret && chars[charcounter] == '='
+        charcounter++
         val heightLimit = getNextInt() ?: return false
         skipSpaces(false)
         ret = ret && chars[charcounter] == ';'
@@ -160,27 +170,8 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         skipSpaces(false)
         ret = ret && chars[charcounter] == ';'
         charcounter++
-        ret = ret && getNextWordEquals("primaryType")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        val primary = getNextWord()
-        val pty = validatePrimaryType(primary) ?: return false
-        skipSpaces(false)
-        if (chars[charcounter] != ';') {
-            ret = false
-        }
-        charcounter++
 
-        ret = ret && getNextWordEquals("secondaryType")
-
-        skipSpaces(false)
-        if (chars[charcounter] != '=') {
-            ret = false
-        }
-        charcounter++
-
-        return ret && parseAttributes3(start, end, village, name, weight, heightLimit, pty)
+        return ret && parseAttributes3(start, end, village, name, weight, heightLimit)
     }
 
     private fun parseAttributes3(
@@ -190,9 +181,57 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         name: String,
         weight: Int,
         heightLimit: Int,
-        pty: PrimaryRoadType
     ): Boolean {
         var ret = true
+        ret = ret && getNextWordEquals("primaryType")
+        skipSpaces(false)
+        ret = ret && chars[charcounter] == '='
+        charcounter++
+        val primary = getNextWord()
+        val pty = validatePrimaryType(primary) ?: return false
+        if (pty == PrimaryRoadType.SIDESTREET) {
+            sideStreetCount = true
+        } else if (mapVilVer.contains(start)) {
+            ret = ret && mapVilVer[start] == village
+        } else {
+            mapVilVer[start] = village
+        }
+        if (pty == PrimaryRoadType.MAINSTREET) {
+            if (mapVilMain.contains(village)) {
+                mapVilMain.replace(village, false, true)
+            }
+        }
+        if (mapVilVer.contains(end)) {
+            ret = ret && mapVilVer[end] == village
+        } else {
+            mapVilVer[start] = village
+        }
+
+        skipSpaces(false)
+        if (chars[charcounter] != ';') {
+            ret = false
+        }
+        charcounter++
+        return ret && parseAttributes4(pty, village, name, weight, heightLimit, start, end)
+    }
+
+    private fun parseAttributes4(
+        pty: PrimaryRoadType,
+        village: String,
+        name: String,
+        weight: Int,
+        heightLimit: Int,
+        start: Int,
+        end: Int
+    ): Boolean {
+        var ret = true
+        ret = ret && getNextWordEquals("secondaryType")
+
+        skipSpaces(false)
+        if (chars[charcounter] != '=') {
+            ret = false
+        }
+        charcounter++
         val secondary = getNextWord()
         val sty = validateSecondaryType(secondary) ?: return false
 
@@ -211,7 +250,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         if (!validateRoad(road)) {
             ret = false
         }
-        return gm.addRoad(road, start, end) && ret && chars[charcounter++] == ']'
+        return ret && gm.addRoad(road, start, end) && chars[charcounter++] == ']'
     }
 
     private fun validateId(id: String): Boolean {
@@ -245,7 +284,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
     }
 
     private fun validateGraphMap(): Boolean {
-        return gm.name != ""
+        return !mapVilMain.containsValue(false)
     }
 
     private fun getNextWord(): String {
