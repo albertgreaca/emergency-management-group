@@ -11,7 +11,8 @@ object Simulation {
     val map = GraphMap()
     val statistics = Statistics()
 
-    //initializes the setting and returns whether the process was successful
+    /** initializes the simulation setting and returns whether the process was successful
+     */
     fun initialize(
         mapConfig: File, baseVehicleConfig: File,
         emergEventConfig: File
@@ -44,12 +45,14 @@ object Simulation {
         currentTick += 1
     }
 
-    //adds an emergency to the global event list
+    /** adds an emergency to the global event list
+     */
     fun addEmergency(em: Emergency) {
         emergencies.add(em)
     }
 
-    //adds an event to the global event list
+    /** adds an event to the global event list
+     */
     fun addEvent(ev: Event) {
         events.add(ev)
     }
@@ -98,6 +101,8 @@ object Simulation {
         simulateUpdatePhase()
     }
 
+    /** perform the entire simulation
+     */
     fun simulateSimulation() {
         if (maximumTicks == null) {
             while (true) {
