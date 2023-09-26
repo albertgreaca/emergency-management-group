@@ -4,58 +4,16 @@ package de.unisaarland.cs.se.selab
  * This is the class responsible for simulating the different phases of a tick
  */
 object EMCC {
-    private val observers: MutableList<EmergencyObserver> = mutableListOf()
-    private val startingEmergencies: MutableList<Emergency> = mutableListOf()
-    private val handledEmergencies: MutableList<Emergency> = mutableListOf()
-    private val activeEvents: MutableList<Event> = mutableListOf()
-    private val startingEvents: MutableList<Event> = mutableListOf()
-    private var nextRequestId: Int = 1
-    private val requests: MutableList<Request> = mutableListOf()
+    val observers: MutableList<EmergencyObserver> = mutableListOf()
+    val startingEmergencies: MutableList<Emergency> = mutableListOf()
+    val handledEmergencies: MutableList<Emergency> = mutableListOf()
+    val activeEvents: MutableList<Event> = mutableListOf()
+    val startingEvents: MutableList<Event> = mutableListOf()
+    var nextRequestId: Int = 1
+    val requests: MutableList<Request> = mutableListOf()
 
     /**
-     *
-     */
-    fun getNextRequestId(): Int {
-        return nextRequestId
-    }
-
-    /**
-     *
-     */
-    fun getStartingEmergencies(): MutableList<Emergency> {
-        return startingEmergencies
-    }
-
-    /**
-     *
-     */
-    fun getHandledEmergencies(): MutableList<Emergency> {
-        return handledEmergencies
-    }
-
-    /**
-     *
-     */
-    fun getStartingEvents(): MutableList<Event> {
-        return startingEvents
-    }
-
-    /**
-     *
-     */
-    fun getActiveEvents(): MutableList<Event> {
-        return activeEvents
-    }
-
-    /**
-     *
-     */
-    fun getRequests(): MutableList<Request> {
-        return requests
-    }
-
-    /**
-     *
+     * increases the ID of the next request by 1
      */
     fun increaseNextRequestId() {
         nextRequestId++
@@ -181,6 +139,16 @@ object EMCC {
      * reroutes all vehicles that are currently driving
      */
     fun rerouteVehicles() {
-        TODO("not implemented")
+        var numberOfReroutedVehicles = 0
+        for (em in Simulation.emergencies) {
+            for (vec in em.assignedVehicles) {
+                if (vec.reroutable()) {
+                    val wasRerouted = vec.reroute()
+                    numberOfReroutedVehicles = if (wasRerouted) numberOfReroutedVehicles + 1 else numberOfReroutedVehicles
+                }
+            }
+        }
+        Logger.logAssetsRerouted(numberOfReroutedVehicles)
+        Simulation.statistics.increaseRerouted(numberOfReroutedVehicles)
     }
 }
