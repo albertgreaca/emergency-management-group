@@ -16,20 +16,20 @@ object Simulation {
         mapConfig: File, baseVehicleConfig: File,
         emergEventConfig: File
     ): Boolean {
-        val mapParser: MapParser = MapParser(map, mapConfig)
+        val mapParser: MapParser = MapParser(map, mapConfig) //initialize the map and check for validity
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
         if (!mapParsed) {
             return false
         }
         val jsonParser: JsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
-        val vehiclesParsed: Boolean = jsonParser.parseVehicles()
+        val vehiclesParsed: Boolean = jsonParser.parseVehicles() //initialize vehicles and beses and check for validity
         val basesParsed: Boolean = jsonParser.parseBases()
         Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
         if (!(vehiclesParsed && basesParsed)) {
             return false
         }
-        val eventsParsed: Boolean = jsonParser.parseEvents()
+        val eventsParsed: Boolean = jsonParser.parseEvents() //initialize events and emergencies and check for validity
         val emergenciesParsed: Boolean = jsonParser.parseEmergency()
         Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
         if (!(eventsParsed && emergenciesParsed)) {
