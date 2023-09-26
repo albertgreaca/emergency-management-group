@@ -22,4 +22,14 @@ class GraphMap (var adjacencyList: MutableList<MutableMap<Vertex,Road>> = mutabl
     fun getRoad(villageName: String, roadName: String): Road? {
         return roadList.firstOrNull {it.getVillage() == villageName && it.getName() == roadName}
     }
+    fun getRoad(start: Vertex, end: Vertex): Road? {
+        return adjacencyList[start.id].get(end)
+    }
+    fun getListRoad(t: PrimaryRoadType): MutableList<Road> {
+        var ans: MutableList<Road> = mutableListOf<Road>()
+        for(r in roadList)
+            if (r.primType == t)
+                ans.add(r)
+        return ans
+    }
 }
