@@ -90,7 +90,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     /**
      * function to parse Emergencies
      */
-    fun parseEmergency(): Boolean {
+    fun parseEmergencies(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
@@ -111,8 +111,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val maxDuration = currEmer.getInt("maxDuration")
             if (maxDuration < 2) res = false
             val resources = Resource(mutableListOf(), 0, 0, 0, 0) // resourceFactory
-
-            // Simulation.addEmergency(Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources))
+            val newEmergency = Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources)
+            Simulation().addEmergency(newEmergency)
         }
         res = res && true
         return res
