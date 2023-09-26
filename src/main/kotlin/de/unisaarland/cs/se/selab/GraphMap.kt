@@ -1,22 +1,7 @@
 package de.unisaarland.cs.se.selab
 
-class GraphMap (private var adjacencyList: MutableList<MutableMap<Vertex,Road>> = mutableListOf(mutableMapOf()), private var vertexList: MutableList<Vertex> = mutableListOf(),
-                private var roadList: MutableList<Road> = mutableListOf(), private var name: String? = null){
-    fun getAdjacencyList(): MutableList<MutableMap<Vertex,Road>> {
-        return adjacencyList
-    }
-    fun getVertexList(): MutableList<Vertex> {
-        return vertexList
-    }
-    fun getRoadList(): MutableList<Road> {
-        return roadList
-    }
-    fun getName(): String? {
-        return name
-    }
-    fun setName(name: String) {
-        this.name = name
-    }
+class GraphMap (var adjacencyList: MutableList<MutableMap<Vertex,Road>> = mutableListOf(mutableMapOf()), var vertexList: MutableList<Vertex> = mutableListOf(),
+                var roadList: MutableList<Road> = mutableListOf(), var name: String? = null){
     fun addVertex(vertex: Vertex) {
         vertexList.add(vertex)
         adjacencyList.add(mutableMapOf())
