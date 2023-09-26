@@ -132,7 +132,7 @@ open class Vehicle(
         if (getPosition()!!.arrivalTicks == 0) {
             return false
         }
-        if (targetEmergency == null || em.getSeverity() < targetEmergency!!.getSeverity()) {
+        if (targetEmergency == null || em.severity < targetEmergency!!.severity) {
             return false
         }
 

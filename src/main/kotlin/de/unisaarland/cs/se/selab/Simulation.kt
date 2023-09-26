@@ -85,11 +85,11 @@ object Simulation {
     }
 
     private fun finalEvaluation() {
-        val rerouted: Int = statistics.getRerouted()
-        val receivedEms: Int = statistics.getReceived()
-        val ongoingEms: Int = statistics.getOngoing()
-        val failedEms: Int = statistics.getFailed()
-        val resolvedEms: Int = statistics.getResolved()
+        val rerouted: Int = statistics.reroutedAssets
+        val receivedEms: Int = statistics.receivedEmergencies
+        val ongoingEms: Int = statistics.ongoingEmergencies
+        val failedEms: Int = statistics.failedEmergencies
+        val resolvedEms: Int = statistics.resolvedEmergencies
         Logger.logSimulationEnd()
         Logger.logStatistics(rerouted, receivedEms, ongoingEms, failedEms, resolvedEms)
     }

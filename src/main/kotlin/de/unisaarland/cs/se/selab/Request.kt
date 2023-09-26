@@ -26,7 +26,7 @@ class Request(
      * @return the Resources that are being requested
      */
     fun getResources(): Resource {
-        return emergency.getResources()
+        return emergency.resources
     }
 
     /**
@@ -40,6 +40,6 @@ class Request(
      * @return Base which requested (responsible base for emergency)
      */
     fun getRequestingBase(): Base {
-        return emergency.getBase()!!
+        return emergency.base!!
     }
 }

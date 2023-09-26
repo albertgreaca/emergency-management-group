@@ -3,11 +3,11 @@ package de.unisaarland.cs.se.selab
 /** Class for the Fire Truck Ladder
  */
 class FireTruckLadder(
-    private val id: Int,
-    private val base: Base,
-    private val staffCapacity: Int,
-    private val vehicleHeight: Int,
-    private var position: Position? = null,
+    override val id: Int,
+    override val base: Base,
+    override val staffCapacity: Int,
+    override val vehicleHeight: Int,
+    override var position: Position? = null,
     private val ladderLength40: Boolean,
 ) : Vehicle(
     id,
