@@ -237,15 +237,15 @@ class MapParser(private val gm: GraphMap, private val file: File) {
     }
 
     private fun validateRoad(r: Road): Boolean {
-        return if (r.getSecType() == SecondaryRoadType.TUNNEL) {
-            r.getWeight() > 0 && r.getHeight() <= 3 && r.getHeight() >= 1
+        return if (r.secType == SecondaryRoadType.TUNNEL) {
+            r.weight > 0 && r.height <= 3 && r.height >= 1
         } else {
-            r.getWeight() > 0 && r.getHeight() >= 1
+            r.weight > 0 && r.height >= 1
         }
     }
 
     private fun validateGraphMap(): Boolean {
-        return gm.getName() == ""
+        return gm.name != ""
     }
 
     private fun getNextWord(): String {

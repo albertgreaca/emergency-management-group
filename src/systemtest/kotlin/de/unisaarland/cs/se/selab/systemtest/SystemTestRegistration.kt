@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest
 import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
-import de.unisaarland.cs.se.selab.systemtest.failedparser.*
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
@@ -10,6 +10,13 @@ object SystemTestRegistration {
         manager.registerTest(ExampleTest())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReroutingTest())
+        registerMapParserSyntaxFail1(manager)
+        registerMapParserSyntaxFail2(manager)
+        registerMapParserSemanticFail1(manager)
+
+    }
+
+    fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(FailedParser2())
         manager.registerTest(FailedParser3())
@@ -27,10 +34,90 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser15())
         manager.registerTest(FailedParser16())
         manager.registerTest(FailedParser17())
+    }
+
+    fun registerMapParserSyntaxFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParserSyntax1())
         manager.registerTest(FailedParserSyntax2())
         manager.registerTest(FailedParserSyntax3())
         manager.registerTest(FailedParserSyntax4())
         manager.registerTest(FailedParserSyntax5())
+        manager.registerTest(FailedParserSyntax6())
+        manager.registerTest(FailedParserSyntax7())
+        manager.registerTest(FailedParserSyntax8())
+        manager.registerTest(FailedParserSyntax9())
+        manager.registerTest(FailedParserSyntax10())
+        manager.registerTest(FailedParserSyntax11())
+        manager.registerTest(FailedParserSyntax12())
+        manager.registerTest(FailedParserSyntax13())
+        manager.registerTest(FailedParserSyntax14())
+        manager.registerTest(FailedParserSyntax15())
+        manager.registerTest(FailedParserSyntax16())
+        manager.registerTest(FailedParserSyntax17())
+        manager.registerTest(FailedParserSyntax18())
+        manager.registerTest(FailedParserSyntax19())
+        manager.registerTest(FailedParserSyntax20())
+        manager.registerTest(FailedParserSyntax21())
+        manager.registerTest(FailedParserSyntax22())
+        manager.registerTest(FailedParserSyntax23())
+        manager.registerTest(FailedParserSyntax24())
+        manager.registerTest(FailedParserSyntax25())
+        manager.registerTest(FailedParserSyntax26())
+        manager.registerTest(FailedParserSyntax27())
+        manager.registerTest(FailedParserSyntax28())
+        manager.registerTest(FailedParserSyntax29())
+        manager.registerTest(FailedParserSyntax30())
+        manager.registerTest(FailedParserSyntax31())
+        manager.registerTest(FailedParserSyntax32())
+        manager.registerTest(FailedParserSyntax33())
+        manager.registerTest(FailedParserSyntax34())
+        manager.registerTest(FailedParserSyntax35())
+        manager.registerTest(FailedParserSyntax36())
+    }
+
+    fun registerMapParserSyntaxFail2(manager: SystemTestManager) {
+        manager.registerTest(FailedParserSyntax37())
+        manager.registerTest(FailedParserSyntax38())
+        manager.registerTest(FailedParserSyntax39())
+        manager.registerTest(FailedParserSyntax40())
+        manager.registerTest(FailedParserSyntax41())
+        manager.registerTest(FailedParserSyntax42())
+        manager.registerTest(FailedParserSyntax43())
+        manager.registerTest(FailedParserSyntax44())
+        manager.registerTest(FailedParserSyntax45())
+        manager.registerTest(FailedParserSyntax46())
+        manager.registerTest(FailedParserSyntax47())
+        manager.registerTest(FailedParserSyntax48())
+        manager.registerTest(FailedParserSyntax49())
+        manager.registerTest(FailedParserSyntax50())
+        manager.registerTest(FailedParserSyntax51())
+        manager.registerTest(FailedParserSyntax52())
+        manager.registerTest(FailedParserSyntax53())
+        manager.registerTest(FailedParserSyntax54())
+        manager.registerTest(FailedParserSyntax55())
+        manager.registerTest(FailedParserSyntax56())
+        manager.registerTest(FailedParserSyntax57())
+        manager.registerTest(FailedParserSyntax58())
+        manager.registerTest(FailedParserSyntax59())
+        manager.registerTest(FailedParserSyntax60())
+        manager.registerTest(FailedParserSyntax61())
+        manager.registerTest(FailedParserSyntax62())
+        manager.registerTest(FailedParserSyntax63())
+        manager.registerTest(FailedParserSyntax64())
+        manager.registerTest(FailedParserSyntax65())
+        manager.registerTest(FailedParserSyntax66())
+        manager.registerTest(FailedParserSyntax67())
+        manager.registerTest(FailedParserSyntax68())
+        manager.registerTest(FailedParserSyntax69())
+        manager.registerTest(FailedParserSyntax70())
+        manager.registerTest(FailedParserSyntax71())
+        manager.registerTest(FailedParserSyntax72())
+        manager.registerTest(FailedParserSyntax73())
+        manager.registerTest(FailedParserSyntax74())
+        manager.registerTest(FailedParserSyntax75())
+        manager.registerTest(FailedParserSyntax76())
     }
 }
+
+
+

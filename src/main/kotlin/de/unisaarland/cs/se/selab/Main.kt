@@ -11,8 +11,9 @@ fun main(args: Array<String>) {
     val map = argsMap["--map"] ?: argsMap["-m"] ?: return
     val assets = argsMap["--assets"] ?: argsMap["-a"] ?: return
     val scenario = argsMap["--scenario"] ?: argsMap["-s"] ?: return
-    val ticks = argsMap["--ticks"]?.toIntOrNull()
-    val out = argsMap["--out"]
+    val ticks = argsMap["--ticks"]?: argsMap["-s"] ?: return
+    val maxticks = ticks.toIntOrNull()
+    val out = argsMap["--out"]?: argsMap["-o"]
     if (out != null) {
         Logger.setPrintWriter(FileOutputStream(out))
     } else {
@@ -21,7 +22,7 @@ fun main(args: Array<String>) {
     val f1 = File(map)
     val f2 = File(assets)
     val f3 = File(scenario)
-    Simulation.maximumTicks = ticks
+    Simulation.maximumTicks = maxticks
     if (!Simulation.initialize(f1,f2,f3)) {
         return
     }
