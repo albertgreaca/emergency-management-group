@@ -3,30 +3,10 @@ package de.unisaarland.cs.se.selab
 /** Class for the Events
  */
 abstract class Event(
-    private val id: Int,
-    private var tick: Int,
-    private var duration: Int
+     val id: Int,
+     var tick: Int,
+     var duration: Int
 ) {
-    /**
-     * @return Id
-     */
-    fun getId(): Int {
-        return id
-    }
-
-    /**
-     * @return tick where event starts
-     */
-    fun getTick(): Int {
-        return tick
-    }
-
-    /**
-     * @return duration of the event
-     */
-    fun getDuration(): Int {
-        return duration
-    }
 
     /**
      * setter for the starting tick

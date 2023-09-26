@@ -1,30 +1,31 @@
 package de.unisaarland.cs.se.selab
 class RushHourEvent(
-    private val id: Int,
-    private var tick: Int,
-    private var duration: Int,
-    private var roads: MutableList<Road>,
-    private val factor: Int
+     val id: Int,
+     var tick: Int,
+     var duration: Int,
+     var roads: MutableList<Road>,
+     val factor: Int
 ) : Event(
     id,
     tick,
     duration
 ) {
     fun executeStart(): Boolean{
+        for(road in roads){
+            if()
+        }
 
     }
 
-    fun updateEvent(): Boolean{
-        if(tick+duration == Simulation.getCurrentTick()){
+    override fun updateEvent(): Boolean{
+        if(tick+duration == Simulation.getCurrentTick()) {
             EMCC.getActiveEvents().remove(this)
-            for(road in roads){
-                road.gete
+            for (road in roads) {
+                road.getev
             }
             Logger.logEventEnded(id)
             return true
         }
-        else{
-
-        }
+        return false
     }
 }
