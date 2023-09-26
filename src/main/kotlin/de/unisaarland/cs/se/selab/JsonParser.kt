@@ -61,7 +61,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             when (baseType) {
                 "FIRE_STATION" -> {
                     Base(id, staffs, location, mutableListOf())
-                    // TODO: add Department
+                    // add Department
                 }
 
                 "POLICE_STATION" -> {
@@ -71,7 +71,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 "HOSPITAL" -> {
                     val doctor = currBase.getInt("doctors") // create Hospital}
                 }
-            } // TODO: add Department
+            } // add Department
         }
         return true
     }
@@ -111,49 +111,75 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         for (i in 0 until eventArray.length()) {
             val currEvent = eventArray.getJSONObject(i)
             val id = currEvent.getInt(id)
-            if (id < 0) res = false
             val type = currEvent.getString("type")
             val tick = currEvent.getInt("tick")
-            if (tick < 0) res = false
             val duration = currEvent.getInt("duration")
-            if (duration < 1) res = false
+            // if (duration < 1 || id < 0 || tick < 0) res = false
             when (type) {
-                "VEHICLE_UNAVAILABLE" -> {
-                    val vehicleId = currEvent.getInt("vehicleID")
-                    if (vehicleId < 0) res = false
-                    // need list of bases
-                }
-                "ROAD_CLOSURE" -> {
-                    val sourceVertex = currEvent.getInt(source)
-                    val targetVertex = currEvent.getInt(target)
-                    if (sourceVertex < 0 || targetVertex < 0) res = false
-                    // find road via a new find function with source and target
-                }
-                "CONSTRUCTION_SITE" -> {
-                    val sourceVertex = currEvent.getInt(source)
-                    val targetVertex = currEvent.getInt(target)
-                    if (sourceVertex < 0 || targetVertex < 0) res = false
-                    // find road via a new find function with source and target
-                    val oneWayStreet = currEvent.getBoolean("oneWayStreet")
-                    val factor = currEvent.getInt("factor")
-                    if (factor < 1) res = false
-                    // create
-                }
-                "TRAFFIC_JAM" -> {
-                    val factor = currEvent.getInt("factor")
-                    if (factor < 1) res = false
-                    val sourceVertex = currEvent.getInt(source)
-                    val targetVertex = currEvent.getInt(target)
-                    if (sourceVertex < 0 || targetVertex < 0) res = false
-                    // find Road
-                    // create
-                }
-                "RUSH_HOUR" -> {
-                    val roadTypes: MutableList<VehicleType> = currEvent.get("roadTypes") as MutableList<VehicleType>
-                    // getRoads from GraphMap with types
-                }
+                "VEHICLE_UNAVAILABLE" -> res = res && parseVehicleUnavailableEvent(currEvent, id, tick, duration)
+                "ROAD_CLOSURE" -> res = res && parseRoadClosureEvent(currEvent, id, tick, duration)
+                "CONSTRUCTION_SITE" -> res = res && parseConstructionSite(currEvent, id, tick, duration)
+                "TRAFFIC_JAM" -> res = res && parseTrafficJAM(currEvent, id, tick, duration)
+                "RUSH_HOUR" -> res = res && parseRushHour(currEvent, id, tick, duration)
             }
         }
+        res = res && true
+        return res
+    }
+
+    private fun parseVehicleUnavailableEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
+        var res = true
+        val vehicleId = currEvent.getInt("vehicleID")
+        if (vehicleId < 0 || duration < 1 || id < 0) res = false
+        if (tick < 0) res = false
+        // need list of bases
+        res = res && true
+        return res
+    }
+
+    private fun parseRoadClosureEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
+        var res = true
+        val sourceVertex = currEvent.getInt(source)
+        val targetVertex = currEvent.getInt(target)
+        if (sourceVertex < 0 || targetVertex < 0 || duration < 1) res = false
+        if (id < 0 || tick < 0) res = false
+        // find road via a new find function with source and target
+        res = res && true
+        return res
+    }
+
+    private fun parseConstructionSite(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
+        var res = true
+        val sourceVertex = currEvent.getInt(source)
+        val targetVertex = currEvent.getInt(target)
+        // find road via a new find function with source and target
+        val oneWayStreet = currEvent.getBoolean("oneWayStreet")
+        val factor = currEvent.getInt("factor")
+        if (factor < 1 || sourceVertex < 0 || targetVertex < 0) res = false
+        if (duration < 1 || id < 0 || tick < 0) res = false
+        // create
+        res = res && true
+        return res
+    }
+
+    private fun parseTrafficJAM(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
+        var res = true
+        val factor = currEvent.getInt("factor")
+        val sourceVertex = currEvent.getInt(source)
+        val targetVertex = currEvent.getInt(target)
+        if (sourceVertex < 0 || targetVertex < 0 || factor < 1) res = false
+        if (duration < 1 || id < 0 || tick < 0) res = false
+        // find Road
+        // create
+        res = res && true
+        return res
+    }
+
+    private fun parseRushHour(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
+        var res = true
+        val roadTypes: MutableList<VehicleType> = currEvent.get("roadTypes") as MutableList<VehicleType>
+        if (duration < 1 || id < 0 || tick < 0) return false
+        // getRoads from GraphMap with types
         res = res && true
         return res
     }
