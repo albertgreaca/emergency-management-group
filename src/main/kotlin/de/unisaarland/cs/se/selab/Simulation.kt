@@ -2,29 +2,39 @@ package de.unisaarland.cs.se.selab
 
 import java.io.File
 
-class Simulation(maxTick: Int) {
+object Simulation() {
 
     private var currentTick: Int = 0
-    private val maximumTicks: Int = maxTick
+    private val maximumTicks: Int? = null
     private val emergencies: MutableList<Emergency> = mutableListOf()
     private val events: MutableList<Event> = mutableListOf()
     private val map = GraphMap()
     private val statistics = Statistics()
 
-    fun initialize(
+    fun initialize( //init boolean
         mapConfig: File, baseVehicleConfig: File,
         emergEventConfig: File
-    ) {
+    ): Boolean {
         val mapParser: MapParser = MapParser(map, mapConfig)
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
+        if (!mapParsed) {
+            return false
+        }
         val jsonParser: JsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
         val vehiclesParsed: Boolean = jsonParser.parseVehicles()
         val basesParsed: Boolean = jsonParser.parseBases()
         Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
+        if (!(vehiclesParsed && basesParsed)) {
+            return false
+        }
         val eventsParsed: Boolean = jsonParser.parseEvents()
-        val emergenciesParsed: Boolean = jsonParser.parseEmergencies()
+        val emergenciesParsed: Boolean = jsonParser.parseEmergency()
         Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
+        if (!(eventsParsed && emergenciesParsed)) {
+            return false
+        }
+        return true
 
 
     }
@@ -37,7 +47,7 @@ class Simulation(maxTick: Int) {
         currentTick += 1
     }
 
-    fun getMaxTicks(): Int {
+    fun getMaxTicks(): Int? {
         return maximumTicks
     }
 
@@ -99,4 +109,9 @@ class Simulation(maxTick: Int) {
         simulateUpdatePhase()
         finalEvaluation()
     }
+
+    fun simulateSimulation() {
+        if()
+    }
 }
+
