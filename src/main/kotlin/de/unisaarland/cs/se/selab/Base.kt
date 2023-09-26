@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab
 
+
 /**
  * Bases of the departments
  */
@@ -10,7 +11,7 @@ class Base(
     private val vehicles: MutableList<Vehicle>
 ) {
 
-    private val nextBases: MutableList<Base> = mutableListOf()
+    private var nextBases: MutableList<Base> = mutableListOf()
 
     /**
      * @return ID of Base
@@ -73,8 +74,17 @@ class Base(
         var criminals = r.getCriminalAmount()
         var patients = r.getPatientAmount()
         var neededVehiclesCopy = neededVehicles.toMutableList()
-
+        var availableBaseVehicles = this.getVehicles().filter{it.isAvailable()}
         // TODO: implement
+        for (vt in neededVehicles) {
+            when(vt) {
+                VehicleType.FIRE_TRUCK_LADDER -> TODO(wtf)
+                VehicleType.FIRE_TRUCK_WATER -> TODO(water wtf)
+                VehicleType.POLICE_CAR -> TODO()
+                VehicleType.AMBULANCE -> TODO()
+                else ->
+            }
+        }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
@@ -93,7 +103,9 @@ class Base(
      */
     fun calculateNextBases() {
         // TODO: implement
-
+        val nextcalculatedBases = Dijkstra.dijkstraRequest(this.getLocation().getId())
+        this.nextBases = nextcalculatedBases
+        return
         // recalculates the distances of the other bases to this base
         // updates 'nextBases' with new distances and sorts the list
         // this calculation has to be made once per tick since new events might change the distances of the next bases
@@ -103,8 +115,13 @@ class Base(
      * @return the next Base
      */
     fun getNextBase(b: Base): Base? {
-        // TODO: implement
-        return null
+        if (this.getNextBases().isEmpty()) {
+            return null
+        } else {
+            val returnBase = this.getNextBases().get(0)
+            this.getNextBases().removeAt(0)
+            return returnBase
+        }
     }
 
     /**
