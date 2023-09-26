@@ -68,13 +68,15 @@ class Base(
      * @return the stuff that is still missing
      */
     fun requestResources(em: Emergency): Resource {
-        val r = em.getResources()
+        val r = em.resources
         val neededVehicles = r.getVehicles()
         var water = r.getWaterAmount()
         var criminals = r.getCriminalAmount()
         var patients = r.getPatientAmount()
         var neededVehiclesCopy = neededVehicles.toMutableList()
-        var availableBaseVehicles = this.getVehicles().filter{it.isAvailable()}
+        var availableBaseVehicles = this.vehicles.filter{it.isAvailable()}.toMutableList()
+        var vehiclesToallocate = mutableListOf<Vehicle>()
+        var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO: implement
         for (vt in neededVehicles) {
             when(vt) {
@@ -82,10 +84,36 @@ class Base(
                 VehicleType.FIRE_TRUCK_WATER -> TODO(water wtf)
                 VehicleType.POLICE_CAR -> TODO()
                 VehicleType.AMBULANCE -> TODO()
-                else ->
+                else -> {
+                    var speicher = helperVehiclecompare(vt, availableBaseVehicles)
+                    var bool = speicher.first
+                    if (bool) {
+                        var vehic = speicher.second
+                        if (vehic != null) {
+                            vehiclesToallocate.add(vehic)
+                            availableBaseVehicles.remove(vehic)
+                        } else {
+                           vehicTypestoRequest.add(vt)
+                        }
+
+                    }
+                }
             }
         }
+        // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
         return Resource(mutableListOf(), 0, 0, 0, 0)
+    }
+
+    /**
+     * helper function to check available vehicles for corresponding type
+     */
+    private fun helperVehiclecompare(v: VehicleType, VehicleList: MutableList<Vehicle>): Pair<Boolean, Vehicle?> {
+        for (vehicle in VehicleList) {
+            if (vehicle.vehicleType == v) {
+                return Pair(true, vehicle)
+            }
+        }
+        return Pair(false, null)
     }
 
     /**
