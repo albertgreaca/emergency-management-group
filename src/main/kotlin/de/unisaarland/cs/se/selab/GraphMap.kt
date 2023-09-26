@@ -20,7 +20,7 @@ class GraphMap (var adjacencyList: MutableList<MutableMap<Vertex,Road>> = mutabl
         return vertexList.firstOrNull {it.getId() == id}
     }
     fun getRoad(villageName: String, roadName: String): Road? {
-        return roadList.firstOrNull {it.getVillage() == villageName && it.getName() == roadName}
+        return roadList.firstOrNull {it.village == villageName && it.name == roadName}
     }
     fun getRoad(start: Vertex, end: Vertex): Road? {
         return adjacencyList[start.id].get(end)
