@@ -132,7 +132,21 @@ object EMCC {
      * updates starting and ending events
      */
     fun updateEvents(): Boolean {
-        TODO("not implemented")
+        var eventsChanged = false
+        // first handle the ending events
+        for (event in activeEvents) {
+            if (event.tick + event.duration == Simulation.currentTick) {
+                removeActiveEvent(event)
+                event.updateEvent()
+                eventsChanged = true
+            }
+        }
+        // then handle the starting events
+        for (event in startingEvents) {
+            if (event.executeStart())
+                eventsChanged = true
+        }
+        return eventsChanged
     }
 
     /**
