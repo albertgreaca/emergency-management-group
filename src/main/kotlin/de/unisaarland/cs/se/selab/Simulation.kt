@@ -18,6 +18,14 @@ class Simulation(maxTick: Int) {
         val mapParser: MapParser = MapParser(map, mapConfig)
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
+        val jsonParser: JsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
+        val vehiclesParsed: Boolean = jsonParser.parseVehicles()
+        val basesParsed: Boolean = jsonParser.parseBases()
+        Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
+        val eventsParsed: Boolean = jsonParser.parseEvents()
+        val emergenciesParsed: Boolean = jsonParser.parseEmergencies()
+        Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
+
 
     }
 
@@ -25,7 +33,7 @@ class Simulation(maxTick: Int) {
         return currentTick
     }
 
-    fun increaseCurrentTick() {
+    private fun increaseCurrentTick() {
         currentTick += 1
     }
 
@@ -46,7 +54,7 @@ class Simulation(maxTick: Int) {
     }
 
     // add starting emergencies to EMCC and notify its observers
-    fun simulateEmergencyPhase() {
+    private fun simulateEmergencyPhase() {
         for (em in emergencies) {
             if (em.getTick() == currentTick)
                 EMCC.addStartingEmergency(em)
@@ -55,18 +63,18 @@ class Simulation(maxTick: Int) {
     }
 
     // order emergencies by severity then id, allocate assets for each one
-    fun simulatePlanningPhase() {
+    private fun simulatePlanningPhase() {
         EMCC.orderEmergencies()
         EMCC.allocateAssets()
     }
 
-    fun simulateRequestPhase() {
+    private fun simulateRequestPhase() {
         EMCC.processRequests()
     }
 
-    fun simulateUpdatePhase() {
-     //   EMCC.updateAssets()
-     //   EMCC.updateEmergencies()
+    private fun simulateUpdatePhase() {
+        //   EMCC.updateAssets()
+        //   EMCC.updateEmergencies()
         val checkEventsChange: Boolean = EMCC.updateEvents()
         if (checkEventsChange) {
             EMCC.rerouteVehicles()
@@ -74,7 +82,7 @@ class Simulation(maxTick: Int) {
         increaseCurrentTick()
     }
 
-    fun finalEvaluation() {
+    private fun finalEvaluation() {
         val rerouted: Int = statistics.getRerouted()
         val receivedEms: Int = statistics.getReceived()
         val ongoingEms: Int = statistics.getOngoing()
