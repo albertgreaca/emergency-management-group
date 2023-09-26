@@ -48,7 +48,7 @@ object Dijkstra {
         return null
     }
 
-    fun dijkstraRequest(startingNode: Int): List<Base> {
+    fun dijkstraRequest(startingNode: Int): MutableList<Base> {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
         var dist: IntArray = IntArray(n)
@@ -87,21 +87,21 @@ object Dijkstra {
     fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position? {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
-        var dist: Array<Position> = Array<Position>(n) {index -> Position(mutableListOf<Road>(),0,0,null, 0, Int.MAX_VALUE, false)}
+        var dist: Array<Position> = Array<Position>(n) {index -> Position(mutableListOf<Road>(),mutableListOf<Vertex>(),0,null, 0,0, false)}
         var i: Int
         for (i in 0..n - 1) {
-            dist[i].setDistance(Int.MAX_VALUE)
+            dist[i].distance = Int.MAX_VALUE
         }
-        dist[startingNode].setDistance(Int.MAX_VALUE)
+        dist[startingNode].distance = 0
         var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
-            pq.add(Pair(i, dist[i].getDistance()))
+            pq.add(Pair(i, dist[i].distance))
         }
         var ans: MutableList<Base> = mutableListOf()
         while (!pq.isEmpty()) {
             var cur: Pair<Int, Int> = pq.remove()
-            if (dist[cur.first].getDistance() != cur.second) {
+            if (dist[cur.first].distance != cur.second) {
                 continue
             }
             var v: Vertex = gm.getVertex(cur.first) ?: continue
@@ -109,12 +109,14 @@ object Dijkstra {
                 return dist[cur.first]
             }
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
-            for ((node, edge) in nex) {
-                if (dist[node.id].distance > dist[cur.first].distance + edge.getActualWeight() || ) {
-                    dist[node.id] = dist[cur.first] + edge.getActualWeight()
-                    pq.add(Pair(node.getId(), dist[node.getId()]))
+            for ((node, edge) in nex)
+                if (edge.height <= height) {
+                    var newp: Position
+                    if (dist[node.id].distance > newp.distance || (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))) {
+                        dist[node.id] = newp
+                        pq.add(Pair(node.id, newp.distance))
+                    }
                 }
-            }
         }
         return null
     }
