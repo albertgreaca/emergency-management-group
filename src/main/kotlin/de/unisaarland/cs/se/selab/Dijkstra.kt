@@ -111,7 +111,49 @@ object Dijkstra {
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex)
                 if (edge.height <= height) {
-                    var newp: Position
+                    var newp: Position = Position(mutableListOf<Road>(),mutableListOf<Vertex>(),0,null, 0,0, false)
+                    newp.distance = dist[cur.first].distance + edge.getActualWeight()
+                    newp.vertexList = dist[cur.first].vertexList.toMutableList()
+                    newp.vertexList.add(v)
+                    if (dist[node.id].distance > newp.distance || (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))) {
+                        dist[node.id] = newp
+                        pq.add(Pair(node.id, newp.distance))
+                    }
+                }
+        }
+        return null
+    }
+    fun dijkstraBackToBase(startingNode: Int, endNode: Int, height: Int): Position? {
+        var gm: GraphMap = gm2!!
+        var n: Int = gm.vertexList.size
+        var dist: Array<Position> = Array<Position>(n) {index -> Position(mutableListOf<Road>(),mutableListOf<Vertex>(),0,null, 0,0, false)}
+        var i: Int
+        for (i in 0..n - 1) {
+            dist[i].distance = Int.MAX_VALUE
+        }
+        dist[startingNode].distance = 0
+        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        for (i in 0..n - 1) {
+            pq.add(Pair(i, dist[i].distance))
+        }
+        var ans: MutableList<Base> = mutableListOf()
+        while (!pq.isEmpty()) {
+            var cur: Pair<Int, Int> = pq.remove()
+            if (dist[cur.first].distance != cur.second) {
+                continue
+            }
+            var v: Vertex = gm.getVertex(cur.first) ?: continue
+            if (endNode == v.id) {
+                return dist[cur.first]
+            }
+            val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
+            for ((node, edge) in nex)
+                if (edge.height <= height) {
+                    var newp: Position = Position(mutableListOf<Road>(),mutableListOf<Vertex>(),0,null, 0,0, false)
+                    newp.distance = dist[cur.first].distance + edge.getActualWeight()
+                    newp.vertexList = dist[cur.first].vertexList.toMutableList()
+                    newp.vertexList.add(v)
                     if (dist[node.id].distance > newp.distance || (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))) {
                         dist[node.id] = newp
                         pq.add(Pair(node.id, newp.distance))
