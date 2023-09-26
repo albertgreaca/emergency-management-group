@@ -5,7 +5,7 @@ import java.io.File
 object Simulation {
 
     var currentTick: Int = 0
-    val maximumTicks: Int? = null
+    var maximumTicks: Int? = null
     val emergencies: MutableList<Emergency> = mutableListOf()
     val events: MutableList<Event> = mutableListOf()
     val map = GraphMap()
@@ -23,7 +23,7 @@ object Simulation {
             return false
         }
         val jsonParser: JsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
-        val vehiclesParsed: Boolean = jsonParser.parseVehicles() //initialize vehicles and beses and check for validity
+        val vehiclesParsed: Boolean = jsonParser.parseVehicles() //initialize vehicles and bases and check for validity
         val basesParsed: Boolean = jsonParser.parseBases()
         Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
         if (!(vehiclesParsed && basesParsed)) {
@@ -72,8 +72,8 @@ object Simulation {
     }
 
     private fun simulateUpdatePhase() {
-        //   EMCC.updateAssets()
-        //   EMCC.updateEmergencies()
+        EMCC.updateAssets()
+        EMCC.updateEmergencies()
         val checkEventsChange: Boolean = EMCC.updateEvents()
         if (checkEventsChange) {
             EMCC.rerouteVehicles()
