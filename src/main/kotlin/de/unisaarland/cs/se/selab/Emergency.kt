@@ -10,11 +10,12 @@ class Emergency(
     val severity: Int,
     val handleTime: Int,
     val maxDuration: Int,
-    var resources: Resource,
+    var resources: Resource
 ) {
 
     var base: Base? = null
     val assignedVehicles: MutableList<Vehicle> = mutableListOf()
+    val alreadyHandled: Int = 0
     var handlingStarted: Boolean = false
     var resolved: Boolean = false
 

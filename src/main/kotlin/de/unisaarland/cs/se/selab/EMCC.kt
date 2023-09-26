@@ -129,6 +129,28 @@ object EMCC {
     }
 
     /**
+     * moves all driving assets
+     */
+    fun updateAssets() {
+        for (em in Simulation.emergencies) {
+            for (vec in em.assignedVehicles) {
+                if (vec.position != null && vec.position!!.arrivalTicks != 0)
+                    vec.move()
+            }
+        }
+    }
+
+    /**
+     * updates the state of all emergencies
+     */
+    fun updateEmergencies() {
+        // update all emergencies whose handling started (neededResources are empty and all assets have arrival time of 0)
+        // update all emergencies that were resolved ()
+        // update all emergencies that failed (tick + maxDuration == Simulation.currentTick)
+        TODO()
+    }
+
+    /**
      * updates starting and ending events
      */
     fun updateEvents(): Boolean {
@@ -137,7 +159,7 @@ object EMCC {
         for (event in activeEvents) {
             if (event.tick + event.duration == Simulation.currentTick) {
                 removeActiveEvent(event)
-                event.updateEvent()
+                event.stopEvent()
                 eventsChanged = true
             }
         }
