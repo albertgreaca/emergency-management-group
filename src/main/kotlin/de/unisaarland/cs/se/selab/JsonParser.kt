@@ -12,39 +12,64 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
      * function to parse the Vehicles
      */
     fun parseVehicles(): Boolean {
+        var res = true
         val jsonObject = JSONObject(file1.readText())
         val vehiclesObject = jsonObject.getJSONArray("Vehicles")
         for (i in 0 until vehiclesObject.length()) {
             val currVehicle = vehiclesObject.getJSONObject(i)
             val id = currVehicle.getInt(Companion.ID)
-            if (id < 0) return false
             val baseId = currVehicle.getInt("baseID")
             val vehicleType: VehicleType = currVehicle.get("VehicleType") as VehicleType
             val vehicleHeight = currVehicle.getInt("vehicleHeight")
-            val staffCapacity = currVehicle.getInt("staffCapacity")
+            val staff = currVehicle.getInt("staffCapacity")
             when (vehicleType) {
-                VehicleType.POLICE_CAR -> {
-                    val crimCapacity = currVehicle.getInt("criminalCapacity")
-                    // PoliceCar(id, baseId, staffCapacity, vehicleHeight, null, crimCapacity, 0)
-                } // add to BAse and findBase is needed
-                VehicleType.FIRE_TRUCK_WATER -> {
-                    val waterCapacity = currVehicle.getInt("waterCapacity")
-                    // FireTruckWater(id, baseId, staffCapacity, vehicleHeight, null, waterCapacity, waterCapacity)
-                }
-                // create FireTruckWater
-                VehicleType.FIRE_TRUCK_LADDER -> {
-                    val ladderLength = currVehicle.getInt("ladderLength") == LADDER_REFERENCE
-                    //   FireTruckLadder(id, baseId, staffCapacity, vehicleHeight, null, ladderLength)
-                } // create FireTruck
-                VehicleType.AMBULANCE -> {
-                    // Ambulance(id, baseId, staffCapacity, vehicleHeight, null, false)
-                } else -> {
+                VehicleType.POLICE_CAR -> res = res && parsePoliceCar(currVehicle, id, baseId, staff)
+                VehicleType.FIRE_TRUCK_WATER -> res = res && parseFireTruckWater(currVehicle, id, baseId, staff)
+                VehicleType.FIRE_TRUCK_LADDER -> res = res && parseFireTruckLadder(currVehicle, id, baseId, staff)
+                VehicleType.AMBULANCE -> res = res && parseAmbulance(currVehicle, id, baseId, staff)
+                else -> {
                     // Vehicle(id, vehicleType, baseId, staffCapacity, vehicleHeight, null)
                 }
             }
-            // create Vehicle
         }
-        return true
+        // res = res && validateVehicles(newVehicle)
+        Logger.logInitInfo(file1.name, res)
+        return res
+    }
+
+    private fun parseAmbulance(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
+        var res = true
+        if (id < 0 || baseId < 0 || staffs < 0) res = false
+        // Ambulance(id, baseId, staffCapacity, vehicleHeight, null, false)
+        return res
+    }
+
+    private fun parseFireTruckLadder(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
+        var res = true
+        if (id < 0 || baseId < 0 || staffs < 0) res = false
+        val ladderLength = currVehicle.getInt("ladderLength")
+        if (ladderLength < LADDER_REFERENCE || ladderLength > LADDER_REFERENCE_BIG) res = false
+        val ladder40 = ladderLength == LADDER_REFERENCE
+        //   FireTruckLadder(id, baseId, staffCapacity, vehicleHeight, null, ladder40)
+        return res
+    }
+
+    private fun parseFireTruckWater(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
+        var res = true
+        if (id < 0 || baseId < 0 || staffs < 0) res = false
+        val waterCapacity = currVehicle.getInt("waterCapacity")
+        if (waterCapacity != WATER_LITTLE && waterCapacity != WATER_MIDDLE && waterCapacity != WATER_BIG) res = false
+        // FireTruckWater(id, baseId, staffCapacity, vehicleHeight, null, waterCapacity, waterCapacity)
+        return res
+    }
+    private fun parsePoliceCar(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
+        var res = true
+        val crimCapacity = currVehicle.getInt("criminalCapacity")
+        if (id < 0 || baseId < 0 || staffs < 0) res = false
+        if (crimCapacity < 1 || crimCapacity > MAX_CRIM_CAPACITY) res = false
+        // PoliceCar(id, baseId, staffCapacity, vehicleHeight, null, crimCapacity, 0)
+        // add to BAse and findBase is needed
+        return res
     }
 
     /**
@@ -110,9 +135,10 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             if (handleTime < 1) res = false
             val maxDuration = currEmer.getInt("maxDuration")
             if (maxDuration < 2) res = false
+            // resources tofo
             val resources = Resource(mutableListOf(), 0, 0, 0, 0) // resourceFactory
             val newEmergency = Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources)
-            Simulation().addEmergency(newEmergency)
+            Simulation.addEmergency(newEmergency)
         }
         res = res && true
         return res
@@ -131,7 +157,6 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val type = currEvent.getString("type")
             val tick = currEvent.getInt("tick")
             val duration = currEvent.getInt("duration")
-            // if (duration < 1 || id < 0 || tick < 0) res = false
             when (type) {
                 "VEHICLE_UNAVAILABLE" -> res = res && parseVehicleUnavailableEvent(currEvent, id, tick, duration)
                 "ROAD_CLOSURE" -> res = res && parseRoadClosureEvent(currEvent, id, tick, duration)
@@ -203,8 +228,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
 
     companion object {
         const val LADDER_REFERENCE = 40 // because magic number
+        const val LADDER_REFERENCE_BIG = 70
         const val SOURCE = "source" // because duplicates
         const val TARGET = "target" // because duplicates
         const val ID = "id" // because duplications for keywords
+        const val WATER_LITTLE = 600
+        const val WATER_MIDDLE = 1200
+        const val WATER_BIG = 2400
+        const val MAX_CRIM_CAPACITY = 4
     }
 }
