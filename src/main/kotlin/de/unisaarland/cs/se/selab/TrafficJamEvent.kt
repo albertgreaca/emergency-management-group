@@ -1,32 +1,29 @@
 package de.unisaarland.cs.se.selab
 
-class TrafficJamEvent  ( val id: Int,
- var tick: Int,
- var duration: Int,
- var roads: MutableList<Road>,
- val factor: Int
+class TrafficJamEvent  (
+    override val id: Int,
+    override var tick: Int,
+    override var duration: Int,
+    var road: Road,
+    val factor: Int
 ) : Event(
 id,
 tick,
 duration
 ) {
-    fun executeStart(): Boolean{
-        for(road in roads){
-            if()
-        }
-
+    override fun executeStart(): Boolean {
+        if (road.eventList.isEmpty()) {
+            road.addEvent(this)
+           EMCC.moveFromStartingToActive(this)
+            Logger.logEventTriggered(id)
+            return true
+       }
+        tick++
+        return false
     }
 
-    override fun updateEvent(): Boolean{
-            if(tick+duration == Simulation.getCurrentTick()){
-                EMCC.getActiveEvents().remove(this)
-                for(road in roads){
-                    road.getev
-                }
-                Logger.logEventEnded(id)
-                return true
-            }
-    return false
+    override fun stopEvent() {
+        road.eventList.remove(this)
+        Logger.logEventEnded(id)
     }
-
 }

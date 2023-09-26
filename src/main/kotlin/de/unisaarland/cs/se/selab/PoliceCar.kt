@@ -3,13 +3,13 @@ package de.unisaarland.cs.se.selab
 /** Class for the Police Car
  */
 class PoliceCar(
-    private val id: Int,
-    private val base: Base,
-    private val staffCapacity: Int,
-    private val vehicleHeight: Int,
-    private var position: Position? = null,
-    private val criminalCapacity: Int,
-    private var transportedCriminals: Int
+    override val id: Int,
+    override val base: Base,
+    override val staffCapacity: Int,
+    override val vehicleHeight: Int,
+    override var position: Position? = null,
+    val criminalCapacity: Int,
+    var transportedCriminals: Int
 ) : Vehicle(
     id,
     VehicleType.POLICE_CAR,

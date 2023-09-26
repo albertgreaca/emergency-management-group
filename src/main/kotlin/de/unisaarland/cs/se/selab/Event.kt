@@ -3,9 +3,9 @@ package de.unisaarland.cs.se.selab
 /** Class for the Events
  */
 abstract class Event(
-     val id: Int,
-     var tick: Int,
-     var duration: Int
+    open val id: Int,
+    open var tick: Int,
+    open var duration: Int
 ) {
 
     /**
@@ -36,5 +36,5 @@ abstract class Event(
      *updates state of event if it already had started
      * returns true if event could be updated
      */
-    abstract fun updateEvent(): Boolean
+    abstract fun stopEvent()
 }

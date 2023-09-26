@@ -3,17 +3,17 @@ package de.unisaarland.cs.se.selab
 /** Class for all Vehicles
  */
 open class Vehicle(
-    private val id: Int,
-    private val vehicleType: VehicleType,
-    private val base: Base,
-    private val staffCapacity: Int,
-    private val vehicleHeight: Int,
-    private var position: Position? = null
+    open val id: Int,
+    open val vehicleType: VehicleType,
+    open val base: Base,
+    open val staffCapacity: Int,
+    open val vehicleHeight: Int,
+    open var position: Position? = null
 
 ) {
-    private var available: Boolean = true
-    private var baseWaitingTicks: Int = 0
-    private var targetEmergency: Emergency? = null
+    var available: Boolean = true
+    var baseWaitingTicks: Int = 0
+    var targetEmergency: Emergency? = null
 
     /**
      * getter for the id
@@ -115,7 +115,7 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (getPosition()!!.getArrivalTicks() == 0) {
+        if (getPosition()!!.arrivalTicks == 0) {
             return false
         }
         return true
@@ -129,7 +129,7 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (getPosition()!!.getArrivalTicks() == 0) {
+        if (getPosition()!!.arrivalTicks == 0) {
             return false
         }
         if (targetEmergency == null || em.getSeverity() < targetEmergency!!.getSeverity()) {
