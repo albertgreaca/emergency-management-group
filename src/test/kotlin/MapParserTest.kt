@@ -15,8 +15,8 @@ class MapParserTest {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapvalid1.dot"))
         assertTrue(parser.parseMap())
-        assertTrue(graphMap.getVertexList().size == 2)
-        assertTrue(graphMap.getRoadList().size == 2)
+        assertTrue(graphMap.vertexList.size == 2)
+        assertTrue(graphMap.roadList.size == 2)
     }
 
     /**
@@ -27,8 +27,8 @@ class MapParserTest {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapvalid2.dot"))
         assertTrue(parser.parseMap())
-        assertTrue(graphMap.getVertexList().size == 7)
-        assertTrue(graphMap.getRoadList().size == 6)
+        assertTrue(graphMap.vertexList.size == 7)
+        assertTrue(graphMap.roadList.size == 6)
     }
 
     @Test
@@ -36,8 +36,8 @@ class MapParserTest {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapvalid3.dot"))
         assertTrue(parser.parseMap())
-        assertTrue(graphMap.getVertexList().size == 7)
-        assertTrue(graphMap.getRoadList().size == 6)
+        assertTrue(graphMap.vertexList.size == 7)
+        assertTrue(graphMap.roadList.size == 6)
     }
 
     /**

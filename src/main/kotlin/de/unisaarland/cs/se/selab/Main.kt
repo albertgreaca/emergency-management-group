@@ -18,14 +18,12 @@ fun main(args: Array<String>) {
     } else {
         Logger.setPrintWriter(System.out)
     }
-    var f1 = File(map)
-    var f2 = File(assets)
-    var f3 = File(scenario)
-    val s = Simulation(ticks)
-    if(!s.initialize(File(map),File(assets),File(scenario))) {
-       return
+    val f1 = File(map)
+    val f2 = File(assets)
+    val f3 = File(scenario)
+    Simulation.maximumTicks = ticks
+    if (!Simulation.initialize(f1,f2,f3)) {
+        return
     }
-    s.simulate()
-
-
+    Simulation.simulateSimulation()
 }
