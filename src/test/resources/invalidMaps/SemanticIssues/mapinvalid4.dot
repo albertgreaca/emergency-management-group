@@ -1,0 +1,22 @@
+digraph Test {
+0;
+1;
+2;
+3;
+4;
+5;
+6;
+7;
+8;
+9;
+10;
+0->1[village = Saarbruecken; name = Campus; heightLimit = 5; weight = 3; primaryType = sideStreet; secondaryType = none;];
+1->2[village = Saarbruecken; name = Teststrasse; heightLimit = 5; weight = 8; primaryType = sideStreet; secondaryType = none;];
+2->3[village = Saarbruecken; name = Wohnheim E; heightLimit = 5; weight = 11; primaryType = mainStreet; secondaryType = none;];
+3->4[village = Saarbruecken; name = E1.3; heightLimit = 5; weight = 8; primaryType = sideStreet; secondaryType = none;];
+4->5[village = Saarbruecken; name = E1.1; heightLimit = 5; weight = 11; primaryType = sideStreet; secondaryType = none;];
+5->6[village = Saarbruecken; name = E1.2; heightLimit = 5; weight = 12; primaryType = mainStreet; secondaryType = none;];
+6->7[village = Saarbruecken; name = Bahnhofstrasse; heightLimit = 5; weight = 14; primaryType = sideStreet; secondaryType = none;];
+7->8[village = Saarbruecken; name = Dudoplatz; heightLimit = 5; weight = 3; primaryType = mainStreet; secondaryType = none;];
+8->9[village = Saarbruecken; name = Bussardstrasse; heightLimit = 5; weight = 20; primaryType = sideStreet; secondaryType = none;];
+}

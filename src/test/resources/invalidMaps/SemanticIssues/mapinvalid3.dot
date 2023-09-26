@@ -1,0 +1,9 @@
+digraph Test {
+0;
+1;
+2;
+3;
+0->1[village = Saarbruecken; name = Campus; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
+1->2[village = Saarbruecken; name = Campus; heightLimit = 7; weight = 7; primaryType = mainStreet; secondaryType = none;];
+2->3[vilage = Saarbruecken; name = Waldhaus; heightLimit = 3; weight = 8; primaryType = mainStreet; secondaryType = none;];
+}

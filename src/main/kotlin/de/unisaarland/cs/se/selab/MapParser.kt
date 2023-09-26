@@ -56,20 +56,21 @@ class MapParser(private val gm: GraphMap, private val file: File) {
      * @return Parsing Successful or not
      */
     private fun parseVertices(): Boolean {
-        var split = getNextSeparator()
-        var sep = split.second
+        var id = getNextInt() ?: return false
+        skipSpaces(false)
+        var sep = chars[charcounter]
+        charcounter++
         while (sep == ';') {
-            val id = split.first.toIntOrNull() ?: return false
             val vertex = Vertex(id, null)
             if (!validateVertex(vertex)) {
                 return false
             }
             gm.addVertex(vertex)
-            charcounter++
             skipSpaces(false)
-            split = getNextSeparator()
-            next = split
-            sep = split.second
+            id = getNextInt() ?: return false
+            skipSpaces(false)
+            sep = chars[charcounter]
+            charcounter++
         }
         return sep == '-'
     }
@@ -80,22 +81,22 @@ class MapParser(private val gm: GraphMap, private val file: File) {
      * @return Parsing Successful or not
      */
     private fun parseEdges(): Boolean {
-        var split = next
-        var sep = split.second
+        var start = getNextInt() ?: return false
+        skipSpaces(false)
+        var sep = chars[charcounter]
         while (sep == '-') {
-            val start = split.first.toIntOrNull() ?: return false
-            skipSpaces(false)
             if (chars[charcounter] != '-' || chars[charcounter + 1] != '>') {
                 return false
             }
             charcounter += 2
-            val end = getNextWord().toIntOrNull() ?: return false
-            if (!parseAttributes(start, end) || chars[charcounter] != ';') {
+            val end = getNextInt()
+            if (end == null || !parseAttributes(start, end) || chars[charcounter] != ';') {
                 return false
             }
             charcounter++
-            split = getNextSeparator()
-            sep = split.second
+            start = getNextInt() ?: return false
+            skipSpaces(false)
+            sep = chars[charcounter]
         }
         return sep == '}'
     }
@@ -146,7 +147,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         name: String,
     ): Boolean {
         var ret = true
-        val heightLimit = getNextWord().toIntOrNull() ?: return false
+        val heightLimit = getNextInt() ?: return false
         skipSpaces(false)
         ret = ret && chars[charcounter] == ';'
         charcounter++
@@ -154,7 +155,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         skipSpaces(false)
         ret = ret && chars[charcounter] == '='
         charcounter++
-        val weight = getNextWord().toIntOrNull() ?: return false
+        val weight = getNextInt() ?: return false
         skipSpaces(false)
         ret = ret && chars[charcounter] == ';'
         charcounter++
@@ -249,7 +250,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
     private fun getNextWord(): String {
         skipSpaces(false)
         var res = ""
-        while (!chars[charcounter].isWhitespace() && !isSeperator(chars[charcounter])
+        while (!chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])
         ) {
             res += chars[charcounter]
             charcounter++
@@ -257,20 +258,13 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         return res
     }
 
-    private fun isSeperator(c: Char): Boolean {
+    private fun isSeparator(c: Char): Boolean {
         return when (c) {
             '{', '}', '[', ']', ';', '-', '>', '=' -> true
             else -> {
                 false
             }
         }
-    }
-
-    private fun getNextSeparator(): Pair<String, Char> {
-        skipSpaces(false)
-        val next = getNextWord()
-        skipSpaces(false)
-        return Pair(next, chars[charcounter])
     }
 
     private fun skipSpaces(spaceNec: Boolean): Boolean {
@@ -316,5 +310,15 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         }
         skipSpaces(false)
         return true
+    }
+
+    private fun getNextInt(): Int? {
+        skipSpaces(false)
+        var res = ""
+        while (!chars[charcounter].isWhitespace() && (!isSeparator(chars[charcounter]) || chars[charcounter] == '-')) {
+            res += chars[charcounter]
+            charcounter++
+        }
+        return res.toIntOrNull()
     }
 }

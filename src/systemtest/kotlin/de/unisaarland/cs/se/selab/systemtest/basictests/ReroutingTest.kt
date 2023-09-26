@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class ReroutingTest: SystemTest() {
+class ReroutingTest : SystemTest() {
     override val name = "Rerouting"
 
     override val map = "mapFiles/rerouting_map.dot"
