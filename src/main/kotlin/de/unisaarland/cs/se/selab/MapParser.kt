@@ -18,6 +18,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
     private var charcounter = 0
     private val chars = file.readText().toCharArray()
     var next = Pair("", ' ')
+    var name = ""
 
     /**
      * Starting function for parsing
@@ -29,7 +30,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
             return false
         }
         skipSpaces(false)
-        val name = getNextWord()
+        name = getNextWord()
         if (!validateId(name)) {
             return false
         }
@@ -119,7 +120,7 @@ class MapParser(private val gm: GraphMap, private val file: File) {
         charcounter++
         skipSpaces(false)
         val village = getNextWord()
-        ret = ret && validateId(village)
+        ret = ret && validateId(village) && (village != name)
         skipSpaces(false)
         ret = ret && chars[charcounter] != ';'
         charcounter++
