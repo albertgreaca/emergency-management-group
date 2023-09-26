@@ -33,8 +33,7 @@ abstract class Event(
     abstract fun executeStart(): Boolean
 
     /**
-     *updates state of event if it already had started
-     * returns true if event could be updated
+     *stops events that ended
      */
     abstract fun stopEvent()
 }

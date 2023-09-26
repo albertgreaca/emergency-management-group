@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+/** Class for the road closure event
+ */
 class RoadClosureEvent(
     override val id: Int,
     override var tick: Int,
@@ -10,6 +12,11 @@ class RoadClosureEvent(
     tick,
     duration
 ) {
+    /**
+     * starts event for the first time
+     * return true if event could be started
+     * check if event can be applied on the road
+     */
     override fun executeStart(): Boolean {
         if (road.eventList.isEmpty()) {
             road.addEvent(this)
@@ -21,6 +28,11 @@ class RoadClosureEvent(
         return false
     }
 
+    /**
+     *stops the event
+     * removes event from the list of events in the road
+     * logs
+     */
     override fun stopEvent() {
         road.eventList.remove(this)
         Logger.logEventEnded(id)

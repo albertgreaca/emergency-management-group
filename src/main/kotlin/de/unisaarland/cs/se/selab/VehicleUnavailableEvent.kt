@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+/** Class for the vehicle unavailable event
+ */
 class VehicleUnavailableEvent(
     override val id: Int,
     override var tick: Int,
@@ -10,6 +12,10 @@ class VehicleUnavailableEvent(
     tick,
     duration
 ) {
+    /**
+     * starts event for the first time
+     * makes vehicle unavailable if already possible
+     */
     override fun executeStart(): Boolean {
         if (vehicle.available) {
             vehicle.available = false
@@ -21,6 +27,11 @@ class VehicleUnavailableEvent(
         return false
     }
 
+    /**
+     *stops the event
+     * makes vehicle available again
+     * logs
+     */
     override fun stopEvent() {
         vehicle.available = true
         Logger.logEventEnded(id)

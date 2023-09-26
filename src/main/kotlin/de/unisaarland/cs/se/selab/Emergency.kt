@@ -10,11 +10,13 @@ class Emergency(
     val severity: Int,
     val handleTime: Int,
     val maxDuration: Int,
-    var resources: Resource
+    var resources: Resource,
 ) {
 
     var base: Base? = null
     val assignedVehicles: MutableList<Vehicle> = mutableListOf()
+    var handlingStarted: Boolean = false
+    var resolved: Boolean = false
 
     /**
      * @return adds a vehicle to the vehicle list
@@ -34,6 +36,6 @@ class Emergency(
      * @return updates state of the emergency
      */
     fun updateEmergency() {
-        // TODO
+        TODO("implement")
     }
 }
