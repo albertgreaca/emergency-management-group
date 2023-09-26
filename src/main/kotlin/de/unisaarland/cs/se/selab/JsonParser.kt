@@ -41,7 +41,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseAmbulance(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
         var res = true
         if (id < 0 || baseId < 0 || staffs < 0) res = false
-       // Ambulance(id, baseId, staffs, vehicleHeight, null, false)
+        // Ambulance(id, baseId, staffs, vehicleHeight, null, false)
         return res
     }
 
@@ -199,8 +199,9 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
         val targetVertex = gm.getVertex(targetVertexId) ?: return false
         if (id < 0 || tick < 0) res = false
-        val road = gm.getRoad(sourceVertex, targetVertex)
-        val newEvent = RoadClosureEvent()
+        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
+        val newEvent = RoadClosureEvent(id, tick, duration, road)
+        Simulation.addEvent(newEvent)
         res = res && true
         return res
     }
@@ -210,28 +211,30 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val sourceVertexId = currEvent.getInt(SOURCE)
         val targetVertexId = currEvent.getInt(TARGET)
         val oneWayStreet = currEvent.getBoolean("oneWayStreet")
-        val factor = currEvent.getInt("factor")
+        val factor = currEvent.getInt(FACTOR)
         if (factor < 1 || sourceVertexId < 0 || targetVertexId < 0) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
         val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
         val targetVertex = gm.getVertex(targetVertexId) ?: return false
-        val road = gm.getRoad(sourceVertex, targetVertex)
-        // create
+        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
+        val newEvent = ConstructionSiteEvent(id, tick, duration, oneWayStreet, road, factor)
+        Simulation.addEvent(newEvent)
         res = res && true
         return res
     }
 
     private fun parseTrafficJAM(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val factor = currEvent.getInt("factor")
+        val factor = currEvent.getInt(FACTOR)
         val sourceVertexId = currEvent.getInt(SOURCE)
         val targetVertexId = currEvent.getInt(TARGET)
         if (sourceVertexId < 0 || targetVertexId < 0 || factor < 1) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
         val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
         val targetVertex = gm.getVertex(targetVertexId) ?: return false
-        val road = gm.getRoad(sourceVertex, targetVertex)
-        // create
+        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
+        val newEvent = TrafficJamEvent(id, tick, duration, road, factor)
+        Simulation.addEvent(newEvent)
         res = res && true
         return res
     }
@@ -240,11 +243,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         var res = true
         val roadList: MutableList<Road> = mutableListOf<Road>()
         val roadTypes: MutableList<PrimaryRoadType> = currEvent.get("roadTypes") as MutableList<PrimaryRoadType>
+        val factor = currEvent.getInt(FACTOR)
         if (duration < 1 || id < 0 || tick < 0) res = false
         for (type in roadTypes) {
             roadList.addAll(gm.getListRoad(type))
         }
-
+        val newEvent = RushHourEvent(id, tick, duration, roadList, factor)
+        Simulation.addEvent(newEvent)
         res = res && true
         return res
     }
@@ -259,5 +264,6 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         const val WATER_MIDDLE = 1200
         const val WATER_BIG = 2400
         const val MAX_CRIM_CAPACITY = 4
+        const val FACTOR = "factor"
     }
 }
