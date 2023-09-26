@@ -3,6 +3,7 @@ package de.unisaarland.cs.se.selab
 import PoliceDepartment
 import org.json.JSONObject
 import java.io.File
+
 /**
  * Class to parse JSON Files
 */
@@ -40,7 +41,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseAmbulance(currVehicle: JSONObject, id: Int, baseId: Int, staffs: Int): Boolean {
         var res = true
         if (id < 0 || baseId < 0 || staffs < 0) res = false
-        // Ambulance(id, baseId, staffCapacity, vehicleHeight, null, false)
+       // Ambulance(id, baseId, staffs, vehicleHeight, null, false)
         return res
     }
 
@@ -94,7 +95,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             when (baseType) {
                 "FIRE_STATION" -> {
                     val newBase = Base(id, staffs, location, mutableListOf())
-                    location.setBase(newBase)
+                    location.base = newBase
                     // add Department
                 }
 
@@ -115,7 +116,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     /**
      * function to parse Emergencies
      */
-    fun parseEmergencies(): Boolean {
+    fun parseEmergency(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
@@ -136,12 +137,23 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val maxDuration = currEmer.getInt("maxDuration")
             if (maxDuration < 2) res = false
             // resources tofo
-            val resources = Resource(mutableListOf(), 0, 0, 0, 0) // resourceFactory
+
+            val resources = resourcesParse(type, severity)
             val newEmergency = Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources)
             Simulation.addEmergency(newEmergency)
         }
         res = res && true
         return res
+    }
+
+    private fun resourcesParse(type: EmergencyType, severity: Int): Resource {
+        val resourcesFactory = ResourceFactory() // resourceFactory
+        when (type) {
+            EmergencyType.ACCIDENT -> return resourcesFactory.createAccidentResources(severity)
+            EmergencyType.CRIME -> return resourcesFactory.createCrimeResources(severity)
+            EmergencyType.FIRE -> return resourcesFactory.createFireResources(severity)
+            EmergencyType.MEDICAL -> return resourcesFactory.createMedicalResources(severity)
+        }
     }
 
     /**
@@ -181,24 +193,29 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
 
     private fun parseRoadClosureEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val sourceVertex = currEvent.getInt(SOURCE)
-        val targetVertex = currEvent.getInt(TARGET)
-        if (sourceVertex < 0 || targetVertex < 0 || duration < 1) res = false
+        val sourceVertexId = currEvent.getInt(SOURCE)
+        val targetVertexId = currEvent.getInt(TARGET)
+        if (sourceVertexId < 0 || targetVertexId < 0 || duration < 1) res = false
+        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertex(targetVertexId) ?: return false
         if (id < 0 || tick < 0) res = false
-        // find road via a new find function with source and target
+        val road = gm.getRoad(sourceVertex, targetVertex)
+        val newEvent = RoadClosureEvent()
         res = res && true
         return res
     }
 
     private fun parseConstructionSite(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val sourceVertex = currEvent.getInt(SOURCE)
-        val targetVertex = currEvent.getInt(TARGET)
-        // find road via a new find function with source and target
+        val sourceVertexId = currEvent.getInt(SOURCE)
+        val targetVertexId = currEvent.getInt(TARGET)
         val oneWayStreet = currEvent.getBoolean("oneWayStreet")
         val factor = currEvent.getInt("factor")
-        if (factor < 1 || sourceVertex < 0 || targetVertex < 0) res = false
+        if (factor < 1 || sourceVertexId < 0 || targetVertexId < 0) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
+        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertex(targetVertexId) ?: return false
+        val road = gm.getRoad(sourceVertex, targetVertex)
         // create
         res = res && true
         return res
@@ -207,11 +224,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseTrafficJAM(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         val factor = currEvent.getInt("factor")
-        val sourceVertex = currEvent.getInt(SOURCE)
-        val targetVertex = currEvent.getInt(TARGET)
-        if (sourceVertex < 0 || targetVertex < 0 || factor < 1) res = false
+        val sourceVertexId = currEvent.getInt(SOURCE)
+        val targetVertexId = currEvent.getInt(TARGET)
+        if (sourceVertexId < 0 || targetVertexId < 0 || factor < 1) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
-        // find Road
+        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertex(targetVertexId) ?: return false
+        val road = gm.getRoad(sourceVertex, targetVertex)
         // create
         res = res && true
         return res
@@ -219,9 +238,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
 
     private fun parseRushHour(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val roadTypes: MutableList<VehicleType> = currEvent.get("roadTypes") as MutableList<VehicleType>
+        val roadList: MutableList<Road> = mutableListOf<Road>()
+        val roadTypes: MutableList<PrimaryRoadType> = currEvent.get("roadTypes") as MutableList<PrimaryRoadType>
         if (duration < 1 || id < 0 || tick < 0) res = false
-        // getRoads from GraphMap with types
+        for (type in roadTypes) {
+            roadList.addAll(gm.getListRoad(type))
+        }
+
         res = res && true
         return res
     }
