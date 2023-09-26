@@ -30,7 +30,7 @@ object Simulation {
             return false
         }
         val eventsParsed: Boolean = jsonParser.parseEvents() //initialize events and emergencies and check for validity
-        val emergenciesParsed: Boolean = jsonParser.parseEmergencies()
+        val emergenciesParsed: Boolean = jsonParser.parseEmergency()
         Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
         if (!(eventsParsed && emergenciesParsed)) {
             return false
