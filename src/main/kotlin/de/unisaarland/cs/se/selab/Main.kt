@@ -8,9 +8,9 @@ import java.io.FileOutputStream
  */
 fun main(args: Array<String>) {
     val argsMap = args.toList().chunked(2).associate { it[0] to it[1] }
-    val map = argsMap["--map"] ?: return
-    val assets = argsMap["--assets"] ?: return
-    val scenario = argsMap["--scenario"] ?: return
+    val map = argsMap["--map"] ?: argsMap["-m"] ?: return
+    val assets = argsMap["--assets"] ?: argsMap["-a"] ?: return
+    val scenario = argsMap["--scenario"] ?: argsMap["-s"] ?: return
     val ticks = argsMap["--ticks"]?.toIntOrNull()
     val out = argsMap["--out"]
     if (out != null) {

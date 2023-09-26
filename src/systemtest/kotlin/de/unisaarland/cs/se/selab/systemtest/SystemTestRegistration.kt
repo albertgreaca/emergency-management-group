@@ -1,25 +1,8 @@
 package de.unisaarland.cs.se.selab.systemtest
-
 import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser10
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser11
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser12
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser13
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser14
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser15
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser16
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser17
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser2
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser3
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser4
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser5
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser6
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser7
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser8
-import de.unisaarland.cs.se.selab.systemtest.failedparser.FailedParser9
+import de.unisaarland.cs.se.selab.systemtest.failedparser.*
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
@@ -44,5 +27,10 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser15())
         manager.registerTest(FailedParser16())
         manager.registerTest(FailedParser17())
+        manager.registerTest(FailedParserSyntax1())
+        manager.registerTest(FailedParserSyntax2())
+        manager.registerTest(FailedParserSyntax3())
+        manager.registerTest(FailedParserSyntax4())
+        manager.registerTest(FailedParserSyntax5())
     }
 }
