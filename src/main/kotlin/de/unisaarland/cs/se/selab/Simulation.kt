@@ -2,16 +2,17 @@ package de.unisaarland.cs.se.selab
 
 import java.io.File
 
-object Simulation() {
+object Simulation {
 
-    private var currentTick: Int = 0
-    private val maximumTicks: Int? = null
-    private val emergencies: MutableList<Emergency> = mutableListOf()
-    private val events: MutableList<Event> = mutableListOf()
-    private val map = GraphMap()
-    private val statistics = Statistics()
+    var currentTick: Int = 0
+    val maximumTicks: Int? = null
+    val emergencies: MutableList<Emergency> = mutableListOf()
+    val events: MutableList<Event> = mutableListOf()
+    val map = GraphMap()
+    val statistics = Statistics()
 
-    fun initialize( //init boolean
+    //initializes the setting and returns whether the process was successful
+    fun initialize(
         mapConfig: File, baseVehicleConfig: File,
         emergEventConfig: File
     ): Boolean {
@@ -39,31 +40,20 @@ object Simulation() {
 
     }
 
-    fun getCurrentTick(): Int {
-        return currentTick
-    }
-
     private fun increaseCurrentTick() {
         currentTick += 1
     }
 
-    fun getMaxTicks(): Int? {
-        return maximumTicks
-    }
-
+    //adds an emergency to the global event list
     fun addEmergency(em: Emergency) {
         emergencies.add(em)
     }
 
+    //adds an event to the global event list
     fun addEvent(ev: Event) {
         events.add(ev)
     }
 
-    fun getMap(): GraphMap {
-        return map
-    }
-
-    // add starting emergencies to EMCC and notify its observers
     private fun simulateEmergencyPhase() {
         for (em in emergencies) {
             if (em.getTick() == currentTick)
@@ -72,7 +62,6 @@ object Simulation() {
         EMCC.notifyObservers()
     }
 
-    // order emergencies by severity then id, allocate assets for each one
     private fun simulatePlanningPhase() {
         EMCC.orderEmergencies()
         EMCC.allocateAssets()
@@ -102,16 +91,24 @@ object Simulation() {
         Logger.logStatistics(rerouted, receivedEms, ongoingEms, failedEms, resolvedEms)
     }
 
-    fun simulateTick() {
+    private fun simulateTick() {
         simulateEmergencyPhase()
         simulatePlanningPhase()
         simulateRequestPhase()
         simulateUpdatePhase()
-        finalEvaluation()
     }
 
     fun simulateSimulation() {
-        if()
+        if (maximumTicks == null) {
+            while (true) {
+                simulateTick()
+            }
+        } else {
+            while (currentTick <= maximumTicks) {
+                simulateTick()
+            }
+        }
+        finalEvaluation()
     }
 }
 
