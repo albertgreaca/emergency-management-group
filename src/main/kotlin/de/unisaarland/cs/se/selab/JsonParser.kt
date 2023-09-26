@@ -3,15 +3,20 @@ package de.unisaarland.cs.se.selab
 import PoliceDepartment
 import org.json.JSONObject
 import java.io.File
-
+/**
+ * Class to parse JSON Files
+*/
 class JsonParser(private val gm: GraphMap, private val file1: File, private val file2: File) {
-    val id = "id" // because duplications for keywords
+
+    /**
+     * function to parse the Vehicles
+     */
     fun parseVehicles(): Boolean {
         val jsonObject = JSONObject(file1.readText())
         val vehiclesObject = jsonObject.getJSONArray("Vehicles")
         for (i in 0 until vehiclesObject.length()) {
             val currVehicle = vehiclesObject.getJSONObject(i)
-            val id = currVehicle.getInt(id)
+            val id = currVehicle.getInt(Companion.ID)
             if (id < 0) return false
             val baseId = currVehicle.getInt("baseID")
             val vehicleType: VehicleType = currVehicle.get("VehicleType") as VehicleType
@@ -28,7 +33,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 }
                 // create FireTruckWater
                 VehicleType.FIRE_TRUCK_LADDER -> {
-                    val ladderLength = currVehicle.getInt("ladderLength") == ladderReference
+                    val ladderLength = currVehicle.getInt("ladderLength") == LADDER_REFERENCE
                     //   FireTruckLadder(id, baseId, staffCapacity, vehicleHeight, null, ladderLength)
                 } // create FireTruck
                 VehicleType.AMBULANCE -> {
@@ -42,6 +47,9 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         return true
     }
 
+    /**
+     * function to parse Bases
+     */
     fun parseBases(): Boolean {
         val fireDepartment = FireDepartment()
         val policeDepartment = PoliceDepartment()
@@ -50,7 +58,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val basesObject = jsonObject.getJSONArray("Bases")
         for (i in 0 until basesObject.length()) {
             val currBase = basesObject.getJSONObject(i)
-            val id = currBase.getInt(id)
+            val id = currBase.getInt(Companion.ID)
             if (id < 0) return false
             val baseType = currBase.getString("baseType")
             val locationId = currBase.getInt("location")
@@ -60,12 +68,15 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             if (staffs < 1) return false
             when (baseType) {
                 "FIRE_STATION" -> {
-                    Base(id, staffs, location, mutableListOf())
+                    val newBase = Base(id, staffs, location, mutableListOf())
+                    location.setBase(newBase)
                     // add Department
                 }
 
                 "POLICE_STATION" -> {
                     val dogs = currBase.getInt("dogs") // create Police Station
+                    val newBase = PoliceStation()
+                    // location.setBase(newBase)
                 }
 
                 "HOSPITAL" -> {
@@ -76,13 +87,16 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         return true
     }
 
+    /**
+     * function to parse Emergencies
+     */
     fun parseEmergency(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
-            val id = currEmer.getInt(id)
+            val id = currEmer.getInt(Companion.ID)
             if (id < 0) res = false
             val tick = currEmer.getInt("tick")
             if (tick < 1) res = false
@@ -104,13 +118,16 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         return res
     }
 
+    /**
+     * funtion to parse Events
+     */
     fun parseEvents(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
         val eventArray = jsonObject.getJSONArray("events")
         for (i in 0 until eventArray.length()) {
             val currEvent = eventArray.getJSONObject(i)
-            val id = currEvent.getInt(id)
+            val id = currEvent.getInt(Companion.ID)
             val type = currEvent.getString("type")
             val tick = currEvent.getInt("tick")
             val duration = currEvent.getInt("duration")
@@ -139,8 +156,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
 
     private fun parseRoadClosureEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val sourceVertex = currEvent.getInt(source)
-        val targetVertex = currEvent.getInt(target)
+        val sourceVertex = currEvent.getInt(SOURCE)
+        val targetVertex = currEvent.getInt(TARGET)
         if (sourceVertex < 0 || targetVertex < 0 || duration < 1) res = false
         if (id < 0 || tick < 0) res = false
         // find road via a new find function with source and target
@@ -150,8 +167,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
 
     private fun parseConstructionSite(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
-        val sourceVertex = currEvent.getInt(source)
-        val targetVertex = currEvent.getInt(target)
+        val sourceVertex = currEvent.getInt(SOURCE)
+        val targetVertex = currEvent.getInt(TARGET)
         // find road via a new find function with source and target
         val oneWayStreet = currEvent.getBoolean("oneWayStreet")
         val factor = currEvent.getInt("factor")
@@ -165,8 +182,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseTrafficJAM(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         val factor = currEvent.getInt("factor")
-        val sourceVertex = currEvent.getInt(source)
-        val targetVertex = currEvent.getInt(target)
+        val sourceVertex = currEvent.getInt(SOURCE)
+        val targetVertex = currEvent.getInt(TARGET)
         if (sourceVertex < 0 || targetVertex < 0 || factor < 1) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
         // find Road
@@ -178,15 +195,16 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseRushHour(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         val roadTypes: MutableList<VehicleType> = currEvent.get("roadTypes") as MutableList<VehicleType>
-        if (duration < 1 || id < 0 || tick < 0) return false
+        if (duration < 1 || id < 0 || tick < 0) res = false
         // getRoads from GraphMap with types
         res = res && true
         return res
     }
 
     companion object {
-        const val ladderReference = 40 // because magic number
-        const val source = "source" // because duplicates
-        const val target = "target" // because duplicates
+        const val LADDER_REFERENCE = 40 // because magic number
+        const val SOURCE = "source" // because duplicates
+        const val TARGET = "target" // because duplicates
+        const val ID = "id" // because duplications for keywords
     }
 }
