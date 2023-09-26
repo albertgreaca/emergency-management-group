@@ -56,7 +56,7 @@ object Simulation {
 
     private fun simulateEmergencyPhase() {
         for (em in emergencies) {
-            if (em.getTick() == currentTick)
+            if (em.tick == currentTick)
                 EMCC.addStartingEmergency(em)
         }
         EMCC.notifyObservers()
