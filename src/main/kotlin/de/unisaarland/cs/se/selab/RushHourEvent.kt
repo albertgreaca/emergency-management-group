@@ -15,6 +15,16 @@ class RushHourEvent(
     }
 
     fun updateEvent(): Boolean{
-        if(tick+duration == )
+        if(tick+duration == Simulation.getCurrentTick()){
+            EMCC.getActiveEvents().remove(this)
+            for(road in roads){
+                road.gete
+            }
+            Logger.logEventEnded(id)
+            return true
+        }
+        else{
+
+        }
     }
 }
