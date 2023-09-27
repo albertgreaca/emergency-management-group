@@ -1,6 +1,7 @@
 import de.unisaarland.cs.se.selab.Resource
 import de.unisaarland.cs.se.selab.VehicleType
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -22,5 +23,88 @@ class ResourceTest {
     fun isEmptyfalse() {
         val res = Resource(mutableListOf(VehicleType.AMBULANCE), 1, 4, 5, 0)
         assertFalse(res.isEmpty())
+    }
+
+    @Test
+    fun policeresources() {
+        val vehicleList =
+            mutableListOf<VehicleType>(
+                VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR,
+                VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.K9_POLICE_CAR,
+                VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE,
+                VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.FIREFIGHTER_TRANSPORTER
+            )
+        var res = Resource(vehicleList, 10, 5, 32, null)
+        val policeres = res.filterPoliceResources()
+        val testres =
+            Resource(
+                mutableListOf<VehicleType>(
+                    VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR,
+                    VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.K9_POLICE_CAR,
+                    VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE
+                ),
+                0,
+                5,
+                0,
+                null
+            )
+        assertEquals(policeres, testres)
+    }
+
+    @Test
+    fun hospitalrequest() {
+        val vehicleList =
+            mutableListOf<VehicleType>(
+                VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
+                VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR, VehicleType.EMERGENCY_DOCTOR_CAR,
+                VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL
+            )
+        var res = Resource(vehicleList, 10, 5, 32, null)
+        val hospitalres = res.filterPoliceResources()
+        val testres =
+            Resource(
+                mutableListOf<VehicleType>(
+                    VehicleType.AMBULANCE,
+                    VehicleType.AMBULANCE,
+                    VehicleType.AMBULANCE,
+                    VehicleType.AMBULANCE,
+                    VehicleType.AMBULANCE,
+                    VehicleType.EMERGENCY_DOCTOR_CAR,
+                    VehicleType.EMERGENCY_DOCTOR_CAR
+                ),
+                0,
+                0,
+                32,
+                null
+            )
+        assertEquals(hospitalres, testres)
+    }
+
+    @Test
+    fun firerequest() {
+        val vehicleList =
+            mutableListOf<VehicleType>(
+                VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL,
+                VehicleType.FIRE_TRUCK_TECHNICAL,
+                VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE,
+                VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_CAR,
+                VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
+                VehicleType.EMERGENCY_DOCTOR_CAR
+            )
+        var res = Resource(vehicleList, 10, 5, 32, null)
+        val fireres = res.filterPoliceResources()
+        val testres = Resource(
+            mutableListOf<VehicleType>(
+                VehicleType.FIRE_TRUCK_TECHNICAL,
+                VehicleType.FIRE_TRUCK_TECHNICAL,
+                VehicleType.FIRE_TRUCK_TECHNICAL,
+                VehicleType.FIRE_TRUCK_TECHNICAL
+            ),
+            10,
+            0,
+            0,
+            null
+        )
+        assertEquals(fireres, testres)
     }
 }
