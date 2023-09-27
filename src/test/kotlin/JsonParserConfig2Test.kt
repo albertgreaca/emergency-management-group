@@ -8,7 +8,11 @@ class JsonParserConfig2Test {
     @Test
     fun testParseBases() {
         val map = GraphMap()
-        val parser = JsonParser(map, File("invalidConfig2/Semantics/config2Invalid1.json"), File("config3valid1.json"))
+        val parser = JsonParser(
+            map,
+            File("src/test/resources/invalidConfig2/Semantics/config2Invalid1.json"),
+            File("src/test/resources/config3valid1.json")
+        )
         assertTrue(!parser.parseBases())
     }
 }
