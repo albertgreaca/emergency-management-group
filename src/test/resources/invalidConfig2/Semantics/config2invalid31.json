@@ -11,14 +11,14 @@
       "baseType": "POLICE_STATION",
       "location": 4,
       "staff": 12,
-      "dogs": 0
+      "dogs": 3
     },
     {
       "id": 2,
       "baseType": "HOSPITAL",
       "location": 5,
-      "doctors": 0,
-      "staff": 32
+      "staff": 32,
+      "doctors": 0
     },
     {
       "id": 3,
@@ -68,7 +68,7 @@
       "vehicleType": "POLICE_CAR",
       "vehicleHeight": 2,
       "staffCapacity": 5,
-      "criminalCapacity": 3
+      "criminalCapacity": 4
     },
     {
       "id": 1,
@@ -90,7 +90,7 @@
       "vehicleType": "POLICE_CAR",
       "vehicleHeight": 2,
       "staffCapacity": 5,
-      "criminalCapacity": 3
+      "criminalCapacity": 0
     },
     {
       "id": 4,
@@ -222,7 +222,7 @@
       "baseID": 0,
       "vehicleType": "FIREFIGHTER_TRANSPORTER",
       "vehicleHeight": 2,
-      "staffCapacity": 7
+      "staffCapacity": -6
     },
     {
       "id": 22,
@@ -251,7 +251,7 @@
       "id": 25,
       "baseID": 0,
       "vehicleType": "FIREFIGHTER_TRANSPORTER",
-      "vehicleHeight": 1,
+      "vehicleHeight": 2,
       "staffCapacity": 7
     },
     {
@@ -434,7 +434,7 @@
       "id": 50,
       "baseID": 8,
       "vehicleType": "AMBULANCE",
-      "vehicleHeight": 2,
+      "vehicleHeight": 4,
       "staffCapacity": 2
     },
     {
@@ -448,14 +448,14 @@
       "id": 52,
       "baseID": 8,
       "vehicleType": "AMBULANCE",
-      "vehicleHeight": 5,
+      "vehicleHeight": 4,
       "staffCapacity": 2
     },
     {
       "id": 53,
       "baseID": 8,
       "vehicleType": "EMERGENCY_DOCTOR_CAR",
-      "vehicleHeight": 1,
+      "vehicleHeight": 3,
       "staffCapacity": 2
     }
   ]
