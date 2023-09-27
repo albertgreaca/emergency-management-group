@@ -1,5 +1,8 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * Enum for representing Vehicle Types
+ */
 enum class VehicleType {
     POLICE_CAR,
     K9_POLICE_CAR,

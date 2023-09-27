@@ -2,6 +2,9 @@ package de.unisaarland.cs.se.selab
 
 import java.io.File
 
+/**
+ * Class representing the main structure of the simulation
+ */
 object Simulation {
 
     var currentTick: Int = 0
@@ -14,21 +17,22 @@ object Simulation {
     /** initializes the simulation setting and returns whether the process was successful
      */
     fun initialize(
-        mapConfig: File, baseVehicleConfig: File,
+        mapConfig: File,
+        baseVehicleConfig: File,
         emergEventConfig: File
     ): Boolean {
-        val mapParser = MapParser(map, mapConfig) //initialize the map and check for validity
+        val mapParser = MapParser(map, mapConfig) // initialize the map and check for validity
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
         if (mapParsed) {
             val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
             val vehiclesParsed: Boolean =
-                jsonParser.parseVehicles() //initialize vehicles and bases and check for validity
+                jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
             val basesParsed: Boolean = jsonParser.parseBases()
             Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
             if (vehiclesParsed && basesParsed) {
                 val eventsParsed: Boolean =
-                    jsonParser.parseEvents() //initialize events and emergencies and check for validity
+                    jsonParser.parseEvents() // initialize events and emergencies and check for validity
                 val emergenciesParsed: Boolean = jsonParser.parseEmergency()
                 Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
                 if (eventsParsed && emergenciesParsed) {
@@ -57,8 +61,9 @@ object Simulation {
 
     private fun simulateEmergencyPhase() {
         for (em in emergencies) {
-            if (em.tick == currentTick)
+            if (em.tick == currentTick) {
                 EMCC.addStartingEmergency(em)
+            }
         }
         EMCC.notifyObservers()
     }
@@ -114,4 +119,3 @@ object Simulation {
         finalEvaluation()
     }
 }
-

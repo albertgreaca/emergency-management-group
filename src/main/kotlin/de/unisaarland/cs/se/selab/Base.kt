@@ -1,6 +1,4 @@
 package de.unisaarland.cs.se.selab
-
-
 /**
  * Bases of the departments
  */
@@ -81,7 +79,7 @@ open class Base(
         var availableBaseVehicles = this.vehicles.filter { it.isAvailable() }.toMutableList()
         var vehiclesToallocate = mutableListOf<Vehicle>()
         var vehicTypestoRequest = mutableListOf<VehicleType>()
-        // TODO: implement
+        // TODO : implement
         for (vt in neededVehicles) {
             when (vt) {
                 VehicleType.FIRE_TRUCK_LADDER -> TODO()
@@ -107,7 +105,8 @@ open class Base(
         }
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
         for (vehicle in vehiclesToallocate) {
-
+            var p = 0
+            p+=0
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
