@@ -108,7 +108,7 @@ object Simulation {
                 simulateTick()
             }
         } else {
-            while (currentTick <= maximumTicks!!) {
+            while (currentTick <= requireNotNull(maximumTicks)) {
                 simulateTick()
             }
         }

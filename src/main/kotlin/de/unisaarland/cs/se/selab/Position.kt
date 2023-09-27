@@ -41,8 +41,8 @@ class Position(
      */
     fun smaller(o: Position): Boolean {
         // TODO
-        var n: Int = vertexList.size
-        var m: Int = o.vertexList.size
+        val n: Int = vertexList.size
+        val m: Int = o.vertexList.size
         for (i in 0..min(n, m) - 1) {
             if (vertexList[i].id < o.vertexList[i].id) {
                 return true

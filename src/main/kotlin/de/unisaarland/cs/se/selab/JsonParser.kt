@@ -113,7 +113,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         try {
             schem?.validate(jsonObject)
         } catch (e: ValidationException) {
-            println(e)
+            e.message
             return false
         }
 
@@ -165,7 +165,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         try {
             schem?.validate(jsonObject)
         } catch (e: ValidationException) {
-            println(e)
+            e.message
             return false
         }
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
