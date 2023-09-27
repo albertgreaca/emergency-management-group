@@ -7,6 +7,7 @@ object EMCC {
     val observers: MutableList<EmergencyObserver> = mutableListOf()
     val startingEmergencies: MutableList<Emergency> = mutableListOf()
     val handledEmergencies: MutableList<Emergency> = mutableListOf()
+    val resolvedOrFailedEmergencies: MutableList<Emergency> = mutableListOf()
     val activeEvents: MutableList<Event> = mutableListOf()
     val startingEvents: MutableList<Event> = mutableListOf()
     var nextRequestId: Int = 1
@@ -46,7 +47,7 @@ object EMCC {
      * orders the starting emergencies by severity, then by ID
      */
     fun orderEmergencies() {
-        startingEmergencies.sortWith(compareBy({ it.getSeverity() }, { it.getId() }))
+        startingEmergencies.sortWith(compareBy({ it.severity }, { it.id }))
     }
 
     /**
@@ -56,19 +57,19 @@ object EMCC {
         // iterate over emergencies
         for (em in startingEmergencies) {
             // get the base assigned to the emergency
-            var emBase = em.getBase()!!
+            var emBase = em.base!!
 
             // base tries to allocate resources for emergency, returns what is left
             var resourcesAfterAllocating = emBase.requestResources(em)
 
             // update the resources in the emergency
-            em.getResources().updateDifference(resourcesAfterAllocating)
+            em.resources.updateDifference(resourcesAfterAllocating)
 
             // base tries to reallocate resources from other emergencies, returns what is left
             var resourcesAfterReallocating = emBase.reallocateResources(em)
 
             // update the resources in the emergency
-            em.getResources().updateDifference(resourcesAfterReallocating)
+            em.resources.updateDifference(resourcesAfterReallocating)
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!resourcesAfterReallocating.isEmpty()) {
@@ -134,8 +135,9 @@ object EMCC {
     fun updateAssets() {
         for (em in Simulation.emergencies) {
             for (vec in em.assignedVehicles) {
-                if (vec.position != null && vec.position!!.arrivalTicks != 0)
+                if (vec.position != null && vec.position!!.arrivalTicks != 0) {
                     vec.move()
+                }
             }
         }
     }
@@ -144,10 +146,86 @@ object EMCC {
      * updates the state of all emergencies
      */
     fun updateEmergencies() {
-        // update all emergencies whose handling started (neededResources are empty and all assets have arrival time of 0)
-        // update all emergencies that were resolved ()
-        // update all emergencies that failed (tick + maxDuration == Simulation.currentTick)
-        TODO()
+        // update all emergencies whose handling started in this tick
+        updateHandlingStartedEmergencies()
+        // update all emergencies that were resolved in this tick
+        updateResolvedEmergencies()
+        // update all emergencies that failed in this tick
+        updateFailedEmergencies()
+        // if all assets assigned to an emergency returned to their bases, we don't need to track it anymore
+        for (em in resolvedOrFailedEmergencies) {
+            if (em.assignedVehicles.isEmpty())
+                    resolvedOrFailedEmergencies.remove(em)
+        }
+    }
+
+    /**
+     * updates the state of all emergencies that were started handling
+     */
+    private fun updateHandlingStartedEmergencies() {
+        for (em in handledEmergencies) {
+            if (!em.handlingStarted && em.resources.isEmpty()) {
+                var allArrived = true
+                for (vec in em.assignedVehicles) {
+                    allArrived = if (vec.position!!.arrivalTicks == 0) allArrived else false
+                }
+            }
+        }
+    }
+
+    /**
+     * updates the state of all emergencies that were resolved in this tick
+     * an emergency is newly resolved if:
+     * -it is not already in the list of resolved emergencies
+     * -its handling already started
+     * -the amount of ticks that it was handled already equal its required handle time
+     * ------------------------------------------------
+     * if an emergency was newly resolved, we have to:
+     * -move it to list of resolved emergencies
+     * -send all assigned assets back to their bases
+     * -log that the emergency was resolved
+     */
+    private fun updateResolvedEmergencies() {
+        val newlyResolvedEmergencies: MutableList<Emergency> = mutableListOf()
+
+        for (em in handledEmergencies) {
+            if (em.handlingStarted && em.alreadyHandled == em.handleTime) {
+                resolvedOrFailedEmergencies.add(em)
+                newlyResolvedEmergencies.add(em)
+                for (vec in em.assignedVehicles) {
+                    vec.sendBackToBase()
+                }
+            }
+        }
+        newlyResolvedEmergencies.sortBy { it.id }
+        for (resolvedEm in newlyResolvedEmergencies) {
+            Logger.logEmergencyResolved(resolvedEm.id)
+        }
+    }
+
+    /**
+     * updates the state of all emergencies that failed in this tick
+     * an emergency failed in this tick if:
+     * -it has not been resolved yet (is not in the list of resolved emergencies)
+     * -there is no more time to resolve it (-> the emergency's starting tick plus its maxDuration is greater equal the
+     * current tick of the simulation)
+     */
+    private fun updateFailedEmergencies() {
+        val newlyFailedEmergencies: MutableList<Emergency> = mutableListOf()
+
+        for (em in handledEmergencies) {
+            if (em.tick + em.maxDuration >= Simulation.currentTick) {
+                resolvedOrFailedEmergencies.add(em)
+                newlyFailedEmergencies.add(em)
+                for (vec in em.assignedVehicles) {
+                    vec.sendBackToBase()
+                }
+            }
+        }
+        newlyFailedEmergencies.sortBy { it.id }
+        for (resolvedEm in newlyFailedEmergencies) {
+            Logger.logEmergencyFailed(resolvedEm.id)
+        }
     }
 
     /**
@@ -165,8 +243,9 @@ object EMCC {
         }
         // then handle the starting events
         for (event in startingEvents) {
-            if (event.executeStart())
+            if (event.executeStart()) {
                 eventsChanged = true
+            }
         }
         return eventsChanged
     }
