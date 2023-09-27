@@ -73,7 +73,7 @@ open class Base(
         var criminals = r.getCriminalAmount()
         criminals += 0
         var patients = r.getPatientAmount()
-        patients+= 0
+        patients += 0
         var neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
         var availableBaseVehicles = this.vehicles.filter { it.isAvailable() }.toMutableList()
@@ -81,41 +81,24 @@ open class Base(
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
-            when (vt) {
-                VehicleType.FIRE_TRUCK_LADDER -> TODO()
-                VehicleType.FIRE_TRUCK_WATER -> TODO()
-                VehicleType.POLICE_CAR -> TODO()
-                VehicleType.AMBULANCE -> TODO()
-                else -> {
-                    var speicher = helperVehiclecompare(vt, availableBaseVehicles)
-                    var vehiclefound = speicher.first
-                    if (vehiclefound) {
-                        var vehic = speicher.second
-                        if (vehic != null) {
-                            vehiclesToallocate.add(vehic)
-                            availableBaseVehicles.remove(vehic)
-                        }
-                    } else {
-                        vehicTypestoRequest.add(vt)
-                    }
-
-
-                }
-            }
+            //Todo : something happening here
+            var p = 0
+            p+= 0
         }
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
         for (vehicle in vehiclesToallocate) {
             var p = 0
-            p+=0
+            p += 0
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
+
     /**
      * helper function to check available vehicles for corresponding type
      */
-    private fun helperVehiclecompare(v: VehicleType, VehicleList: MutableList<Vehicle>): Pair<Boolean, Vehicle?> {
-        for (vehicle in VehicleList) {
+    private fun helperVehiclecompare(v: VehicleType, vehicleList: List<Vehicle>): Pair<Boolean, Vehicle?> {
+        for (vehicle in vehicleList) {
             if (vehicle.vehicleType == v) {
                 return Pair(true, vehicle)
             }
@@ -128,7 +111,8 @@ open class Base(
      * @return a Resource with what's still missing
      */
     fun reallocateResources(em: Emergency): Resource {
-        // TODO: implement
+        // TODO : implement
+        em.id
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
@@ -137,7 +121,7 @@ open class Base(
      * updates list of next bases
      */
     fun calculateNextBases() {
-        // TODO: implement
+        // TODO : implement
         val nextcalculatedBases = Dijkstra.dijkstraRequest(this.getLocation().getId())
         this.nextBases = nextcalculatedBases
         return
@@ -150,6 +134,7 @@ open class Base(
      * @return the next Base
      */
     fun getNextBase(b: Base): Base? {
+        b.id
         if (this.getNextBases().isEmpty()) {
             return null
         } else {
