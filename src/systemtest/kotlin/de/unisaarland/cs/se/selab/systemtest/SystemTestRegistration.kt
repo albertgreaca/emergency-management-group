@@ -13,10 +13,9 @@ object SystemTestRegistration {
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
-
     }
 
-    fun registerMapParserSemanticFail1(manager: SystemTestManager) {
+    private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(FailedParser2())
         manager.registerTest(FailedParser3())
@@ -118,6 +117,3 @@ object SystemTestRegistration {
         manager.registerTest(FailedParserSyntax76())
     }
 }
-
-
-
