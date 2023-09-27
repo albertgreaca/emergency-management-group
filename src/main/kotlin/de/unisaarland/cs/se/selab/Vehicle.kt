@@ -16,54 +16,6 @@ open class Vehicle(
     var targetEmergency: Emergency? = null
 
     /**
-     * getter for the id
-     * @return id of the vehicle
-     */
-    fun getId(): Int {
-        return id
-    }
-
-    /**
-     * getter for the base
-     * @return base of the vehicle
-     */
-    fun getBase(): Base {
-        return base
-    }
-
-    /**
-     * getter for the VehicleType
-     * @return VehicleType of the vehicle
-     */
-    fun getVehicleType(): VehicleType {
-        return vehicleType
-    }
-
-    /**
-     * getter for the staffCapacity
-     * @return staffCapacity of the vehicle
-     */
-    fun getStaffCapacity(): Int {
-        return staffCapacity
-    }
-
-    /**
-     * getter for the VehicleHeight
-     * @return Height of the vehicle
-     */
-    fun getVehicleHeight(): Int {
-        return vehicleHeight
-    }
-
-    /**
-     * getter for the baseWaitingTicks
-     * @return baseWaitingTicks of the vehicle
-     */
-    fun getBaseWaitingTicks(): Int {
-        return baseWaitingTicks
-    }
-
-    /**
      * setter for the baseWaitingTicks
      */
     fun setBaseWaitingTicks(ticks: Int) {
@@ -71,26 +23,10 @@ open class Vehicle(
     }
 
     /**
-     * getter for the Position
-     * @return Position of the vehicle
-     */
-    fun getPosition(): Position? {
-        return position
-    }
-
-    /**
      * setter for the Position
      */
     fun setPosition(pos: Position) {
         position = pos
-    }
-
-    /**
-     * getter for the Availability
-     * @return Availability of the vehicle
-     */
-    fun isAvailable(): Boolean {
-        return available
     }
 
     /**
@@ -115,7 +51,7 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (getPosition()!!.arrivalTicks == 0) {
+        if (position!!.arrivalTicks == 0) {
             return false
         }
         return true
@@ -129,7 +65,7 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (getPosition()!!.arrivalTicks == 0) {
+        if (position!!.arrivalTicks == 0) {
             return false
         }
         if (targetEmergency == null || em.severity < targetEmergency!!.severity) {
@@ -150,8 +86,14 @@ open class Vehicle(
         // Position pos = Dijkstra.dijkstraHeigth()
         // if (!position.equals(pos)){
         // position = pos
-        return true
+       // return true
+    return position == null
         // }
         // return false }
+    }
+
+    fun sendBackToBase() {
+      //  Position pos = Dijkstra.dijkstraHeigth()
+      //  position = pos
     }
 }
