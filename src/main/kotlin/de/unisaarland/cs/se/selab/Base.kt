@@ -145,6 +145,47 @@ open class Base(
     }
 
     /**
+     * returns next Base of Type Police Station
+     */
+    fun getNextPoliceBase(b: Base): Base? {
+        var nextPoliceBase = getNextBase(b)
+        if (nextPoliceBase == null) {
+            return null
+        }
+        while (!(nextPoliceBase is PoliceStation)) {
+            nextPoliceBase = getNextPoliceBase(nextPoliceBase!!)
+        }
+        return nextPoliceBase
+    }
+    /**
+     * returns next Base of Type Hospital
+     */
+    fun getNextHospital(b: Base): Base? {
+        var nextHospital = getNextBase(b)
+        if (nextHospital == null) {
+            return null
+        }
+        while (!(nextHospital is Hospital)) {
+            nextHospital = getNextHospital(nextHospital!!)
+        }
+        return nextHospital
+    }
+
+    /**
+     * returns next Base of Type Police Station
+     */
+    fun getNextFireBase(b: Base): Base? {
+        var nextFireBase = getNextBase(b)
+        if (nextFireBase == null) {
+            return null
+        }
+        while ((nextFireBase is PoliceStation) || (nextFireBase is Hospital)) {
+            nextFireBase = getNextFireBase(nextFireBase!!)
+        }
+        return nextFireBase
+    }
+
+    /**
      * send a request to the next closest Base
      * adds request to Requestlist in EMCC
      */
