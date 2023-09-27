@@ -38,27 +38,27 @@ object Dijkstra {
      * Doing dijkstra for emergencies
      */
     fun dijkstraEmergency(startingNode: Int, startingNode2: Int, et: EmergencyType): Base? {
-        var gm: GraphMap = gm2!!
-        var n: Int = gm.vertexList.size
-        var dist = IntArray(n)
+        val gm: GraphMap = gm2!!
+        val n: Int = gm.vertexList.size
+        val dist = IntArray(n)
         for (i in 0..n - 1) {
             dist[i] = Int.MAX_VALUE
         }
         dist[startingNode] = 0
         dist[startingNode2] = 0
-        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
-        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i]))
         }
         while (!pq.isEmpty()) {
-            var cur: Pair<Int, Int> = pq.remove()
+            val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            var v: Vertex = gm.getVertex(cur.first)!!
+            val v: Vertex = gm.getVertex(cur.first)!!
             if (v.base != null) {
-                var b: Base = v.base!!
+                val b: Base = v.base!!
                 if (determineBaseEmergency(et, b) != null) {
                     return determineBaseEmergency(et, b)
                 }
@@ -72,28 +72,27 @@ object Dijkstra {
      * Doing dijkstra for requesting
      */
     fun dijkstraRequest(startingNode: Int): MutableList<Base> {
-        var gm: GraphMap = gm2!!
-        var n: Int = gm.vertexList.size
-        var dist: IntArray = IntArray(n)
-        var i: Int
+        val gm: GraphMap = gm2!!
+        val n: Int = gm.vertexList.size
+        val dist = IntArray(n)
         for (i in 0..n - 1) {
             dist[i] = Int.MAX_VALUE
         }
         dist[startingNode] = 0
-        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
-        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i]))
         }
-        var ans: MutableList<Base> = mutableListOf()
+        val ans: MutableList<Base> = mutableListOf<Base>()
         while (!pq.isEmpty()) {
-            var cur: Pair<Int, Int> = pq.remove()
+            val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            var v: Vertex = gm.getVertex(cur.first)!!
+            val v: Vertex = gm.getVertex(cur.first)!!
             if (v.base != null) {
-                var b: Base = v.base!!
+                val b: Base = v.base!!
                 ans.add(b)
             }
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
@@ -107,7 +106,7 @@ object Dijkstra {
         return ans
     }
 
-    private fun determinePathHeight(cur: Pair<Int, Int>, dist: Array<Position>): Position? {
+    private fun determinePathHeight(cur: Pair<Int, Int>, dist: Array<Position>): Position {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
                 gm2!!.getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])!!
@@ -130,7 +129,7 @@ object Dijkstra {
         val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height <= height) {
-                var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+                val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
@@ -148,28 +147,26 @@ object Dijkstra {
      * Doing Dijkstra respecting the height of vehicles and roads
      */
     fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position? {
-        var gm: GraphMap = gm2!!
-        var n: Int = gm.vertexList.size
-        var dist: Array<Position> = Array<Position>(n) { index ->
+        val gm: GraphMap = gm2!!
+        val n: Int = gm.vertexList.size
+        val dist: Array<Position> = Array<Position>(n) { index ->
             Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
         }
-        var i: Int
         for (i in 0..n - 1) {
             dist[i].distance = Int.MAX_VALUE
         }
         dist[startingNode].distance = 0
-        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
-        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        var ans: MutableList<Base> = mutableListOf()
         while (!pq.isEmpty()) {
-            var cur: Pair<Int, Int> = pq.remove()
+            val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            var v: Vertex = gm.getVertex(cur.first)!!
+            val v: Vertex = gm.getVertex(cur.first)!!
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathHeight(cur, dist)
             }
@@ -184,7 +181,7 @@ object Dijkstra {
         startRoad: Road,
         distStart: Int,
         distEnd: Int
-    ): Position? {
+    ): Position {
         if (dist[cur.first].vertexList[0] == startRoad.start) {
             if (distStart != 0) {
                 dist[cur.first].roadList.add(startRoad)
@@ -232,7 +229,7 @@ object Dijkstra {
         val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height <= height) {
-                var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+                val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
@@ -257,9 +254,9 @@ object Dijkstra {
         endRoad: Road,
         height: Int
     ): Position? {
-        var gm: GraphMap = gm2!!
-        var n: Int = gm.vertexList.size
-        var dist: Array<Position> = Array<Position>(n) { index ->
+        val gm: GraphMap = gm2!!
+        val n: Int = gm.vertexList.size
+        val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
                 mutableListOf<Road>(),
                 mutableListOf<Vertex>(),
@@ -270,7 +267,6 @@ object Dijkstra {
                 0
             )
         }
-        var i: Int
         for (i in 0..n - 1) {
             dist[i].distance = Int.MAX_VALUE
         }
@@ -281,18 +277,17 @@ object Dijkstra {
             dist[startRoad.start.id].distance = distEnd
             dist[startRoad.end.id].distance = distStart
         }
-        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
-        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        var ans: MutableList<Base> = mutableListOf()
         while (!pq.isEmpty()) {
-            var cur: Pair<Int, Int> = pq.remove()
+            val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            var v: Vertex = gm.getVertex(cur.first)!!
+            val v: Vertex = gm.getVertex(cur.first)!!
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathReroute(cur, dist, startRoad, distStart, distEnd)
             }
@@ -307,7 +302,7 @@ object Dijkstra {
         startRoad: Road,
         distStart: Int,
         distEnd: Int
-    ): Position? {
+    ): Position {
         if (dist[cur.first].vertexList[0] == startRoad.start) {
             if (distStart != 0) {
                 dist[cur.first].roadList.add(startRoad)
@@ -355,7 +350,7 @@ object Dijkstra {
         val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height <= height) {
-                var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+                val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
@@ -380,9 +375,9 @@ object Dijkstra {
         endNode: Int,
         height: Int
     ): Position? {
-        var gm: GraphMap = gm2!!
-        var n: Int = gm.vertexList.size
-        var dist: Array<Position> = Array<Position>(n) { index ->
+        val gm: GraphMap = gm2!!
+        val n: Int = gm.vertexList.size
+        val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
                 mutableListOf<Road>(),
                 mutableListOf<Vertex>(),
@@ -393,7 +388,6 @@ object Dijkstra {
                 0
             )
         }
-        var i: Int
         for (i in 0..n - 1) {
             dist[i].distance = Int.MAX_VALUE
         }
@@ -404,18 +398,17 @@ object Dijkstra {
             dist[startRoad.start.id].distance = distEnd
             dist[startRoad.end.id].distance = distStart
         }
-        var compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
-        var pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        var ans: MutableList<Base> = mutableListOf()
         while (!pq.isEmpty()) {
-            var cur: Pair<Int, Int> = pq.remove()
+            val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            var v: Vertex = gm.getVertex(cur.first)!!
+            val v: Vertex = gm.getVertex(cur.first)!!
             if (endNode == v.id) {
                 return determinePathBackToBase(cur, dist, startRoad, distStart, distEnd)
             }
