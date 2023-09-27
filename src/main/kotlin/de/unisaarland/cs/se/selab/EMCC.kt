@@ -77,25 +77,28 @@ object EMCC {
                 var fireResources = em.resources.filterFireResources()
                 var ambulanceResources = em.resources.filterAmbulanceResources()
 
+                // make a request for the missing police resources
                 if (!policeResources.isEmpty()) {
-                    TODO("make request for police")
+                    var nextPoliceBase = emBase.getNextPoliceBase(emBase)
+                    if (nextPoliceBase != null) {
+                        emBase.makeRequest(em, nextPoliceBase)
+                    }
                 }
 
+                // make a request for the missing police resources
                 if (!fireResources.isEmpty()) {
-                    TODO("make request for fire")
+                    var nextFireBase = emBase.getNextFireBase(emBase)
+                    if (nextFireBase != null) {
+                        emBase.makeRequest(em, nextFireBase)
+                    }
                 }
 
                 if (!ambulanceResources.isEmpty()) {
-                    TODO("make request for ambulance")
+                    var nextAmbulanceBase = emBase.getNextHospital(emBase)
+                    if (nextAmbulanceBase != null) {
+                        emBase.makeRequest(em, nextAmbulanceBase)
+                    }
                 }
-
-                val nextBase = emBase.getNextBase(emBase)
-                if (nextBase != null) {
-                    emBase.makeRequest(em, nextBase)
-                }
-            } else {
-                startingEmergencies.remove(em)
-                handledEmergencies.add(em)
             }
         }
     }
@@ -105,7 +108,6 @@ object EMCC {
      */
     fun processRequests() {
         while (!requests.isEmpty()) {
-
         }
     }
 
@@ -164,7 +166,7 @@ object EMCC {
                 if (vec.position != null && vec.position!!.arrivalTicks != 0) {
                     vec.move()
                     // if a vehicle arrived at an emergency after moving, log it
-                    if ((!vec.position!!.isDrivingBack) && vec.position!!.arrivalTicks == 0) {
+                    if (!vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
                         newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
                     }
                     // if a vehicle arrived back at its base after moving, log it
@@ -187,6 +189,13 @@ object EMCC {
      * updates the state of all emergencies
      */
     fun updateEmergencies() {
+        // update all emergencies who allocated all resources in this tick
+        for (em in startingEmergencies) {
+            if (em.resources.isEmpty()) {
+                startingEmergencies.remove(em)
+                handledEmergencies.add(em)
+            }
+        }
         // update all emergencies whose handling started in this tick
         updateHandlingStartedEmergencies()
         // update all emergencies that were resolved in this tick
@@ -195,8 +204,9 @@ object EMCC {
         updateFailedEmergencies()
         // if all assets assigned to an emergency returned to their bases, we don't need to track it anymore
         for (em in resolvedOrFailedEmergencies) {
-            if (em.assignedVehicles.isEmpty())
-                    resolvedOrFailedEmergencies.remove(em)
+            if (em.assignedVehicles.isEmpty()) {
+                resolvedOrFailedEmergencies.remove(em)
+            }
         }
     }
 
