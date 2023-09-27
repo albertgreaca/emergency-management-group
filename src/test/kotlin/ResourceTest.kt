@@ -33,7 +33,7 @@ class ResourceTest {
                 VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE,
                 VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.FIREFIGHTER_TRANSPORTER
             )
-        var res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, null)
         val policeres = res.filterPoliceResources()
         val testres =
             Resource(
@@ -58,7 +58,7 @@ class ResourceTest {
                 VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR, VehicleType.EMERGENCY_DOCTOR_CAR,
                 VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL
             )
-        var res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, null)
         val hospitalres = res.filterAmbulanceResources()
         val testres =
             Resource(
@@ -90,7 +90,7 @@ class ResourceTest {
                 VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
                 VehicleType.EMERGENCY_DOCTOR_CAR
             )
-        var res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, null)
         val fireres = res.filterFireResources()
         val testres = Resource(
             mutableListOf<VehicleType>(
