@@ -87,7 +87,7 @@ class VehicleTest {
         val vertex0 = Vertex(0, null, 0)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
 
         assertFalse(vehicle.reroutable())
@@ -103,10 +103,10 @@ class VehicleTest {
         val roadlist = mutableListOf(road1)
         val vertexlist = mutableListOf(vertex0, vertex1)
 
-        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
+        val pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
         assertFalse(vehicle.reroutable())
     }
@@ -120,10 +120,10 @@ class VehicleTest {
         val roadlist = mutableListOf(road1)
         val vertexlist = mutableListOf(vertex0, vertex1)
 
-        var pos = Position(roadlist, vertexlist, 0, 20, vertex1, 20, 2, startedThisTick = false, isDrivingBack = false)
+        val pos = Position(roadlist, vertexlist, 0, 20, vertex1, 20, 2, startedThisTick = false, isDrivingBack = false)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
 
         assertTrue(vehicle.reroutable())
@@ -138,7 +138,7 @@ class VehicleTest {
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
         val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
         val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
@@ -155,10 +155,10 @@ class VehicleTest {
         val roadlist = mutableListOf(road1)
         val vertexlist = mutableListOf(vertex0, vertex1)
 
-        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
+        val pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
         val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
         val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
@@ -177,10 +177,10 @@ class VehicleTest {
         val roadlist = mutableListOf(road1)
         val vertexlist = mutableListOf(vertex0, vertex1)
 
-        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
+        val pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
         val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
         val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
@@ -199,10 +199,10 @@ class VehicleTest {
         val roadlist = mutableListOf(road1)
         val vertexlist = mutableListOf(vertex0, vertex1)
 
-        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
+        val pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         vertex0.base = base
-        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        val vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
         base.addVehicle(vehicle)
         val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
         val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 3, 2, 3, re)
