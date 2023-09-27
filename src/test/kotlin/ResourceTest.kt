@@ -77,7 +77,7 @@ class ResourceTest {
                 32,
                 null
             )
-        assertEquals(hospitalres, testres)
+        assertTrue(hospitalres == testres)
     }
 
     @Test
