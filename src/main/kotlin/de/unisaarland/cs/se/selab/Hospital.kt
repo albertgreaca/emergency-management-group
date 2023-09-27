@@ -3,14 +3,12 @@ package de.unisaarland.cs.se.selab
 /**
  * Hospital Base with number of doctors
  */
-class Hospital(id: Int, staff: Int, location: Vertex, vehicles: MutableList<Vehicle>) : Base(
+class Hospital(id: Int, staff: Int, location: Vertex, vehicles: MutableList<Vehicle>, var doctors: Int) : Base(
     id,
     staff,
     location,
     vehicles
 ) {
-    var doctors: Int = 0
-
     /**
      * random function to increase doctors?
      */
