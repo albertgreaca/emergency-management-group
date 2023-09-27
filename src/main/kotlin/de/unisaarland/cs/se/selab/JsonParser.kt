@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab
 
+import org.everit.json.schema.ValidationException
 import org.json.JSONObject
 import java.io.File
 
@@ -108,8 +109,14 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val policeDepartment = PoliceDepartment()
         val ambulanceDepartment = AmbulanceDepartment()
         val jsonObject = JSONObject(file1.readText())
-        val schem = getSchema(JsonParser::class.java, "assets")
-        schem?.validate(jsonObject)
+        val schem = getSchema(JsonParser::class.java, "assets.schema")
+        try {
+            schem?.validate(jsonObject)
+        } catch (e: ValidationException) {
+            println(e)
+            return false
+        }
+
         val basesArray = jsonObject.getJSONArray("Bases")
         for (i in 0 until basesArray.length()) {
             val currBase = basesArray.getJSONObject(i)
@@ -154,8 +161,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     fun parseEmergency(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
-        val schem = getSchema(JsonParser::class.java, "simulation")
-        schem?.validate(jsonObject)
+        val schem = getSchema(JsonParser::class.java, "simulation.schema")
+        try {
+            schem?.validate(jsonObject)
+        } catch (e: ValidationException) {
+            println(e)
+            return false
+        }
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
