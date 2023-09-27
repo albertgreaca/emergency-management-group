@@ -81,9 +81,9 @@ open class Base(
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
-            //Todo : something happening here
+            // Todo : something happening here
             var p = 0
-            p+= 0
+            p += 0
         }
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
         for (vehicle in vehiclesToallocate) {
@@ -93,17 +93,16 @@ open class Base(
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
-
     /**
      * helper function to check available vehicles for corresponding type
      */
-    private fun helperVehiclecompare(v: VehicleType, vehicleList: List<Vehicle>): Pair<Boolean, Vehicle?> {
+    private fun helperVehicleCompare(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
         for (vehicle in vehicleList) {
             if (vehicle.vehicleType == v) {
-                return Pair(true, vehicle)
+                return vehicle
             }
         }
-        return Pair(false, null)
+        return null
     }
 
     /**
@@ -113,6 +112,41 @@ open class Base(
     fun reallocateResources(em: Emergency): Resource {
         // TODO : implement
         em.id
+        // Only vehicles that are unavailable can be reallocated
+        // -> filter List for this
+        // also filter if target emergency severity is lower (bcs only then you can reallocate)
+        var allvehics = this.vehicles
+        var unavailableVehics = allvehics.filter { it.available == false }
+        var ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
+        var reallocableVehics = ontwVehics.filter { it.targetEmergency!!.severity < em.severity }.toMutableList()
+        // get emergencies resource
+        var neededVehicles = em.resources.getVehicles()
+        var vehicTypestoRequest = mutableListOf<VehicleType>()
+        // for each vehic type in resource
+        for (vt in neededVehicles) {
+            // check type special vs normal
+            // check if it is in filtered list
+            var vehic = helperVehicleCompare(vt, reallocableVehics)
+            if (vehic != null) {
+                // is staffed already
+                val height = vehic.vehicleHeight
+                var pos = Dijkstra.dijkstraHeight(this.location.id, em.road, height)
+                // only thing we need is dijkstra
+                // look if it arrives in time
+                if (pos!!.arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                    // no
+                    // abort
+                    vehicTypestoRequest.add(vt)
+                } else {
+                    // yes
+                    // change position, remove from needed list
+                    vehic.position = pos
+                    vehic.targetEmergency = em
+                }
+            } else {
+                vehicTypestoRequest.add(vt)
+            }
+        }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
@@ -157,6 +191,7 @@ open class Base(
         }
         return nextPoliceBase
     }
+
     /**
      * returns next Base of Type Hospital
      */
