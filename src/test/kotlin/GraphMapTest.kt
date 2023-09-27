@@ -101,4 +101,16 @@ class GraphMapTest {
         val map5 = adjList[5]
         assertTrue(map5[vert6] == r56 && map5[vert4] == r45)
     }
+
+    @Test
+    fun checkRoadAddingMV3() {
+        val gm = GraphMap()
+        val parser = MapParser(gm, File("src/test/resources/mapvalid3.dot"))
+        parser.parseMap()
+        val roadList = gm.roadList
+        val vert0 = Vertex(0, null, 0)
+        val vert4 = Vertex(4, null, 4)
+        val r1 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Uni", "Business_area", 10, 5, vert0, vert4)
+        assertTrue(roadList.contains(r1))
+    }
 }
