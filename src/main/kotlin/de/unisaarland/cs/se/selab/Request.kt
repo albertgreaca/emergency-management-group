@@ -40,6 +40,6 @@ class Request(
      * @return Base which requested (responsible base for emergency)
      */
     fun getRequestingBase(): Base {
-        return emergency.base!!
+        return requireNotNull(emergency.base)
     }
 }

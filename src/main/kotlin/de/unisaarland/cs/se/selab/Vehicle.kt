@@ -19,7 +19,7 @@ open class Vehicle(
      * moves the vehicle, changes the position
      */
     fun move() {
-        position!!.advance()
+        requireNotNull(position).advance()
     }
 
     /**
@@ -30,7 +30,7 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (position!!.arrivalTicks == 0) {
+        if (requireNotNull(position).arrivalTicks == 0) {
             return false
         }
         return true
@@ -44,10 +44,10 @@ open class Vehicle(
         if (position == null) {
             return false
         }
-        if (position!!.arrivalTicks == 0) {
+        if (requireNotNull(position).arrivalTicks == 0) {
             return false
         }
-        if (targetEmergency == null || em.severity < targetEmergency!!.severity) {
+        if (targetEmergency == null || em.severity < requireNotNull(targetEmergency).severity) {
             return false
         }
 
@@ -71,13 +71,13 @@ open class Vehicle(
                 base.id,
                 vehicleHeight
             )
-            if (!requireNotNull(position).isEqual(pos!!)) {
+            if (!requireNotNull(position).isEqual(requireNotNull(pos))) {
                 position = pos
                 return true
             }
             return false
         }
-        if (!position!!.isDrivingBack) {
+        if (!requireNotNull(position).isDrivingBack) {
             val pos = Dijkstra.dijkstraReroute(
                 requireNotNull(position).roadList[0],
                 requireNotNull(position).distanceFromStart,
