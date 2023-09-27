@@ -43,7 +43,7 @@ open class Base(
         neededVehiclesCopy.isEmpty()
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         val vehiclesToallocate = mutableListOf<Vehicle>()
-        var vehicTypestoRequest = mutableListOf<VehicleType>()
+        val vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
             // Todo : something happening here
@@ -83,7 +83,7 @@ open class Base(
         val allvehics = this.vehicles
         val unavailableVehics = allvehics.filter { it.available == false }
         val ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
-        val reallocableVehics = ontwVehics.filter { it.targetEmergency!!.severity < em.severity }.toMutableList()
+        val reallocableVehics = ontwVehics.filter { requireNotNull(it.targetEmergency).severity < em.severity }.toMutableList()
         // get emergencies resource
         val neededVehicles = em.resources.vehicles
         val vehicTypestoRequest = mutableListOf<VehicleType>()
@@ -98,7 +98,7 @@ open class Base(
                 var pos = Dijkstra.dijkstraHeight(this.location.id, em.road, height)
                 // only thing we need is dijkstra
                 // look if it arrives in time
-                if (pos!!.arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
                     // no
                     // abort
                     vehicTypestoRequest.add(vt)
@@ -152,7 +152,7 @@ open class Base(
             return null
         }
         while (!(nextPoliceBase is PoliceStation)) {
-            nextPoliceBase = getNextPoliceBase(nextPoliceBase!!)
+            nextPoliceBase = getNextPoliceBase(requireNotNull(nextPoliceBase))
         }
         return nextPoliceBase
     }
@@ -163,7 +163,7 @@ open class Base(
     fun getNextHospital(b: Base): Base? {
         var nextHospital: Base? = getNextBase(b) ?: return null
         while (nextHospital !is Hospital) {
-            nextHospital = getNextHospital(nextHospital!!)
+            nextHospital = getNextHospital(requireNotNull(nextHospital))
         }
         return nextHospital
     }
