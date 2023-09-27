@@ -134,11 +134,8 @@ object Dijkstra {
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance || (
-                        dist[node.id].distance == newp.distance && newp.smaller(
-                            dist[node.id]
-                        )
-                        )
+                if (dist[node.id].distance > newp.distance ||
+                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
                 ) {
                     dist[node.id] = newp
                     pq.add(Pair(node.id, newp.distance))
@@ -239,11 +236,8 @@ object Dijkstra {
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance || (
-                        dist[node.id].distance == newp.distance && newp.smaller(
-                            dist[node.id]
-                        )
-                        )
+                if (dist[node.id].distance > newp.distance ||
+                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
                 ) {
                     dist[node.id] = newp
                     pq.add(Pair(node.id, newp.distance))
@@ -350,6 +344,7 @@ object Dijkstra {
         }
         return dist[cur.first]
     }
+
     private fun updateNeighborsBackToBase(
         cur: Pair<Int, Int>,
         dist: Array<Position>,
@@ -364,10 +359,8 @@ object Dijkstra {
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance || (
-                        dist[node.id].distance == newp.distance &&
-                            newp.smaller(dist[node.id])
-                        )
+                if (dist[node.id].distance > newp.distance ||
+                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
                 ) {
                     dist[node.id] = newp
                     pq.add(Pair(node.id, newp.distance))

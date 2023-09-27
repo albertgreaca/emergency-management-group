@@ -19,5 +19,5 @@ interface EmergencyObserver {
     /**
      give the departments the list of Emergencies to handle
      */
-    fun update(list: MutableList<Emergency>)
+    fun update(em: Emergency)
 }

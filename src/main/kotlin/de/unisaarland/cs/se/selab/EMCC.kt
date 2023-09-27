@@ -17,8 +17,13 @@ object EMCC {
      * notifies all observers about new emergencies, this initiates the emergency phase
      */
     fun notifyObservers() {
-        for (o in observers) {
-            o.update(startingEmergencies)
+        startingEmergencies.sortBy { it.id }
+        for (em in startingEmergencies) {
+            when (em.type) {
+                EmergencyType.CRIME -> observers[0].update(em)
+                EmergencyType.FIRE, EmergencyType.ACCIDENT -> observers[1].update(em)
+                else -> observers[2].update(em)
+            }
         }
     }
 

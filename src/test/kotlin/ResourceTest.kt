@@ -60,7 +60,7 @@ class ResourceTest {
                 VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL
             )
         var res = Resource(vehicleList, 10, 5, 32, null)
-        val hospitalres = res.filterPoliceResources()
+        val hospitalres = res.filterAmbulanceResources()
         val testres =
             Resource(
                 mutableListOf<VehicleType>(
@@ -92,7 +92,7 @@ class ResourceTest {
                 VehicleType.EMERGENCY_DOCTOR_CAR
             )
         var res = Resource(vehicleList, 10, 5, 32, null)
-        val fireres = res.filterPoliceResources()
+        val fireres = res.filterFireResources()
         val testres = Resource(
             mutableListOf<VehicleType>(
                 VehicleType.FIRE_TRUCK_TECHNICAL,
