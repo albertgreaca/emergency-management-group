@@ -172,8 +172,8 @@ object Logger {
      */
     fun logStatistics(rerouted: Int, received: Int, ongoing: Int, failed: Int, resolved: Int): String {
         val output = "Simulation Statistics: $rerouted assets rerouted.\nSimulation Statistics: $received received " +
-                "emergencies.\nSimulation Statistics: $ongoing ongoing emergencies.\nSimulation Statistics: $failed " +
-                "failed emergencies.\nSimulation Statistics: $resolved resolved emergencies."
+            "emergencies.\nSimulation Statistics: $ongoing ongoing emergencies.\nSimulation Statistics: $failed " +
+            "failed emergencies.\nSimulation Statistics: $resolved resolved emergencies."
         pw.print(output)
         return output
     }
