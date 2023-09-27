@@ -80,27 +80,32 @@ class Base(
         // TODO: implement
         for (vt in neededVehicles) {
             when(vt) {
-                VehicleType.FIRE_TRUCK_LADDER -> TODO(wtf)
-                VehicleType.FIRE_TRUCK_WATER -> TODO(water wtf)
+                VehicleType.FIRE_TRUCK_LADDER -> TODO()
+                VehicleType.FIRE_TRUCK_WATER -> TODO( )
                 VehicleType.POLICE_CAR -> TODO()
                 VehicleType.AMBULANCE -> TODO()
                 else -> {
                     var speicher = helperVehiclecompare(vt, availableBaseVehicles)
-                    var bool = speicher.first
-                    if (bool) {
+                    var vehiclefound = speicher.first
+                    if (vehiclefound) {
                         var vehic = speicher.second
                         if (vehic != null) {
                             vehiclesToallocate.add(vehic)
                             availableBaseVehicles.remove(vehic)
-                        } else {
+                        }
+                    }
+                    else {
                            vehicTypestoRequest.add(vt)
                         }
 
-                    }
+
                 }
             }
         }
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
+        for (vehicle in vehiclesToallocate) {
+
+        }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
@@ -158,11 +163,11 @@ class Base(
      */
     fun makeRequest(em: Emergency, nextBase: Base) {
         // create a request
-        val req = Request(EMCC.getNextRequestId(), em, nextBase)
+        val req = Request(EMCC.nextRequestId, em, nextBase)
         // add it to the list of requests
-        EMCC.getRequests().add(req)
+        EMCC.requests.add(req)
         // log that a new request was made
-        Logger.logAssetRequest(req.getId(), nextBase.getId(), em.getId())
+        Logger.logAssetRequest(req.getId(), nextBase.getId(), em.id)
         // count up the id of the next request
         EMCC.increaseNextRequestId()
     }
