@@ -1,5 +1,8 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * Class representing Edges/Roads
+ */
 class Road(
     var primType: PrimaryRoadType,
     var secType: SecondaryRoadType,
@@ -13,16 +16,27 @@ class Road(
 
     var eventList: MutableList<Event> = mutableListOf()
 
+    /**
+     * @return the actual weight depending on the event
+     */
     fun getActualWeight(): Int {
         // TODO
-        return 0
+        return weight + height
     }
+
+    /**
+     * @return the current event (first element of list) null if no event is active
+     */
     fun getCurrentEvent(): Event? {
         if (eventList.isEmpty()) {
             return null
         }
         return eventList[0]
     }
+
+    /**
+     * Setting all necessary attributes for a road
+     */
     fun setAttributes(
         prim: PrimaryRoadType,
         sec: SecondaryRoadType,
@@ -38,9 +52,17 @@ class Road(
         this.weight = weight
         this.height = height
     }
+
+    /**
+     * Adding Event to list
+     */
     fun addEvent(ev: Event) {
         eventList.add(ev)
     }
+
+    /**
+     * Removing event from list
+     */
     fun removeEvent(ev: Event) {
         eventList.remove(ev)
     }
