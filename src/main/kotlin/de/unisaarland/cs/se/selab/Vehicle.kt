@@ -83,17 +83,41 @@ open class Vehicle(
      * @return true if changed the position, else false
      */
     fun reroute(): Boolean {
-         Position pos = Dijkstra.dijkstraReroute(position.roadList.get(0), position.distanceFromStart, position.distanceFromEnd, position.destinationVertex, )
-         if (!position.equals(pos)){
-         position = pos
-        return true
-    return position == null
-        // }
-        // return false }
+        if (position!!.isDrivingBack) {
+            val pos = Dijkstra.dijkstraBackToBase(
+                position!!.roadList.get(0),
+                position!!.distanceFromStart,
+                position!!.distanceFromEnd,
+                position!!.destinationVertex!!,
+                base.getId(),
+                vehicleHeight
+            )
+            if (!position!!.equals(pos)) {
+                position = pos
+                return true
+            }
+            return false
+        }
+        if (!position!!.isDrivingBack) {
+            val pos = Dijkstra.dijkstraReroute(
+                position!!.roadList.get(0),
+                position!!.distanceFromStart,
+                position!!.distanceFromEnd,
+                position!!.destinationVertex!!,
+                targetEmergency!!.road,
+                vehicleHeight
+            )
+            if (!position!!.equals(pos)) {
+                position = pos
+                return true
+            }
+            return false
+        }
+        return false
     }
 
     fun sendBackToBase() {
-      //  Position pos = Dijkstra.dijkstraHeigth()
-      //  position = pos
+        //  Position pos = Dijkstra.dijkstraHeigth()
+        //  position = pos
     }
 }
