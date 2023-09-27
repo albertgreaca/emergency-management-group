@@ -24,6 +24,7 @@ class MapParser(private val gm: GraphMap, file: File) {
     private var mapVilMain = mutableMapOf<String, Boolean>()
     private var mapVilVer = mutableMapOf<Int, String>()
     private var curIndex = 0
+    private var lastCharSize = 0
 
     /**
      * Starting function for parsing
@@ -77,8 +78,11 @@ class MapParser(private val gm: GraphMap, file: File) {
             id = getNextInt() ?: return false
             skipSpaces(false)
             sep = chars[charcounter]
-            charcounter++
+            if (sep != '-') {
+                charcounter++
+            }
         }
+        charcounter -= lastCharSize
         return sep == '-'
     }
 
@@ -97,8 +101,9 @@ class MapParser(private val gm: GraphMap, file: File) {
             }
             charcounter += 2
             val end = getNextInt()
-            var ret = end == null || verToVer.contains(Pair(start, end)) || !parseAttributes(start, end)
-            ret = ret || chars[charcounter] != ';'
+            var ret = end != null && (!verToVer.contains(Pair(start, end)) || !verToVer.contains(
+                Pair(end, start))) && !parseAttributes(start, end)
+            ret = ret && chars[charcounter] == ';'
             if (ret) {
                 return false
             }
@@ -320,13 +325,13 @@ class MapParser(private val gm: GraphMap, file: File) {
                 return false
             }
         }
-        if(charcounter >= chars.size) {
+        if (charcounter >= chars.size) {
             return false
         }
-        while (chars[charcounter].isWhitespace()
-            && charcounter < chars.size) {
+        while (chars[charcounter].isWhitespace() &&
+            charcounter < chars.size
+        ) {
             charcounter++
-
         }
         return true
     }
@@ -364,14 +369,17 @@ class MapParser(private val gm: GraphMap, file: File) {
     private fun getNextInt(): Int? {
         skipSpaces(false)
         var res = ""
-        if(charcounter >= chars.size) {
+        lastCharSize = 0
+        if (charcounter >= chars.size) {
             return null
         }
-        while (charcounter < chars.size && !chars[charcounter].isWhitespace()) {
-            if(!(!isSeparator(chars[charcounter]) || chars[charcounter] == '-')) {
-                break;
-            }
+        if (chars[charcounter] == '-') {
             res += chars[charcounter]
+            charcounter++
+        }
+        while (charcounter < chars.size && !chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])) {
+            res += chars[charcounter]
+            lastCharSize++
             charcounter++
         }
         return res.toIntOrNull()
