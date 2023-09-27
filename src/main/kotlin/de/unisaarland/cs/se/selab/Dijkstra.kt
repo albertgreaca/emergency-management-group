@@ -91,7 +91,7 @@ object Dijkstra {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
         var dist: Array<Position> = Array<Position>(n) { index ->
-            Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, null, 0, 0, false)
+            Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
         }
         var i: Int
         for (i in 0..n - 1) {
@@ -125,7 +125,7 @@ object Dijkstra {
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex) {
                 if (edge.height <= height) {
-                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, null, 0, 0, false)
+                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                     newp.distance = dist[cur.first].distance + edge.getActualWeight()
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
@@ -159,10 +159,10 @@ object Dijkstra {
                 mutableListOf<Road>(),
                 mutableListOf<Vertex>(),
                 0,
+                0,
                 null,
                 0,
-                0,
-                false
+                0
             )
         }
         var i: Int
@@ -228,7 +228,7 @@ object Dijkstra {
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex) {
                 if (edge.height <= height) {
-                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, null, 0, 0, false)
+                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                     newp.distance = dist[cur.first].distance + edge.getActualWeight()
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
@@ -262,10 +262,10 @@ object Dijkstra {
                 mutableListOf<Road>(),
                 mutableListOf<Vertex>(),
                 0,
+                0,
                 null,
                 0,
-                0,
-                false
+                0
             )
         }
         var i: Int
@@ -331,7 +331,7 @@ object Dijkstra {
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex) {
                 if (edge.height <= height) {
-                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, null, 0, 0, false)
+                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                     newp.distance = dist[cur.first].distance + edge.getActualWeight()
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
