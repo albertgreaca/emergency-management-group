@@ -107,4 +107,9 @@ class ResourceTest {
         )
         assertEquals(fireres, testres)
     }
+
+    @Test
+    fun ResourceDifferenceTest() {
+
+    }
 }
