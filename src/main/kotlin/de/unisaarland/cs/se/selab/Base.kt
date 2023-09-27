@@ -32,12 +32,12 @@ open class Base(
      */
     fun requestResources(em: Emergency): Resource {
         val r = em.resources
-        val neededVehicles = r.getVehicles()
-        var water = r.getWaterAmount()
+        val neededVehicles = r.vehicles
+        var water = r.waterAmount
         water += 0
-        var criminals = r.getCriminalAmount()
+        var criminals = r.criminalAmount
         criminals += 0
-        var patients = r.getPatientAmount()
+        var patients = r.patientAmount
         patients += 0
         val neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
@@ -85,7 +85,7 @@ open class Base(
         val ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
         val reallocableVehics = ontwVehics.filter { it.targetEmergency!!.severity < em.severity }.toMutableList()
         // get emergencies resource
-        val neededVehicles = em.resources.getVehicles()
+        val neededVehicles = em.resources.vehicles
         val vehicTypestoRequest = mutableListOf<VehicleType>()
         // for each vehic type in resource
         for (vt in neededVehicles) {

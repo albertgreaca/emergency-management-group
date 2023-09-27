@@ -4,11 +4,11 @@ package de.unisaarland.cs.se.selab
  * Resource class to save needs for emergency
  */
 class Resource(
-    private val vehicles: MutableList<VehicleType>,
-    private var waterAmount: Int,
-    private var criminalAmount: Int,
-    private var patientAmount: Int,
-    private var ladderLength: Int?
+    val vehicles: MutableList<VehicleType>,
+    var waterAmount: Int,
+    var criminalAmount: Int,
+    var patientAmount: Int,
+    var ladderLength: Int?
 ) {
 
 
@@ -128,6 +128,9 @@ class Resource(
         return ambulanceResource
     }
 
+    /**
+     * checks if equal
+     */
     fun isEqual(other: Any?): Boolean {
         if (other is Resource) {
             return this.vehicles.sort().equals(other.vehicles.sort()) && this.waterAmount == other.waterAmount &&

@@ -105,6 +105,6 @@ class ResourceTest {
             0,
             null
         )
-        assertEquals(fireres, testres)
+        assertTrue(fireres.isEqual(testres))
     }
 }
