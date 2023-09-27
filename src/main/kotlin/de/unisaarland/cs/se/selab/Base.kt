@@ -226,6 +226,6 @@ open class Base(
         // log that a new request was made
         Logger.logAssetRequest(req.getId(), nextBase.getId(), em.id)
         // count up the id of the next request
-        EMCC.increaseNextRequestId()
+        EMCC.nextRequestId++
     }
 }
