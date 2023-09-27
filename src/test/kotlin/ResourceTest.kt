@@ -1,7 +1,6 @@
 import de.unisaarland.cs.se.selab.Resource
 import de.unisaarland.cs.se.selab.VehicleType
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
