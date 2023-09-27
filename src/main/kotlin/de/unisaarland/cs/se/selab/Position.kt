@@ -16,7 +16,6 @@ class Position(
     var startedThisTick: Boolean = false,
     var isDrivingBack: Boolean = false
 ) {
-
     /**
      * advances the position by one tick
      */

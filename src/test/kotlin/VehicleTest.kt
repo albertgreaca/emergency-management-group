@@ -8,14 +8,16 @@ import de.unisaarland.cs.se.selab.Vehicle
 import de.unisaarland.cs.se.selab.VehicleType
 import de.unisaarland.cs.se.selab.Vertex
 import org.junit.jupiter.api.Test
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class VehicleTest {
     @Test
-    fun testMove() {
-        val vertex0 = Vertex(0, null)
-        val vertex1 = Vertex(1, null)
-        val vertex2 = Vertex(2, null)
-        val vertex3 = Vertex(3, null)
+    fun testMove1() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+        val vertex2 = Vertex(2, null, 2)
+        val vertex3 = Vertex(3, null, 3)
 
         val road1 =
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex1, vertex2)
@@ -23,10 +25,10 @@ class VehicleTest {
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Allee", 5, 4, vertex2, vertex3)
 
         val roadlist = mutableListOf(road1, road2)
-        val vertexlist = mutableListOf(vertex1, vertex2)
+        val vertexlist = mutableListOf(vertex1, vertex2, vertex3)
         val expected = mutableListOf(road2)
 
-        var pos = Position(roadlist, vertexlist, 10, vertex3, 15, 2, false)
+        var pos = Position(roadlist, vertexlist, 10, 10, vertex3, 15, 2, startedThisTick = false, isDrivingBack = false)
 
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
@@ -34,11 +36,94 @@ class VehicleTest {
 
         vehicle.move()
 
-        assert(roadlist.size == 1)
-        assert(pos.positionOnRoad == 0)
-        assert(pos.distance == 5)
-        assert(pos.arrivalTicks == 1)
-        assert(pos.roadList.equals(expected))
-        // wenn started this tick true nicht bewegen
+        assertTrue(roadlist.size == 1)
+        assertTrue(pos.distanceFromEnd == 0)
+        assertTrue(pos.distanceFromStart == 0)
+        assertTrue(pos.distance == 5)
+        assertTrue(pos.arrivalTicks == 1)
+        assertTrue(pos.startedThisTick == false)
+        assertTrue(pos.isDrivingBack == false)
+        assertTrue(pos.destinationVertex == vertex3)
+        assertTrue(pos.roadList == expected)
+    }
+
+    @Test
+    fun testMove2StartedThisTick() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+        val vertex2 = Vertex(2, null, 2)
+        val vertex3 = Vertex(3, null, 3)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+        val road2 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Allee", 5, 4, vertex1, vertex2)
+
+        val roadlist = mutableListOf(road1, road2)
+        val vertexlist = mutableListOf(vertex0, vertex1, vertex2)
+
+        var pos = Position(roadlist, vertexlist, 0, 20, vertex3, 25, 3, startedThisTick = true, isDrivingBack = false)
+
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        vehicle.move()
+
+        assertTrue(pos.startedThisTick == false)
+        assertTrue(pos.isDrivingBack == false)
+        assertTrue(roadlist.size == 2)
+        assertTrue(pos.distanceFromEnd == 20)
+        assertTrue(pos.distanceFromStart == 0)
+        assertTrue(pos.distance == 25)
+        assertTrue(pos.arrivalTicks == 3)
+        assertTrue(pos.destinationVertex == vertex3)
+    }
+
+    fun testReroutablePositionNull() {
+        val pos: Position? = null
+        val vertex0 = Vertex(0, null, 0)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+
+        assertFalse(vehicle.reroutable())
+    }
+
+    fun testReroutableArrivalTicks0() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+
+        val roadlist = mutableListOf(road1)
+        val vertexlist = mutableListOf(vertex0, vertex1)
+
+        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        assertFalse(vehicle.reroutable())
+    }
+    fun testReroutableTrue() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+
+        val roadlist = mutableListOf(road1)
+        val vertexlist = mutableListOf(vertex0, vertex1)
+
+        var pos = Position(roadlist, vertexlist, 0, 20, vertex1, 20, 2, startedThisTick = false, isDrivingBack = false)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+
+        assertTrue(vehicle.reroutable())
     }
 }
