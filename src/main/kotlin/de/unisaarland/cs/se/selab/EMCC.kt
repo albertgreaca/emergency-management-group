@@ -14,13 +14,6 @@ object EMCC {
     val requests: MutableList<Request> = mutableListOf()
 
     /**
-     * increases the ID of the next request by 1
-     */
-    fun increaseNextRequestId() {
-        nextRequestId++
-    }
-
-    /**
      * notifies all observers about new emergencies, this initiates the emergency phase
      */
     fun notifyObservers() {
@@ -73,32 +66,41 @@ object EMCC {
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!em.resources.isEmpty()) {
-                var policeResources = em.resources.filterPoliceResources()
-                var fireResources = em.resources.filterFireResources()
-                var ambulanceResources = em.resources.filterAmbulanceResources()
+                makeRequest(em)
+            }
+        }
+    }
 
-                // make a request for the missing police resources
-                if (!policeResources.isEmpty()) {
-                    var nextPoliceBase = emBase.getNextPoliceBase(emBase)
-                    if (nextPoliceBase != null) {
-                        emBase.makeRequest(em, nextPoliceBase)
-                    }
-                }
+    /**
+     * creates a request for each type of base with the resources that are still missing after allocation/reallocation
+     */
+    private fun makeRequest(em: Emergency) {
+        var emBase = em.base!!
+        var policeResources = em.resources.filterPoliceResources()
+        var fireResources = em.resources.filterFireResources()
+        var ambulanceResources = em.resources.filterAmbulanceResources()
 
-                // make a request for the missing police resources
-                if (!fireResources.isEmpty()) {
-                    var nextFireBase = emBase.getNextFireBase(emBase)
-                    if (nextFireBase != null) {
-                        emBase.makeRequest(em, nextFireBase)
-                    }
-                }
+        // make a request for the missing police resources
+        if (!policeResources.isEmpty()) {
+            var nextPoliceBase = emBase.getNextPoliceBase(emBase)
+            if (nextPoliceBase != null) {
+                emBase.makeRequest(em, nextPoliceBase)
+            }
+        }
 
-                if (!ambulanceResources.isEmpty()) {
-                    var nextAmbulanceBase = emBase.getNextHospital(emBase)
-                    if (nextAmbulanceBase != null) {
-                        emBase.makeRequest(em, nextAmbulanceBase)
-                    }
-                }
+        // make a request for the missing police resources
+        if (!fireResources.isEmpty()) {
+            var nextFireBase = emBase.getNextFireBase(emBase)
+            if (nextFireBase != null) {
+                emBase.makeRequest(em, nextFireBase)
+            }
+        }
+
+        // make a request for the missing ambulance resources
+        if (!ambulanceResources.isEmpty()) {
+            var nextAmbulanceBase = emBase.getNextHospital(emBase)
+            if (nextAmbulanceBase != null) {
+                emBase.makeRequest(em, nextAmbulanceBase)
             }
         }
     }
@@ -108,51 +110,56 @@ object EMCC {
      */
     fun processRequests() {
         while (!requests.isEmpty()) {
+            for (request in requests) {
+                // try to allocate all requested resources, return what is left
+                var resourcesLeft: Resource = request.getProcessingBase().requestResources(request.getEmergency())
+
+                // if we have resources left, make another request to the next closest base
+                if (!resourcesLeft.isEmpty()) {
+                    // update the resources in the emergency
+                    request.getEmergency().resources.updateDifference(resourcesLeft)
+                    // make a new request
+                    delegateRequest(request)
+                }
+            }
         }
     }
 
     /**
-     * adds an event to the startingEvents list
+     * creates a new request to the next closest base if the current request could not be handled by the current base
      */
-    fun addStartingEvent(event: Event) {
-        startingEvents.add(event)
-    }
-
-    /**
-     * removes an event from the startingEvents list
-     */
-    fun removeStartingEvent(event: Event) {
-        startingEvents.remove(event)
-    }
-
-    /**
-     * adds an event to the activeEvents list
-     */
-    fun addActiveEvent(event: Event) {
-        activeEvents.add(event)
-    }
-
-    /**
-     * removes an event from the activeEvents list
-     */
-    fun removeActiveEvent(event: Event) {
-        activeEvents.remove(event)
+    private fun delegateRequest(request: Request) {
+        when (request.getProcessingBase()) {
+            is PoliceStation -> {
+                // calculate the next closest police base and make a request to this base
+                val nextBase = request.getRequestingBase().getNextPoliceBase(request.getProcessingBase())
+                if (nextBase != null) {
+                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                }
+            }
+            is Hospital -> {
+                // calculate the next closest ambulance base and make a request to this base
+                val nextBase = request.getRequestingBase().getNextHospital(request.getProcessingBase())
+                if (nextBase != null) {
+                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                }
+            }
+            else -> {
+                // calculate the next closest fire base and make a request to this base
+                val nextBase = request.getRequestingBase().getNextFireBase(request.getProcessingBase())
+                if (nextBase != null) {
+                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                }
+            }
+        }
     }
 
     /**
      * moves an event from the startingEvents list to the activeEvents list
      */
     fun moveFromStartingToActive(event: Event) {
-        removeStartingEvent(event)
-        addActiveEvent(event)
-    }
-
-    /**
-     * moves an event from the activeEvents list to the startingEvents list
-     */
-    fun moveFromActiveToStarting(event: Event) {
-        removeActiveEvent(event)
-        addStartingEvent(event)
+        startingEvents.remove(event)
+        activeEvents.add(event)
     }
 
     /**
@@ -162,26 +169,29 @@ object EMCC {
         val newlyArrivedAssets: MutableList<Pair<Int, Int>> = mutableListOf()
         for (em in Simulation.emergencies) {
             for (vec in em.assignedVehicles) {
-                // move each vehicle that is currently driving
-                if (vec.position != null && vec.position!!.arrivalTicks != 0) {
-                    vec.move()
-                    // if a vehicle arrived at an emergency after moving, log it
-                    if (!vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
-                        newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
-                    }
-                    // if a vehicle arrived back at its base after moving, log it
-                    if (vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
-                        newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
-                        vec.targetEmergency!!.assignedVehicles.remove(vec)
-                        vec.targetEmergency = null
-                        vec.position = null
-                    }
-                }
+                moveAndLogAsset(vec, newlyArrivedAssets)
             }
         }
         newlyArrivedAssets.sortBy { it.first }
         for ((aid, vid) in newlyArrivedAssets) {
             Logger.logAssetArrival(aid, vid)
+        }
+    }
+
+    private fun moveAndLogAsset(vec: Vehicle, newlyArrivedAssets: MutableList<Pair<Int, Int>>) {
+        // move each vehicle that is currently driving
+        if (vec.position == null || vec.position!!.arrivalTicks == 0) return
+        vec.move()
+        // if a vehicle arrived at an emergency after moving, log it
+        if (!vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
+            newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
+        }
+        // if a vehicle arrived back at its base after moving, log it
+        if (vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
+            newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
+            vec.targetEmergency!!.assignedVehicles.remove(vec)
+            vec.targetEmergency = null
+            vec.position = null
         }
     }
 
@@ -220,15 +230,14 @@ object EMCC {
     private fun updateHandlingStartedEmergencies() {
         var newlyHandlingStartedEmergencies: MutableList<Emergency> = mutableListOf()
         for (em in handledEmergencies) {
-            if (!em.handlingStarted && em.resources.isEmpty()) {
-                var allArrived = true
-                for (vec in em.assignedVehicles) {
-                    allArrived = if (vec.position!!.arrivalTicks == 0) allArrived else false
-                }
-                if (allArrived) {
-                    em.handlingStarted = true
-                    newlyHandlingStartedEmergencies.add(em)
-                }
+            if (em.handlingStarted || !em.resources.isEmpty()) continue
+            var allArrived = true
+            for (vec in em.assignedVehicles) {
+                allArrived = if (vec.position!!.arrivalTicks == 0) allArrived else false
+            }
+            if (allArrived) {
+                em.handlingStarted = true
+                newlyHandlingStartedEmergencies.add(em)
             }
         }
         newlyHandlingStartedEmergencies.sortBy { it.id }
@@ -300,7 +309,7 @@ object EMCC {
         // first handle the ending events
         for (event in activeEvents) {
             if (event.tick + event.duration == Simulation.currentTick) {
-                removeActiveEvent(event)
+                activeEvents.remove(event)
                 event.stopEvent()
                 eventsChanged = true
             }
@@ -321,9 +330,12 @@ object EMCC {
         var numberOfReroutedVehicles = 0
         for (em in Simulation.emergencies) {
             for (vec in em.assignedVehicles) {
-                if (vec.reroutable()) {
-                    val wasRerouted = vec.reroute()
-                    numberOfReroutedVehicles = if (wasRerouted) numberOfReroutedVehicles + 1 else numberOfReroutedVehicles
+                if (!vec.reroutable()) continue
+                val wasRerouted = vec.reroute()
+                numberOfReroutedVehicles = if (wasRerouted) {
+                    numberOfReroutedVehicles + 1
+                } else {
+                    numberOfReroutedVehicles
                 }
             }
         }
