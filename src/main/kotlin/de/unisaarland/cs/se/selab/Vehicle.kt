@@ -62,16 +62,16 @@ open class Vehicle(
      * @return true if changed the position, else false
      */
     fun reroute(): Boolean {
-        if (position!!.isDrivingBack) {
+        if (requireNotNull(position).isDrivingBack) {
             val pos = Dijkstra.dijkstraBackToBase(
-                position!!.roadList[0],
-                position!!.distanceFromStart,
-                position!!.distanceFromEnd,
-                position!!.destinationVertex!!,
+                requireNotNull(position).roadList[0],
+                requireNotNull(position).distanceFromStart,
+                requireNotNull(position).distanceFromEnd,
+                requireNotNull(requireNotNull(position).destinationVertex),
                 base.id,
                 vehicleHeight
             )
-            if (!position!!.isEqual(pos!!)) {
+            if (!requireNotNull(position).isEqual(pos!!)) {
                 position = pos
                 return true
             }
@@ -79,14 +79,14 @@ open class Vehicle(
         }
         if (!position!!.isDrivingBack) {
             val pos = Dijkstra.dijkstraReroute(
-                position!!.roadList[0],
-                position!!.distanceFromStart,
-                position!!.distanceFromEnd,
-                position!!.destinationVertex!!,
-                targetEmergency!!.road,
+                requireNotNull(position).roadList[0],
+                requireNotNull(position).distanceFromStart,
+                requireNotNull(position).distanceFromEnd,
+                requireNotNull(requireNotNull(position).destinationVertex),
+                requireNotNull(targetEmergency).road,
                 vehicleHeight
             )
-            if (!position!!.isEqual(pos!!)) {
+            if (!requireNotNull(position).isEqual(requireNotNull(pos))) {
                 position = pos
                 return true
             }
@@ -100,10 +100,10 @@ open class Vehicle(
      */
     fun sendBackToBase() {
         val pos = Dijkstra.dijkstraBackToBase(
-            position!!.roadList[0],
-            position!!.distanceFromStart,
-            position!!.distanceFromEnd,
-            position!!.destinationVertex!!,
+            requireNotNull(position).roadList[0],
+            requireNotNull(position).distanceFromStart,
+            requireNotNull(position).distanceFromEnd,
+            requireNotNull(requireNotNull(position).destinationVertex),
             base.id,
             vehicleHeight
         )
