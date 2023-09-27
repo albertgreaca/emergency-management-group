@@ -350,6 +350,7 @@ object Dijkstra {
         }
         return dist[cur.first]
     }
+
     private fun updateNeighborsBackToBase(
         cur: Pair<Int, Int>,
         dist: Array<Position>,

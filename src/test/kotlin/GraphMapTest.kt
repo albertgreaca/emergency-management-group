@@ -1,7 +1,7 @@
 import de.unisaarland.cs.se.selab.GraphMap
-import de.unisaarland.cs.se.selab.Road
 import de.unisaarland.cs.se.selab.MapParser
 import de.unisaarland.cs.se.selab.PrimaryRoadType
+import de.unisaarland.cs.se.selab.Road
 import de.unisaarland.cs.se.selab.SecondaryRoadType
 import de.unisaarland.cs.se.selab.Vertex
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -26,17 +26,17 @@ class GraphMapTest {
         assertTrue(roadList.contains(r2))
         val adjList: MutableList<MutableMap<Vertex, Road>> = gm.adjacencyList
         val map0 = adjList[0]
-        assertTrue(map0.containsKey(vert1)) //check existence of connection between vert0 and vert1
+        assertTrue(map0.containsKey(vert1)) // check existence of connection between vert0 and vert1
         val supposed2 = map0[vert1]
-        assertTrue(supposed2 == r2) //check if the connection between vert0 and vert1 is supposed one
+        assertTrue(supposed2 == r2) // check if the connection between vert0 and vert1 is supposed one
         val map1 = adjList[1]
         assertTrue(map1.containsKey(vert0)) // check if the said connection is bidirectional
         val supposed2Again = map1[vert0]
-        assertTrue(supposed2Again == r2) //check for the other way around
-        assertTrue(map1.containsKey(vert2)) //check if vert1 is connected to vert2
+        assertTrue(supposed2Again == r2) // check for the other way around
+        assertTrue(map1.containsKey(vert2)) // check if vert1 is connected to vert2
         val supposed1 = map1[vert2]
-        assertTrue(supposed1 == r1) //check if the vert1 to vert2 connection is the correct one
-        //now check for bidirectionality
+        assertTrue(supposed1 == r1) // check if the vert1 to vert2 connection is the correct one
+        // now check for bidirectionality
         val map2 = adjList[2]
         assertTrue(r1 == map2[vert2])
     }
@@ -81,13 +81,13 @@ class GraphMapTest {
             vert5,
             vert6
         )
-        val roadList = gm.roadList
         assertTrue(
-            roadList.contains(r01) && roadList.contains(r12) && roadList.contains(r13)
+            gm.roadList.contains(r01) && gm.roadList.contains(r12) && gm.roadList.contains(r13)
         )
         assertTrue(
-            roadList.contains(r24) && roadList.contains(r45
-            ) && roadList.contains(r56)
+            gm.roadList.contains(r24) && gm.roadList.contains(
+                r45
+            ) && gm.roadList.contains(r56)
         )
         val adjList: MutableList<MutableMap<Vertex, Road>> = gm.adjacencyList
         val map0 = adjList[0]
