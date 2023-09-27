@@ -55,16 +55,16 @@ object EMCC {
         // iterate over emergencies
         for (em in startingEmergencies) {
             // get the base assigned to the emergency
-            var emBase = requireNotNull(em.base)
+            val emBase = requireNotNull(em.base)
 
             // base tries to allocate resources for emergency, returns what is left
-            var resourcesAfterAllocating = emBase.requestResources(em)
+            val resourcesAfterAllocating = emBase.requestResources(em)
 
             // update the resources in the emergency
             em.resources.updateDifference(resourcesAfterAllocating)
 
             // base tries to reallocate resources from other emergencies, returns what is left
-            var resourcesAfterReallocating = emBase.reallocateResources(em)
+            val resourcesAfterReallocating = emBase.reallocateResources(em)
 
             // update the resources in the emergency
             em.resources.updateDifference(resourcesAfterReallocating)
@@ -80,14 +80,14 @@ object EMCC {
      * creates a request for each type of base with the resources that are still missing after allocation/reallocation
      */
     private fun makeRequest(em: Emergency) {
-        var emBase = requireNotNull(em.base)
-        var policeResources = em.resources.filterPoliceResources()
-        var fireResources = em.resources.filterFireResources()
-        var ambulanceResources = em.resources.filterAmbulanceResources()
+        val emBase = requireNotNull(em.base)
+        val policeResources = em.resources.filterPoliceResources()
+        val fireResources = em.resources.filterFireResources()
+        val ambulanceResources = em.resources.filterAmbulanceResources()
 
         // make a request for the missing police resources
         if (!policeResources.isEmpty()) {
-            var nextPoliceBase = emBase.getNextPoliceBase(emBase)
+            val nextPoliceBase = emBase.getNextPoliceBase(emBase)
             if (nextPoliceBase != null) {
                 emBase.makeRequest(em, nextPoliceBase)
             }
@@ -95,7 +95,7 @@ object EMCC {
 
         // make a request for the missing police resources
         if (!fireResources.isEmpty()) {
-            var nextFireBase = emBase.getNextFireBase(emBase)
+            val nextFireBase = emBase.getNextFireBase(emBase)
             if (nextFireBase != null) {
                 emBase.makeRequest(em, nextFireBase)
             }
@@ -103,7 +103,7 @@ object EMCC {
 
         // make a request for the missing ambulance resources
         if (!ambulanceResources.isEmpty()) {
-            var nextAmbulanceBase = emBase.getNextHospital(emBase)
+            val nextAmbulanceBase = emBase.getNextHospital(emBase)
             if (nextAmbulanceBase != null) {
                 emBase.makeRequest(em, nextAmbulanceBase)
             }
@@ -117,7 +117,7 @@ object EMCC {
         while (!requests.isEmpty()) {
             for (request in requests) {
                 // try to allocate all requested resources, return what is left
-                var resourcesLeft: Resource = request.getProcessingBase().requestResources(request.getEmergency())
+                val resourcesLeft: Resource = request.getProcessingBase().requestResources(request.getEmergency())
 
                 // if we have resources left, make another request to the next closest base
                 if (!resourcesLeft.isEmpty()) {
@@ -233,7 +233,7 @@ object EMCC {
      * -all allocated resources have arrived
      */
     private fun updateHandlingStartedEmergencies() {
-        var newlyHandlingStartedEmergencies: MutableList<Emergency> = mutableListOf()
+        val newlyHandlingStartedEmergencies: MutableList<Emergency> = mutableListOf()
         for (em in handledEmergencies) {
             if (em.handlingStarted || !em.resources.isEmpty()) continue
             var allArrived = true
