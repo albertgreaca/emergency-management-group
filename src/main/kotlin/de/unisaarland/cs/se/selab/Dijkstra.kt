@@ -2,9 +2,15 @@ package de.unisaarland.cs.se.selab
 
 import java.util.PriorityQueue
 
+/**
+ * Class representing Dijkstra
+ */
 object Dijkstra {
     var gm2: GraphMap? = null
 
+    /**
+     * Doing dijkstra for emergencies
+     */
     fun dijkstraEmergency(startingNode: Int, startingNode2: Int, et: EmergencyType): Base? {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
@@ -51,6 +57,9 @@ object Dijkstra {
         return null
     }
 
+    /**
+     * Doing dijkstra for requesting
+     */
     fun dijkstraRequest(startingNode: Int): MutableList<Base> {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
@@ -87,6 +96,9 @@ object Dijkstra {
         return ans
     }
 
+    /**
+     * Doing Dijkstra respecting the height of vehicles and roads
+     */
     fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position? {
         var gm: GraphMap = gm2!!
         var n: Int = gm.vertexList.size
@@ -130,10 +142,10 @@ object Dijkstra {
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
                     if (dist[node.id].distance > newp.distance || (
-                                dist[node.id].distance == newp.distance && newp.smaller(
-                                    dist[node.id]
-                                )
-                                )
+                            dist[node.id].distance == newp.distance && newp.smaller(
+                                dist[node.id]
+                            )
+                            )
                     ) {
                         dist[node.id] = newp
                         pq.add(Pair(node.id, newp.distance))
@@ -144,6 +156,9 @@ object Dijkstra {
         return null
     }
 
+    /**
+     * Doing Dijkstra for Reallocation
+     */
     fun dijkstraReallocate(
         startRoad: Road,
         distStart: Int,
@@ -233,10 +248,10 @@ object Dijkstra {
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
                     if (dist[node.id].distance > newp.distance || (
-                                dist[node.id].distance == newp.distance && newp.smaller(
-                                    dist[node.id]
-                                )
-                                )
+                            dist[node.id].distance == newp.distance && newp.smaller(
+                                dist[node.id]
+                            )
+                            )
                     ) {
                         dist[node.id] = newp
                         pq.add(Pair(node.id, newp.distance))
@@ -247,6 +262,9 @@ object Dijkstra {
         return null
     }
 
+    /**
+     * Doing dijkstra to the base
+     */
     fun dijkstraBackToBase(
         startRoad: Road,
         distStart: Int,
@@ -335,7 +353,11 @@ object Dijkstra {
                     newp.distance = dist[cur.first].distance + edge.getActualWeight()
                     newp.vertexList = dist[cur.first].vertexList.toMutableList()
                     newp.vertexList.add(v)
-                    if (dist[node.id].distance > newp.distance || (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))) {
+                    if (dist[node.id].distance > newp.distance || (
+                            dist[node.id].distance == newp.distance &&
+                                newp.smaller(dist[node.id])
+                            )
+                    ) {
                         dist[node.id] = newp
                         pq.add(Pair(node.id, newp.distance))
                     }
