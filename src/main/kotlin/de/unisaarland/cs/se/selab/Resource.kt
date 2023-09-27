@@ -163,9 +163,9 @@ class Resource(
 
     override fun equals(other: Any?): Boolean {
         if (other is Resource) {
-            return this.vehicles.sort().equals(other.vehicles.sort()) && this.waterAmount == other.waterAmount
-                    && this.patientAmount == other.patientAmount && this.criminalAmount == other.criminalAmount
-                    && this.ladderLength == other.ladderLength
+            return this.vehicles.sort().equals(other.vehicles.sort()) && this.waterAmount == other.waterAmount &&
+                this.patientAmount == other.patientAmount && this.criminalAmount == other.criminalAmount &&
+                this.ladderLength == other.ladderLength
         }
         return false
     }
