@@ -10,40 +10,7 @@ class Resource(
     private var patientAmount: Int,
     private var ladderLength: Int?
 ) {
-    /**
-     * @returns Vehicles
-     */
-    fun getVehicles(): MutableList<VehicleType> {
-        return vehicles
-    }
 
-    /**
-     * @return WaterAmount
-     */
-    fun getWaterAmount(): Int {
-        return waterAmount
-    }
-
-    /**
-     * @return CriminalAmount
-     */
-    fun getCriminalAmount(): Int {
-        return criminalAmount
-    }
-
-    /**
-     * @return PatientAmount
-     */
-    fun getPatientAmount(): Int {
-        return patientAmount
-    }
-
-    /**
-     * @return ladderLength
-     */
-    fun getLadderLength(): Int? {
-        return ladderLength
-    }
 
     /**
      * check if Resource is empty
@@ -69,21 +36,21 @@ class Resource(
         // compare WaterAmount
         // this assumes first resource always has more?
         // abs fix?
-        val waterDifference = this.getWaterAmount() - resource.getWaterAmount()
+        val waterDifference = this.waterAmount - resource.waterAmount
         // compare CriminalAmount
         // abs fix?
-        val criminalDifference = this.getCriminalAmount() - resource.getCriminalAmount()
+        val criminalDifference = this.criminalAmount - resource.criminalAmount
         // compare patientAmount
         // abs fix?
-        val patientDifference = this.getPatientAmount() - resource.getPatientAmount()
+        val patientDifference = this.patientAmount - resource.patientAmount
         // compare Ladder Length
         // the weird let thing was a detekt fix I have no clue what it does
-        val ladderDifference = resource.getLadderLength()?.let { this.getLadderLength()?.minus(it) }
+        val ladderDifference = resource.ladderLength?.let { this.ladderLength?.minus(it) }
         // compare List of needed Vehicles
         // am I supposed to create a new resource?
         // what is the Int for?
-        var originalNeededVehicles = this.getVehicles()
-        var newNeededVehicles = resource.getVehicles()
+        var originalNeededVehicles = this.vehicles
+        var newNeededVehicles = resource.vehicles
         var diffNeededVehicles: MutableList<VehicleType>
         if (originalNeededVehicles.size >= newNeededVehicles.size) {
             diffNeededVehicles = listDifference(originalNeededVehicles, newNeededVehicles)
@@ -161,7 +128,7 @@ class Resource(
         return ambulanceResource
     }
 
-    override fun equals(other: Any?): Boolean {
+    fun isEqual(other: Any?): Boolean {
         if (other is Resource) {
             return this.vehicles.sort().equals(other.vehicles.sort()) && this.waterAmount == other.waterAmount &&
                 this.patientAmount == other.patientAmount && this.criminalAmount == other.criminalAmount &&
