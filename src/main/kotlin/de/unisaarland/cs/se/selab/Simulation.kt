@@ -17,28 +17,26 @@ object Simulation {
         mapConfig: File, baseVehicleConfig: File,
         emergEventConfig: File
     ): Boolean {
-        val mapParser: MapParser = MapParser(map, mapConfig) //initialize the map and check for validity
+        val mapParser = MapParser(map, mapConfig) //initialize the map and check for validity
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
-        if (!mapParsed) {
-            return false
+        if (mapParsed) {
+            val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
+            val vehiclesParsed: Boolean =
+                jsonParser.parseVehicles() //initialize vehicles and bases and check for validity
+            val basesParsed: Boolean = jsonParser.parseBases()
+            Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
+            if (vehiclesParsed && basesParsed) {
+                val eventsParsed: Boolean =
+                    jsonParser.parseEvents() //initialize events and emergencies and check for validity
+                val emergenciesParsed: Boolean = jsonParser.parseEmergency()
+                Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
+                if (eventsParsed && emergenciesParsed) {
+                    return true
+                }
+            }
         }
-        val jsonParser: JsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
-        val vehiclesParsed: Boolean = jsonParser.parseVehicles() //initialize vehicles and bases and check for validity
-        val basesParsed: Boolean = jsonParser.parseBases()
-        Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
-        if (!(vehiclesParsed && basesParsed)) {
-            return false
-        }
-        val eventsParsed: Boolean = jsonParser.parseEvents() //initialize events and emergencies and check for validity
-        val emergenciesParsed: Boolean = jsonParser.parseEmergency()
-        Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
-        if (!(eventsParsed && emergenciesParsed)) {
-            return false
-        }
-        return true
-
-
+        return false
     }
 
     private fun increaseCurrentTick() {
