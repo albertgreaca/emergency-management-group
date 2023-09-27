@@ -156,7 +156,7 @@ open class Base(
      */
     fun calculateNextBases() {
         // TODO : implement
-        val nextcalculatedBases = Dijkstra.dijkstraRequest(this.getLocation().getId())
+        val nextcalculatedBases = Dijkstra.dijkstraRequest(this.getLocation().id)
         this.nextBases = nextcalculatedBases
         return
         // recalculates the distances of the other bases to this base

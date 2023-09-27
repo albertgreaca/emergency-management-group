@@ -38,7 +38,7 @@ class GraphMap(
      * Getting Vertex by Id
      */
     fun getVertex(id: Int): Vertex? {
-        return vertexList.firstOrNull { it.getId() == id }
+        return vertexList.firstOrNull { it.id == id }
     }
 
     /**

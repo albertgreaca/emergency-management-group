@@ -274,7 +274,7 @@ class MapParser(private val gm: GraphMap, file: File) {
     }
 
     private fun validateVertex(v: Vertex): Boolean {
-        return v.getId() >= 0 && gm.getVertex(v.getId()) == null
+        return v.id >= 0 && gm.getVertex(v.id) == null
     }
 
     private fun validateRoad(r: Road): Boolean {
