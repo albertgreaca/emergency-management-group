@@ -8,7 +8,7 @@ import java.util.PriorityQueue
 object Dijkstra {
     var gm2: GraphMap? = null
 
-    private fun determineBase(et: EmergencyType, b: Base): Base? {
+    private fun determineBaseEmergency(et: EmergencyType, b: Base): Base? {
         if (et == EmergencyType.FIRE && b !is PoliceStation && b !is Hospital) {
             return b
         }
@@ -24,7 +24,7 @@ object Dijkstra {
         return null
     }
 
-    private fun updateNeighbors(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
+    private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (dist[node.id] > dist[cur.first] + edge.weight) {
@@ -59,11 +59,11 @@ object Dijkstra {
             var v: Vertex = gm.getVertex(cur.first)!!
             if (v.base != null) {
                 var b: Base = v.base!!
-                if (determineBase(et, b) != null) {
-                    return determineBase(et, b)
+                if (determineBaseEmergency(et, b) != null) {
+                    return determineBaseEmergency(et, b)
                 }
             }
-            updateNeighbors(cur, dist, pq)
+            updateNeighborsEmergency(cur, dist, pq)
         }
         return null
     }
@@ -107,7 +107,7 @@ object Dijkstra {
         return ans
     }
 
-    private fun determinePath(cur: Pair<Int, Int>, dist: Array<Position>): Position? {
+    private fun determinePathHeight(cur: Pair<Int, Int>, dist: Array<Position>): Position? {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
                 gm2!!.getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])!!
@@ -120,7 +120,7 @@ object Dijkstra {
         return dist[cur.first]
     }
 
-    private fun updateNeighborsPath(
+    private fun updateNeighborsHeight(
         cur: Pair<Int, Int>,
         dist: Array<Position>,
         pq: PriorityQueue<Pair<Int, Int>>,
@@ -174,9 +174,9 @@ object Dijkstra {
             }
             var v: Vertex = gm.getVertex(cur.first)!!
             if (endRoad.start == v || endRoad.end == v) {
-                return determinePath(cur, dist)
+                return determinePathHeight(cur, dist)
             }
-            updateNeighborsPath(cur, dist, pq, height, v)
+            updateNeighborsHeight(cur, dist, pq, height, v)
         }
         return null
     }
@@ -307,6 +307,75 @@ object Dijkstra {
         return null
     }
 
+    private fun determinePathBackToBase(
+        cur: Pair<Int, Int>,
+        dist: Array<Position>,
+        startRoad: Road,
+        distStart: Int,
+        distEnd: Int
+    ): Position? {
+        if (dist[cur.first].vertexList[0] == startRoad.start) {
+            if (distStart != 0) {
+                dist[cur.first].roadList.add(startRoad)
+                dist[cur.first].distance = cur.second
+                dist[cur.first].destinationVertex = startRoad.start
+                dist[cur.first].distanceFromStart = distEnd
+                dist[cur.first].distanceFromEnd = distStart
+            } else {
+                dist[cur.first].distance = cur.second
+                dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
+                dist[cur.first].distanceFromStart = 0
+                dist[cur.first].distanceFromEnd =
+                    gm2!!.getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])!!.getActualWeight()
+            }
+        } else {
+            if (distEnd != 0) {
+                dist[cur.first].roadList.add(startRoad)
+                dist[cur.first].distance = cur.second
+                dist[cur.first].destinationVertex = startRoad.end
+                dist[cur.first].distanceFromStart = distStart
+                dist[cur.first].distanceFromEnd = distEnd
+            } else {
+                dist[cur.first].distance = cur.second
+                dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
+                dist[cur.first].distanceFromStart = 0
+                dist[cur.first].distanceFromEnd =
+                    gm2!!.getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])!!.getActualWeight()
+            }
+        }
+        for (i in 0..dist[cur.first].vertexList.size - 2) {
+            dist[cur.first].roadList.add(
+                gm2!!.getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])!!
+            )
+        }
+        return dist[cur.first]
+    }
+    private fun updateNeighborsBackToBase(
+        cur: Pair<Int, Int>,
+        dist: Array<Position>,
+        pq: PriorityQueue<Pair<Int, Int>>,
+        height: Int,
+        v: Vertex
+    ) {
+        val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
+        for ((node, edge) in nex) {
+            if (edge.height <= height) {
+                var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+                newp.distance = dist[cur.first].distance + edge.getActualWeight()
+                newp.vertexList = dist[cur.first].vertexList.toMutableList()
+                newp.vertexList.add(v)
+                if (dist[node.id].distance > newp.distance || (
+                        dist[node.id].distance == newp.distance &&
+                            newp.smaller(dist[node.id])
+                        )
+                ) {
+                    dist[node.id] = newp
+                    pq.add(Pair(node.id, newp.distance))
+                }
+            }
+        }
+    }
+
     /**
      * Doing dijkstra to the base
      */
@@ -355,59 +424,9 @@ object Dijkstra {
             }
             var v: Vertex = gm.getVertex(cur.first)!!
             if (endNode == v.id) {
-                if (dist[cur.first].vertexList[0] == startRoad.start) {
-                    if (distStart != 0) {
-                        dist[cur.first].roadList.add(startRoad)
-                        dist[cur.first].distance = cur.second
-                        dist[cur.first].destinationVertex = startRoad.start
-                        dist[cur.first].distanceFromStart = distEnd
-                        dist[cur.first].distanceFromEnd = distStart
-                    } else {
-                        dist[cur.first].distance = cur.second
-                        dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
-                        dist[cur.first].distanceFromStart = 0
-                        dist[cur.first].distanceFromEnd =
-                            gm.getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])!!.getActualWeight()
-                    }
-                } else {
-                    if (distEnd != 0) {
-                        dist[cur.first].roadList.add(startRoad)
-                        dist[cur.first].distance = cur.second
-                        dist[cur.first].destinationVertex = startRoad.end
-                        dist[cur.first].distanceFromStart = distStart
-                        dist[cur.first].distanceFromEnd = distEnd
-                    } else {
-                        dist[cur.first].distance = cur.second
-                        dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
-                        dist[cur.first].distanceFromStart = 0
-                        dist[cur.first].distanceFromEnd =
-                            gm.getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])!!.getActualWeight()
-                    }
-                }
-                for (i in 0..dist[cur.first].vertexList.size - 2) {
-                    dist[cur.first].roadList.add(
-                        gm.getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])!!
-                    )
-                }
-                return dist[cur.first]
+                return determinePathBackToBase(cur, dist, startRoad, distStart, distEnd)
             }
-            val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
-            for ((node, edge) in nex) {
-                if (edge.height <= height) {
-                    var newp: Position = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
-                    newp.distance = dist[cur.first].distance + edge.getActualWeight()
-                    newp.vertexList = dist[cur.first].vertexList.toMutableList()
-                    newp.vertexList.add(v)
-                    if (dist[node.id].distance > newp.distance || (
-                            dist[node.id].distance == newp.distance &&
-                                newp.smaller(dist[node.id])
-                            )
-                    ) {
-                        dist[node.id] = newp
-                        pq.add(Pair(node.id, newp.distance))
-                    }
-                }
-            }
+            updateNeighborsBackToBase(cur, dist, pq, height, v)
         }
         return null
     }
