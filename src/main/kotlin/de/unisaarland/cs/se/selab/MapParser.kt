@@ -206,17 +206,6 @@ class MapParser(private val gm: GraphMap, file: File) {
                 mapVilMain.replace(village, false, true)
             }
         }
-        if (mapVilVer.contains(end)) {
-            ret = ret && mapVilVer[end] == village
-        } else {
-            mapVilVer[start] = village
-        }
-
-        skipSpaces(false)
-        if (chars[charcounter] != ';') {
-            ret = false
-        }
-        charcounter++
         return ret && parseAttributes4(pty, village, name, weight, heightLimit, start, end)
     }
 
@@ -230,6 +219,17 @@ class MapParser(private val gm: GraphMap, file: File) {
         end: Int
     ): Boolean {
         var ret = true
+        if (mapVilVer.contains(end)) {
+            ret = ret && mapVilVer[end] == village
+        } else {
+            mapVilVer[start] = village
+        }
+
+        skipSpaces(false)
+        if (chars[charcounter] != ';') {
+            ret = false
+        }
+        charcounter++
         ret = ret && getNextWordEquals("secondaryType")
 
         skipSpaces(false)

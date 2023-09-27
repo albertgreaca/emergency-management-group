@@ -11,7 +11,6 @@ class Resource(
     var ladderLength: Int?
 ) {
 
-
     /**
      * check if Resource is empty
      */
