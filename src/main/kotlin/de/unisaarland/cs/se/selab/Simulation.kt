@@ -43,10 +43,6 @@ object Simulation {
         return false
     }
 
-    private fun increaseCurrentTick() {
-        currentTick += 1
-    }
-
     /** adds an emergency to the global event list
      */
     fun addEmergency(em: Emergency) {
@@ -84,7 +80,7 @@ object Simulation {
         if (checkEventsChange) {
             EMCC.rerouteVehicles()
         }
-        increaseCurrentTick()
+        currentTick++
     }
 
     private fun finalEvaluation() {
