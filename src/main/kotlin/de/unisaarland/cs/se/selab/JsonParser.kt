@@ -110,17 +110,15 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val jsonObject = JSONObject(file1.readText())
         val schem = getSchema(JsonParser::class.java, "assets")
         schem?.validate(jsonObject)
-        val basesObject = jsonObject.getJSONArray("Bases")
-        for (i in 0 until basesObject.length()) {
-            val currBase = basesObject.getJSONObject(i)
+        val basesArray = jsonObject.getJSONArray("Bases")
+        for (i in 0 until basesArray.length()) {
+            val currBase = basesArray.getJSONObject(i)
             val id = currBase.getInt(ID)
-            if (id < 0) res = false
             val baseType = currBase.getString("baseType")
             val locationId = currBase.getInt("location")
-            if (locationId < 0) res = false
             val location = gm.getVertex(locationId) ?: return false
             val staffs = currBase.getInt("staffs")
-            if (staffs < 1) res = false
+            if (staffs < 1 || locationId < 0 || id < 0) res = false
             when (baseType) {
                 "FIRE_STATION" -> {
                     val newBase = Base(id, staffs, location, mutableListOf())
@@ -131,12 +129,14 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 "POLICE_STATION" -> {
                     val dogs = currBase.getInt("dogs") // create Police Station
                     val newBase = PoliceStation(id, staffs, location, mutableListOf(), dogs)
+                    location.base = newBase
                     policeDepartment.addBase(newBase)
                 }
 
                 "HOSPITAL" -> {
                     val doctor = currBase.getInt("doctors")
                     val newBase = Hospital(id, staffs, location, mutableListOf(), doctor)
+                    location.base = newBase
                     ambulanceDepartment.addBase(newBase)
                 }
             }
@@ -144,7 +144,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             EMCC.addObserver(fireDepartment)
             EMCC.addObserver(ambulanceDepartment)
         }
-        if (!res) Logger.logInitInfo(file1.name, res)
+        if (!res) Logger.logInitInfo(file1.name, false)
         return res
     }
 
@@ -160,9 +160,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
             val id = currEmer.getInt(ID)
-            if (id < 0) res = false
             val tick = currEmer.getInt("tick")
-            if (tick < 1) res = false
+            if (tick < 1 || id < 0) res = false
             val village = currEmer.getString("village")
             val roadName = currEmer.getString("roadName")
             val road = gm.getRoad(village, roadName) ?: return false
@@ -170,9 +169,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val severity = currEmer.getInt("severity")
             if (severity < 1 || severity > 3) res = false
             val handleTime = currEmer.getInt("handleTime")
-            if (handleTime < 1) res = false
             val maxDuration = currEmer.getInt("maxDuration")
-            if (maxDuration < 2) res = false
+            if (maxDuration < 2 || handleTime < 1) res = false
             // resources
 
             val resources = resourcesParse(type, severity)
@@ -180,17 +178,17 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             Simulation.addEmergency(newEmergency)
         }
         res = res && true
-        if (!res) Logger.logInitInfo(file2.name, res)
+        if (!res) Logger.logInitInfo(file2.name, false)
         return res
     }
 
     private fun resourcesParse(type: EmergencyType, severity: Int): Resource {
         val resourcesFactory = ResourceFactory() // resourceFactory
-        when (type) {
-            EmergencyType.ACCIDENT -> return resourcesFactory.createAccidentResources(severity)
-            EmergencyType.CRIME -> return resourcesFactory.createCrimeResources(severity)
-            EmergencyType.FIRE -> return resourcesFactory.createFireResources(severity)
-            EmergencyType.MEDICAL -> return resourcesFactory.createMedicalResources(severity)
+        return when (type) {
+            EmergencyType.ACCIDENT -> resourcesFactory.createAccidentResources(severity)
+            EmergencyType.CRIME -> resourcesFactory.createCrimeResources(severity)
+            EmergencyType.FIRE -> resourcesFactory.createFireResources(severity)
+            EmergencyType.MEDICAL -> resourcesFactory.createMedicalResources(severity)
         }
     }
 
