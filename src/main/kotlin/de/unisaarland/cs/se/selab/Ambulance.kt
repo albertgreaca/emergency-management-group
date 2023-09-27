@@ -8,7 +8,7 @@ class Ambulance(
     override val staffCapacity: Int,
     override val vehicleHeight: Int,
     override var position: Position? = null,
-    private var patientOnBoard: Boolean,
+    var patientOnBoard: Boolean,
 ) : Vehicle(
     id,
     VehicleType.AMBULANCE,
@@ -16,20 +16,4 @@ class Ambulance(
     staffCapacity,
     vehicleHeight,
     position
-) {
-
-    /**
-     * getter for knowing if there is a patient on board
-     * @return true if there is a patient on board, else false
-     */
-    fun getPatientOnBoard(): Boolean {
-        return patientOnBoard
-    }
-
-    /**
-     * setter for the patient on board
-     */
-    fun setPatientOnBoard(patient: Boolean) {
-        patientOnBoard = patient
-    }
-}
+)

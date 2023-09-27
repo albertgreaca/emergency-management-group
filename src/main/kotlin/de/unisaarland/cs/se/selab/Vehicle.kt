@@ -16,27 +16,6 @@ open class Vehicle(
     var targetEmergency: Emergency? = null
 
     /**
-     * setter for the baseWaitingTicks
-     */
-    fun setBaseWaitingTicks(ticks: Int) {
-        baseWaitingTicks = ticks
-    }
-
-    /**
-     * setter for the Position
-     */
-    fun setPosition(pos: Position) {
-        position = pos
-    }
-
-    /**
-     * setter for the Availability
-     */
-    fun setAvailable(value: Boolean) {
-        available = value
-    }
-
-    /**
      * moves the vehicle, changes the position
      */
     fun move() {
