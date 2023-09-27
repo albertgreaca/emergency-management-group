@@ -8,12 +8,12 @@ import java.lang.Integer.min
 class Position(
     var roadList: MutableList<Road>,
     var vertexList: MutableList<Vertex>,
-    var positionOnRoad: Int,
+    var distanceFromStart: Int,
+    var distanceFromEnd: Int,
     var destinationVertex: Vertex?,
     var distance: Int,
     var arrivalTicks: Int,
     var startedThisTick: Boolean = false,
-    var roadIndex: Int = 0,
     var isDrivingBack: Boolean = false
 ) {
 
@@ -32,10 +32,9 @@ class Position(
      * checks if two positions are equal
      */
     fun isEqual(o: Position): Boolean {
-        return this.roadList == o.roadList && this.vertexList == o.vertexList && this.roadIndex == o.roadIndex &&
-            this.positionOnRoad == o.positionOnRoad &&
-            this.destinationVertex == o.destinationVertex &&
-            this.arrivalTicks == o.arrivalTicks
+        return this.roadList == o.roadList &&
+            this.distanceFromStart == o.distanceFromStart && this.distanceFromEnd == o.distanceFromEnd &&
+            this.destinationVertex == o.destinationVertex && this.distance == o.distance
     }
 
     /**

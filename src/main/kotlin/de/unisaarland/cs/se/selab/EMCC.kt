@@ -73,7 +73,10 @@ object EMCC {
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!resourcesAfterReallocating.isEmpty()) {
-                TODO("implement creating requests")
+                val nextBase = emBase.getNextBase(emBase)
+                if (nextBase != null) {
+                    emBase.makeRequest(em, nextBase)
+                }
             }
         }
     }
@@ -82,7 +85,7 @@ object EMCC {
      * handles all requests made in the allocation phase of the current tick
      */
     fun processRequests() {
-        TODO("not implemented yet")
+
     }
 
     /**
@@ -130,15 +133,32 @@ object EMCC {
     }
 
     /**
-     * moves all driving assets
+     * updates the state of all driving assets
      */
     fun updateAssets() {
+        val newlyArrivedAssets: MutableList<Pair<Int, Int>> = mutableListOf()
         for (em in Simulation.emergencies) {
             for (vec in em.assignedVehicles) {
+                // move each vehicle that is currently driving
                 if (vec.position != null && vec.position!!.arrivalTicks != 0) {
                     vec.move()
+                    // if a vehicle arrived at an emergency after moving, log it
+                    if ((!vec.position!!.isDrivingBack) && vec.position!!.arrivalTicks == 0) {
+                        newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
+                    }
+                    // if a vehicle arrived back at its base after moving, log it
+                    if (vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
+                        newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
+                        vec.targetEmergency!!.assignedVehicles.remove(vec)
+                        vec.targetEmergency = null
+                        vec.position = null
+                    }
                 }
             }
+        }
+        newlyArrivedAssets.sortBy { it.first }
+        for ((aid, vid) in newlyArrivedAssets) {
+            Logger.logAssetArrival(aid, vid)
         }
     }
 
@@ -161,15 +181,28 @@ object EMCC {
 
     /**
      * updates the state of all emergencies that were started handling
+     * an emergency starts handling if:
+     * -it has not started handling before
+     * -all needed resources are allocated
+     * -all allocated resources have arrived
      */
     private fun updateHandlingStartedEmergencies() {
+        var newlyHandlingStartedEmergencies: MutableList<Emergency> = mutableListOf()
         for (em in handledEmergencies) {
             if (!em.handlingStarted && em.resources.isEmpty()) {
                 var allArrived = true
                 for (vec in em.assignedVehicles) {
                     allArrived = if (vec.position!!.arrivalTicks == 0) allArrived else false
                 }
+                if (allArrived) {
+                    em.handlingStarted = true
+                    newlyHandlingStartedEmergencies.add(em)
+                }
             }
+        }
+        newlyHandlingStartedEmergencies.sortBy { it.id }
+        for (emergency in newlyHandlingStartedEmergencies) {
+            Logger.logEmergencyHandlingStart(emergency.id)
         }
     }
 
