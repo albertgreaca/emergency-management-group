@@ -1,35 +1,70 @@
 package de.unisaarland.cs.se.selab
 
-class GraphMap (var adjacencyList: MutableList<MutableMap<Vertex,Road>> = mutableListOf(mutableMapOf()), var vertexList: MutableList<Vertex> = mutableListOf(),
-                var roadList: MutableList<Road> = mutableListOf(), var name: String? = null){
+/**
+ * Class representing that graph of map
+ */
+class GraphMap(
+    var adjacencyList: MutableList<MutableMap<Vertex, Road>> = mutableListOf(
+        mutableMapOf()
+    ),
+    var vertexList: MutableList<Vertex> = mutableListOf(),
+    var roadList: MutableList<Road> = mutableListOf(),
+    var name: String? = null
+) {
+    /**
+     * Adding Vertex to lists
+     */
     fun addVertex(vertex: Vertex) {
         vertexList.add(vertex)
         adjacencyList.add(mutableMapOf())
     }
+
+    /**
+     * Adding Vertex to lists
+     */
     fun addRoad(road: Road, start: Int, end: Int): Boolean {
         val vs: Vertex? = getVertex(start)
         val ve: Vertex? = getVertex(end)
-        if (vs == null || ve == null)
+        if (vs == null || ve == null) {
             return false
+        }
         roadList.add(road)
         adjacencyList[vs.getId()][ve] = road
         adjacencyList[ve.getId()][vs] = road
         return true
     }
+
+    /**
+     * Getting Vertex by Id
+     */
     fun getVertex(id: Int): Vertex? {
-        return vertexList.firstOrNull {it.getId() == id}
+        return vertexList.firstOrNull { it.getId() == id }
     }
+
+    /**
+     * Getting Road of village and with roadname
+     */
     fun getRoad(villageName: String, roadName: String): Road? {
-        return roadList.firstOrNull {it.village == villageName && it.name == roadName}
+        return roadList.firstOrNull { it.village == villageName && it.name == roadName }
     }
+
+    /**
+     * @return road by start and end vertex
+     */
     fun getRoad(start: Vertex, end: Vertex): Road? {
-        return adjacencyList[start.id].get(end)
+        return adjacencyList[start.id][end]
     }
+
+    /**
+     @return List of Roads that are of certain type
+     */
     fun getListRoad(t: PrimaryRoadType): MutableList<Road> {
         var ans: MutableList<Road> = mutableListOf<Road>()
-        for(r in roadList)
-            if (r.primType == t)
+        for (r in roadList) {
+            if (r.primType == t) {
                 ans.add(r)
+            }
+        }
         return ans
     }
 }
