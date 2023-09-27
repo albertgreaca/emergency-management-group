@@ -45,16 +45,8 @@ class MapParser(private val gm: GraphMap, file: File) {
             return false
         }
         charcounter++
-        return parseSgtStmtList() && validateGraphMap()
-    }
-
-    /**
-     * Parsing everything in between { }
-     * @return Parsing Successful or not
-     */
-    private fun parseSgtStmtList(): Boolean {
         skipSpaces(false)
-        return parseVertices() && parseEdges()
+        return parseVertices() && parseEdges() && !mapVilMain.containsValue(false)
     }
 
     /**
@@ -101,19 +93,23 @@ class MapParser(private val gm: GraphMap, file: File) {
             }
             charcounter += 2
             val end = getNextInt()
-            var ret = end != null && (!verToVer.contains(Pair(start, end)) || !verToVer.contains(
-                Pair(end, start))) && !parseAttributes(start, end)
+            var ret = end != null && !verToVer.contains(Pair(start, end)) &&
+                !verToVer.contains(Pair(end, start)) && parseAttributes(start, end)
             ret = ret && chars[charcounter] == ';'
-            if (ret) {
+            if (!ret) {
                 return false
             }
             charcounter++
             verToVer.add(Pair(start, end!!))
+            if (untilEnd() == 1) {
+                break
+            }
             start = getNextInt() ?: return false
             skipSpaces(false)
             sep = chars[charcounter]
         }
-        return sep == '}' && sideStreetCount
+        skipSpaces(false)
+        return chars[charcounter] == '}' && sideStreetCount
     }
 
     /**
@@ -123,7 +119,7 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseAttributes(start: Int, end: Int): Boolean {
-        var ret: Boolean = start == end
+        var ret: Boolean = start != end
         skipSpaces(false)
         ret = ret && chars[charcounter] == '['
         charcounter++
@@ -133,12 +129,9 @@ class MapParser(private val gm: GraphMap, file: File) {
         charcounter++
         skipSpaces(false)
         val village = getNextWord()
-        ret = ret && validateId(village) && village != graphName
-        if (!mapVilMain.contains(village)) {
-            mapVilMain[village] = false
-        }
+        ret = ret && validateId(village)
         skipSpaces(false)
-        ret = ret && chars[charcounter] != ';'
+        ret = ret && chars[charcounter] == ';'
         charcounter++
         ret = ret && getNextWordEquals("name")
         skipSpaces(false)
@@ -203,13 +196,8 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = ret && village == graphName
         } else if (mapVilVer.contains(start)) {
             ret = ret && mapVilVer[start] == village
-        } else {
+        } else if (pty != PrimaryRoadType.COUNTYROAD) {
             mapVilVer[start] = village
-        }
-        if (pty == PrimaryRoadType.MAINSTREET) {
-            if (mapVilMain.contains(village)) {
-                mapVilMain.replace(village, false, true)
-            }
         }
         return ret && parseAttributes4(pty, village, name, weight, heightLimit, start, end)
     }
@@ -224,13 +212,37 @@ class MapParser(private val gm: GraphMap, file: File) {
         end: Int
     ): Boolean {
         var ret = true
-        if (mapVilVer.contains(end)) {
+        if (pty != PrimaryRoadType.COUNTYROAD) {
+            if (!mapVilMain.contains(village)) {
+                mapVilMain[village] = false
+            }
+            ret = ret && village != graphName
+        }
+        if (pty == PrimaryRoadType.MAINSTREET) {
+            if (mapVilMain.contains(village)) {
+                mapVilMain.replace(village, false, true)
+            }
+        }
+        if (pty != PrimaryRoadType.COUNTYROAD && mapVilVer.contains(end)) {
             ret = ret && mapVilVer[end] == village
-        } else {
-            mapVilVer[start] = village
+        } else if (pty != PrimaryRoadType.COUNTYROAD) {
+            mapVilVer[end] = village
         }
 
         skipSpaces(false)
+        return ret && parseAttributes5(pty, village, name, weight, heightLimit, start, end)
+    }
+
+    private fun parseAttributes5(
+        pty: PrimaryRoadType,
+        village: String,
+        name: String,
+        weight: Int,
+        heightLimit: Int,
+        start: Int,
+        end: Int
+    ): Boolean {
+        var ret = true
         if (chars[charcounter] != ';') {
             ret = false
         }
@@ -242,6 +254,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = false
         }
         charcounter++
+        skipSpaces(false)
         val secondary = getNextWord()
         val sty = validateSecondaryType(secondary) ?: return false
 
@@ -250,17 +263,20 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = false
         }
         charcounter++
-        skipSpaces(false)
         val startv = gm.getVertex(start)
         val endv = gm.getVertex(end)
         if (startv == null || endv == null) {
             ret = false
         }
-        val road = Road(pty, sty, village, name, weight, heightLimit, startv!!, endv!!)
-        if (!validateRoad(road)) {
-            ret = false
+        if (ret) {
+            val road = Road(pty, sty, village, name, weight, heightLimit, startv!!, endv!!)
+            if (!validateRoad(road)) {
+                ret = false
+            }
+            ret = ret && gm.addRoad(road, start, end) && chars[charcounter] == ']'
+            charcounter++
         }
-        return ret && gm.addRoad(road, start, end) && chars[charcounter++] == ']'
+        return ret
     }
 
     private fun validateId(id: String): Boolean {
@@ -291,10 +307,6 @@ class MapParser(private val gm: GraphMap, file: File) {
         } else {
             r.weight > 0 && r.height >= 1
         }
-    }
-
-    private fun validateGraphMap(): Boolean {
-        return !mapVilMain.containsValue(false)
     }
 
     private fun getNextWord(): String {
@@ -383,5 +395,17 @@ class MapParser(private val gm: GraphMap, file: File) {
             charcounter++
         }
         return res.toIntOrNull()
+    }
+
+    private fun untilEnd(): Int {
+        var counter = charcounter
+        var i = 0
+        while (counter < chars.size) {
+            if (!chars[counter].isWhitespace()) {
+                i++
+            }
+            counter++
+        }
+        return i
     }
 }
