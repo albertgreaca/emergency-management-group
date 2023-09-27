@@ -48,13 +48,13 @@ class Resource(
         // compare List of needed Vehicles
         // am I supposed to create a new resource?
         // what is the Int for?
-        var originalNeededVehicles = this.vehicles
-        var newNeededVehicles = resource.vehicles
-        var diffNeededVehicles: MutableList<VehicleType>
-        if (originalNeededVehicles.size >= newNeededVehicles.size) {
-            diffNeededVehicles = listDifference(originalNeededVehicles, newNeededVehicles)
+        val originalNeededVehicles = this.vehicles
+        val newNeededVehicles = resource.vehicles
+        val diffNeededVehicles: MutableList<VehicleType>
+        diffNeededVehicles = if (originalNeededVehicles.size >= newNeededVehicles.size) {
+            listDifference(originalNeededVehicles, newNeededVehicles)
         } else {
-            diffNeededVehicles = listDifference(newNeededVehicles, originalNeededVehicles)
+            listDifference(newNeededVehicles, originalNeededVehicles)
         }
         return Resource(diffNeededVehicles, waterDifference, criminalDifference, patientDifference, ladderDifference)
     }
@@ -66,7 +66,7 @@ class Resource(
         firstList: MutableList<VehicleType>,
         secondList: MutableList<VehicleType>
     ): MutableList<VehicleType> {
-        var resultList: MutableList<VehicleType> = mutableListOf()
+        val resultList: MutableList<VehicleType> = mutableListOf()
         if (firstList.isEmpty()) {
             return resultList
         }
