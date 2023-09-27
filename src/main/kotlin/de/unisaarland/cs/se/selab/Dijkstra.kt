@@ -159,7 +159,7 @@ object Dijkstra {
     /**
      * Doing Dijkstra for Reallocation
      */
-    fun dijkstraReallocate(
+    fun dijkstraReroute(
         startRoad: Road,
         distStart: Int,
         distEnd: Int,
