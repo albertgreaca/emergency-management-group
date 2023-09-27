@@ -4,7 +4,7 @@ package de.unisaarland.cs.se.selab
 /**
  * Bases of the departments
  */
-class Base(
+open class Base(
     private val id: Int,
     private var staff: Int,
     private val location: Vertex,
