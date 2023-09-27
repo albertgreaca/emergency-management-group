@@ -3,6 +3,9 @@ package de.unisaarland.cs.se.selab
 import java.io.OutputStream
 import java.io.PrintWriter
 
+/**
+ * Responsible for all possible logs
+ */
 object Logger {
 
     private var pw: PrintWriter = PrintWriter(System.out)
