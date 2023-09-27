@@ -117,7 +117,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             return false
         }
 
-        val basesArray = jsonObject.getJSONArray("Bases")
+        val basesArray = jsonObject.getJSONArray("bases")
         for (i in 0 until basesArray.length()) {
             val currBase = basesArray.getJSONObject(i)
             val id = currBase.getInt(ID)
