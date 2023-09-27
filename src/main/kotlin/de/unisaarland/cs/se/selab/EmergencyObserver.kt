@@ -4,6 +4,7 @@ package de.unisaarland.cs.se.selab
  * interface for the Departments
  */
 interface EmergencyObserver {
+    val bases: MutableList<Base>
 
     /**
      * adds a Base to the Base_list

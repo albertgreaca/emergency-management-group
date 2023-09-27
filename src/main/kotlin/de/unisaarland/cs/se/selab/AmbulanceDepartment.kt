@@ -3,20 +3,21 @@ package de.unisaarland.cs.se.selab
 /**
  * Representing all Hospital Bases
  */
-class AmbulanceDepartment(val hospitals: MutableList<Base>) : EmergencyObserver {
+class AmbulanceDepartment : EmergencyObserver {
+    override val bases: MutableList<Base> = mutableListOf()
 
     /**
      * function to add a base to the Department
      */
     override fun addBase(b: Base) {
-        hospitals.add(b)
+        bases.add(b)
     }
 
     /**
      * function to find a Base via the ID
      */
     override fun findBase(id: Int): Base? {
-        for (b in hospitals) {
+        for (b in bases) {
             if (b.getId() == id) return b
         }
         return null

@@ -3,19 +3,21 @@ package de.unisaarland.cs.se.selab
 /**
  * Class representing all Fire bases
  */
-class FireDepartment(val fireStations: MutableList<Base>) : EmergencyObserver {
+class FireDepartment : EmergencyObserver {
+    override val bases: MutableList<Base> = mutableListOf()
+
     /**
      * add a Base to the List of Fire Stations
      */
     override fun addBase(b: Base) {
-        fireStations.add(b)
+        bases.add(b)
     }
 
     /**
      * find Base via Index
      */
     override fun findBase(id: Int): Base? {
-        for (b in fireStations) {
+        for (b in bases) {
             if (b.getId() == id) return b
         }
         return null
