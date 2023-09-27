@@ -18,11 +18,11 @@ class MapParser(private val gm: GraphMap, file: File) {
     private var charcounter = 0
     private val chars = file.readText().toCharArray()
     private var graphName = ""
-    private var vilRoadSet = mutableSetOf<Pair<String, String>>()
-    private var verToVer = mutableSetOf<Pair<Int, Int>>()
+    private val vilRoadSet = mutableSetOf<Pair<String, String>>()
+    private val verToVer = mutableSetOf<Pair<Int, Int>>()
     private var sideStreetCount = false
-    private var mapVilMain = mutableMapOf<String, Boolean>()
-    private var mapVilVer = mutableMapOf<Int, String>()
+    private val mapVilMain = mutableMapOf<String, Boolean>()
+    private val mapVilVer = mutableMapOf<Int, String>()
     private var curIndex = 0
     private var lastCharSize = 0
 
@@ -100,8 +100,10 @@ class MapParser(private val gm: GraphMap, file: File) {
                 return false
             }
             charcounter++
-            verToVer.add(Pair(start, end!!))
-            if (untilEnd() == 1) {
+            verToVer.add(Pair(start, requireNotNull(end)))
+            if (
+                untilEnd() == 1
+            ) {
                 break
             }
             start = getNextInt() ?: return false
@@ -196,7 +198,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = ret && village == graphName
         } else if (mapVilVer.contains(start)) {
             ret = ret && mapVilVer[start] == village
-        } else if (pty != PrimaryRoadType.COUNTYROAD) {
+        } else {
             mapVilVer[start] = village
         }
         return ret && parseAttributes4(pty, village, name, weight, heightLimit, start, end)
@@ -269,7 +271,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = false
         }
         if (ret) {
-            val road = Road(pty, sty, village, name, weight, heightLimit, startv!!, endv!!)
+            val road = Road(pty, sty, village, name, weight, heightLimit, requireNotNull(startv), requireNotNull(endv))
             if (!validateRoad(road)) {
                 ret = false
             }

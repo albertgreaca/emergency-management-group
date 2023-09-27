@@ -4,11 +4,11 @@ package de.unisaarland.cs.se.selab
  * Class representing that graph of map
  */
 class GraphMap(
-    var adjacencyList: MutableList<MutableMap<Vertex, Road>> = mutableListOf(
+    val adjacencyList: MutableList<MutableMap<Vertex, Road>> = mutableListOf(
         mutableMapOf()
     ),
-    var vertexList: MutableList<Vertex> = mutableListOf(),
-    var roadList: MutableList<Road> = mutableListOf(),
+    val vertexList: MutableList<Vertex> = mutableListOf(),
+    val roadList: MutableList<Road> = mutableListOf(),
     var name: String? = null
 ) {
     /**
@@ -59,7 +59,7 @@ class GraphMap(
      @return List of Roads that are of certain type
      */
     fun getListRoad(t: PrimaryRoadType): MutableList<Road> {
-        var ans: MutableList<Road> = mutableListOf<Road>()
+        val ans: MutableList<Road> = mutableListOf<Road>()
         for (r in roadList) {
             if (r.primType == t) {
                 ans.add(r)
