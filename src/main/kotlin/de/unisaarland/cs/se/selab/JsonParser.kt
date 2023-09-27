@@ -18,7 +18,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val vehiclesObject = jsonObject.getJSONArray("Vehicles")
         for (i in 0 until vehiclesObject.length()) {
             val currVehicle = vehiclesObject.getJSONObject(i)
-            val id = currVehicle.getInt(Companion.ID)
+            val id = currVehicle.getInt(ID)
             val baseId = currVehicle.getInt("baseID")
             val vehicleType: VehicleType = currVehicle.get("VehicleType") as VehicleType
             val vehicleHeight = currVehicle.getInt("vehicleHeight")
@@ -81,6 +81,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val policeDepartment = PoliceDepartment()
         val hospital = Hospital()
         val jsonObject = JSONObject(file1.readText())
+        val schem = getSchema(JsonParser::class.java, "assets")
+        schem?.validate(jsonObject)
         val basesObject = jsonObject.getJSONArray("Bases")
         for (i in 0 until basesObject.length()) {
             val currBase = basesObject.getJSONObject(i)
@@ -119,6 +121,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     fun parseEmergency(): Boolean {
         var res = true
         val jsonObject = JSONObject(file2.readText())
+        val schem = getSchema(JsonParser::class.java, "simulation")
+        schem?.validate(jsonObject)
         val emerArray = jsonObject.getJSONArray("EmergencyCalls")
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
