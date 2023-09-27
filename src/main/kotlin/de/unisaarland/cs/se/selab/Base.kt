@@ -76,7 +76,7 @@ open class Base(
         patients += 0
         var neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
-        var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
+        // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         var vehiclesToallocate = mutableListOf<Vehicle>()
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
@@ -196,11 +196,8 @@ open class Base(
      * returns next Base of Type Hospital
      */
     fun getNextHospital(b: Base): Base? {
-        var nextHospital = getNextBase(b)
-        if (nextHospital == null) {
-            return null
-        }
-        while (!(nextHospital is Hospital)) {
+        var nextHospital: Base? = getNextBase(b) ?: return null
+        while (nextHospital !is Hospital) {
             nextHospital = getNextHospital(nextHospital!!)
         }
         return nextHospital
@@ -210,12 +207,9 @@ open class Base(
      * returns next Base of Type Police Station
      */
     fun getNextFireBase(b: Base): Base? {
-        var nextFireBase = getNextBase(b)
-        if (nextFireBase == null) {
-            return null
-        }
-        while ((nextFireBase is PoliceStation) || (nextFireBase is Hospital)) {
-            nextFireBase = getNextFireBase(nextFireBase!!)
+        var nextFireBase: Base? = getNextBase(b) ?: return null
+        while (nextFireBase is PoliceStation || nextFireBase is Hospital) {
+            nextFireBase = getNextFireBase(nextFireBase)
         }
         return nextFireBase
     }
