@@ -29,8 +29,8 @@ class GraphMap(
             return false
         }
         roadList.add(road)
-        adjacencyList[vs.getId()][ve] = road
-        adjacencyList[ve.getId()][vs] = road
+        adjacencyList[vs.realid][ve] = road
+        adjacencyList[ve.realid][vs] = road
         return true
     }
 
@@ -52,7 +52,7 @@ class GraphMap(
      * @return road by start and end vertex
      */
     fun getRoad(start: Vertex, end: Vertex): Road? {
-        return adjacencyList[start.id][end]
+        return adjacencyList[start.realid][end]
     }
 
     /**

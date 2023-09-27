@@ -23,6 +23,7 @@ class MapParser(private val gm: GraphMap, file: File) {
     private var sideStreetCount = false
     private var mapVilMain = mutableMapOf<String, Boolean>()
     private var mapVilVer = mutableMapOf<Int, String>()
+    private var curIndex = 0
 
     /**
      * Starting function for parsing
@@ -66,7 +67,8 @@ class MapParser(private val gm: GraphMap, file: File) {
         var sep = chars[charcounter]
         charcounter++
         while (sep == ';') {
-            val vertex = Vertex(id, null)
+            val vertex = Vertex(id, null,curIndex)
+            curIndex++
             if (!validateVertex(vertex)) {
                 return false
             }
