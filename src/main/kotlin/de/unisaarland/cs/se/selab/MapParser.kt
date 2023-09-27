@@ -295,7 +295,7 @@ class MapParser(private val gm: GraphMap, file: File) {
     private fun getNextWord(): String {
         skipSpaces(false)
         var res = ""
-        while (!chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])
+        while (charcounter < chars.size && !chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])
         ) {
             res += chars[charcounter]
             charcounter++
@@ -320,9 +320,13 @@ class MapParser(private val gm: GraphMap, file: File) {
                 return false
             }
         }
+        if(charcounter >= chars.size) {
+            return false
+        }
         while (chars[charcounter].isWhitespace()
-        ) {
+            && charcounter < chars.size) {
             charcounter++
+
         }
         return true
     }
@@ -360,7 +364,13 @@ class MapParser(private val gm: GraphMap, file: File) {
     private fun getNextInt(): Int? {
         skipSpaces(false)
         var res = ""
-        while (!chars[charcounter].isWhitespace() && (!isSeparator(chars[charcounter]) || chars[charcounter] == '-')) {
+        if(charcounter >= chars.size) {
+            return null
+        }
+        while (charcounter < chars.size && !chars[charcounter].isWhitespace()) {
+            if(!(!isSeparator(chars[charcounter]) || chars[charcounter] == '-')) {
+                break;
+            }
             res += chars[charcounter]
             charcounter++
         }

@@ -22,7 +22,7 @@ class GraphMapTest {
         val r1 =
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Teststrasse", 10, 5, vert1, vert2)
         assertTrue(roadList.contains(r1))
-        val r2 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Saarbrücken", "Campus", 10, 1, vert0, vert1)
+        val r2 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Saarbruecken", "Campus", 10, 1, vert0, vert1)
         assertTrue(roadList.contains(r2))
         val adjList: MutableList<MutableMap<Vertex, Road>> = gm.adjacencyList
         val map0 = adjList[0]

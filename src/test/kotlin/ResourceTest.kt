@@ -1,7 +1,6 @@
 import de.unisaarland.cs.se.selab.Resource
 import de.unisaarland.cs.se.selab.VehicleType
 import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -48,7 +47,7 @@ class ResourceTest {
                 0,
                 null
             )
-        assertEquals(policeres, testres)
+        assertTrue(policeres.isEqual(testres))
     }
 
     @Test
@@ -77,7 +76,7 @@ class ResourceTest {
                 32,
                 null
             )
-        assertTrue(hospitalres == testres)
+        assertTrue(hospitalres.isEqual(testres))
     }
 
     @Test
