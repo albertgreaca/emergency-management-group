@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab
 /**
  * Class representing all Police bases
  */
-class PoliceDepartment() : EmergencyObserver {
+class PoliceDepartment : EmergencyObserver {
     override val bases: MutableList<Base> = mutableListOf()
 
     /**
