@@ -9,7 +9,7 @@ open class Base(
     val vehicles: MutableList<Vehicle>
 ) {
 
-    private var nextBases: MutableList<Base> = mutableListOf()
+    private val nextBases: MutableList<Base> = mutableListOf()
 
     /**
      * reduce Staff capacity of base
@@ -126,7 +126,8 @@ open class Base(
     fun calculateNextBases() {
         // TODO : implement
         val nextcalculatedBases = Dijkstra.dijkstraRequest(this.location.id)
-        this.nextBases = nextcalculatedBases
+        this.nextBases.clear()
+        this.nextBases.addAll(nextcalculatedBases)
         return
         // recalculates the distances of the other bases to this base
         // updates 'nextBases' with new distances and sorts the list
