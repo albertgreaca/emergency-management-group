@@ -76,7 +76,7 @@ open class Base(
         patients += 0
         var neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
-        var availableBaseVehicles = this.vehicles.filter { it.isAvailable() }.toMutableList()
+        var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         var vehiclesToallocate = mutableListOf<Vehicle>()
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
