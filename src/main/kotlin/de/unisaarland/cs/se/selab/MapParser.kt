@@ -67,7 +67,7 @@ class MapParser(private val gm: GraphMap, file: File) {
         var sep = chars[charcounter]
         charcounter++
         while (sep == ';') {
-            val vertex = Vertex(id, null,curIndex)
+            val vertex = Vertex(id, null, curIndex)
             curIndex++
             if (!validateVertex(vertex)) {
                 return false
