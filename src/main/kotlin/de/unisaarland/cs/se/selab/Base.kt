@@ -93,11 +93,11 @@ open class Base(
         for (vt in neededVehicles) {
             // check type special vs normal
             // check if it is in filtered list
-            var vehic = helperVehicleCompare(vt, reallocableVehics)
+            val vehic = helperVehicleCompare(vt, reallocableVehics)
             if (vehic != null) {
                 // is staffed already
                 val height = vehic.vehicleHeight
-                var pos = Dijkstra.dijkstraHeight(this.location.id, em.road, height)
+                val pos = Dijkstra.dijkstraHeight(this.location.id, em.road, height)
                 // only thing we need is dijkstra
                 // look if it arrives in time
                 if (requireNotNull(pos).arrivalTicks +
