@@ -14,7 +14,7 @@ class Road(
     var end: Vertex
 ) {
 
-    var eventList: MutableList<Event> = mutableListOf()
+    val eventList: MutableList<Event> = mutableListOf()
 
     /**
      * @return the actual weight depending on the event
