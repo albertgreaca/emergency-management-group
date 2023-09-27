@@ -18,7 +18,7 @@ class PoliceDepartment : EmergencyObserver {
      */
     override fun findBase(id: Int): Base? {
         for (b in bases) {
-            if (b.getId() == id) return b
+            if (b.id == id) return b
         }
         return null
     }
@@ -29,7 +29,7 @@ class PoliceDepartment : EmergencyObserver {
     override fun update(em: Emergency) {
         em.base = Dijkstra.dijkstraEmergency(em.road.start.id, em.road.end.id, em.type)
         if (em.base != null) {
-            Logger.logEmergencyAssignment(em.id, em.base!!.getId())
+            Logger.logEmergencyAssignment(em.id, em.base!!.id)
         }
     }
 }

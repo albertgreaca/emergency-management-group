@@ -68,7 +68,7 @@ open class Vehicle(
                 position!!.distanceFromStart,
                 position!!.distanceFromEnd,
                 position!!.destinationVertex!!,
-                base.getId(),
+                base.id,
                 vehicleHeight
             )
             if (!position!!.isEqual(pos!!)) {
@@ -104,7 +104,7 @@ open class Vehicle(
             position!!.distanceFromStart,
             position!!.distanceFromEnd,
             position!!.destinationVertex!!,
-            base.getId(),
+            base.id,
             vehicleHeight
         )
         position = pos
