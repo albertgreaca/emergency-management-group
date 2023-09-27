@@ -1,5 +1,14 @@
-
-import de.unisaarland.cs.se.selab.*
+import de.unisaarland.cs.se.selab.Base
+import de.unisaarland.cs.se.selab.Emergency
+import de.unisaarland.cs.se.selab.EmergencyType
+import de.unisaarland.cs.se.selab.Position
+import de.unisaarland.cs.se.selab.PrimaryRoadType
+import de.unisaarland.cs.se.selab.Resource
+import de.unisaarland.cs.se.selab.Road
+import de.unisaarland.cs.se.selab.SecondaryRoadType
+import de.unisaarland.cs.se.selab.Vehicle
+import de.unisaarland.cs.se.selab.VehicleType
+import de.unisaarland.cs.se.selab.Vertex
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
