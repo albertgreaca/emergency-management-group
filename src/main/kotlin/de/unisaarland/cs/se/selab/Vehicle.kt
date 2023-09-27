@@ -95,8 +95,18 @@ open class Vehicle(
         return false
     }
 
+    /**
+     * to send vehicle back to base
+     */
     fun sendBackToBase() {
-        //  Position pos = Dijkstra.dijkstraHeigth()
-        //  position = pos
+        val pos = Dijkstra.dijkstraBackToBase(
+            position!!.roadList.get(0),
+            position!!.distanceFromStart,
+            position!!.distanceFromEnd,
+            position!!.destinationVertex!!,
+            base.getId(),
+            vehicleHeight
+        )
+        position = pos
     }
 }

@@ -1,12 +1,5 @@
 
-import de.unisaarland.cs.se.selab.Base
-import de.unisaarland.cs.se.selab.Position
-import de.unisaarland.cs.se.selab.PrimaryRoadType
-import de.unisaarland.cs.se.selab.Road
-import de.unisaarland.cs.se.selab.SecondaryRoadType
-import de.unisaarland.cs.se.selab.Vehicle
-import de.unisaarland.cs.se.selab.VehicleType
-import de.unisaarland.cs.se.selab.Vertex
+import de.unisaarland.cs.se.selab.*
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -125,5 +118,88 @@ class VehicleTest {
         base.addVehicle(vehicle)
 
         assertTrue(vehicle.reroutable())
+    }
+
+    fun testReallocatablePositionNull() {
+        val pos: Position? = null
+
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
+        val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
+        assertFalse(vehicle.reallocatable(emergency))
+    }
+
+    fun testReallocatableArrivalTicks0() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+
+        val roadlist = mutableListOf(road1)
+        val vertexlist = mutableListOf(vertex0, vertex1)
+
+        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 0, startedThisTick = false, isDrivingBack = false)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
+        val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
+        val emergency2 = Emergency(51, 1, road1, EmergencyType.MEDICAL, 3, 3, 4, re)
+        vehicle.targetEmergency = emergency2
+        assertFalse(vehicle.reallocatable(emergency))
+    }
+
+    fun testReallocatableSeverity() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+
+        val roadlist = mutableListOf(road1)
+        val vertexlist = mutableListOf(vertex0, vertex1)
+
+        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
+        val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 2, 2, 3, re)
+        val emergency2 = Emergency(51, 1, road1, EmergencyType.MEDICAL, 3, 3, 4, re)
+        vehicle.targetEmergency = emergency2
+        assertFalse(vehicle.reallocatable(emergency))
+    }
+
+    fun testReallocatableBaseWaitingTicks() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
+
+        val road1 =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+
+        val roadlist = mutableListOf(road1)
+        val vertexlist = mutableListOf(vertex0, vertex1)
+
+        var pos = Position(roadlist, vertexlist, 20, 0, vertex1, 0, 3, startedThisTick = false, isDrivingBack = false)
+        val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
+        vertex0.base = base
+        var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)
+        base.addVehicle(vehicle)
+        val re = Resource(mutableListOf(VehicleType.POLICE_CAR), 0, 0, 0, 0)
+        val emergency = Emergency(50, 1, road1, EmergencyType.CRIME, 3, 2, 3, re)
+        val emergency2 = Emergency(51, 1, road1, EmergencyType.MEDICAL, 2, 3, 4, re)
+        vehicle.targetEmergency = emergency2
+        vehicle.baseWaitingTicks = 2
+        assertFalse(vehicle.reallocatable(emergency))
     }
 }
