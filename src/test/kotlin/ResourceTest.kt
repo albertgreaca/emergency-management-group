@@ -48,7 +48,7 @@ class ResourceTest {
                 0,
                 null
             )
-        assertEquals(policeres, testres)
+        assertTrue(policeres.isEqual(testres))
     }
 
     @Test
@@ -77,7 +77,7 @@ class ResourceTest {
                 32,
                 null
             )
-        assertTrue(hospitalres == testres)
+        assertTrue(hospitalres.isEqual(testres))
     }
 
     @Test
