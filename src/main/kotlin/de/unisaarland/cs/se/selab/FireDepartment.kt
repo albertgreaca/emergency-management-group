@@ -24,11 +24,12 @@ class FireDepartment : EmergencyObserver {
     }
 
     /**
-     * gets the Emergencies and give it to the responsible Bases
+     * assigns closest base to the given emergency and logs the assignment
      */
-    override fun update(list: MutableList<Emergency>) {
-        for (e in list) {
-            e.base = Dijkstra.dijkstraEmergency(e.road.start.id, e.road.end.id, e.type)
+    override fun update(em: Emergency) {
+        em.base = Dijkstra.dijkstraEmergency(em.road.start.id, em.road.end.id, em.type)
+        if (em.base != null) {
+            Logger.logEmergencyAssignment(em.id, em.base!!.getId())
         }
     }
 }
