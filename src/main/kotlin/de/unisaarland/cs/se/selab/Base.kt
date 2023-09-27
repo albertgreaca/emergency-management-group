@@ -71,17 +71,21 @@ open class Base(
         val r = em.resources
         val neededVehicles = r.getVehicles()
         var water = r.getWaterAmount()
+        water += 0
         var criminals = r.getCriminalAmount()
+        criminals += 0
         var patients = r.getPatientAmount()
+        patients+= 0
         var neededVehiclesCopy = neededVehicles.toMutableList()
-        var availableBaseVehicles = this.vehicles.filter{it.isAvailable()}.toMutableList()
+        neededVehiclesCopy.isEmpty()
+        var availableBaseVehicles = this.vehicles.filter { it.isAvailable() }.toMutableList()
         var vehiclesToallocate = mutableListOf<Vehicle>()
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO: implement
         for (vt in neededVehicles) {
-            when(vt) {
+            when (vt) {
                 VehicleType.FIRE_TRUCK_LADDER -> TODO()
-                VehicleType.FIRE_TRUCK_WATER -> TODO( )
+                VehicleType.FIRE_TRUCK_WATER -> TODO()
                 VehicleType.POLICE_CAR -> TODO()
                 VehicleType.AMBULANCE -> TODO()
                 else -> {
@@ -93,10 +97,9 @@ open class Base(
                             vehiclesToallocate.add(vehic)
                             availableBaseVehicles.remove(vehic)
                         }
+                    } else {
+                        vehicTypestoRequest.add(vt)
                     }
-                    else {
-                           vehicTypestoRequest.add(vt)
-                        }
 
 
                 }
