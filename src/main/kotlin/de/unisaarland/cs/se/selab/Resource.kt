@@ -113,4 +113,51 @@ class Resource(
         }
         return resultList
     }
+
+    /**
+     * filters out all resources that police stations can provide
+     */
+    fun filterPoliceResources(): Resource {
+        val policeResource = Resource(mutableListOf(), 0, this.criminalAmount, 0, 0)
+        for (type in this.vehicles) {
+            when (type) {
+                VehicleType.POLICE_CAR, VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE ->
+                    policeResource.addVehicle(type)
+                else -> {
+                }
+            }
+        }
+        return policeResource
+    }
+
+    /**
+     * filters out all resources that fire stations can provide
+     */
+    fun filterFireResources(): Resource {
+        val fireResource = Resource(mutableListOf(), this.waterAmount, 0, 0, this.ladderLength)
+        for (type in this.vehicles) {
+            when (type) {
+                VehicleType.FIREFIGHTER_TRANSPORTER, VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_WATER,
+                VehicleType.FIRE_TRUCK_LADDER -> fireResource.addVehicle(type)
+                else -> {
+                }
+            }
+        }
+        return fireResource
+    }
+
+    /**
+     * filters out all resources that ambulance stations can provide
+     */
+    fun filterAmbulanceResources(): Resource {
+        val ambulanceResource = Resource(mutableListOf(), 0, 0, this.patientAmount, 0)
+        for (type in this.vehicles) {
+            when (type) {
+                VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR -> ambulanceResource.addVehicle(type)
+                else -> {
+                }
+            }
+        }
+        return ambulanceResource
+    }
 }

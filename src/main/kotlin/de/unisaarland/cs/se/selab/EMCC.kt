@@ -72,11 +72,30 @@ object EMCC {
             em.resources.updateDifference(resourcesAfterReallocating)
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
-            if (!resourcesAfterReallocating.isEmpty()) {
+            if (!em.resources.isEmpty()) {
+                var policeResources = em.resources.filterPoliceResources()
+                var fireResources = em.resources.filterFireResources()
+                var ambulanceResources = em.resources.filterAmbulanceResources()
+
+                if (!policeResources.isEmpty()) {
+                    TODO("make request for police")
+                }
+
+                if (!fireResources.isEmpty()) {
+                    TODO("make request for fire")
+                }
+
+                if (!ambulanceResources.isEmpty()) {
+                    TODO("make request for ambulance")
+                }
+
                 val nextBase = emBase.getNextBase(emBase)
                 if (nextBase != null) {
                     emBase.makeRequest(em, nextBase)
                 }
+            } else {
+                startingEmergencies.remove(em)
+                handledEmergencies.add(em)
             }
         }
     }
@@ -85,7 +104,9 @@ object EMCC {
      * handles all requests made in the allocation phase of the current tick
      */
     fun processRequests() {
+        while (!requests.isEmpty()) {
 
+        }
     }
 
     /**
