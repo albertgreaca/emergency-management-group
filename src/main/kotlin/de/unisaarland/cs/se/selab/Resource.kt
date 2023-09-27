@@ -84,7 +84,7 @@ class Resource(
      * filters out all resources that police stations can provide
      */
     fun filterPoliceResources(): Resource {
-        val policeResource = Resource(mutableListOf(), 0, this.criminalAmount, 0, 0)
+        val policeResource = Resource(mutableListOf(), 0, this.criminalAmount, 0, null)
         for (type in this.vehicles) {
             when (type) {
                 VehicleType.POLICE_CAR, VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE ->
@@ -116,7 +116,7 @@ class Resource(
      * filters out all resources that ambulance stations can provide
      */
     fun filterAmbulanceResources(): Resource {
-        val ambulanceResource = Resource(mutableListOf(), 0, 0, this.patientAmount, 0)
+        val ambulanceResource = Resource(mutableListOf(), 0, 0, this.patientAmount, null)
         for (type in this.vehicles) {
             when (type) {
                 VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR -> ambulanceResource.addVehicle(type)
@@ -132,9 +132,13 @@ class Resource(
      */
     fun isEqual(other: Any?): Boolean {
         if (other is Resource) {
-            return this.vehicles.sort().equals(other.vehicles.sort()) && this.waterAmount == other.waterAmount &&
-                this.patientAmount == other.patientAmount && this.criminalAmount == other.criminalAmount &&
-                this.ladderLength == other.ladderLength
+            val vehiclesEqual = this.vehicles == other.vehicles
+            val waterEqual = this.waterAmount == other.waterAmount
+            val patientEqual = this.patientAmount == other.patientAmount
+            val criminalEqual = this.criminalAmount == other.criminalAmount
+            val ladderEqual = this.ladderLength == other.ladderLength
+            return  vehiclesEqual && waterEqual && patientEqual && criminalEqual && ladderEqual
+
         }
         return false
     }
