@@ -73,7 +73,10 @@ object EMCC {
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!resourcesAfterReallocating.isEmpty()) {
-                TODO("implement creating requests")
+                val nextBase = emBase.getNextBase(emBase)
+                if (nextBase != null) {
+                    emBase.makeRequest(em, nextBase)
+                }
             }
         }
     }
@@ -82,7 +85,7 @@ object EMCC {
      * handles all requests made in the allocation phase of the current tick
      */
     fun processRequests() {
-        TODO("not implemented yet")
+
     }
 
     /**

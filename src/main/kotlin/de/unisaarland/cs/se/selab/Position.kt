@@ -32,7 +32,7 @@ class Position(
      * checks if two positions are equal
      */
     fun isEqual(o: Position): Boolean {
-        return this.roadList == o.roadList && this.vertexList == o.vertexList &&
+        return this.roadList == o.roadList &&
             this.distanceFromStart == o.distanceFromStart && this.distanceFromEnd == o.distanceFromEnd &&
             this.destinationVertex == o.destinationVertex && this.distance == o.distance
     }
