@@ -137,8 +137,7 @@ class Resource(
             val patientEqual = this.patientAmount == other.patientAmount
             val criminalEqual = this.criminalAmount == other.criminalAmount
             val ladderEqual = this.ladderLength == other.ladderLength
-            return  vehiclesEqual && waterEqual && patientEqual && criminalEqual && ladderEqual
-
+            return vehiclesEqual && waterEqual && patientEqual && criminalEqual && ladderEqual
         }
         return false
     }

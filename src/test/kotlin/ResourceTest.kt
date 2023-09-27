@@ -76,7 +76,6 @@ class ResourceTest {
                 32,
                 null
             )
-        val boo = hospitalres.isEqual(testres)
         assertTrue(hospitalres.isEqual(testres))
     }
 
