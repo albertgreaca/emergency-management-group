@@ -55,7 +55,7 @@ object EMCC {
         // iterate over emergencies
         for (em in startingEmergencies) {
             // get the base assigned to the emergency
-            var emBase = em.base!!
+            var emBase = requireNotNull(em.base)
 
             // base tries to allocate resources for emergency, returns what is left
             var resourcesAfterAllocating = emBase.requestResources(em)
@@ -80,7 +80,7 @@ object EMCC {
      * creates a request for each type of base with the resources that are still missing after allocation/reallocation
      */
     private fun makeRequest(em: Emergency) {
-        var emBase = em.base!!
+        var emBase = requireNotNull(em.base)
         var policeResources = em.resources.filterPoliceResources()
         var fireResources = em.resources.filterFireResources()
         var ambulanceResources = em.resources.filterAmbulanceResources()
@@ -185,16 +185,16 @@ object EMCC {
 
     private fun moveAndLogAsset(vec: Vehicle, newlyArrivedAssets: MutableList<Pair<Int, Int>>) {
         // move each vehicle that is currently driving
-        if (vec.position == null || vec.position!!.arrivalTicks == 0) return
+        if (vec.position == null || requireNotNull(vec.position).arrivalTicks == 0) return
         vec.move()
         // if a vehicle arrived at an emergency after moving, log it
-        if (!vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
-            newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
+        if (!requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
+            newlyArrivedAssets.add(Pair(vec.id, requireNotNull(requireNotNull(vec.position).destinationVertex).id))
         }
         // if a vehicle arrived back at its base after moving, log it
-        if (vec.position!!.isDrivingBack && vec.position!!.arrivalTicks == 0) {
-            newlyArrivedAssets.add(Pair(vec.id, vec.position!!.destinationVertex!!.id))
-            vec.targetEmergency!!.assignedVehicles.remove(vec)
+        if (requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
+            newlyArrivedAssets.add(Pair(vec.id, requireNotNull(requireNotNull(vec.position).destinationVertex).id))
+            requireNotNull(vec.targetEmergency).assignedVehicles.remove(vec)
             vec.targetEmergency = null
             vec.position = null
         }
@@ -238,7 +238,7 @@ object EMCC {
             if (em.handlingStarted || !em.resources.isEmpty()) continue
             var allArrived = true
             for (vec in em.assignedVehicles) {
-                allArrived = if (vec.position!!.arrivalTicks == 0) allArrived else false
+                allArrived = if (requireNotNull(vec.position).arrivalTicks == 0) allArrived else false
             }
             if (allArrived) {
                 em.handlingStarted = true
