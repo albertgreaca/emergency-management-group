@@ -27,9 +27,9 @@ object Dijkstra {
     private fun updateNeighbors(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = gm2!!.adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (dist[node.getId()] > dist[cur.first] + edge.weight) {
-                dist[node.getId()] = dist[cur.first] + edge.weight
-                pq.add(Pair(node.getId(), dist[node.getId()]))
+            if (dist[node.id] > dist[cur.first] + edge.weight) {
+                dist[node.id] = dist[cur.first] + edge.weight
+                pq.add(Pair(node.id, dist[node.id]))
             }
         }
     }
@@ -98,9 +98,9 @@ object Dijkstra {
             }
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex) {
-                if (dist[node.getId()] > dist[cur.first] + edge.getActualWeight()) {
-                    dist[node.getId()] = dist[cur.first] + edge.getActualWeight()
-                    pq.add(Pair(node.getId(), dist[node.getId()]))
+                if (dist[node.id] > dist[cur.first] + edge.getActualWeight()) {
+                    dist[node.id] = dist[cur.first] + edge.getActualWeight()
+                    pq.add(Pair(node.id, dist[node.id]))
                 }
             }
         }
