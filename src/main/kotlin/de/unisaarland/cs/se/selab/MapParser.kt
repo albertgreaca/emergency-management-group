@@ -281,8 +281,8 @@ class MapParser(private val gm: GraphMap, file: File) {
 
     private fun validateId(id: String): Boolean {
         val arr = id.toCharArray()
-        if (arr[0] < 'A' || arr[0] > 'Z') {
-            if (arr[0] < 'a' || arr[0] > 'z') {
+        if (id == "" || arr[0] < 'A' || arr[0] > 'Z') {
+            if (id == "" || arr[0] < 'a' || arr[0] > 'z') {
                 return false
             }
         }
@@ -308,7 +308,6 @@ class MapParser(private val gm: GraphMap, file: File) {
             r.weight > 0 && r.height >= 1
         }
     }
-
     private fun getNextWord(): String {
         skipSpaces(false)
         var res = ""
