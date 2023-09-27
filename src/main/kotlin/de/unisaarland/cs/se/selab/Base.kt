@@ -83,7 +83,9 @@ open class Base(
         val allvehics = this.vehicles
         val unavailableVehics = allvehics.filter { it.available == false }
         val ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
-        val reallocableVehics = ontwVehics.filter { requireNotNull(it.targetEmergency).severity < em.severity }.toMutableList()
+        val reallocableVehics = ontwVehics.filter {
+            requireNotNull(it.targetEmergency).severity < em.severity
+        }.toMutableList()
         // get emergencies resource
         val neededVehicles = em.resources.vehicles
         val vehicTypestoRequest = mutableListOf<VehicleType>()
@@ -98,7 +100,9 @@ open class Base(
                 var pos = Dijkstra.dijkstraHeight(this.location.id, em.road, height)
                 // only thing we need is dijkstra
                 // look if it arrives in time
-                if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                if (requireNotNull(pos).arrivalTicks +
+                    Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
+                ) {
                     // no
                     // abort
                     vehicTypestoRequest.add(vt)

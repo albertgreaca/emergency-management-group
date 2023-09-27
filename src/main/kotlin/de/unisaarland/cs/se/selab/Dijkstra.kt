@@ -109,7 +109,12 @@ object Dijkstra {
     private fun determinePathHeight(cur: Pair<Int, Int>, dist: Array<Position>): Position {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
-                requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1]))
+                requireNotNull(
+                    requireNotNull(gm2).getRoad(
+                        dist[cur.first].vertexList[i],
+                        dist[cur.first].vertexList[i + 1]
+                    )
+                )
             )
         }
         dist[cur.first].distance = cur.second
@@ -194,7 +199,12 @@ object Dijkstra {
                 dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
                 dist[cur.first].distanceFromStart = 0
                 dist[cur.first].distanceFromEnd =
-                    requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])).getActualWeight()
+                    requireNotNull(
+                        requireNotNull(gm2).getRoad(
+                            dist[cur.first].vertexList[0],
+                            dist[cur.first].vertexList[1]
+                        )
+                    ).getActualWeight()
             }
         } else {
             if (distEnd != 0) {
@@ -208,12 +218,19 @@ object Dijkstra {
                 dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
                 dist[cur.first].distanceFromStart = 0
                 dist[cur.first].distanceFromEnd =
-                    requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])).getActualWeight()
+                    requireNotNull(
+                        requireNotNull(gm2).getRoad(
+                            dist[cur.first].vertexList[0],
+                            dist[cur.first].vertexList[1]
+                        )
+                    ).getActualWeight()
             }
         }
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
-                requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1]))
+                requireNotNull(
+                    requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
+                )
             )
         }
         return dist[cur.first]
@@ -315,7 +332,12 @@ object Dijkstra {
                 dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
                 dist[cur.first].distanceFromStart = 0
                 dist[cur.first].distanceFromEnd =
-                    requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])).getActualWeight()
+                    requireNotNull(
+                        requireNotNull(gm2).getRoad(
+                            dist[cur.first].vertexList[0],
+                            dist[cur.first].vertexList[1]
+                        )
+                    ).getActualWeight()
             }
         } else {
             if (distEnd != 0) {
@@ -329,12 +351,19 @@ object Dijkstra {
                 dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
                 dist[cur.first].distanceFromStart = 0
                 dist[cur.first].distanceFromEnd =
-                    requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[0], dist[cur.first].vertexList[1])).getActualWeight()
+                    requireNotNull(
+                        requireNotNull(gm2).getRoad(
+                            dist[cur.first].vertexList[0],
+                            dist[cur.first].vertexList[1]
+                        )
+                    ).getActualWeight()
             }
         }
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
-                requireNotNull(requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1]))
+                requireNotNull(
+                    requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
+                )
             )
         }
         return dist[cur.first]
