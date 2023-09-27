@@ -1,7 +1,22 @@
 package de.unisaarland.cs.se.selab
 
-class EmergencyObserver {
+/**
+ * interface for the Departments
+ */
+interface EmergencyObserver {
 
-    fun update(list: MutableList<Emergency>) {
-    }
+    /**
+     * adds a Base to the Base_list
+     */
+    fun addBase(b: Base)
+
+    /**
+     * find a base via ID
+     */
+    fun findBase(id: Int): Base?
+
+    /**
+     give the departments the list of Emergencies to handle
+     */
+    fun update(list: MutableList<Emergency>)
 }
