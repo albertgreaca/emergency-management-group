@@ -3,48 +3,13 @@ package de.unisaarland.cs.se.selab
  * Bases of the departments
  */
 open class Base(
-    private val id: Int,
-    private var staff: Int,
-    private val location: Vertex,
-    private val vehicles: MutableList<Vehicle>
+    val id: Int,
+    var staff: Int,
+    val location: Vertex,
+    val vehicles: MutableList<Vehicle>
 ) {
 
     private var nextBases: MutableList<Base> = mutableListOf()
-
-    /**
-     * @return ID of Base
-     */
-    fun getId(): Int {
-        return id
-    }
-
-    /**
-     * @return Staff Number
-     */
-    fun getStaff(): Int {
-        return staff
-    }
-
-    /**
-     * @return Location
-     */
-    fun getLocation(): Vertex {
-        return location
-    }
-
-    /**
-     * @return Vehicle List
-     */
-    fun getVehicles(): MutableList<Vehicle> {
-        return vehicles
-    }
-
-    /**
-     * @return NextBases
-     */
-    fun getNextBases(): MutableList<Base> {
-        return nextBases
-    }
 
     /**
      * reduce Staff capacity of base
@@ -74,10 +39,10 @@ open class Base(
         criminals += 0
         var patients = r.getPatientAmount()
         patients += 0
-        var neededVehiclesCopy = neededVehicles.toMutableList()
+        val neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
-        var vehiclesToallocate = mutableListOf<Vehicle>()
+        val vehiclesToallocate = mutableListOf<Vehicle>()
         var vehicTypestoRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
@@ -115,13 +80,13 @@ open class Base(
         // Only vehicles that are unavailable can be reallocated
         // -> filter List for this
         // also filter if target emergency severity is lower (bcs only then you can reallocate)
-        var allvehics = this.vehicles
-        var unavailableVehics = allvehics.filter { it.available == false }
-        var ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
-        var reallocableVehics = ontwVehics.filter { it.targetEmergency!!.severity < em.severity }.toMutableList()
+        val allvehics = this.vehicles
+        val unavailableVehics = allvehics.filter { it.available == false }
+        val ontwVehics = unavailableVehics.filter { it.targetEmergency != null }
+        val reallocableVehics = ontwVehics.filter { it.targetEmergency!!.severity < em.severity }.toMutableList()
         // get emergencies resource
-        var neededVehicles = em.resources.getVehicles()
-        var vehicTypestoRequest = mutableListOf<VehicleType>()
+        val neededVehicles = em.resources.getVehicles()
+        val vehicTypestoRequest = mutableListOf<VehicleType>()
         // for each vehic type in resource
         for (vt in neededVehicles) {
             // check type special vs normal
@@ -156,7 +121,7 @@ open class Base(
      */
     fun calculateNextBases() {
         // TODO : implement
-        val nextcalculatedBases = Dijkstra.dijkstraRequest(this.getLocation().id)
+        val nextcalculatedBases = Dijkstra.dijkstraRequest(this.location.id)
         this.nextBases = nextcalculatedBases
         return
         // recalculates the distances of the other bases to this base
@@ -169,11 +134,11 @@ open class Base(
      */
     fun getNextBase(b: Base): Base? {
         b.id
-        if (this.getNextBases().isEmpty()) {
+        if (this.nextBases.isEmpty()) {
             return null
         } else {
-            val returnBase = this.getNextBases().get(0)
-            this.getNextBases().removeAt(0)
+            val returnBase = this.nextBases[0]
+            this.nextBases.removeAt(0)
             return returnBase
         }
     }
@@ -224,7 +189,7 @@ open class Base(
         // add it to the list of requests
         EMCC.requests.add(req)
         // log that a new request was made
-        Logger.logAssetRequest(req.getId(), nextBase.getId(), em.id)
+        Logger.logAssetRequest(req.getId(), nextBase.id, em.id)
         // count up the id of the next request
         EMCC.nextRequestId++
     }
