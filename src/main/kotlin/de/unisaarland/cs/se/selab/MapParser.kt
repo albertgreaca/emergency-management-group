@@ -193,6 +193,9 @@ class MapParser(private val gm: GraphMap, file: File) {
         val pty = validatePrimaryType(primary) ?: return false
         if (pty == PrimaryRoadType.SIDESTREET) {
             sideStreetCount = true
+        }
+        if (pty == PrimaryRoadType.COUNTYROAD) {
+            ret = ret && village == graphName
         } else if (mapVilVer.contains(start)) {
             ret = ret && mapVilVer[start] == village
         } else {
