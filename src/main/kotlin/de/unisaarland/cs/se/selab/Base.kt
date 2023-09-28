@@ -163,7 +163,7 @@ open class Base(
      * Initiates reallocation phase, looks through own vehicles if can be reallocated to emergency
      * @return a Resource with what's still missing
      */
-    /*fun reallocateResources(em: Emergency): Resource {
+    fun reallocateResources(em: Emergency): Resource {
         // TODO : implement
         em.id
         // Only vehicles that are unavailable can be reallocated
@@ -206,7 +206,19 @@ open class Base(
             }
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
-    }*/
+    }
+
+    /**
+     * helper function to check available vehicles for corresponding type
+     */
+    private fun helperVehicleCompare(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
+        for (vehicle in vehicleList) {
+            if (vehicle.vehicleType == v) {
+                return vehicle
+            }
+        }
+        return null
+    }
 
     /**
      * Each tick due to events recalculates the new distance of the other bases
