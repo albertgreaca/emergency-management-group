@@ -12,6 +12,11 @@ open class Base(
     val vehicles: MutableList<Vehicle>
 ) {
 
+    companion object {
+        const val maxCriminalCapacity = 4
+        const val maxWaterCapacity = 2400
+    }
+
     private val nextBases: MutableList<Base> = mutableListOf()
 
     /**
@@ -29,9 +34,6 @@ open class Base(
     fun requestResources(em: Emergency): Resource {
         val r = em.resources
         val neededVehicles = r.vehicles
-        var water = r.waterAmount
-        var criminals = r.criminalAmount
-        var patients = r.patientAmount
 
         // create a list of all vehicles in the base which could potentially be allocated
         val potentialVehicles = requireNotNull(em.base).vehicles.filter { it.available
@@ -51,26 +53,26 @@ open class Base(
         }
 
         // allocate all vehicles in the list
-        for (vehicle in vehiclesToAllocate) {
+        //for (vehicle in vehiclesToAllocate) {
 
-        }
+        //}
 
 
 
 
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
-        val vehicTypesToRequest = mutableListOf<VehicleType>()
+        //val vehicTypesToRequest = mutableListOf<VehicleType>()
         // TODO : implement
-        for (vt in neededVehicles) {
+        /*for (vt in neededVehicles) {
             // Todo : something happening here
             var p = 0
             p += 0
-        }
+        }*/
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
-        for (vehicle in vehiclesToAllocate) {
+        /*for (vehicle in vehiclesToAllocate) {
             var p = 0
             p += 0
-        }
+        }*/
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
@@ -83,15 +85,13 @@ open class Base(
         // try each combination of n vehicles starting with the lowest id's
         var k = resource.vehicles.size
         var n = vehicles.size
-        var tries = IntArray(k)
-        for (i in 0..k - 1) {
-            tries[i] = i
-        }
+        var tries = IntArray(k) {it}
         var cur: MutableList<Vehicle>
         while (true) {
             cur = mutableListOf()
-            for (i in 0..k - 1)
+            for (i in 0..k - 1) {
                 cur.add(vehicles[tries[i]])
+            }
             if (checkCombination(resource, cur))
                 return cur
             var pos = -1
@@ -104,8 +104,9 @@ open class Base(
             if (pos == -1)
                 break
             tries[pos]++
-            for (i in pos + 1..k - 1)
+            for (i in pos + 1..k - 1) {
                 tries[i] = tries[i - 1] + 1
+            }
         }
         return null
     }
@@ -132,11 +133,13 @@ open class Base(
             }
         }
         if (staffNeeded > this.staff) return false
-        if (resource.criminalAmount - fittingCriminals > 4 * (resource.countInstancesOf(VehicleType.POLICE_CAR) -
+        if (resource.criminalAmount - fittingCriminals >
+            maxCriminalCapacity * (resource.countInstancesOf(VehicleType.POLICE_CAR) -
                     numberOfPoliceCars)) {
             return false
         }
-        if (resource.waterAmount - fittingWater > 2400 * (resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+        if (resource.waterAmount - fittingWater >
+            maxWaterCapacity * (resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
                     numberOfWaterTrucks)) {
             return false
         }
@@ -154,7 +157,7 @@ open class Base(
      * Initiates reallocation phase, looks through own vehicles if can be reallocated to emergency
      * @return a Resource with what's still missing
      */
-    fun reallocateResources(em: Emergency): Resource {
+    /*fun reallocateResources(em: Emergency): Resource {
         // TODO : implement
         em.id
         // Only vehicles that are unavailable can be reallocated
@@ -197,7 +200,7 @@ open class Base(
             }
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
-    }
+    }*/
 
     /**
      * Each tick due to events recalculates the new distance of the other bases

@@ -64,10 +64,10 @@ object EMCC {
             em.resources.updateDifference(resourcesAfterAllocating)
 
             // base tries to reallocate resources from other emergencies, returns what is left
-            val resourcesAfterReallocating = emBase.reallocateResources(em)
+            // TODO val resourcesAfterReallocating = emBase.reallocateResources(em)
 
             // update the resources in the emergency
-            em.resources.updateDifference(resourcesAfterReallocating)
+            // TODO em.resources.updateDifference(resourcesAfterReallocating)
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!em.resources.isEmpty()) {
