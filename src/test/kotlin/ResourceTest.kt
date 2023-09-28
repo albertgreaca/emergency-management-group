@@ -135,7 +135,8 @@ class ResourceTest {
             VehicleType.FIRE_TRUCK_LADDER,
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE,
-            VehicleType.EMERGENCY_DOCTOR_CAR)
+            VehicleType.EMERGENCY_DOCTOR_CAR
+        )
         val testres = Resource(testVehicList, 5, 10, 15, 0)
         assertTrue(testres.isEqual(resultres))
         // cool seems to work
@@ -169,8 +170,9 @@ class ResourceTest {
             VehicleType.FIRE_TRUCK_LADDER,
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE,
-            VehicleType.EMERGENCY_DOCTOR_CAR)
+            VehicleType.EMERGENCY_DOCTOR_CAR
+        )
         val testres = Resource(testVehicList, 5, 10, 15, 0)
         assertTrue(testres.isEqual(resultres))
     }
- }
+}
