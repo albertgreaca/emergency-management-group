@@ -36,8 +36,10 @@ open class Base(
         val neededVehicles = r.vehicles
 
         // create a list of all vehicles in the base which could potentially be allocated
-        val potentialVehicles = requireNotNull(em.base).vehicles.filter { it.available
-                && it.vehicleType in neededVehicles }.toMutableList()
+        val potentialVehicles = requireNotNull(em.base).vehicles.filter {
+            it.available &&
+                it.vehicleType in neededVehicles
+        }.toMutableList()
 
         var vehiclesToAllocate: MutableList<Vehicle>? = mutableListOf()
         for (i in min(neededVehicles.size, potentialVehicles.size) downTo 0) {
@@ -53,15 +55,12 @@ open class Base(
         }
 
         // allocate all vehicles in the list
-        //for (vehicle in vehiclesToAllocate) {
+        // for (vehicle in vehiclesToAllocate) {
 
-        //}
-
-
-
+        // }
 
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
-        //val vehicTypesToRequest = mutableListOf<VehicleType>()
+        // val vehicTypesToRequest = mutableListOf<VehicleType>()
         // TODO : implement
         /*for (vt in neededVehicles) {
             // Todo : something happening here
@@ -85,15 +84,16 @@ open class Base(
         // try each combination of n vehicles starting with the lowest id's
         var k = resource.vehicles.size
         var n = vehicles.size
-        var tries = IntArray(k) {it}
+        var tries = IntArray(k) { it }
         var cur: MutableList<Vehicle>
         while (true) {
             cur = mutableListOf()
             for (i in 0..k - 1) {
                 cur.add(vehicles[tries[i]])
             }
-            if (checkCombination(resource, cur))
+            if (checkCombination(resource, cur)) {
                 return cur
+            }
             var pos = -1
             for (i in k - 1 downTo 0) {
                 if (tries[i] != n - (k - i)) {
@@ -101,8 +101,9 @@ open class Base(
                     break
                 }
             }
-            if (pos == -1)
+            if (pos == -1) {
                 break
+            }
             tries[pos]++
             for (i in pos + 1..k - 1) {
                 tries[i] = tries[i - 1] + 1
@@ -110,7 +111,6 @@ open class Base(
         }
         return null
     }
-
 
     /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
@@ -134,13 +134,19 @@ open class Base(
         }
         if (staffNeeded > this.staff) return false
         if (resource.criminalAmount - fittingCriminals >
-            maxCriminalCapacity * (resource.countInstancesOf(VehicleType.POLICE_CAR) -
-                    numberOfPoliceCars)) {
+            maxCriminalCapacity * (
+                resource.countInstancesOf(VehicleType.POLICE_CAR) -
+                    numberOfPoliceCars
+                )
+        ) {
             return false
         }
         if (resource.waterAmount - fittingWater >
-            maxWaterCapacity * (resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
-                    numberOfWaterTrucks)) {
+            maxWaterCapacity * (
+                resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+                    numberOfWaterTrucks
+                )
+        ) {
             return false
         }
 
