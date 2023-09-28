@@ -1,5 +1,8 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * token for Lexer
+ */
 enum class LexerToken {
     ARROW,
     SEMICOLON,
