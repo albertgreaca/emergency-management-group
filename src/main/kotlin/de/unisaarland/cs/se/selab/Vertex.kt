@@ -8,9 +8,9 @@ class Vertex(val id: Int, var base: Base?, val realid: Int) {
      * check equality
      */
     override fun equals(other: Any?): Boolean {
-        when (other) {
-            is Vertex -> return id == other.id
-            else -> return false
+        return when (other) {
+            is Vertex -> id == other.id
+            else -> false
         }
     }
         /**
