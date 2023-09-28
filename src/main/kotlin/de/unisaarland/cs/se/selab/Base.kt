@@ -12,13 +12,6 @@ open class Base(
     private val nextBases: MutableList<Base> = mutableListOf()
 
     /**
-     * reduce Staff capacity of base
-     */
-    fun reduceStaff(capacity: Int) {
-        staff -= capacity
-    }
-
-    /**
      * add Vehicle to Base Vehicle List
      */
     fun addVehicle(v: Vehicle) {
@@ -42,8 +35,8 @@ open class Base(
         val neededVehiclesCopy = neededVehicles.toMutableList()
         neededVehiclesCopy.isEmpty()
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
-        val vehiclesToallocate = mutableListOf<Vehicle>()
-        val vehicTypestoRequest = mutableListOf<VehicleType>()
+        val vehiclesToAllocate = mutableListOf<Vehicle>()
+        val vehicTypesToRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
             // Todo : something happening here
@@ -51,7 +44,7 @@ open class Base(
             p += 0
         }
         // Todo : Implement actual allocation of vehicles in vehiclesToAllocate
-        for (vehicle in vehiclesToallocate) {
+        for (vehicle in vehiclesToAllocate) {
             var p = 0
             p += 0
         }
@@ -88,7 +81,7 @@ open class Base(
         }.toMutableList()
         // get emergencies resource
         val neededVehicles = em.resources.vehicles
-        val vehicTypestoRequest = mutableListOf<VehicleType>()
+        val vehicTypesToRequest = mutableListOf<VehicleType>()
         // for each vehic type in resource
         for (vt in neededVehicles) {
             // check type special vs normal
@@ -105,7 +98,7 @@ open class Base(
                 ) {
                     // no
                     // abort
-                    vehicTypestoRequest.add(vt)
+                    vehicTypesToRequest.add(vt)
                 } else {
                     // yes
                     // change position, remove from needed list
@@ -113,7 +106,7 @@ open class Base(
                     vehic.targetEmergency = em
                 }
             } else {
-                vehicTypestoRequest.add(vt)
+                vehicTypesToRequest.add(vt)
             }
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
