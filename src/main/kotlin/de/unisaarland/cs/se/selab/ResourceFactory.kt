@@ -14,7 +14,7 @@ class ResourceFactory {
                 WATERCONSTANTFIRE1,
                 0,
                 0,
-                null
+                0
             )
         } else if (severity == 2) {
             val vehicleList = mutableListOf<VehicleType>(
@@ -38,7 +38,7 @@ class ResourceFactory {
             )
             return Resource(vehicleList, WATERCONSTANTFIRE3, 0, PATIENTCONSTANTFIRE3, LADDERCONSTANTFIRE3)
         }
-        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, null)
+        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, 0)
     }
 
     /**
@@ -46,7 +46,7 @@ class ResourceFactory {
      */
     fun createAccidentResources(severity: Int): Resource {
         if (severity == 1) {
-            return Resource(mutableListOf<VehicleType>(VehicleType.FIRE_TRUCK_TECHNICAL), 0, 0, 0, null)
+            return Resource(mutableListOf<VehicleType>(VehicleType.FIRE_TRUCK_TECHNICAL), 0, 0, 0, 0)
         } else if (severity == 2) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -56,7 +56,7 @@ class ResourceFactory {
                     VehicleType.POLICE_CAR,
                     VehicleType.AMBULANCE
                 )
-            return Resource(vehicleList, 0, 0, 1, null)
+            return Resource(vehicleList, 0, 0, 1, 0)
         } else if (severity == 3) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -67,9 +67,9 @@ class ResourceFactory {
                     VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
                     VehicleType.EMERGENCY_DOCTOR_CAR
                 )
-            return Resource(vehicleList, 0, 0, 2, null)
+            return Resource(vehicleList, 0, 0, 2, 0)
         }
-        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, null)
+        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, 0)
     }
 
     /**
@@ -77,7 +77,7 @@ class ResourceFactory {
      */
     fun createCrimeResources(severity: Int): Resource {
         if (severity == 1) {
-            return Resource(mutableListOf<VehicleType>(VehicleType.POLICE_CAR), 0, 1, 0, null)
+            return Resource(mutableListOf<VehicleType>(VehicleType.POLICE_CAR), 0, 1, 0, 0)
         } else if (severity == 2) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -88,7 +88,7 @@ class ResourceFactory {
                     VehicleType.K9_POLICE_CAR,
                     VehicleType.AMBULANCE
                 )
-            return Resource(vehicleList, 0, CRIMINALAMOUNTCRIME2, 0, null)
+            return Resource(vehicleList, 0, CRIMINALAMOUNTCRIME2, 0, 0)
         } else if (severity == 3) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -97,9 +97,9 @@ class ResourceFactory {
                     VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE,
                     VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.FIREFIGHTER_TRANSPORTER
                 )
-            return Resource(vehicleList, 0, CRIMINALAMOUNTCRIME3, 1, null)
+            return Resource(vehicleList, 0, CRIMINALAMOUNTCRIME3, 1, 0)
         }
-        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, null)
+        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, 0)
     }
 
     // patientamount seems unlikely wtf??
@@ -108,7 +108,7 @@ class ResourceFactory {
      */
     fun createMedicalResources(severity: Int): Resource {
         if (severity == 1) {
-            return Resource(mutableListOf<VehicleType>(VehicleType.AMBULANCE), 0, 0, 0, null)
+            return Resource(mutableListOf<VehicleType>(VehicleType.AMBULANCE), 0, 0, 0, 0)
         } else if (severity == 2) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -116,7 +116,7 @@ class ResourceFactory {
                     VehicleType.AMBULANCE,
                     VehicleType.EMERGENCY_DOCTOR_CAR
                 )
-            return Resource(vehicleList, 0, 0, 2, null)
+            return Resource(vehicleList, 0, 0, 2, 0)
         } else if (severity == 3) {
             val vehicleList =
                 mutableListOf<VehicleType>(
@@ -124,9 +124,9 @@ class ResourceFactory {
                     VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR, VehicleType.EMERGENCY_DOCTOR_CAR,
                     VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL
                 )
-            return Resource(vehicleList, 0, 0, PATIENTCONSTANTMED3, null)
+            return Resource(vehicleList, 0, 0, PATIENTCONSTANTMED3, 0)
         }
-        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, null)
+        return Resource(mutableListOf<VehicleType>(), 0, 0, 0, 0)
     }
 
     companion object {

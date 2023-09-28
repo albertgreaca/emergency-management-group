@@ -8,7 +8,7 @@ class ResourceTest {
 
     @Test
     fun isEmpty1() {
-        val res = Resource(mutableListOf(), 0, 0, 0, null)
+        val res = Resource(mutableListOf(), 0, 0, 0, 0)
         assertTrue(res.isEmpty())
     }
 
@@ -33,7 +33,7 @@ class ResourceTest {
                 VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE, VehicleType.POLICE_MOTORCYCLE,
                 VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.FIREFIGHTER_TRANSPORTER
             )
-        val res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, 0)
         val policeres = res.filterPoliceResources()
         val testres =
             Resource(
@@ -45,7 +45,7 @@ class ResourceTest {
                 0,
                 5,
                 0,
-                null
+                0
             )
         assertTrue(policeres.isEqual(testres))
     }
@@ -58,7 +58,7 @@ class ResourceTest {
                 VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR, VehicleType.EMERGENCY_DOCTOR_CAR,
                 VehicleType.FIRE_TRUCK_TECHNICAL, VehicleType.FIRE_TRUCK_TECHNICAL
             )
-        val res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, 0)
         val hospitalres = res.filterAmbulanceResources()
         val testres =
             Resource(
@@ -74,7 +74,7 @@ class ResourceTest {
                 0,
                 0,
                 32,
-                null
+                0
             )
         assertTrue(hospitalres.isEqual(testres))
     }
@@ -90,7 +90,7 @@ class ResourceTest {
                 VehicleType.AMBULANCE, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
                 VehicleType.EMERGENCY_DOCTOR_CAR
             )
-        val res = Resource(vehicleList, 10, 5, 32, null)
+        val res = Resource(vehicleList, 10, 5, 32, 0)
         val fireres = res.filterFireResources()
         val testres = Resource(
             mutableListOf<VehicleType>(
@@ -102,7 +102,7 @@ class ResourceTest {
             10,
             0,
             0,
-            null
+            0
         )
         assertTrue(fireres.isEqual(testres))
     }
@@ -117,7 +117,7 @@ class ResourceTest {
             VehicleType.FIREFIGHTER_TRANSPORTER, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
             VehicleType.EMERGENCY_DOCTOR_CAR
         )
-        val startres = Resource(vehicleList, 10, 20, 30, null)
+        val startres = Resource(vehicleList, 10, 20, 30, 0)
         val newVehicList = mutableListOf<VehicleType>(
             VehicleType.FIRE_TRUCK_WATER,
             VehicleType.FIRE_TRUCK_WATER,
@@ -127,7 +127,7 @@ class ResourceTest {
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE
         )
-        val diffres = Resource(newVehicList, 5, 10, 15, null)
+        val diffres = Resource(newVehicList, 5, 10, 15, 0)
         val resultres = startres.updateDifference(diffres)
         val testVehicList = mutableListOf<VehicleType>(
             VehicleType.FIRE_TRUCK_WATER,
@@ -136,7 +136,7 @@ class ResourceTest {
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE,
             VehicleType.EMERGENCY_DOCTOR_CAR)
-        val testres = Resource(testVehicList, 5, 10, 15, null)
+        val testres = Resource(testVehicList, 5, 10, 15, 0)
         assertTrue(testres.isEqual(resultres))
         // cool seems to work
         // now maybe with null in ladder??? Edge case?
@@ -161,7 +161,7 @@ class ResourceTest {
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE
         )
-        val diffres = Resource(newVehicList, 5, 10, 15, null)
+        val diffres = Resource(newVehicList, 5, 10, 15, 0)
         val resultres = startres.updateDifference(diffres)
         val testVehicList = mutableListOf<VehicleType>(
             VehicleType.FIRE_TRUCK_WATER,
