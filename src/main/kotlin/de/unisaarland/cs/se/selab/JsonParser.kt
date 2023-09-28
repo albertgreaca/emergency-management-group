@@ -124,7 +124,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val baseType = currBase.getString("baseType")
             val locationId = currBase.getInt("location")
             val location = gm.getVertex(locationId) ?: return false
-            val staffs = currBase.getInt("staffs")
+            val staffs = currBase.getInt("staff")
             if (staffs < 1 || locationId < 0 || id < 0) res = false
             when (baseType) {
                 "FIRE_STATION" -> {
