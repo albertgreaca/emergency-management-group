@@ -5,8 +5,8 @@ import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
     fun registerSystemTests(manager: SystemTestManager) {
-        manager.registerTest(ExampleTest())
-        /*manager.registerTest(EmergencySimpleTest())
+        /*manager.registerTest(ExampleTest())
+        manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReroutingTest())
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
