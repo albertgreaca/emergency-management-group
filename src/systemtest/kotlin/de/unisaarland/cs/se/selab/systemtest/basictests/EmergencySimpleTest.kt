@@ -8,7 +8,7 @@ class EmergencySimpleTest : SystemTest() {
     override val map = "mapFiles/MapEmergencySimple.dot"
     override val assets = "assetsJsons/AssetsEmergencySimple.json"
     override val scenario = "scenarioJsons/ScenarioEmergencySimple.json"
-    override val maxTicks = 20
+    override val maxTicks = 21
 
     override suspend fun run() {
         // everything is parsed and validated

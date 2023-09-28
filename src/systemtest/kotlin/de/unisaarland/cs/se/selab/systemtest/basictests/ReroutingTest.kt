@@ -8,7 +8,7 @@ class ReroutingTest : SystemTest() {
     override val map = "mapFiles/rerouting_map.dot"
     override val assets = "assetsJsons/rerouting_assets.json"
     override val scenario = "scenarioJsons/rerouting_scenario.json"
-    override val maxTicks = 20
+    override val maxTicks = 21
 
     override suspend fun run() {
         // everything is parsed and validated

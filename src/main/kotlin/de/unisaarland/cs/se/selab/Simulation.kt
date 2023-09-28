@@ -94,6 +94,7 @@ object Simulation {
     }
 
     private fun simulateTick() {
+        Logger.logSimulationTick(currentTick)
         simulateEmergencyPhase()
         simulatePlanningPhase()
         simulateRequestPhase()
@@ -103,12 +104,13 @@ object Simulation {
     /** perform the entire simulation
      */
     fun simulateSimulation() {
+        Logger.logSimulationStart()
         if (maximumTicks == null) {
             while (true) {
                 simulateTick()
             }
         } else {
-            while (currentTick <= requireNotNull(maximumTicks)) {
+            while (currentTick < requireNotNull(maximumTicks)) {
                 simulateTick()
             }
         }
