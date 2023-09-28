@@ -112,5 +112,9 @@ class GraphMapTest {
         val vert4 = Vertex(4, null, 4)
         val r1 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Uni", "Business_area", 10, 5, vert0, vert4)
         assertTrue(roadList.contains(r1))
+        val adjList = gm.adjacencyList
+        val map0 = adjList[0]
+        val map4 = adjList[4]
+        assertTrue(map0.containsKey(vert4) && map4.containsKey(vert0))
     }*/
 }
