@@ -138,5 +138,7 @@ class ResourceTest {
             VehicleType.EMERGENCY_DOCTOR_CAR)
         val testres = Resource(testVehicList, 5, 10, 15, null)
         assertTrue(testres.isEqual(resultres))
+        // cool seems to work
+        // now maybe with null in ladder??? Edge case?
     }
  }
