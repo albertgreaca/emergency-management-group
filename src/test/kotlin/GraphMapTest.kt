@@ -10,7 +10,7 @@ import java.io.File*/
 
 class GraphMapTest {
 
-    /*@Test
+  /*  @Test
     fun checkRoadAddingMV1() {
         val gm = GraphMap()
         val parser = MapParser(gm, File("src/test/resources/mapvalid1.dot"))

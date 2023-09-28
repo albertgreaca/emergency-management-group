@@ -26,9 +26,9 @@ object Simulation {
         Logger.logInitInfo(mapConfig.name, mapParsed)
         if (mapParsed) {
             val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
+            val basesParsed: Boolean = jsonParser.parseBases()
             val vehiclesParsed: Boolean =
                 jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
-            val basesParsed: Boolean = jsonParser.parseBases()
             Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
             if (vehiclesParsed && basesParsed) {
                 val eventsParsed: Boolean =
