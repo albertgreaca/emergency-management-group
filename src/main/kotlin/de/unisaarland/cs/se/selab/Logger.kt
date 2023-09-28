@@ -13,7 +13,7 @@ object Logger {
      *
      */
     fun logInitInfo(filename: String, isValid: Boolean): String {
-        var output = ""
+        val output: String
         if (isValid) {
             output = "Initialization Info: $filename successfully parsed and validated"
             pw.println(output)
