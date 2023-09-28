@@ -44,7 +44,11 @@ class Resource(
         val patientDifference = this.patientAmount - resource.patientAmount
         // compare Ladder Length
         // the weird let thing was a detekt fix I have no clue what it does
-        val ladderDifference = resource.ladderLength - this.ladderLength
+        var ladderDifference = if (resource.ladderLength == 0) {
+            0
+        } else {
+            this.ladderLength - resource.ladderLength
+        }
         // compare List of needed Vehicles
         // am I supposed to create a new resource?
         // what is the Int for?

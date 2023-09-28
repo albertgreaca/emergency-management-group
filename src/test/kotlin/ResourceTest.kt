@@ -170,7 +170,7 @@ class ResourceTest {
             VehicleType.FIREFIGHTER_TRANSPORTER,
             VehicleType.AMBULANCE,
             VehicleType.EMERGENCY_DOCTOR_CAR)
-        val testres = Resource(testVehicList, 5, 10, 15, 50)
+        val testres = Resource(testVehicList, 5, 10, 15, 0)
         assertTrue(testres.isEqual(resultres))
     }
  }
