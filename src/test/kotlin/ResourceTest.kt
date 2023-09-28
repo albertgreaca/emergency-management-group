@@ -106,4 +106,37 @@ class ResourceTest {
         )
         assertTrue(fireres.isEqual(testres))
     }
-}
+
+    @Test
+    fun diffTest1() {
+        val vehicleList = mutableListOf<VehicleType>(
+            VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_LADDER, VehicleType.FIRE_TRUCK_LADDER, VehicleType.FIREFIGHTER_TRANSPORTER,
+            VehicleType.FIREFIGHTER_TRANSPORTER, VehicleType.AMBULANCE, VehicleType.AMBULANCE,
+            VehicleType.EMERGENCY_DOCTOR_CAR
+        )
+        val startres = Resource(vehicleList, 10, 20, 30, null)
+        val newVehicList = mutableListOf<VehicleType>(
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_LADDER,
+            VehicleType.FIREFIGHTER_TRANSPORTER,
+            VehicleType.AMBULANCE
+        )
+        val diffres = Resource(newVehicList, 5, 10, 15, null)
+        val resultres = startres.updateDifference(diffres)
+        val testVehicList = mutableListOf<VehicleType>(
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_WATER,
+            VehicleType.FIRE_TRUCK_LADDER,
+            VehicleType.FIREFIGHTER_TRANSPORTER,
+            VehicleType.AMBULANCE,
+            VehicleType.EMERGENCY_DOCTOR_CAR)
+        val testres = Resource(testVehicList, 5, 10, 15, null)
+        assertTrue(testres.isEqual(resultres))
+    }
+ }
