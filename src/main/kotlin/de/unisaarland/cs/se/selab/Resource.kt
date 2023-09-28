@@ -141,4 +141,15 @@ class Resource(
         }
         return false
     }
+
+    /**
+     * counts instances of the given vehicle type
+     */
+    fun countInstancesOf(t: VehicleType): Int {
+        var count = 0
+        for (type in vehicles) {
+            if (type == t) count++
+        }
+        return count
+    }
 }

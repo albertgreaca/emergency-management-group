@@ -89,36 +89,39 @@ open class Base(
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
     fun checkCombination(resource: Resource, vehicles: MutableList<Vehicle>): Boolean {
-        // get total amount of staff and compare against staff in base
         var staffNeeded = 0
         var fittingCriminals = 0
         var fittingWater = 0
+        var numberOfPoliceCars = 0
+        var numberOfWaterTrucks = 0
         for (vec in vehicles) {
             staffNeeded += vec.staffCapacity
             if (vec is PoliceCar) {
-
+                fittingCriminals += vec.criminalCapacity
+                numberOfPoliceCars++
             }
-
-
+            if (vec is FireTruckWater) {
+                fittingWater += vec.getWaterAmount()
+                numberOfWaterTrucks++
+            }
         }
         if (staffNeeded > this.staff) return false
+        if (resource.criminalAmount - fittingCriminals > 4 * (resource.countInstancesOf(VehicleType.POLICE_CAR) -
+                    numberOfPoliceCars)) {
+            return false
+        }
+        if (resource.waterAmount - fittingWater > 2400 * (resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+                    numberOfWaterTrucks)) {
+            return false
+        }
 
         // for each vehicle-type, check if there are more vehicles in the combination that required
-
-    }
-
-
-
-    /**
-     * helper function to check available vehicles for corresponding type
-     */
-    private fun helperVehicleCompare(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
-        for (vehicle in vehicleList) {
-            if (vehicle.vehicleType == v) {
-                return vehicle
+        for (vehicleType in VehicleType.values()) {
+            if (resource.countInstancesOf(vehicleType) < vehicles.count { it.vehicleType == vehicleType }) {
+                return false
             }
         }
-        return null
+        return true
     }
 
     /**
