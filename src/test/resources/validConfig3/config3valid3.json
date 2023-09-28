@@ -3,19 +3,19 @@
     {
       "id": 0,
       "type": "RUSH_HOUR",
-      "tick": 3,
+      "tick": 0,
       "duration": 2,
-      "roadTypes": ["SIDE_STREET"],
+      "roadTypes": ["SIDE_STREET","MAIN_STREET"],
       "factor": 2
     },
     {
       "id": 1,
       "type": "TRAFFIC_JAM",
       "tick": 5,
-      "factor": 2,
+      "factor": 11,
       "source": 1,
       "target": 3,
-      "duration": 5
+      "duration": 8
     },
     {
       "id": 2,
@@ -46,9 +46,9 @@
     {
       "id": 5,
       "type": "VEHICLE_UNAVAILABLE",
-      "tick": 12,
+      "tick": 15,
       "vehicleID": 3,
-      "duration": 11
+      "duration": 3
     }
   ],
   "emergencies": [
@@ -69,8 +69,8 @@
       "village": "Saarbrueken",
       "road": "Mozartstraße",
       "severity": 2,
-      "handleTime": 8,
-      "maxDuration": 45
+      "handleTime": 20,
+      "maxDuration": 70
     },
     {
       "id": 2,
@@ -93,7 +93,7 @@
       "maxDuration": 50
     },
     {
-      "id": 0,
+      "id": 4,
       "tick": 1,
       "emergencyType": "FIRE",
       "village": "Saarbrueken",

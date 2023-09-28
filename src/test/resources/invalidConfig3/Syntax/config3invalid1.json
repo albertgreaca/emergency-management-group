@@ -1,7 +1,6 @@
 {
   "events": [
     {
-      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,

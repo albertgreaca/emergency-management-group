@@ -3,7 +3,7 @@
     {
       "id": 0,
       "type": "RUSH_HOUR",
-      "tick": 3,
+      "tick": 0,
       "duration": 2,
       "roadTypes": ["SIDE_STREET"],
       "factor": 2
@@ -11,7 +11,7 @@
     {
       "id": 1,
       "type": "TRAFFIC_JAM",
-      "tick": 5,
+      "tick": 9,
       "factor": 2,
       "source": 1,
       "target": 3,
@@ -23,7 +23,7 @@
       "tick": 5,
       "roadTypes": ["MAIN_STREET","SIDE_STREET"],
       "factor": 20,
-      "duration": 10
+      "duration": 30
     },
     {
       "id": 3,
@@ -58,7 +58,7 @@
       "emergencyType": "FIRE",
       "village": "Saarbrueken",
       "road": "Meerwiesertalweg",
-      "severity": 2,
+      "severity": 1,
       "handleTime": 5,
       "maxDuration": 45
     },
@@ -70,7 +70,7 @@
       "road": "Mozartstraße",
       "severity": 2,
       "handleTime": 8,
-      "maxDuration": 45
+      "maxDuration": 20
     },
     {
       "id": 2,
@@ -93,14 +93,14 @@
       "maxDuration": 50
     },
     {
-      "id": 0,
+      "id": 4,
       "tick": 1,
       "emergencyType": "FIRE",
       "village": "Saarbrueken",
       "road": "Meerwiesertalweg",
-      "severity": 2,
+      "severity": 3,
       "handleTime": 5,
-      "maxDuration": 45
+      "maxDuration": 60
     }
   ]
 }

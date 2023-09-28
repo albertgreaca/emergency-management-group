@@ -10,7 +10,6 @@
     },
     {
       "id": 1,
-      "type": "TRAFFIC_JAM",
       "tick": 5,
       "factor": 2,
       "source": 1,
