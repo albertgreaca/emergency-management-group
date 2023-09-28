@@ -38,7 +38,7 @@ open class Base(
                 && it.vehicleType in neededVehicles }.toMutableList()
 
         var vehiclesToAllocate: MutableList<Vehicle>? = mutableListOf()
-        for (i in min(neededVehicles.size, potentialVehicles.size)..0) {
+        for (i in min(neededVehicles.size, potentialVehicles.size) downTo 0) {
             vehiclesToAllocate = canSendThisNumberOfAssets(i, em.resources, potentialVehicles)
             if (vehiclesToAllocate != null) {
                 break
@@ -80,8 +80,34 @@ open class Base(
     fun canSendThisNumberOfAssets(n: Int, resource: Resource, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
         vehicles.sortBy { it.id }
 
-    // try each combination of n vehicles starting with the lowest id's
-
+        // try each combination of n vehicles starting with the lowest id's
+        var k = resource.vehicles.size
+        var n = vehicles.size
+        var tries = IntArray(k)
+        for (i in 0..k - 1) {
+            tries[i] = i
+        }
+        var cur: MutableList<Vehicle>
+        while (true) {
+            cur = mutableListOf()
+            for (i in 0..k - 1)
+                cur.add(vehicles[tries[i]])
+            if (checkCombination(resource, cur))
+                return cur
+            var pos = -1
+            for (i in k - 1 downTo 0) {
+                if (tries[i] != n - (k - i)) {
+                    pos = i
+                    break
+                }
+            }
+            if (pos == -1)
+                break
+            tries[pos]++
+            for (i in pos + 1..k - 1)
+                tries[i] = tries[i - 1] + 1
+        }
+        return null
     }
 
 
