@@ -13,10 +13,11 @@ class Vertex(val id: Int, var base: Base?, val realid: Int) {
             else -> false
         }
     }
-        /**
-         * hashing
-         */
-        override fun hashCode(): Int {
-            return id
-        }
+
+    /**
+     * hashing
+     */
+    override fun hashCode(): Int {
+        return id
     }
+}
