@@ -1,4 +1,7 @@
 package de.unisaarland.cs.se.selab
+
+import kotlin.math.min
+
 /**
  * Bases of the departments
  */
@@ -27,15 +30,35 @@ open class Base(
         val r = em.resources
         val neededVehicles = r.vehicles
         var water = r.waterAmount
-        water += 0
         var criminals = r.criminalAmount
-        criminals += 0
         var patients = r.patientAmount
-        patients += 0
-        val neededVehiclesCopy = neededVehicles.toMutableList()
-        neededVehiclesCopy.isEmpty()
+
+        // create a list of all vehicles in the base which could potentially be allocated
+        val potentialVehicles = requireNotNull(em.base).vehicles.filter { it.available
+                && it.vehicleType in neededVehicles }.toMutableList()
+
+        var vehiclesToAllocate: MutableList<Vehicle>? = mutableListOf()
+        for (i in min(neededVehicles.size, potentialVehicles.size)..0) {
+            vehiclesToAllocate = canSendThisNumberOfAssets(i, em.resources, potentialVehicles)
+            if (vehiclesToAllocate != null) {
+                break
+            }
+        }
+
+        // if we could not allocate anything, return the initial resource
+        if (vehiclesToAllocate == null) {
+            return em.resources
+        }
+
+        // allocate all vehicles in the list
+        for (vehicle in vehiclesToAllocate) {
+
+        }
+
+
+
+
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
-        val vehiclesToAllocate = mutableListOf<Vehicle>()
         val vehicTypesToRequest = mutableListOf<VehicleType>()
         // TODO : implement
         for (vt in neededVehicles) {
@@ -50,6 +73,41 @@ open class Base(
         }
         return Resource(mutableListOf(), 0, 0, 0, 0)
     }
+
+    /**
+     * @returns the ordered list of vehicles to be allocated if allocation of n vehicles is possible, null otherwise
+     */
+    fun canSendThisNumberOfAssets(n: Int, resource: Resource, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
+        vehicles.sortBy { it.id }
+
+    // try each combination of n vehicles starting with the lowest id's
+
+    }
+
+
+    /**
+     * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
+     */
+    fun checkCombination(resource: Resource, vehicles: MutableList<Vehicle>): Boolean {
+        // get total amount of staff and compare against staff in base
+        var staffNeeded = 0
+        var fittingCriminals = 0
+        var fittingWater = 0
+        for (vec in vehicles) {
+            staffNeeded += vec.staffCapacity
+            if (vec is PoliceCar) {
+
+            }
+
+
+        }
+        if (staffNeeded > this.staff) return false
+
+        // for each vehicle-type, check if there are more vehicles in the combination that required
+
+    }
+
+
 
     /**
      * helper function to check available vehicles for corresponding type
