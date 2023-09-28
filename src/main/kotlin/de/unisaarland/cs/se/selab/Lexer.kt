@@ -20,8 +20,8 @@ class Lexer {
         string = string.replace("=", " = ")
         string = string.replace("-", " -")
         string = string.replace(">", "> ")
-        var list = string.split("\\s+".toRegex()).toMutableList()
-        var tokenlist = mutableListOf<LexerToken>()
+        val list = string.split("\\s+".toRegex()).toMutableList()
+        val tokenlist = mutableListOf<LexerToken>()
         for (element in list) {
             whencyclo(element, tokenlist)
         }
@@ -75,7 +75,7 @@ class Lexer {
      * lex Num
      */
     fun lexNum(xc: Char) {
-        var acc = 0
+        val acc = 0
         xc.minus(acc)
     }
 

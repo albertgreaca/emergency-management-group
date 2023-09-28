@@ -41,17 +41,13 @@ open class Base(
                 it.vehicleType in neededVehicles
         }.toMutableList()
 
-        var vehiclesToAllocate: MutableList<Vehicle>? = mutableListOf()
+        val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
         for (i in min(neededVehicles.size, potentialVehicles.size) downTo 0) {
-            vehiclesToAllocate = canSendThisNumberOfAssets(i, em.resources, potentialVehicles)
-            if (vehiclesToAllocate != null) {
+            vehiclesToAllocate.clear()
+            if (canSendThisNumberOfAssets(i, em.resources, potentialVehicles) != null) {
                 break
             }
-        }
-
-        // if we could not allocate anything, return the initial resource
-        if (vehiclesToAllocate == null) {
-            return em.resources
+            vehiclesToAllocate.addAll(requireNotNull(canSendThisNumberOfAssets(i, em.resources, potentialVehicles)))
         }
 
         // allocate all vehicles in the list
@@ -78,16 +74,15 @@ open class Base(
     /**
      * @returns the ordered list of vehicles to be allocated if allocation of n vehicles is possible, null otherwise
      */
-    fun canSendThisNumberOfAssets(n: Int, resource: Resource, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
+    fun canSendThisNumberOfAssets(k: Int, resource: Resource, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
         vehicles.sortBy { it.id }
 
         // try each combination of n vehicles starting with the lowest id's
-        var k = resource.vehicles.size
-        var n = vehicles.size
-        var tries = IntArray(k) { it }
-        var cur: MutableList<Vehicle>
+        val n = vehicles.size
+        val tries = IntArray(k) { it }
+        val cur: MutableList<Vehicle> = mutableListOf()
         while (true) {
-            cur = mutableListOf()
+            cur.clear()
             for (i in 0..k - 1) {
                 cur.add(vehicles[tries[i]])
             }

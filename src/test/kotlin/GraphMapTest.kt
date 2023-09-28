@@ -68,7 +68,9 @@ class GraphMapTest {
             "Saarlouis",
             "Saarbrueckerstrasse",
             12,
-            4, vert4, vert5
+            4,
+            vert4,
+            vert5
         )
         val r56 = Road(
             PrimaryRoadType.MAINSTREET,
@@ -80,9 +82,7 @@ class GraphMapTest {
             vert5,
             vert6
         )
-        assertTrue(
-            rl.contains(r01) && rl.contains(r12) && rl.contains(r13)
-        )
+        assertTrue(rl.contains(r01) && rl.contains(r12) && rl.contains(r13))
         assertTrue(
             gm.roadList.contains(r24) && gm.roadList.contains(
                 r45
@@ -92,7 +92,7 @@ class GraphMapTest {
         val map0 = adjList[0]
         assertTrue(map0[vert1] == r01)
         val map1 = adjList[1]
-        assertTrue(map1[vert0] == r01 )//&& map1[vert3] == r13 && map1[vert2] == r12)
+        assertTrue(map1[vert0] == r01) // && map1[vert3] == r13 && map1[vert2] == r12)
         val map2 = adjList[2]
         val supposedRoad = map2[vert1]
         assertTrue(supposedRoad == r12 && map2[vert4] == r24)
@@ -111,10 +111,9 @@ class GraphMapTest {
         val vert0 = Vertex(0, null, 0)
         val vert4 = Vertex(4, null, 4)
         val r1 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Uni", "Business_area", 10, 5, vert0, vert4)
-        assertTrue(roadList.contains(r1))
         val adjList = gm.adjacencyList
         val map0 = adjList[0]
         val map4 = adjList[4]
-        assertTrue(map0.containsKey(vert4) && map4.containsKey(vert0))
+        assertTrue(map0.containsKey(vert4) && map4.containsKey(vert0) && roadList.contains(r1))
     }
 }
