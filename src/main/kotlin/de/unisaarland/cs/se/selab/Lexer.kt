@@ -1,8 +1,13 @@
 package de.unisaarland.cs.se.selab
 
+/**
+ * the lexer
+ */
 class Lexer {
 
-
+    /**
+     * lexes
+     */
     // function instream needed for character List?
     fun lex(s: String): MutableList<LexerToken> {
 
@@ -19,41 +24,54 @@ class Lexer {
         var list = string.split("\\s+".toRegex()).toMutableList()
         var tokenlist = mutableListOf<LexerToken>()
         for (element in list) {
-            when(element) {
-                "->" -> tokenlist.add(LexerToken.ARROW)
-                ";" -> tokenlist.add(LexerToken.SEMICOLON)
-                ")" -> tokenlist.add(LexerToken.RPARENTHESES)
-                "(" -> tokenlist.add(LexerToken.LPARENTHESES)
-                "{" -> tokenlist.add(LexerToken.CLPARENTHESES)
-                "}" -> tokenlist.add(LexerToken.CRPARENTHESES)
-                "=" -> tokenlist.add(LexerToken.EQUAL)
-                "village" -> tokenlist.add(LexerToken.VILLAGE)
-                "name" -> tokenlist.add(LexerToken.NAME)
-                "heightLimit" -> tokenlist.add(LexerToken.HEIGHTLIMIT)
-                "weight" -> tokenlist.add(LexerToken.WEIGHT)
-                "primaryType" -> tokenlist.add(LexerToken.PRIMARYTYPE)
-                "secondaryType" -> tokenlist.add(LexerToken.SECONDARYTYPE)
-                "mainStreet" -> tokenlist.add(LexerToken.MAINSTREET)
-                "sideStreet" -> tokenlist.add(LexerToken.SIDESTREET)
-                "countyRoad" -> tokenlist.add(LexerToken.COUNTYROAD)
-                "oneWayStreet" -> tokenlist.add(LexerToken.ONEWAYSTREET)
-                "tunnel" -> tokenlist.add(LexerToken.TUNNEL)
-                "none" -> tokenlist.add(LexerToken.NONE)
-            }
+            tokenlist = whencyclo(element, tokenlist)
         }
 
         return tokenlist
     }
 
+    private fun whencyclo(element: String, tokenList: MutableList<LexerToken>) : MutableList<LexerToken> {
+        when(element) {
+            "->" -> tokenList.add(LexerToken.ARROW)
+            ";" -> tokenList.add(LexerToken.SEMICOLON)
+            ")" -> tokenList.add(LexerToken.RPARENTHESES)
+            "(" -> tokenList.add(LexerToken.LPARENTHESES)
+            "{" -> tokenList.add(LexerToken.CLPARENTHESES)
+            "}" -> tokenList.add(LexerToken.CRPARENTHESES)
+            "=" -> tokenList.add(LexerToken.EQUAL)
+            "village" -> tokenList.add(LexerToken.VILLAGE)
+            "name" -> tokenList.add(LexerToken.NAME)
+            "heightLimit" -> tokenList.add(LexerToken.HEIGHTLIMIT)
+            "weight" -> tokenList.add(LexerToken.WEIGHT)
+            "primaryType" -> tokenList.add(LexerToken.PRIMARYTYPE)
+            "secondaryType" -> tokenList.add(LexerToken.SECONDARYTYPE)
+            "mainStreet" -> tokenList.add(LexerToken.MAINSTREET)
+            "sideStreet" -> tokenList.add(LexerToken.SIDESTREET)
+            "countyRoad" -> tokenList.add(LexerToken.COUNTYROAD)
+            "oneWayStreet" -> tokenList.add(LexerToken.ONEWAYSTREET)
+            "tunnel" -> tokenList.add(LexerToken.TUNNEL)
+            "none" -> tokenList.add(LexerToken.NONE)
+        }
+        return tokenList
+    }
+    /**
+     * lext string
+     */
     fun lexString() {
 
     }
 
+    /**
+     * lex Num
+     */
     fun lexNum(xc: Char) {
         var acc = 0
 
     }
 
+    /**
+     * checks if char
+     */
     fun isChar(x:Char): Boolean {
         when (x) {
             in 'a' .. 'z' -> return true
@@ -62,6 +80,9 @@ class Lexer {
         }
     }
 
+    /**
+     * check if digit
+     */
     fun isDigit(x: Char): Boolean {
         when(x) {
             in '0' .. '9' -> return true
