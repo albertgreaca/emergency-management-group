@@ -66,4 +66,21 @@ class Road(
     fun removeEvent(ev: Event) {
         eventList.remove(ev)
     }
+
+    /**
+     * check equality
+     */
+    override fun equals(other: Any?): Boolean {
+        return when (other){
+            is Road -> (other.primType == primType && other.secType == secType && other.village == village
+                    && other.name == name && other.weight == weight && other.height == height == other.start.equals(start) && other.end.equals(end))
+                else-> false
+        }
+    }
+    /**
+     * hashing
+     */
+    override fun hashCode(): Int{
+        return 1
+    }
 }
