@@ -395,6 +395,10 @@ class MapParser(private val gm: GraphMap, file: File) {
             lastCharSize++
             charcounter++
         }
+        while (charcounter < chars.size && chars[charcounter].isWhitespace()) {
+            charcounter++
+            lastCharSize++
+        }
         return res.toIntOrNull()
     }
 

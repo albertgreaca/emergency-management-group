@@ -15,12 +15,12 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     fun parseVehicles(): Boolean {
         var res = true
         val jsonObject = JSONObject(file1.readText())
-        val vehiclesObject = jsonObject.getJSONArray("Vehicles")
+        val vehiclesObject = jsonObject.getJSONArray("vehicles")
         for (i in 0 until vehiclesObject.length()) {
             val currVehicle = vehiclesObject.getJSONObject(i)
             val id = currVehicle.getInt(ID)
             val baseId = currVehicle.getInt("baseID")
-            val vehicleType: VehicleType = currVehicle.get("VehicleType") as VehicleType
+            val vehicleType: VehicleType = parseVehicleType(currVehicle.get("vehicleType")) ?: return false
             val vehicleHeight = currVehicle.getInt("vehicleHeight")
             val staff = currVehicle.getInt("staffCapacity")
             when (vehicleType) {
@@ -168,7 +168,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             e.message
             return false
         }
-        val emerArray = jsonObject.getJSONArray("EmergencyCalls")
+        val emerArray = jsonObject.getJSONArray("emergencies")
         for (i in 0 until emerArray.length()) {
             val currEmer = emerArray.getJSONObject(i)
             val id = currEmer.getInt(ID)
@@ -335,6 +335,21 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         Simulation.addEvent(newEvent)
         res = res && true
         return res
+    }
+
+    private fun parseVehicleType(s: Any): VehicleType? {
+        return when (s) {
+            "POLICE_CAR" -> VehicleType.POLICE_CAR
+            "K9_POLICE_CAR" -> VehicleType.K9_POLICE_CAR
+            "POLICE_MOTORCYCLE" -> VehicleType.POLICE_MOTORCYCLE
+            "FIRE_TRUCK_WATER" -> VehicleType.FIRE_TRUCK_WATER
+            "FIRE_TRUCK_TECHNICAL" -> VehicleType.FIRE_TRUCK_TECHNICAL
+            "FIRE_TRUCK_LADDER" -> VehicleType.FIRE_TRUCK_LADDER
+            "FIREFIGHTER_TRANSPORTER" -> VehicleType.FIRE_TRUCK_WATER
+            "AMBULANCE" -> VehicleType.AMBULANCE
+            "EMERGENCY_DOCTOR_CAR" -> VehicleType.EMERGENCY_DOCTOR_CAR
+            else -> { null }
+        }
     }
 
     companion object {

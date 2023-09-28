@@ -40,6 +40,13 @@ class MapParserTest {
         assertTrue(graphMap.roadList.size == 9)
     }
 
+    @Test
+    fun validExampleFile() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/example_map.dot"))
+        assertTrue(parser.parseMap())
+    }
+
     /**
      Testing for unique IDs
      */
