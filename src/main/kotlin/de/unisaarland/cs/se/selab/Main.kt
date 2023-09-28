@@ -25,7 +25,11 @@ fun main(args: Array<String>) {
     val f3 = File(scenario)
     Simulation.maximumTicks = maxticks
     if (!Simulation.initialize(f1, f2, f3)) {
+        Logger.pw.flush()
+        Logger.pw.close()
         return
     }
     Simulation.simulateSimulation()
+    Logger.pw.flush()
+    Logger.pw.close()
 }
