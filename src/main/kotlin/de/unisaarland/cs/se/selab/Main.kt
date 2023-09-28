@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab
 
 import java.io.File
 import java.io.FileOutputStream
+import java.io.PrintWriter
 
 /**
  * This is the entry point of the simulation.
@@ -11,13 +12,13 @@ fun main(args: Array<String>) {
     val map = argsMap["--map"] ?: argsMap["-m"] ?: return
     val assets = argsMap["--assets"] ?: argsMap["-a"] ?: return
     val scenario = argsMap["--scenario"] ?: argsMap["-s"] ?: return
-    val ticks = argsMap["--ticks"] ?: argsMap["-s"] ?: return
-    val maxticks = ticks.toIntOrNull()
+    val ticks = argsMap["--ticks"] ?: argsMap["-t"]
+    val maxticks = ticks?.toIntOrNull()
     val out = argsMap["--out"] ?: argsMap["-o"]
     if (out != null) {
-        Logger.setPrintWriter(FileOutputStream(out))
+        Logger.pw = PrintWriter(FileOutputStream(out))
     } else {
-        Logger.setPrintWriter(System.out)
+        Logger.pw = PrintWriter(System.out)
     }
     val f1 = File(map)
     val f2 = File(assets)

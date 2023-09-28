@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab
 
-import java.io.OutputStream
 import java.io.PrintWriter
 
 /**
@@ -8,14 +7,7 @@ import java.io.PrintWriter
  */
 object Logger {
 
-    private var pw: PrintWriter = PrintWriter(System.out)
-
-    /**
-     *
-     */
-    fun setPrintWriter(o: OutputStream) {
-        pw = PrintWriter(o)
-    }
+    var pw: PrintWriter = PrintWriter(System.out)
 
     /**
      *
@@ -24,10 +16,10 @@ object Logger {
         var output = ""
         if (isValid) {
             output = "Initialization Info: $filename successfully parsed and validated"
-            pw.print(output)
+            pw.println(output)
         } else {
             output = "Initialization Info: $filename invalid"
-            pw.print(output)
+            pw.println(output)
         }
         return output
     }
@@ -37,7 +29,7 @@ object Logger {
      */
     fun logSimulationStart(): String {
         val output = "Simulation starts"
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -46,7 +38,7 @@ object Logger {
      */
     fun logSimulationTick(t: Int): String {
         val output = "Simulation Tick: $t"
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -55,7 +47,7 @@ object Logger {
      */
     fun logEmergencyAssignment(eid: Int, bid: Int): String {
         val output = "Emergency Assignment: $eid assigned to $bid"
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -64,7 +56,7 @@ object Logger {
      */
     fun logAssetAllocation(aid: Int, eid: Int, t: Int): String {
         val output = "Asset Allocation: $aid allocated to $eid; $t ticks to arrive."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -73,7 +65,7 @@ object Logger {
      */
     fun logAssetReallocation(aid: Int, eid: Int): String {
         val output = "Asset Reallocation: $aid reallocated to $eid."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -82,7 +74,7 @@ object Logger {
      */
     fun logAssetRequest(rid: Int, bid: Int, eid: Int): String {
         val output = "Asset Request: $rid sent to $bid for $eid."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -91,7 +83,7 @@ object Logger {
      */
     fun logRequestFailed(eid: Int): String {
         val output = "Request Failed: $eid failed."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -100,7 +92,7 @@ object Logger {
      */
     fun logAssetArrival(aid: Int, vid: Int): String {
         val output = "Asset Arrival: $aid arrived at $vid."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -109,7 +101,7 @@ object Logger {
      */
     fun logEmergencyHandlingStart(eid: Int): String {
         val output = "Emergency Handling Start: $eid handling started."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -118,7 +110,7 @@ object Logger {
      */
     fun logEmergencyResolved(eid: Int): String {
         val output = "Emergency Resolved: $eid resolved."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -127,7 +119,7 @@ object Logger {
      */
     fun logEmergencyFailed(eid: Int): String {
         val output = "Emergency Failed: $eid failed."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -136,7 +128,7 @@ object Logger {
      */
     fun logEventEnded(evid: Int): String {
         val output = "Event Ended: $evid ended."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -145,7 +137,7 @@ object Logger {
      */
     fun logEventTriggered(evid: Int): String {
         val output = "Event Triggered: $evid triggered."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -154,7 +146,7 @@ object Logger {
      */
     fun logAssetsRerouted(numOfAssets: Int): String {
         val output = "Assets Rerouted: $numOfAssets"
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -163,7 +155,7 @@ object Logger {
      */
     fun logSimulationEnd(): String {
         val output = "Simulation End"
-        pw.print(output)
+        pw.println(output)
         return output
     }
 
@@ -174,7 +166,7 @@ object Logger {
         val output = "Simulation Statistics: $rerouted assets rerouted.\nSimulation Statistics: $received received " +
             "emergencies.\nSimulation Statistics: $ongoing ongoing emergencies.\nSimulation Statistics: $failed " +
             "failed emergencies.\nSimulation Statistics: $resolved resolved emergencies."
-        pw.print(output)
+        pw.println(output)
         return output
     }
 }
