@@ -33,5 +33,6 @@ bin/
 ### VS Code ###
 .vscode/
 
+libs/
 ### Mac OS ###
 .DS_Store
