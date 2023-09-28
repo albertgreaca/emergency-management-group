@@ -156,6 +156,7 @@ open class Base(
                 return false
             }
         }
+        // TODO : check if all vehicles arrive in time using dijkstra
         return true
     }
 
