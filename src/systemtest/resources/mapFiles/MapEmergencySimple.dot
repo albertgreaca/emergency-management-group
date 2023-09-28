@@ -11,6 +11,6 @@ digraph UdS {
     4 -> 2 [village = Campus; name = Biochemie; heightLimit = 10; weight = 12; primaryType = countyRoad; secondaryType = none;];
     4 -> 3 [village = Campus; name = Chemiekunst; heightLimit = 3; weight = 24; primaryType = sideStreet; secondaryType = tunnel;];
     4 -> 5 [village = Campus; name = Chemistry; heightLimit = 4; weight = 18; primaryType = sideStreet; secondaryType = none;];
-    2 -> 3 [village = Campus; name = Naturkunst; heightLimit = 8; weight = 6; primaryType = countyRoad; secondaryType = none;];
-    3 -> 5 [village = Campus; name = Art; heightLimit = 7; weight = 2; primaryType = countyRoad; secondaryType = tunnel;];
+    2 -> 3 [village = UdS; name = Naturkunst; heightLimit = 8; weight = 6; primaryType = countyRoad; secondaryType = none;];
+    3 -> 5 [village = UdS; name = Art; heightLimit = 7; weight = 2; primaryType = countyRoad; secondaryType = tunnel;];
 }
