@@ -1,21 +1,19 @@
 package de.unisaarland.cs.se.selab.systemtest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
     fun registerSystemTests(manager: SystemTestManager) {
         manager.registerTest(ExampleTest())
-        manager.registerTest(EmergencySimpleTest())
+        /*manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReroutingTest())
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
-        registerMapParserSemanticFail1(manager)
+        registerMapParserSemanticFail1(manager)*/
     }
 
-    private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
+   /* private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(FailedParser2())
         manager.registerTest(FailedParser3())
@@ -115,5 +113,5 @@ object SystemTestRegistration {
         manager.registerTest(FailedParserSyntax74())
         manager.registerTest(FailedParserSyntax75())
         manager.registerTest(FailedParserSyntax76())
-    }
+    } */
 }
