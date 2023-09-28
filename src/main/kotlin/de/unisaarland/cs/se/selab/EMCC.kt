@@ -4,7 +4,9 @@ package de.unisaarland.cs.se.selab
  * This is the class responsible for simulating the different phases of a tick
  */
 object EMCC {
-    val observers: MutableList<EmergencyObserver> = mutableListOf()
+    var policeDepartment: PoliceDepartment? = null
+    var fireDepartment: FireDepartment? = null
+    var ambulanceDepartment: AmbulanceDepartment? = null
     val startingEmergencies: MutableList<Emergency> = mutableListOf()
     val handledEmergencies: MutableList<Emergency> = mutableListOf()
     val resolvedOrFailedEmergencies: MutableList<Emergency> = mutableListOf()
@@ -20,9 +22,9 @@ object EMCC {
         startingEmergencies.sortBy { it.id }
         for (em in startingEmergencies) {
             when (em.type) {
-                EmergencyType.CRIME -> observers[0].update(em)
-                EmergencyType.FIRE, EmergencyType.ACCIDENT -> observers[1].update(em)
-                else -> observers[2].update(em)
+                EmergencyType.CRIME -> policeDepartment?.update(em)
+                EmergencyType.FIRE, EmergencyType.ACCIDENT -> fireDepartment?.update(em)
+                else -> ambulanceDepartment?.update(em)
             }
         }
     }
@@ -30,9 +32,6 @@ object EMCC {
     /**
      * adds a department to the list of observers
      */
-    fun addObserver(ob: EmergencyObserver) {
-        observers.add(ob)
-    }
 
     /**
      * adds an emergency to the startingEmergencies list
