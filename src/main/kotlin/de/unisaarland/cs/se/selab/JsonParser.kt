@@ -254,7 +254,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     }
 
     private fun vehicleUnavailableAmbulance(vehicleId: Int): Vehicle? {
-        for (b in EMCC.ambulanceDepartment?.bases!!) {
+        for (b in requireNotNull(EMCC.ambulanceDepartment?.bases)) {
             for (v in b.vehicles) {
                 if (v.id == vehicleId) {
                     return v
@@ -265,7 +265,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     }
 
     private fun vehicleUnavailablePoliceFire(vehicleId: Int): Vehicle? {
-        for (b in EMCC.policeDepartment?.bases!!) {
+        for (b in requireNotNull(EMCC.policeDepartment?.bases)) {
             for (v in b.vehicles) {
                 if (v.id == vehicleId) {
                     return v
@@ -273,7 +273,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             }
         }
 
-        for (b in EMCC.fireDepartment?.bases!!) {
+        for (b in requireNotNull(EMCC.fireDepartment?.bases)) {
             for (v in b.vehicles) {
                 if (v.id == vehicleId) {
                     return v
