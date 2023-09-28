@@ -16,15 +16,31 @@ class Position(
     var startedThisTick: Boolean = false,
     var isDrivingBack: Boolean = false
 ) {
+
+    companion object {
+        const val WEIGHT_TO_GO = 10
+    }
     /**
      * advances the position by one tick
      */
     fun advance() {
-        if (startedThisTick) {
-            // TODO
-        } else {
-            startedThisTick = true
+        var weightLeft = WEIGHT_TO_GO
+        if (!startedThisTick) {
+            while (weightLeft > 0 && !roadList.isEmpty()) {
+                distanceFromEnd--
+                distanceFromStart++
+                weightLeft--
+                if (distanceFromEnd == 0) {
+                    roadList.removeAt(0)
+                    distanceFromStart = 0
+                    if (!roadList.isEmpty()) {
+                        distanceFromEnd = roadList[0].getActualWeight()
+                    }
+                }
+            }
+            return
         }
+        startedThisTick = false
     }
 
     /**
