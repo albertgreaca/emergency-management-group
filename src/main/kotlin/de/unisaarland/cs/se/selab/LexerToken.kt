@@ -22,5 +22,6 @@ enum class LexerToken {
     COUNTYROAD,
     ONEWAYSTREET,
     TUNNEL,
-    NONE
+    NONE,
+    ID
 }
