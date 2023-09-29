@@ -25,36 +25,37 @@ object Simulation {
         val mapParser = MapParser(map, mapConfig) // initialize the map and check for validity
         val mapParsed: Boolean = mapParser.parseMap()
         Logger.logInitInfo(mapConfig.name, mapParsed)
-        if (mapParsed) {
-            val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
-            val basesParsed: Boolean
-            val vehiclesParsed: Boolean
-            try {
-                 basesParsed = jsonParser.parseBases()
-                 vehiclesParsed =
-                    jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
-                Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
-            } catch (e: JSONException) {
-                e.message
-                Logger.logInitInfo(baseVehicleConfig.name, false)
-                return false
-            }
+        if (!mapParsed) {
+            return false
+        }
+        val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
+        val basesParsed: Boolean
+        val vehiclesParsed: Boolean
+        try {
+            basesParsed = jsonParser.parseBases()
+            vehiclesParsed =
+                jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
+            Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
+        } catch (e: JSONException) {
+            e.message
+            Logger.logInitInfo(baseVehicleConfig.name, false)
+            return false
+        }
 
-            try {
-                if (vehiclesParsed && basesParsed) {
-                    val eventsParsed: Boolean =
-                        jsonParser.parseEvents() // initialize events and emergencies and check for validity
-                    val emergenciesParsed: Boolean = jsonParser.parseEmergency()
-                    Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
-                    if (eventsParsed && emergenciesParsed) {
-                        return true
-                    }
+        try {
+            if (vehiclesParsed && basesParsed) {
+                val eventsParsed: Boolean =
+                    jsonParser.parseEvents() // initialize events and emergencies and check for validity
+                val emergenciesParsed: Boolean = jsonParser.parseEmergency()
+                Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
+                if (eventsParsed && emergenciesParsed) {
+                    return true
                 }
-            } catch (e: JSONException) {
-                e.message
-                Logger.logInitInfo(emergEventConfig.name, false)
-                return false
             }
+        } catch (e: JSONException) {
+            e.message
+            Logger.logInitInfo(emergEventConfig.name, false)
+            return false
         }
         return false
     }
