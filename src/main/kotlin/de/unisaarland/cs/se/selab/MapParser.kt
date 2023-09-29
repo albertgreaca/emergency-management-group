@@ -9,7 +9,7 @@ import java.io.File
  * }
  */
 class MapParser(private val gm: GraphMap, file: File) {
-    private var tokenlist = Lexer().lex(file.readText())
+    private val tokenlist = Lexer().lex(file.readText())
     private var graphName = ""
     private val vilRoadSet = mutableSetOf<Pair<String, String>>()
     private val verToVer = mutableSetOf<Pair<Int, Int>>()
@@ -32,7 +32,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
             ret = ret && validateId(graphName) && parseVertices() && parseEdges() && i == tokenlist.size
             ret = ret && sideStreetCount && !mapVilMain.containsValue(false) && !mapVerCon.containsValue(false) &&
-                !gm.roadList.isEmpty()
+                gm.roadList.isNotEmpty()
         } else {
             ret = false
         }
@@ -71,7 +71,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             val end = tokenlist[i++].text.toIntOrNull() ?: return false
             mapVerCon[start] = true
             mapVerCon[end] = true
-            var ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start)) &&
+            val ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start)) &&
                 parseAttributes(start, end)
             if (!ret || tokenlist[i++].tokenkind != LexerToken.SEMICOLON) {
                 return false
@@ -92,8 +92,7 @@ class MapParser(private val gm: GraphMap, file: File) {
         val attributeslist =
             mutableListOf(LexerToken.VILLAGE, LexerToken.NAME, LexerToken.HEIGHTLIMIT, LexerToken.WEIGHT)
         val resultMap = mutableMapOf<LexerToken, String>()
-        var k = 0
-        for (attribute in attributeslist) {
+        for ((k, attribute) in attributeslist.withIndex()) {
             var p: Pair<String, Boolean>
             if (k >= 2) {
                 p = parseAttribute(attribute, true)
@@ -103,7 +102,6 @@ class MapParser(private val gm: GraphMap, file: File) {
             if (!p.second) {
                 return false
             }
-            k++
             resultMap[attribute] = p.first
         }
         ret = tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
