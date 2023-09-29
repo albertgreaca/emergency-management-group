@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab
 
+import org.json.JSONException
 import java.io.File
 
 /**
@@ -26,18 +27,33 @@ object Simulation {
         Logger.logInitInfo(mapConfig.name, mapParsed)
         if (mapParsed) {
             val jsonParser = JsonParser(map, baseVehicleConfig, emergEventConfig)
-            val basesParsed: Boolean = jsonParser.parseBases()
-            val vehiclesParsed: Boolean =
-                jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
-            Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
-            if (vehiclesParsed && basesParsed) {
-                val eventsParsed: Boolean =
-                    jsonParser.parseEvents() // initialize events and emergencies and check for validity
-                val emergenciesParsed: Boolean = jsonParser.parseEmergency()
-                Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
-                if (eventsParsed && emergenciesParsed) {
-                    return true
+            val basesParsed: Boolean
+            val vehiclesParsed: Boolean
+            try {
+                 basesParsed = jsonParser.parseBases()
+                 vehiclesParsed =
+                    jsonParser.parseVehicles() // initialize vehicles and bases and check for validity
+                Logger.logInitInfo(baseVehicleConfig.name, vehiclesParsed && basesParsed)
+            } catch (e: JSONException) {
+                e.message
+                Logger.logInitInfo(baseVehicleConfig.name, false)
+                return false
+            }
+
+            try {
+                if (vehiclesParsed && basesParsed) {
+                    val eventsParsed: Boolean =
+                        jsonParser.parseEvents() // initialize events and emergencies and check for validity
+                    val emergenciesParsed: Boolean = jsonParser.parseEmergency()
+                    Logger.logInitInfo(emergEventConfig.name, eventsParsed && emergenciesParsed)
+                    if (eventsParsed && emergenciesParsed) {
+                        return true
+                    }
                 }
+            } catch (e: JSONException) {
+                e.message
+                Logger.logInitInfo(emergEventConfig.name, false)
+                return false
             }
         }
         return false
