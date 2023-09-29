@@ -1,10 +1,10 @@
 {
   "bases": [
     {
-    "id": 0,
-    "baseType": "FIRE_STATION",
-    "location": 2,
-    "staff": 62
+      "id": 0,
+      "baseType": "FIRE_STATION",
+      "location": 2,
+      "staff": 62
     },
     {
       "id": 1,
@@ -282,8 +282,7 @@
       "baseID": 3,
       "vehicleType": "FIREFIGHTER_TRANSPORTER",
       "vehicleHeight": 2,
-      "staffCapacity": 7,
-      "ladderLength": 60
+      "staffCapacity": 7
     },
     {
       "id": 30,
