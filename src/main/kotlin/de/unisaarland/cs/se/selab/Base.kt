@@ -55,12 +55,44 @@ open class Base(
         for (vehicle in vehiclesToAllocate) {
             // calculate and set the position of the vehicle
             vehicle.position = Dijkstra.dijkstraHeight(this.location.id, em.road, vehicle.vehicleHeight)
+            // set position to started this tick
+            requireNotNull(vehicle.position).startedThisTick = true
             // reduce the available staff of the vehicle
             this.staff -= vehicle.staffCapacity
             // set the target emergency of the vehicle
             vehicle.targetEmergency = em
             // remove the vehicle type from the list of needed vehicle types
             em.resources.vehicles.remove(vehicle.vehicleType)
+            // special vehicles editen
+            when (vehicle) {
+                is PoliceCar -> {if (em.resources.criminalAmount >= vehicle.criminalCapacity) {
+                    em.resources.criminalAmount -= vehicle.criminalCapacity
+                    vehicle.transportedCriminals = vehicle.criminalCapacity
+                } else {
+                    vehicle.transportedCriminals = em.resources.criminalAmount
+                    em.resources.criminalAmount = 0
+                }}
+                is FireTruckWater -> {if (em.resources.waterAmount >= vehicle.waterCapacity) {
+                    em.resources.waterAmount -= vehicle.waterCapacity
+                    vehicle.waterTransported = vehicle.waterCapacity
+                } else {
+                    vehicle.waterTransported = em.resources.waterAmount
+                    em.resources.waterAmount = 0
+                }}
+                is Ambulance -> {if (em.resources.patientAmount >= 1) {
+                    em.resources.patientAmount -= 1
+                    vehicle.patientOnBoard = true
+                } else {
+                    vehicle.patientOnBoard = false
+                }}
+            }
+            if (em.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
+                em.resources.ladderLength = 0
+            }
+            // set vehicle availability false
+            vehicle.available = false
+            // add vehicle to list in emergency
+            em.addVehicle(vehicle)
         }
 
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
@@ -133,7 +165,7 @@ open class Base(
                 numberOfPoliceCars++
             }
             if (vec is FireTruckWater) {
-                fittingWater += vec.getWaterAmount()
+                fittingWater += vec.waterCapacity
                 numberOfWaterTrucks++
             }
         }
