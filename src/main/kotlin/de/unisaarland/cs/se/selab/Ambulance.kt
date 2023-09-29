@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab
 
 /** Class for the Ambulance
  */
-class Ambulance(
+data class Ambulance(
     override val id: Int,
     override val base: Base,
     override val staffCapacity: Int,
