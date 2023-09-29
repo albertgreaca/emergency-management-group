@@ -6,7 +6,7 @@ import java.util.PriorityQueue
  * Class representing Dijkstra
  */
 object Dijkstra {
-    var gm2: GraphMap? = null
+    var gm2: GraphMap = Simulation.map
 
     private fun determineBaseEmergency(et: EmergencyType, b: Base): Base? {
         if (et == EmergencyType.FIRE && b !is PoliceStation && b !is Hospital) {
@@ -27,9 +27,9 @@ object Dijkstra {
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (dist[node.id] > dist[cur.first] + edge.weight) {
-                dist[node.id] = dist[cur.first] + edge.weight
-                pq.add(Pair(node.id, dist[node.id]))
+            if (dist[node.realid] > dist[cur.first] + edge.weight) {
+                dist[node.realid] = dist[cur.first] + edge.weight
+                pq.add(Pair(node.realid, dist[node.realid]))
             }
         }
     }
@@ -56,7 +56,7 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 if (determineBaseEmergency(et, b) != null) {
@@ -90,16 +90,16 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 ans.add(b)
             }
             val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
             for ((node, edge) in nex) {
-                if (dist[node.id] > dist[cur.first] + edge.getActualWeight()) {
-                    dist[node.id] = dist[cur.first] + edge.getActualWeight()
-                    pq.add(Pair(node.id, dist[node.id]))
+                if (dist[node.realid] > dist[cur.first] + edge.getActualWeight()) {
+                    dist[node.realid] = dist[cur.first] + edge.getActualWeight()
+                    pq.add(Pair(node.realid, dist[node.realid]))
                 }
             }
         }
@@ -133,16 +133,16 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance ||
-                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
+                if (dist[node.realid].distance > newp.distance ||
+                    (dist[node.realid].distance == newp.distance && newp.smaller(dist[node.realid]))
                 ) {
-                    dist[node.id] = newp
-                    pq.add(Pair(node.id, newp.distance))
+                    dist[node.realid] = newp
+                    pq.add(Pair(node.realid, newp.distance))
                 }
             }
         }
@@ -171,7 +171,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathHeight(cur, dist)
             }
@@ -245,16 +245,16 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance ||
-                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
+                if (dist[node.realid].distance > newp.distance ||
+                    (dist[node.realid].distance == newp.distance && newp.smaller(dist[node.realid]))
                 ) {
-                    dist[node.id] = newp
-                    pq.add(Pair(node.id, newp.distance))
+                    dist[node.realid] = newp
+                    pq.add(Pair(node.realid, newp.distance))
                 }
             }
         }
@@ -288,11 +288,11 @@ object Dijkstra {
             dist[i].distance = Int.MAX_VALUE
         }
         if (startRoad.start != dir) {
-            dist[startRoad.start.id].distance = distStart
-            dist[startRoad.end.id].distance = distEnd
+            dist[startRoad.start.realid].distance = distStart
+            dist[startRoad.end.realid].distance = distEnd
         } else {
-            dist[startRoad.start.id].distance = distEnd
-            dist[startRoad.end.id].distance = distStart
+            dist[startRoad.start.realid].distance = distEnd
+            dist[startRoad.end.realid].distance = distStart
         }
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
@@ -304,7 +304,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathReroute(cur, dist, startRoad, distStart, distEnd)
             }
@@ -378,16 +378,16 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
                 newp.vertexList.add(v)
-                if (dist[node.id].distance > newp.distance ||
-                    (dist[node.id].distance == newp.distance && newp.smaller(dist[node.id]))
+                if (dist[node.realid].distance > newp.distance ||
+                    (dist[node.realid].distance == newp.distance && newp.smaller(dist[node.realid]))
                 ) {
-                    dist[node.id] = newp
-                    pq.add(Pair(node.id, newp.distance))
+                    dist[node.realid] = newp
+                    pq.add(Pair(node.realid, newp.distance))
                 }
             }
         }
@@ -421,11 +421,11 @@ object Dijkstra {
             dist[i].distance = Int.MAX_VALUE
         }
         if (startRoad.start != dir) {
-            dist[startRoad.start.id].distance = distStart
-            dist[startRoad.end.id].distance = distEnd
+            dist[startRoad.start.realid].distance = distStart
+            dist[startRoad.end.realid].distance = distEnd
         } else {
-            dist[startRoad.start.id].distance = distEnd
-            dist[startRoad.end.id].distance = distStart
+            dist[startRoad.start.realid].distance = distEnd
+            dist[startRoad.end.realid].distance = distStart
         }
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
@@ -437,8 +437,8 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
-            if (endNode == v.id) {
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            if (endNode == v.realid) {
                 return determinePathBackToBase(cur, dist, startRoad, distStart, distEnd)
             }
             updateNeighborsBackToBase(cur, dist, pq, height, v)

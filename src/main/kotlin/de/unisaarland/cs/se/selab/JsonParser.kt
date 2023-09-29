@@ -129,7 +129,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val id = currBase.getInt(ID)
             val baseType = currBase.getString("baseType")
             val locationId = currBase.getInt("location")
-            val location = gm.getVertex(locationId) ?: return false
+            val location = gm.getVertexFromId(locationId) ?: return false
             val staffs = currBase.getInt("staff")
             if (staffs < 1 || locationId < 0 || id < 0) res = false
             when (baseType) {
@@ -288,8 +288,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val sourceVertexId = currEvent.getInt(SOURCE)
         val targetVertexId = currEvent.getInt(TARGET)
         if (sourceVertexId < 0 || targetVertexId < 0 || duration < 1) res = false
-        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
-        val targetVertex = gm.getVertex(targetVertexId) ?: return false
+        val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
         if (id < 0 || tick < 0) res = false
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = RoadClosureEvent(id, tick, duration, road)
@@ -306,8 +306,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val factor = currEvent.getInt(FACTOR)
         if (factor < 1 || sourceVertexId < 0 || targetVertexId < 0) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
-        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
-        val targetVertex = gm.getVertex(targetVertexId) ?: return false
+        val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = ConstructionSiteEvent(id, tick, duration, oneWayStreet, road, factor)
         Simulation.addEvent(newEvent)
@@ -322,8 +322,8 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val targetVertexId = currEvent.getInt(TARGET)
         if (sourceVertexId < 0 || targetVertexId < 0 || factor < 1) res = false
         if (duration < 1 || id < 0 || tick < 0) res = false
-        val sourceVertex = gm.getVertex(sourceVertexId) ?: return false
-        val targetVertex = gm.getVertex(targetVertexId) ?: return false
+        val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = TrafficJamEvent(id, tick, duration, road, factor)
         Simulation.addEvent(newEvent)
