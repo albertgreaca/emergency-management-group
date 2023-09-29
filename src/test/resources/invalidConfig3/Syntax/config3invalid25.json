@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
@@ -71,7 +71,6 @@
       "id": 1,
       "tick": 1,
       "village": "Saarbruecken",
-      "roadName": "Railway_Station_Road",
       "emergencyType": "ACCIDENT",
       "severity": 2,
       "handleTime": 15,

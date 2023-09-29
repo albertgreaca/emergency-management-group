@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
@@ -74,7 +74,7 @@
       "roadName": "Railway_Station_Road",
       "emergencyType": "ACCIDENT",
       "severity": 2,
-      "handleTime": 15,
+      "handleTime": 15
       "maxDuration": 18
     },
     {

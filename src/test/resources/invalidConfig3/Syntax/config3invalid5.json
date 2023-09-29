@@ -1,8 +1,8 @@
-{
+config3invalid3.json{
   "events": [
     {
-      "il": 0,
-      "type": "RUSH_HOUR",
+      "id": 0,
+      "type": "RUSH_OUR",
       "tick": 3,
       "duration": 2,
       "roadTypes": [

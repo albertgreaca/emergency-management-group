@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
@@ -94,7 +94,6 @@
       "roadName": "Church_Lane",
       "emergencyType": "ACCIDENT",
       "severity": 3,
-      "handleTime": 29,
       "maxDuration": 9
     },
     {

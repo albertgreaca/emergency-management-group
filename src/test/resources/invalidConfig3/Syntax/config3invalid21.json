@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
@@ -100,7 +100,7 @@
     {
       "id": 4,
       "tick": 1,
-      "village": "Osnabrueck",
+      "village": 55,
       "roadName": "Main_Street",
       "emergencyType": "MEDICAL",
       "severity": 2,

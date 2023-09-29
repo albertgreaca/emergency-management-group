@@ -1,8 +1,8 @@
 {
   "events": [
     {
-      "il": 0,
-      "type": "RUSH_HOUR",
+      "id": 0,
+      "tyee": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
       "roadTypes": [

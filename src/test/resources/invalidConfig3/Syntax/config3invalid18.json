@@ -1,7 +1,7 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
@@ -36,7 +36,7 @@
       "tick": 9,
       "source": 3,
       "target": 4,
-      "oneWayStreet": false,
+      "oneWayStreet": "false",
       "factor": 7,
       "duration": 10
     },

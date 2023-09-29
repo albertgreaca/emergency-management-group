@@ -1,13 +1,13 @@
 {
   "events": [
     {
-      "il": 0,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
-      "duration": 2,
-      "roadTypes": [
+      "duration": 3,
+      "roadTypes":
         "SIDE_STREET"
-      ],
+      ,
       "factor": 2
     },
     {

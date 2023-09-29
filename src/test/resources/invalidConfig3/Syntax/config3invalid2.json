@@ -1,11 +1,13 @@
 {
   "ebents": [
     {
-      "id": 1,
+      "id": 0,
       "type": "RUSH_HOUR",
       "tick": 3,
       "duration": 2,
-      "roadTypes": ["SIDE_STREET"],
+      "roadTypes": [
+        "SIDE_STREET"
+      ],
       "factor": 2
     },
     {
@@ -21,7 +23,10 @@
       "id": 2,
       "type": "RUSH_HOUR",
       "tick": 5,
-      "roadTypes": ["MAIN_STREET","SIDE_STREET"],
+      "roadTypes": [
+        "MAIN_STREET",
+        "SIDE_STREET"
+      ],
       "factor": 20,
       "duration": 10
     },
@@ -31,7 +36,7 @@
       "tick": 9,
       "source": 3,
       "target": 4,
-      "oneWayStreet": "false",
+      "oneWayStreet": false,
       "factor": 7,
       "duration": 10
     },
@@ -51,56 +56,56 @@
       "duration": 11
     }
   ],
-  "emergencies": [
+  "emergencyCalls": [
     {
       "id": 0,
       "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Main_Street",
       "emergencyType": "FIRE",
-      "village": "Saarbrueken",
-      "road": "Meerwiesertalweg",
-      "severity": 2,
-      "handleTime": 5,
-      "maxDuration": 45
+      "severity": 1,
+      "handleTime": 7,
+      "maxDuration": 20
     },
     {
       "id": 1,
       "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Railway_Station_Road",
       "emergencyType": "ACCIDENT",
-      "village": "Saarbrueken",
-      "road": "Mozartstraße",
       "severity": 2,
-      "handleTime": 8,
-      "maxDuration": 45
+      "handleTime": 15,
+      "maxDuration": 18
     },
     {
       "id": 2,
       "tick": 1,
-      "emergencyType": "MEDICAL",
-      "village": "Saarlouis",
-      "road": "Provinzialstraße",
-      "severity": 1,
-      "handleTime": 2,
-      "maxDuration": 35
+      "village": "Munich",
+      "roadName": "Garden_Way",
+      "emergencyType": "CRIME",
+      "severity": 3,
+      "handleTime": 20,
+      "maxDuration": 25
     },
     {
       "id": 3,
       "tick": 1,
-      "emergencyType": "CRIME",
-      "village": "Voelklingen",
-      "road": "Heinestraße",
+      "village": "Stuttgart",
+      "roadName": "Church_Lane",
+      "emergencyType": "ACCIDENT",
       "severity": 3,
-      "handleTime": 12,
-      "maxDuration": 50
+      "handleTime": 29,
+      "maxDuration": 9
     },
     {
-      "id": 0,
+      "id": 4,
       "tick": 1,
-      "emergencyType": "FIRE",
-      "village": "Saarbrueken",
-      "road": "Meerwiesertalweg",
+      "village": "Osnabrueck",
+      "roadName": "Main_Street",
+      "emergencyType": "MEDICAL",
       "severity": 2,
-      "handleTime": 5,
-      "maxDuration": 45
+      "handleTime": 19,
+      "maxDuration": 15
     }
   ]
 }
