@@ -746,6 +746,20 @@ class MapParserTest {
         assertFalse(parser.parseMap())
     }
 
+    @Test
+    fun invalidSyntaxDotFile77() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid77.dot"))
+        assertFalse(parser.parseMap())
+    }
+
+    @Test
+    fun invalidSyntaxDotFile78() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid78.dot"))
+        assertFalse(parser.parseMap())
+    }
+
     // compare sizes of parsed elements with expected values
     // check individual field values of parsed objects
 }

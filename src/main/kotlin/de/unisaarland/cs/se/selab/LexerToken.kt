@@ -23,5 +23,6 @@ enum class LexerToken {
     ONEWAYSTREET,
     TUNNEL,
     NONE,
-    ID
+    ID,
+    DIGRAPH
 }

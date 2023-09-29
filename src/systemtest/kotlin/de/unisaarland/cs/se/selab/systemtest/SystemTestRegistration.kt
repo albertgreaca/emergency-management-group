@@ -115,5 +115,7 @@ object SystemTestRegistration {
         manager.registerTest(FailedParserSyntax74())
         manager.registerTest(FailedParserSyntax75())
         manager.registerTest(FailedParserSyntax76())
+        manager.registerTest(FailedParserSyntax77())
+        manager.registerTest(FailedParserSyntax78())
     }
 }

@@ -2,12 +2,6 @@ package de.unisaarland.cs.se.selab
 
 import java.io.File
 
-/*
-     val schem = getSchema(MapParser::class.java,"simulation")
-     val json : JSONObject = JSONObject(file.readText())
-     schem?.validate(json)
-  */
-
 /** Class for Parsing dot Files
  * digraph Id {
  * Id;
@@ -15,38 +9,34 @@ import java.io.File
  * }
  */
 class MapParser(private val gm: GraphMap, file: File) {
-    private var charcounter = 0
-    private val chars = file.readText().toCharArray()
+    private var tokenlist = Lexer().lex(file.readText())
     private var graphName = ""
     private val vilRoadSet = mutableSetOf<Pair<String, String>>()
     private val verToVer = mutableSetOf<Pair<Int, Int>>()
     private var sideStreetCount = false
     private val mapVilMain = mutableMapOf<String, Boolean>()
     private val mapVilVer = mutableMapOf<Int, String>()
+    private val mapVerCon = mutableMapOf<Int, Boolean>()
     private var curIndex = 0
-    private var lastCharSize = 0
+    private var i = 0
 
     /**
      * Starting function for parsing
      * @return Parsing Successful or not
      */
     fun parseMap(): Boolean {
-        val next = getNextWord()
-        if (next != "digraph") {
-            return false
+        var ret = true
+        if (i < tokenlist.size && tokenlist.size > minTokens) {
+            ret = tokenlist[i++].tokenkind == LexerToken.DIGRAPH
+            graphName = tokenlist[i++].text
+            ret = tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
+            ret = ret && validateId(graphName) && parseVertices() && parseEdges() && i == tokenlist.size
+            ret = ret && sideStreetCount && !mapVilMain.containsValue(false) && !mapVerCon.containsValue(false) &&
+                !gm.roadList.isEmpty()
+        } else {
+            ret = false
         }
-        skipSpaces(true)
-        graphName = getNextWord()
-        if (!validateId(graphName)) {
-            return false
-        }
-        skipSpaces(false)
-        if (chars[charcounter] != '{') {
-            return false
-        }
-        charcounter++
-        skipSpaces(false)
-        return parseVertices() && parseEdges() && !mapVilMain.containsValue(false)
+        return ret
     }
 
     /**
@@ -55,27 +45,18 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseVertices(): Boolean {
-        var id = getNextInt() ?: return false
-        skipSpaces(false)
-        var sep = chars[charcounter]
-        charcounter++
-        while (sep == ';') {
-            val vertex = Vertex(id, null, curIndex)
-            curIndex++
-            if (!validateVertex(vertex)) {
+        while (tokenlist[i + 1].tokenkind == LexerToken.SEMICOLON) {
+            val vertexID = tokenlist[i++].text.toIntOrNull() ?: return false
+            val vert = Vertex(vertexID, null, curIndex)
+            if (!validateVertex(vert)) {
                 return false
             }
-            gm.addVertex(vertex)
-            skipSpaces(false)
-            id = getNextInt() ?: return false
-            skipSpaces(false)
-            sep = chars[charcounter]
-            if (sep != '-') {
-                charcounter++
-            }
+            gm.addVertex(vert)
+            mapVerCon[vertexID] = false
+            curIndex++
+            i++
         }
-        charcounter -= lastCharSize
-        return sep == '-'
+        return tokenlist[i + 1].tokenkind == LexerToken.ARROW
     }
 
     /**
@@ -84,34 +65,20 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseEdges(): Boolean {
-        var start = getNextInt() ?: return false
-        skipSpaces(false)
-        var sep = chars[charcounter]
-        while (sep == '-') {
-            if (chars[charcounter] != '-' || chars[charcounter + 1] != '>') {
+        while (i + 1 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.ARROW) {
+            val start = tokenlist[i++].text.toIntOrNull() ?: return false
+            i++
+            val end = tokenlist[i++].text.toIntOrNull() ?: return false
+            mapVerCon[start] = true
+            mapVerCon[end] = true
+            var ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start)) &&
+                parseAttributes(start, end)
+            if (!ret || tokenlist[i++].tokenkind != LexerToken.SEMICOLON) {
                 return false
             }
-            charcounter += 2
-            val end = getNextInt()
-            var ret = end != null && !verToVer.contains(Pair(start, end)) &&
-                !verToVer.contains(Pair(end, start)) && parseAttributes(start, end)
-            ret = ret && chars[charcounter] == ';'
-            if (!ret) {
-                return false
-            }
-            charcounter++
-            verToVer.add(Pair(start, requireNotNull(end)))
-            if (
-                untilEnd() == 1
-            ) {
-                break
-            }
-            start = getNextInt() ?: return false
-            skipSpaces(false)
-            sep = chars[charcounter]
+            verToVer.add(Pair(start, end))
         }
-        skipSpaces(false)
-        return chars[charcounter] == '}' && sideStreetCount
+        return tokenlist[i++].tokenkind == LexerToken.CRPARENTHESES
     }
 
     /**
@@ -121,164 +88,46 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseAttributes(start: Int, end: Int): Boolean {
-        var ret: Boolean = start != end
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '['
-        charcounter++
-        ret = ret && getNextWordEquals("village")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        skipSpaces(false)
-        val village = getNextWord()
-        ret = ret && validateId(village)
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == ';'
-        charcounter++
-        ret = ret && getNextWordEquals("name")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        skipSpaces(false)
-        val name = getNextWord()
-        ret = ret && validateId(name) && !vilRoadSet.contains(Pair(village, name))
-        vilRoadSet.add(Pair(village, name))
-        return ret && parseAttributes2(start, end, village, name)
-    }
-
-    private fun parseAttributes2(
-        start: Int,
-        end: Int,
-        village: String,
-        name: String,
-    ): Boolean {
-        var ret = true
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == ';'
-        charcounter++
-        ret = ret && getNextWordEquals("heightLimit")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        val heightLimit = getNextInt() ?: return false
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == ';'
-        charcounter++
-        ret = ret && getNextWordEquals("weight")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        val weight = getNextInt() ?: return false
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == ';'
-        charcounter++
-
-        return ret && parseAttributes3(start, end, village, name, weight, heightLimit)
-    }
-
-    private fun parseAttributes3(
-        start: Int,
-        end: Int,
-        village: String,
-        name: String,
-        weight: Int,
-        heightLimit: Int,
-    ): Boolean {
-        var ret = true
-        ret = ret && getNextWordEquals("primaryType")
-        skipSpaces(false)
-        ret = ret && chars[charcounter] == '='
-        charcounter++
-        val primary = getNextWord()
-        val pty = validatePrimaryType(primary) ?: return false
-        if (pty == PrimaryRoadType.SIDESTREET) {
-            sideStreetCount = true
-        }
-        if (pty == PrimaryRoadType.COUNTYROAD) {
-            ret = ret && village == graphName
-        } else if (mapVilVer.contains(start)) {
-            ret = ret && mapVilVer[start] == village
-        } else {
-            mapVilVer[start] = village
-        }
-        return ret && parseAttributes4(pty, village, name, weight, heightLimit, start, end)
-    }
-
-    private fun parseAttributes4(
-        pty: PrimaryRoadType,
-        village: String,
-        name: String,
-        weight: Int,
-        heightLimit: Int,
-        start: Int,
-        end: Int
-    ): Boolean {
-        var ret = true
-        if (pty != PrimaryRoadType.COUNTYROAD) {
-            if (!mapVilMain.contains(village)) {
-                mapVilMain[village] = false
+        var ret = tokenlist[i++].tokenkind == LexerToken.LPARENTHESES
+        val attributeslist =
+            mutableListOf(LexerToken.VILLAGE, LexerToken.NAME, LexerToken.HEIGHTLIMIT, LexerToken.WEIGHT)
+        val resultMap = mutableMapOf<LexerToken, String>()
+        var k = 0
+        for (attribute in attributeslist) {
+            var p: Pair<String, Boolean>
+            if (k >= 2) {
+                p = parseAttribute(attribute, true)
+            } else {
+                p = parseAttribute(attribute, false)
             }
-            ret = ret && village != graphName
-        }
-        if (pty == PrimaryRoadType.MAINSTREET) {
-            if (mapVilMain.contains(village)) {
-                mapVilMain.replace(village, false, true)
+            if (!p.second) {
+                return false
             }
+            k++
+            resultMap[attribute] = p.first
         }
-        if (pty != PrimaryRoadType.COUNTYROAD && mapVilVer.contains(end)) {
-            ret = ret && mapVilVer[end] == village
-        } else if (pty != PrimaryRoadType.COUNTYROAD) {
-            mapVilVer[end] = village
-        }
-
-        skipSpaces(false)
-        return ret && parseAttributes5(pty, village, name, weight, heightLimit, start, end)
+        ret = tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
+            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return false
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        ret = tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
+            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return false
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        ret = ret && validateAttributes(resultMap, start, end, primtype)
+        return ret && createObject(resultMap, primtype, sectype, start, end) &&
+            tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
     }
 
-    private fun parseAttributes5(
-        pty: PrimaryRoadType,
-        village: String,
-        name: String,
-        weight: Int,
-        heightLimit: Int,
-        start: Int,
-        end: Int
-    ): Boolean {
-        var ret = true
-        if (chars[charcounter] != ';') {
-            ret = false
-        }
-        charcounter++
-        ret = ret && getNextWordEquals("secondaryType")
-
-        skipSpaces(false)
-        if (chars[charcounter] != '=') {
-            ret = false
-        }
-        charcounter++
-        skipSpaces(false)
-        val secondary = getNextWord()
-        val sty = validateSecondaryType(secondary) ?: return false
-
-        skipSpaces(false)
-        if (chars[charcounter] != ';') {
-            ret = false
-        }
-        charcounter++
-        val startv = gm.getVertexFromId(start)
-        val endv = gm.getVertexFromId(end)
-        if (startv == null || endv == null) {
-            ret = false
-        }
-        if (ret) {
-            val road = Road(pty, sty, village, name, weight, heightLimit, requireNotNull(startv), requireNotNull(endv))
-            if (!validateRoad(road)) {
-                ret = false
-            }
-            ret = ret && gm.addRoad(road, start, end) && chars[charcounter] == ']'
-            charcounter++
-        }
-        return ret
+    private fun parseAttribute(token: LexerToken, isInt: Boolean): Pair<String, Boolean> {
+        var ret = tokenlist[i++].tokenkind == token &&
+            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        val ret2 = tokenlist[i++].text
+        ret = ret && (validateId(ret2) || isInt) && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        return Pair(ret2, ret)
+    }
+    private fun validateVertex(v: Vertex): Boolean {
+        return v.id >= 0 && gm.getVertexFromId(v.id) == null
     }
 
     private fun validateId(id: String): Boolean {
@@ -299,118 +148,94 @@ class MapParser(private val gm: GraphMap, file: File) {
         return true
     }
 
-    private fun validateVertex(v: Vertex): Boolean {
-        return v.id >= 0 && gm.getVertexFromId(v.id) == null
-    }
-
-    private fun validateRoad(r: Road): Boolean {
-        return if (r.secType == SecondaryRoadType.TUNNEL) {
-            r.weight > 0 && r.height <= 3 && r.height >= 1
-        } else {
-            r.weight > 0 && r.height >= 1
-        }
-    }
-    private fun getNextWord(): String {
-        skipSpaces(false)
-        var res = ""
-        while (charcounter < chars.size && !chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])
-        ) {
-            res += chars[charcounter]
-            charcounter++
-        }
-        return res
-    }
-
-    private fun isSeparator(c: Char): Boolean {
-        return when (c) {
-            '{', '}', '[', ']', ';', '-', '>', '=' -> true
-            else -> {
-                false
-            }
-        }
-    }
-
-    private fun skipSpaces(spaceNec: Boolean): Boolean {
-        if (spaceNec) {
-            if (!chars[charcounter].isWhitespace()
-            ) {
-                charcounter++
-                return false
-            }
-        }
-        if (charcounter >= chars.size) {
-            return false
-        }
-        while (chars[charcounter].isWhitespace() &&
-            charcounter < chars.size
-        ) {
-            charcounter++
-        }
-        return true
-    }
-
-    private fun validatePrimaryType(ty: String): PrimaryRoadType? {
+    private fun validatePrimaryType(ty: LexerToken): PrimaryRoadType? {
         return when (ty) {
-            "mainStreet" -> PrimaryRoadType.MAINSTREET
-            "sideStreet" -> PrimaryRoadType.SIDESTREET
-            "countyRoad" -> PrimaryRoadType.COUNTYROAD
+            LexerToken.MAINSTREET -> PrimaryRoadType.MAINSTREET
+            LexerToken.SIDESTREET -> PrimaryRoadType.SIDESTREET
+            LexerToken.COUNTYROAD -> PrimaryRoadType.COUNTYROAD
             else -> {
                 null
             }
         }
     }
 
-    private fun validateSecondaryType(ty: String): SecondaryRoadType? {
+    private fun validateSecondaryType(ty: LexerToken): SecondaryRoadType? {
         return when (ty) {
-            "oneWayStreet" -> SecondaryRoadType.ONEWAYSTREET
-            "tunnel" -> SecondaryRoadType.TUNNEL
-            "none" -> SecondaryRoadType.NONE
+            LexerToken.ONEWAYSTREET -> SecondaryRoadType.ONEWAYSTREET
+            LexerToken.TUNNEL -> SecondaryRoadType.TUNNEL
+            LexerToken.NONE -> SecondaryRoadType.NONE
             else -> {
                 null
             }
         }
     }
 
-    private fun getNextWordEquals(w: String): Boolean {
-        if (getNextWord() != w) {
+    private fun validateAttributes(
+        resultMap: Map<LexerToken, String>,
+        start: Int,
+        end: Int,
+        primarytype: PrimaryRoadType
+    ): Boolean {
+        var ret = !vilRoadSet.contains(Pair(resultMap[LexerToken.VILLAGE], resultMap[LexerToken.NAME]))
+        vilRoadSet.add(Pair(requireNotNull(resultMap[LexerToken.VILLAGE]), requireNotNull(resultMap[LexerToken.NAME])))
+        if (primarytype == PrimaryRoadType.SIDESTREET) {
+            sideStreetCount = true
+        }
+        if (primarytype == PrimaryRoadType.COUNTYROAD) {
+            ret = ret && resultMap[LexerToken.VILLAGE] == graphName
+        }
+        if (primarytype == PrimaryRoadType.MAINSTREET && mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
+            mapVilMain.replace(requireNotNull(resultMap[LexerToken.VILLAGE]), false, true)
+        }
+        return ret && validateNotCountyRoad(resultMap, start, end, primarytype)
+    }
+    private fun validateNotCountyRoad(
+        resultMap: Map<LexerToken, String>,
+        start: Int,
+        end: Int,
+        primarytype: PrimaryRoadType
+    ): Boolean {
+        var ret = true
+        if (primarytype != PrimaryRoadType.COUNTYROAD) {
+            if (!mapVilMain.contains(requireNotNull(resultMap[LexerToken.VILLAGE]))) {
+                mapVilMain[requireNotNull(resultMap[LexerToken.VILLAGE])] = primarytype == PrimaryRoadType.MAINSTREET
+            }
+            ret = ret && resultMap[LexerToken.VILLAGE] != graphName
+            if (mapVilVer.contains(start)) {
+                ret = ret && mapVilVer[start] == resultMap[LexerToken.VILLAGE]
+            } else {
+                mapVilVer[start] = requireNotNull(resultMap[LexerToken.VILLAGE])
+            }
+            if (mapVilVer.contains(end)) {
+                ret = ret && mapVilVer[end] == resultMap[LexerToken.VILLAGE]
+            } else {
+                mapVilVer[end] = requireNotNull(resultMap[LexerToken.VILLAGE])
+            }
+        }
+        return ret
+    }
+
+    private fun createObject(
+        resultMap: Map<LexerToken, String>,
+        pty: PrimaryRoadType,
+        sty: SecondaryRoadType,
+        start: Int,
+        end: Int
+    ): Boolean {
+        val village = resultMap[LexerToken.VILLAGE]
+        val name = resultMap[LexerToken.NAME]
+        val heightlimit = resultMap[LexerToken.HEIGHTLIMIT]?.toIntOrNull()
+        val weight = resultMap[LexerToken.WEIGHT]?.toIntOrNull() ?: return false
+        val startv = gm.getVertexFromId(start) ?: return false
+        val endv = gm.getVertexFromId(end) ?: return false
+        if (name == null || village == null || heightlimit == null) {
             return false
         }
-        skipSpaces(false)
+        val road = Road(pty, sty, village, name, weight, heightlimit, startv, endv)
+        gm.addRoad(road, start, end)
         return true
     }
-
-    private fun getNextInt(): Int? {
-        skipSpaces(false)
-        var res = ""
-        lastCharSize = 0
-        if (charcounter >= chars.size) {
-            return null
-        }
-        if (chars[charcounter] == '-') {
-            res += chars[charcounter]
-            charcounter++
-        }
-        while (charcounter < chars.size && !chars[charcounter].isWhitespace() && !isSeparator(chars[charcounter])) {
-            res += chars[charcounter]
-            lastCharSize++
-            charcounter++
-        }
-        while (charcounter < chars.size && chars[charcounter].isWhitespace()) {
-            charcounter++
-            lastCharSize++
-        }
-        return res.toIntOrNull()
-    }
-
-    private fun untilEnd(): Int {
-        var counter = charcounter
-        var i = 0
-        while (counter < chars.size) {
-            if (!chars[counter].isWhitespace()) {
-                i++
-            }
-            counter++
-        }
-        return i
+    companion object {
+        const val minTokens = 10
     }
 }

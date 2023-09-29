@@ -10,13 +10,13 @@ class Lexer {
      */
     // function instream needed for character List?
     fun lex(s: String): MutableList<LexerIDToken> {
-        var string = s.replace("\\s+}".toRegex(), Space).trim()
+        var string = s.replace("\\s+".toRegex(), Space).trim()
         // string = string.replace("\n", " ")
         string = string.replace(";", " ; ")
         string = string.replace("[", " [ ")
         string = string.replace("]", " ] ")
         string = string.replace("{", " { ")
-        string = string.replace("}", " } ")
+        string = string.replace("}", " }")
         string = string.replace("=", " = ")
         string = string.replace("-", " -")
         string = string.replace(">", "> ")
@@ -32,11 +32,12 @@ class Lexer {
         when (element) {
             "->" -> tokenList.add(LexerIDToken(LexerToken.ARROW, Space))
             ";" -> tokenList.add(LexerIDToken(LexerToken.SEMICOLON, Space))
-            ")" -> tokenList.add(LexerIDToken(LexerToken.RPARENTHESES, Space))
-            "(" -> tokenList.add(LexerIDToken(LexerToken.LPARENTHESES, Space))
+            "]" -> tokenList.add(LexerIDToken(LexerToken.RPARENTHESES, Space))
+            "[" -> tokenList.add(LexerIDToken(LexerToken.LPARENTHESES, Space))
             "{" -> tokenList.add(LexerIDToken(LexerToken.CLPARENTHESES, Space))
             "}" -> tokenList.add(LexerIDToken(LexerToken.CRPARENTHESES, Space))
             "=" -> tokenList.add(LexerIDToken(LexerToken.EQUAL, Space))
+            "digraph" -> tokenList.add(LexerIDToken(LexerToken.DIGRAPH, Space))
             else -> {
                 whencyclo2(element, tokenList)
             }
