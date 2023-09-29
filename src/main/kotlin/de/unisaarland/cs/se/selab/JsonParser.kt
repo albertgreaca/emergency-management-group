@@ -90,7 +90,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val waterCapacity = currVehicle.getInt("waterCapacity")
         if (waterCapacity != WATER_LITTLE && waterCapacity != WATER_MIDDLE && waterCapacity != WATER_BIG) res = false
         val base = EMCC.fireDepartment?.findBase(baseId) ?: return false
-        val newVehicle = FireTruckWater(id, base, staffs, height, null, waterCapacity, waterCapacity)
+        val newVehicle = FireTruckWater(id, base, staffs, height, null, waterCapacity)
         base.addVehicle(newVehicle)
         return res
     }
