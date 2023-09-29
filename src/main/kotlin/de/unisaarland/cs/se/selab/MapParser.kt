@@ -265,8 +265,8 @@ class MapParser(private val gm: GraphMap, file: File) {
             ret = false
         }
         charcounter++
-        val startv = gm.getVertex(start)
-        val endv = gm.getVertex(end)
+        val startv = gm.getVertexFromId(start)
+        val endv = gm.getVertexFromId(end)
         if (startv == null || endv == null) {
             ret = false
         }
@@ -300,7 +300,7 @@ class MapParser(private val gm: GraphMap, file: File) {
     }
 
     private fun validateVertex(v: Vertex): Boolean {
-        return v.id >= 0 && gm.getVertex(v.id) == null
+        return v.id >= 0 && gm.getVertexFromId(v.id) == null
     }
 
     private fun validateRoad(r: Road): Boolean {

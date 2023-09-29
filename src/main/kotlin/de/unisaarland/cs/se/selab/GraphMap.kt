@@ -23,8 +23,8 @@ class GraphMap(
      * Adding Vertex to lists
      */
     fun addRoad(road: Road, start: Int, end: Int): Boolean {
-        val vs: Vertex? = getVertex(start)
-        val ve: Vertex? = getVertex(end)
+        val vs: Vertex? = getVertexFromId(start)
+        val ve: Vertex? = getVertexFromId(end)
         if (vs == null || ve == null) {
             return false
         }
@@ -37,8 +37,15 @@ class GraphMap(
     /**
      * Getting Vertex by Id
      */
-    fun getVertex(id: Int): Vertex? {
+    fun getVertexFromId(id: Int): Vertex? {
         return vertexList.firstOrNull { it.id == id }
+    }
+
+    /**
+     * Getting Vertex by Id
+     */
+    fun getVertexFromRealId(realid: Int): Vertex? {
+        return vertexList.firstOrNull { it.realid == realid }
     }
 
     /**

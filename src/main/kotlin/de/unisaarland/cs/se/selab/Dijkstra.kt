@@ -56,7 +56,7 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 if (determineBaseEmergency(et, b) != null) {
@@ -90,7 +90,7 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 ans.add(b)
@@ -133,7 +133,7 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
@@ -171,7 +171,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathHeight(cur, dist)
             }
@@ -245,7 +245,7 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
@@ -304,7 +304,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (endRoad.start == v || endRoad.end == v) {
                 return determinePathReroute(cur, dist, startRoad, distStart, distEnd)
             }
@@ -378,7 +378,7 @@ object Dijkstra {
     ) {
         val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (edge.height <= height) {
+            if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
@@ -437,7 +437,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertex(cur.first))
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
             if (endNode == v.realid) {
                 return determinePathBackToBase(cur, dist, startRoad, distStart, distEnd)
             }
