@@ -40,5 +40,21 @@
       "handleTime": 2,
       "maxDuration": 8
     }
+  ],
+  "events": [ {
+    "id": 0,
+    "type": "ROAD_CLOSURE",
+    "tick": 52,
+    "duration": 1,
+    "source": 1,
+    "target": 2
+  },   {
+    "id": 1,
+    "type": "RUSH_HOUR",
+    "tick": 50,
+    "duration": 2,
+    "roadTypes": ["SIDE_STREET"],
+    "factor": 2
+  }
   ]
 }
