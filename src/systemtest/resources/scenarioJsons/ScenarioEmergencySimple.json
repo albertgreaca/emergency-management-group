@@ -23,7 +23,7 @@
     {
       "id": 2,
       "tick": 6,
-      "village": "Campus",
+      "village": "UdS",
       "roadName": "Art",
       "emergencyType": "CRIME",
       "severity": 1,
@@ -33,7 +33,7 @@
     {
       "id": 3,
       "tick": 7,
-      "village": "Campus",
+      "village": "UdS",
       "roadName": "Biochemie",
       "emergencyType": "MEDICAL",
       "severity": 1,
