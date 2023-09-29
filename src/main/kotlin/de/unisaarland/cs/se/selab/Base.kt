@@ -31,7 +31,7 @@ open class Base(
      * available
      * @return the stuff that is still missing
      */
-    fun requestResources(em: Emergency): Resource {
+    fun requestResources(em: Emergency) {
         val r = em.resources
         val neededVehicles = r.vehicles
 
@@ -44,16 +44,56 @@ open class Base(
         val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
         for (i in min(neededVehicles.size, potentialVehicles.size) downTo 0) {
             vehiclesToAllocate.clear()
-            if (canSendThisNumberOfAssets(i, em.resources, potentialVehicles) != null) {
+            val res = trySendThisNumberOfAssets(i, em, potentialVehicles)
+            if (res != null) {
                 break
             }
-            vehiclesToAllocate.addAll(requireNotNull(canSendThisNumberOfAssets(i, em.resources, potentialVehicles)))
+            vehiclesToAllocate.addAll(requireNotNull(res))
         }
 
         // allocate all vehicles in the list
-        // for (vehicle in vehiclesToAllocate) {
-
-        // }
+        for (vehicle in vehiclesToAllocate) {
+            // calculate and set the position of the vehicle
+            vehicle.position = Dijkstra.dijkstraHeight(this.location.id, em.road, vehicle.vehicleHeight)
+            // set position to started this tick
+            requireNotNull(vehicle.position).startedThisTick = true
+            // reduce the available staff of the vehicle
+            this.staff -= vehicle.staffCapacity
+            // set the target emergency of the vehicle
+            vehicle.targetEmergency = em
+            // remove the vehicle type from the list of needed vehicle types
+            em.resources.vehicles.remove(vehicle.vehicleType)
+            // special vehicles editen
+            when (vehicle) {
+                is PoliceCar -> {if (em.resources.criminalAmount >= vehicle.criminalCapacity) {
+                    em.resources.criminalAmount -= vehicle.criminalCapacity
+                    vehicle.transportedCriminals = vehicle.criminalCapacity
+                } else {
+                    vehicle.transportedCriminals = em.resources.criminalAmount
+                    em.resources.criminalAmount = 0
+                }}
+                is FireTruckWater -> {if (em.resources.waterAmount >= vehicle.waterCapacity) {
+                    em.resources.waterAmount -= vehicle.waterCapacity
+                    vehicle.waterTransported = vehicle.waterCapacity
+                } else {
+                    vehicle.waterTransported = em.resources.waterAmount
+                    em.resources.waterAmount = 0
+                }}
+                is Ambulance -> {if (em.resources.patientAmount >= 1) {
+                    em.resources.patientAmount -= 1
+                    vehicle.patientOnBoard = true
+                } else {
+                    vehicle.patientOnBoard = false
+                }}
+            }
+            if (em.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
+                em.resources.ladderLength = 0
+            }
+            // set vehicle availability false
+            vehicle.available = false
+            // add vehicle to list in emergency
+            em.addVehicle(vehicle)
+        }
 
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         // val vehicTypesToRequest = mutableListOf<VehicleType>()
@@ -68,13 +108,14 @@ open class Base(
             var p = 0
             p += 0
         }*/
-        return Resource(mutableListOf(), 0, 0, 0, 0)
+        //return Resource(mutableListOf(), 0, 0, 0, 0)
     }
 
     /**
      * @returns the ordered list of vehicles to be allocated if allocation of n vehicles is possible, null otherwise
      */
-    fun canSendThisNumberOfAssets(k: Int, resource: Resource, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
+    fun trySendThisNumberOfAssets(k: Int, em: Emergency, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
+        val resource = em.resources
         vehicles.sortBy { it.id }
 
         // try each combination of n vehicles starting with the lowest id's
@@ -86,7 +127,7 @@ open class Base(
             for (i in 0..k - 1) {
                 cur.add(vehicles[tries[i]])
             }
-            if (checkCombination(resource, cur)) {
+            if (checkCombination(em, cur, )) {
                 return cur
             }
             var pos = -1
@@ -110,7 +151,8 @@ open class Base(
     /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
-    fun checkCombination(resource: Resource, vehicles: MutableList<Vehicle>): Boolean {
+    fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
+        val resource = em.resources
         var staffNeeded = 0
         var fittingCriminals = 0
         var fittingWater = 0
@@ -123,7 +165,7 @@ open class Base(
                 numberOfPoliceCars++
             }
             if (vec is FireTruckWater) {
-                fittingWater += vec.getWaterAmount()
+                fittingWater += vec.waterCapacity
                 numberOfWaterTrucks++
             }
         }
@@ -151,7 +193,15 @@ open class Base(
                 return false
             }
         }
-        // TODO : check if all vehicles arrive in time using dijkstra
+
+        // check if all vehicles arrive in time using dijkstra
+        for (vec in vehicles) {
+            val pos = Dijkstra.dijkstraHeight(this.location.id, em.road, vec.vehicleHeight)
+            if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                return false
+            }
+        }
+
         return true
     }
 

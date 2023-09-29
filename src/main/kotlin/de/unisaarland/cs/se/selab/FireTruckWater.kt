@@ -8,8 +8,7 @@ class FireTruckWater(
     override val staffCapacity: Int,
     override val vehicleHeight: Int,
     override var position: Position? = null,
-    private val maxCapacity: Int,
-    private var waterAmount: Int
+    val waterCapacity: Int,
 ) : Vehicle(
     id,
     VehicleType.FIRE_TRUCK_WATER,
@@ -18,26 +17,5 @@ class FireTruckWater(
     vehicleHeight,
     position
 ) {
-    /**
-     * getter for the maximal Capacity
-     * @return maximal capacity of the vehicle
-     */
-    fun getMaxCapacity(): Int {
-        return maxCapacity
-    }
-
-    /**
-     * getter for the water amount
-     * @return water amount of the vehicle
-     */
-    fun getWaterAmount(): Int {
-        return waterAmount
-    }
-
-    /**
-     * setter for the amount of water
-     */
-    fun setWaterAmount(water: Int) {
-        waterAmount = water
-    }
+    var waterTransported: Int = 0
 }

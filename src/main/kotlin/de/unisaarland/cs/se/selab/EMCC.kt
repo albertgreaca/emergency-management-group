@@ -56,17 +56,13 @@ object EMCC {
             // get the base assigned to the emergency
             val emBase = requireNotNull(em.base)
 
-            // base tries to allocate resources for emergency, returns what is left
-            val resourcesAfterAllocating = emBase.requestResources(em)
+            // base tries to allocate resources for emergency
+            emBase.requestResources(em)
 
-            // update the resources in the emergency
-            em.resources.updateDifference(resourcesAfterAllocating)
-
-            // base tries to reallocate resources from other emergencies, returns what is left
-            val resourcesAfterReallocating = emBase.reallocateResources(em)
-
-            // update the resources in the emergency
-            em.resources.updateDifference(resourcesAfterReallocating)
+            // if needed, base tries to reallocate resources from other emergencies
+            if (!em.resources.isEmpty()) {
+                emBase.reallocateResources(em)
+            }
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!em.resources.isEmpty()) {
@@ -115,14 +111,11 @@ object EMCC {
     fun processRequests() {
         while (!requests.isEmpty()) {
             for (request in requests) {
-                // try to allocate all requested resources, return what is left
-                val resourcesLeft: Resource = request.getProcessingBase().requestResources(request.getEmergency())
+                // try to allocate all requested resources
+                request.getProcessingBase().requestResources(request.getEmergency())
 
                 // if we have resources left, make another request to the next closest base
-                if (!resourcesLeft.isEmpty()) {
-                    // update the resources in the emergency
-                    request.getEmergency().resources.updateDifference(resourcesLeft)
-                    // make a new request
+                if (!request.getEmergency().resources.isEmpty()) {
                     delegateRequest(request)
                 }
             }

@@ -6,7 +6,7 @@ class ReroutingTest : SystemTest() {
     override val name = "Rerouting"
 
     override val map = "mapFiles/rerouting_map.dot"
-    override val assets = "assetsJsons/rerouting_assets.json"
+    override val assets = "assetsJsons/reroute_assets.json"
     override val scenario = "scenarioJsons/rerouting_scenario.json"
     override val maxTicks = 21
 
