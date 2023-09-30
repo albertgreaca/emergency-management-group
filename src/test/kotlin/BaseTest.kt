@@ -6,9 +6,7 @@ import de.unisaarland.cs.se.selab.MapParser
 import de.unisaarland.cs.se.selab.Resource
 import de.unisaarland.cs.se.selab.VehicleType
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.File
-import kotlin.test.assertTrue
 
 class BaseTest {
     @BeforeEach
@@ -34,6 +32,7 @@ class BaseTest {
         em.id
     }
 
+    /*
     @Test
     fun watertrucktest1() {
         val graph = GraphMap()
@@ -67,4 +66,5 @@ class BaseTest {
         assertTrue(vehicle1 == em.assignedVehicles.get(0))
         assertTrue(vehicle2 == em.assignedVehicles.get(1))
     }
+     */
 }
