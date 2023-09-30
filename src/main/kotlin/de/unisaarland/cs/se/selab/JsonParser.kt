@@ -57,6 +57,12 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             else -> base = EMCC.policeDepartment?.findBase(baseId) // K9 PoliceCar
         }
         base ?: return false
+        if (base.staff < staffs) {
+            return false
+        }
+        if (type == VehicleType.EMERGENCY_DOCTOR_CAR && base is Hospital && base.doctors == 0) {
+            return false
+        }
         val newVehicle = Vehicle(id, type, requireNotNull(base), staffs, height, null)
         base.addVehicle(newVehicle)
         return res

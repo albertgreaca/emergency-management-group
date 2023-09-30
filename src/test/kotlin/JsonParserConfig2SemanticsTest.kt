@@ -5,7 +5,6 @@ import java.io.File
 import kotlin.test.assertFalse
 
 class JsonParserConfig2SemanticsTest {
-
     @Test
     fun invalidTestSemantics1() {
         val map = GraphMap()
@@ -17,7 +16,6 @@ class JsonParserConfig2SemanticsTest {
             )
         assertFalse(parser.parseBases())
     }
-    /*
 
     @Test
     fun invalidTestSemantics2() {
@@ -593,5 +591,5 @@ class JsonParserConfig2SemanticsTest {
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
         assertFalse(parser.parseBases())
-    } */
+    }
 }
