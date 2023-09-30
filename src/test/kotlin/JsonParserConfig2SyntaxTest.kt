@@ -1,5 +1,5 @@
-import de.unisaarland.cs.se.selab.GraphMap
-import de.unisaarland.cs.se.selab.JsonParser
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.parser.JsonParser
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertFalse

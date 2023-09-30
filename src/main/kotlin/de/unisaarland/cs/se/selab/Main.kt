@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+import de.unisaarland.cs.se.selab.mainlogic.Simulation
+import de.unisaarland.cs.se.selab.utils.Logger
 import java.io.File
 import java.io.FileOutputStream
 import java.io.PrintWriter

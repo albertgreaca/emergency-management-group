@@ -1,10 +1,10 @@
-import de.unisaarland.cs.se.selab.Emergency
-import de.unisaarland.cs.se.selab.EmergencyType
-import de.unisaarland.cs.se.selab.GraphMap
-import de.unisaarland.cs.se.selab.JsonParser
-import de.unisaarland.cs.se.selab.MapParser
-import de.unisaarland.cs.se.selab.Resource
-import de.unisaarland.cs.se.selab.VehicleType
+import de.unisaarland.cs.se.selab.emergencies.Emergency
+import de.unisaarland.cs.se.selab.emergencies.EmergencyType
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.parser.JsonParser
+import de.unisaarland.cs.se.selab.parser.MapParser
+import de.unisaarland.cs.se.selab.resources.Resource
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import org.junit.jupiter.api.BeforeEach
 import java.io.File
 

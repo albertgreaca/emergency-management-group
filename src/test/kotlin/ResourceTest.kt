@@ -1,5 +1,5 @@
-import de.unisaarland.cs.se.selab.Resource
-import de.unisaarland.cs.se.selab.VehicleType
+import de.unisaarland.cs.se.selab.resources.Resource
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue

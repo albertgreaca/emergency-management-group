@@ -1,4 +1,4 @@
-import de.unisaarland.cs.se.selab.Lexer
+import de.unisaarland.cs.se.selab.parser.Lexer
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 

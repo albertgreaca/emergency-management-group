@@ -1,6 +1,6 @@
-import de.unisaarland.cs.se.selab.Position
-import de.unisaarland.cs.se.selab.Road
-import de.unisaarland.cs.se.selab.Vertex
+import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.Vertex
+import de.unisaarland.cs.se.selab.utils.Position
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue

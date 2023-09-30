@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.events
 
-import de.unisaarland.cs.se.selab.Logger
-import de.unisaarland.cs.se.selab.Vehicle
+import de.unisaarland.cs.se.selab.utils.Logger
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
 
 /** Class for the vehicle unavailable event
  */

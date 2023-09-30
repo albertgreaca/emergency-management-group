@@ -1,4 +1,4 @@
-import de.unisaarland.cs.se.selab.Logger
+import de.unisaarland.cs.se.selab.utils.Logger
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

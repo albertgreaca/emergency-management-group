@@ -1,5 +1,5 @@
-import de.unisaarland.cs.se.selab.GraphMap
-import de.unisaarland.cs.se.selab.MapParser
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.parser.MapParser
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -10,7 +10,7 @@ class MapParserTest {
      Testing for Id 0 Valid
      */
     @Test
-    public fun validDotFile1() {
+    fun validDotFile1() {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/mapvalid1.dot"))
         assertTrue(parser.parseMap())

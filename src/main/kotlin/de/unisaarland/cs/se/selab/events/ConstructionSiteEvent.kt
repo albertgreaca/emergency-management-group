@@ -1,7 +1,7 @@
 package de.unisaarland.cs.se.selab.events
 
-import de.unisaarland.cs.se.selab.Logger
-import de.unisaarland.cs.se.selab.Road
+import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.utils.Logger
 
 /** Class for the construction site event
  */

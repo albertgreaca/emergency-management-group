@@ -1,9 +1,9 @@
-import de.unisaarland.cs.se.selab.GraphMap
-import de.unisaarland.cs.se.selab.MapParser
-import de.unisaarland.cs.se.selab.PrimaryRoadType
-import de.unisaarland.cs.se.selab.Road
-import de.unisaarland.cs.se.selab.SecondaryRoadType
-import de.unisaarland.cs.se.selab.Vertex
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Vertex
+import de.unisaarland.cs.se.selab.parser.MapParser
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.File

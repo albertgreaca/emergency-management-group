@@ -1,14 +1,14 @@
-import de.unisaarland.cs.se.selab.Base
-import de.unisaarland.cs.se.selab.Emergency
-import de.unisaarland.cs.se.selab.EmergencyType
-import de.unisaarland.cs.se.selab.Position
-import de.unisaarland.cs.se.selab.PrimaryRoadType
-import de.unisaarland.cs.se.selab.Resource
-import de.unisaarland.cs.se.selab.Road
-import de.unisaarland.cs.se.selab.SecondaryRoadType
-import de.unisaarland.cs.se.selab.Vehicle
-import de.unisaarland.cs.se.selab.VehicleType
-import de.unisaarland.cs.se.selab.Vertex
+import de.unisaarland.cs.se.selab.bases.Base
+import de.unisaarland.cs.se.selab.emergencies.Emergency
+import de.unisaarland.cs.se.selab.emergencies.EmergencyType
+import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Vertex
+import de.unisaarland.cs.se.selab.resources.Resource
+import de.unisaarland.cs.se.selab.utils.Position
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
