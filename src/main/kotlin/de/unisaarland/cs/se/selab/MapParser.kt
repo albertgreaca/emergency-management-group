@@ -104,17 +104,27 @@ class MapParser(private val gm: GraphMap, file: File) {
             }
             resultMap[attribute] = p.first
         }
-        ret = ret && tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
-            tokenlist[i++].tokenkind == LexerToken.EQUAL
-        val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return false
-        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
-        ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
-            tokenlist[i++].tokenkind == LexerToken.EQUAL
-        val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return false
-        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        val res = parsePrimAndSecType()
+        if (!res.third) {
+            return false
+        }
+        val primtype = requireNotNull(res.first)
+        val sectype = requireNotNull(res.second)
         ret = ret && validateAttributes(resultMap, start, end, primtype)
         return ret && createObject(resultMap, primtype, sectype, start, end) &&
             tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
+    }
+
+    private fun parsePrimAndSecType(): Triple<PrimaryRoadType?, SecondaryRoadType?, Boolean> {
+        var ret = tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
+            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
+            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
+        return Triple(primtype, sectype, true)
     }
 
     private fun parseAttribute(token: LexerToken, isInt: Boolean): Pair<String, Boolean> {
