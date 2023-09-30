@@ -1,12 +1,16 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.events
 
-/** Class for the road closure event
+import de.unisaarland.cs.se.selab.EMCC
+import de.unisaarland.cs.se.selab.Logger
+import de.unisaarland.cs.se.selab.Vehicle
+
+/** Class for the vehicle unavailable event
  */
-class RoadClosureEvent(
+class VehicleUnavailableEvent(
     override val id: Int,
     override var tick: Int,
     override var duration: Int,
-    var road: Road
+    var vehicle: Vehicle
 ) : Event(
     id,
     tick,
@@ -14,12 +18,11 @@ class RoadClosureEvent(
 ) {
     /**
      * starts event for the first time
-     * return true if event could be started
-     * check if event can be applied on the road
+     * makes vehicle unavailable if already possible
      */
     override fun executeStart(): Boolean {
-        if (road.eventList.isEmpty()) {
-            road.addEvent(this)
+        if (vehicle.available) {
+            vehicle.available = false
             EMCC.moveFromStartingToActive(this)
             Logger.logEventTriggered(id)
             return true
@@ -30,11 +33,11 @@ class RoadClosureEvent(
 
     /**
      *stops the event
-     * removes event from the list of events in the road
+     * makes vehicle available again
      * logs
      */
     override fun stopEvent() {
-        road.eventList.remove(this)
+        vehicle.available = true
         Logger.logEventEnded(id)
     }
 }

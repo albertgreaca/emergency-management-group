@@ -1,5 +1,11 @@
 package de.unisaarland.cs.se.selab
 
+import de.unisaarland.cs.se.selab.events.ConstructionSiteEvent
+import de.unisaarland.cs.se.selab.events.Event
+import de.unisaarland.cs.se.selab.events.RoadClosureEvent
+import de.unisaarland.cs.se.selab.events.RushHourEvent
+import de.unisaarland.cs.se.selab.events.TrafficJamEvent
+
 /**
  * Class representing Edges/Roads
  */
@@ -20,8 +26,24 @@ class Road(
      * @return the actual weight depending on the event
      */
     fun getActualWeight(): Int {
-        // TODO
-        return weight + height
+        if (eventList.isEmpty()) {
+            return weight
+        }
+        val ev = eventList[0]
+        var factor = 1
+        if (ev is ConstructionSiteEvent) {
+            factor = ev.factor
+        }
+        if (ev is RushHourEvent) {
+            factor = ev.factor
+        }
+        if (ev is TrafficJamEvent) {
+            factor = ev.factor
+        }
+        if (ev is RoadClosureEvent) {
+            return Integer.MIN_VALUE
+        }
+        return factor * weight
     }
 
     /**
@@ -77,6 +99,7 @@ class Road(
                     other.name == name && other.weight == weight && other.height == height &&
                     other.start == start && other.end == end
             }
+
             else -> false
         }
     }

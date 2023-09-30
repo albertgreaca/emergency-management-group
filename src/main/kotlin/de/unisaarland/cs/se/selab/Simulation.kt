@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab
 
+import de.unisaarland.cs.se.selab.events.Event
 import org.json.JSONException
 import java.io.File
 

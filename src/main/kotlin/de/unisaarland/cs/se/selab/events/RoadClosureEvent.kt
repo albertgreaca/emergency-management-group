@@ -1,13 +1,16 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.events
 
-/** Class for the traffic jam event
+import de.unisaarland.cs.se.selab.EMCC
+import de.unisaarland.cs.se.selab.Logger
+import de.unisaarland.cs.se.selab.Road
+
+/** Class for the road closure event
  */
-class TrafficJamEvent(
+class RoadClosureEvent(
     override val id: Int,
     override var tick: Int,
     override var duration: Int,
-    var road: Road,
-    val factor: Int
+    var road: Road
 ) : Event(
     id,
     tick,

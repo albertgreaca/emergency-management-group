@@ -1,4 +1,4 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.events
 
 /** Class for the Events
  */

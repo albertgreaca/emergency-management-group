@@ -1,5 +1,10 @@
 package de.unisaarland.cs.se.selab
 
+import de.unisaarland.cs.se.selab.events.ConstructionSiteEvent
+import de.unisaarland.cs.se.selab.events.RoadClosureEvent
+import de.unisaarland.cs.se.selab.events.RushHourEvent
+import de.unisaarland.cs.se.selab.events.TrafficJamEvent
+import de.unisaarland.cs.se.selab.events.VehicleUnavailableEvent
 import org.everit.json.schema.ValidationException
 import org.json.JSONArray
 import org.json.JSONObject

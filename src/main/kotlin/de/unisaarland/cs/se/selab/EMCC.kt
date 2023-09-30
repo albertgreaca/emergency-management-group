@@ -1,5 +1,7 @@
 package de.unisaarland.cs.se.selab
 
+import de.unisaarland.cs.se.selab.events.Event
+
 /**
  * This is the class responsible for simulating the different phases of a tick
  */

@@ -1,12 +1,17 @@
-package de.unisaarland.cs.se.selab
+package de.unisaarland.cs.se.selab.events
 
-/** Class for the vehicle unavailable event
+import de.unisaarland.cs.se.selab.EMCC
+import de.unisaarland.cs.se.selab.Logger
+import de.unisaarland.cs.se.selab.Road
+
+/** Class for the traffic jam event
  */
-class VehicleUnavailableEvent(
+class TrafficJamEvent(
     override val id: Int,
     override var tick: Int,
     override var duration: Int,
-    var vehicle: Vehicle
+    var road: Road,
+    val factor: Int
 ) : Event(
     id,
     tick,
@@ -14,11 +19,12 @@ class VehicleUnavailableEvent(
 ) {
     /**
      * starts event for the first time
-     * makes vehicle unavailable if already possible
+     * return true if event could be started
+     * check if event can be applied on the road
      */
     override fun executeStart(): Boolean {
-        if (vehicle.available) {
-            vehicle.available = false
+        if (road.eventList.isEmpty()) {
+            road.addEvent(this)
             EMCC.moveFromStartingToActive(this)
             Logger.logEventTriggered(id)
             return true
@@ -29,11 +35,11 @@ class VehicleUnavailableEvent(
 
     /**
      *stops the event
-     * makes vehicle available again
+     * removes event from the list of events in the road
      * logs
      */
     override fun stopEvent() {
-        vehicle.available = true
+        road.eventList.remove(this)
         Logger.logEventEnded(id)
     }
 }
