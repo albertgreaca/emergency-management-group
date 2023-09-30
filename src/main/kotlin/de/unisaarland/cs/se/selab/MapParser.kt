@@ -25,11 +25,11 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     fun parseMap(): Boolean {
-        var ret = true
+        var ret: Boolean
         if (i < tokenlist.size && tokenlist.size > minTokens) {
             ret = tokenlist[i++].tokenkind == LexerToken.DIGRAPH
             graphName = tokenlist[i++].text
-            ret = tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
+            ret = ret && tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
             ret = ret && validateId(graphName) && parseVertices() && parseEdges() && i == tokenlist.size
             ret = ret && sideStreetCount && !mapVilMain.containsValue(false) && !mapVerCon.containsValue(false) &&
                 gm.roadList.isNotEmpty()
@@ -45,7 +45,7 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseVertices(): Boolean {
-        while (tokenlist[i + 1].tokenkind == LexerToken.SEMICOLON) {
+        while (i + 1 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.SEMICOLON) {
             val vertexID = tokenlist[i++].text.toIntOrNull() ?: return false
             val vert = Vertex(vertexID, null, curIndex)
             if (!validateVertex(vert)) {
@@ -56,7 +56,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             curIndex++
             i++
         }
-        return tokenlist[i + 1].tokenkind == LexerToken.ARROW
+        return i + 1 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.ARROW
     }
 
     /**
@@ -65,7 +65,7 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseEdges(): Boolean {
-        while (i + 1 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.ARROW) {
+        while (i + 2 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.ARROW) {
             val start = tokenlist[i++].text.toIntOrNull() ?: return false
             i++
             val end = tokenlist[i++].text.toIntOrNull() ?: return false
@@ -78,7 +78,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             }
             verToVer.add(Pair(start, end))
         }
-        return tokenlist[i++].tokenkind == LexerToken.CRPARENTHESES
+        return i < tokenlist.size && tokenlist[i++].tokenkind == LexerToken.CRPARENTHESES
     }
 
     /**
@@ -104,11 +104,11 @@ class MapParser(private val gm: GraphMap, file: File) {
             }
             resultMap[attribute] = p.first
         }
-        ret = tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
             tokenlist[i++].tokenkind == LexerToken.EQUAL
         val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return false
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
-        ret = tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
             tokenlist[i++].tokenkind == LexerToken.EQUAL
         val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return false
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
