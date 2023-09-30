@@ -94,6 +94,11 @@ object Simulation {
     private fun simulateUpdatePhase() {
         EMCC.updateAssets()
         EMCC.updateEmergencies()
+        for (ev in events) {
+            if (ev.tick == currentTick) {
+                EMCC.startingEvents.add(ev)
+            }
+        }
         val checkEventsChange: Boolean = EMCC.updateEvents()
         if (checkEventsChange) {
             EMCC.rerouteVehicles()

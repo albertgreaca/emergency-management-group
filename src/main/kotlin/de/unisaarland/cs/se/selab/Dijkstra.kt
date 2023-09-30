@@ -7,6 +7,7 @@ import java.util.PriorityQueue
  */
 object Dijkstra {
     var gm2: GraphMap = Simulation.map
+    const val divisor = 10
 
     private fun determineBaseEmergency(et: EmergencyType, b: Base): Base? {
         if (et == EmergencyType.FIRE && b !is PoliceStation && b !is Hospital) {
@@ -123,6 +124,10 @@ object Dijkstra {
             dist[cur.first].distanceFromStart = 0
             dist[cur.first].distanceFromEnd = dist[cur.first].roadList[0].getActualWeight()
         }
+        dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
+        if (dist[cur.first].distance % divisor != 0) {
+            dist[cur.first].arrivalTicks++
+        }
         return dist[cur.first]
     }
 
@@ -223,6 +228,10 @@ object Dijkstra {
                     requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
                 )
             )
+        }
+        dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
+        if (dist[cur.first].distance % divisor != 0) {
+            dist[cur.first].arrivalTicks++
         }
         return dist[cur.first]
     }

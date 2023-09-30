@@ -9,7 +9,7 @@ open class Base(
     val id: Int,
     var staff: Int,
     val location: Vertex,
-    val vehicles: MutableList<Vehicle>
+    val vehicles: MutableList<Vehicle>,
 ) {
 
     companion object {
@@ -51,11 +51,16 @@ open class Base(
             }
         }
 
+        val loggerlist = mutableListOf<Vehicle>()
+
         // allocate all vehicles in the list
         for (vehicle in vehiclesToAllocate) {
-            allocateVehicle(vehicle, em)
+            allocateVehicle(vehicle, em, loggerlist)
         }
-
+        loggerlist.sortBy { it.id }
+        for (ve in loggerlist) {
+            Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position?.arrivalTicks))
+        }
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         // val vehicTypesToRequest = mutableListOf<VehicleType>()
         // TODO : implement
@@ -75,7 +80,7 @@ open class Base(
     /**
      * allocates Vehicles
      */
-    fun allocateVehicle(vehicle: Vehicle, em: Emergency) {
+    fun allocateVehicle(vehicle: Vehicle, em: Emergency, loggerlist: MutableList<Vehicle>) {
         // calculate and set the position of the vehicle
         vehicle.position = Dijkstra.dijkstraHeight(this.location.realid, em.road, vehicle.vehicleHeight)
         // set position to started this tick
@@ -122,6 +127,7 @@ open class Base(
         vehicle.available = false
         // add vehicle to list in emergency
         em.addVehicle(vehicle)
+        loggerlist.add(vehicle)
     }
 
     /**

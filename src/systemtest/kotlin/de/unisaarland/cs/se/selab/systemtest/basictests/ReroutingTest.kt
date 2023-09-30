@@ -13,14 +13,14 @@ class ReroutingTest : SystemTest() {
     override suspend fun run() {
         // everything is parsed and validated
         assertNextLine("Initialization Info: rerouting_map.dot successfully parsed and validated")
-        assertNextLine("Initialization Info: rerouting_assets.json successfully parsed and validated")
+        assertNextLine("Initialization Info: reroute_assets.json successfully parsed and validated")
         assertNextLine("Initialization Info: rerouting_scenario.json successfully parsed and validated")
         // The Simulation starts with tick 0
         assertNextLine("Simulation starts")
         assertNextLine("Simulation Tick: 0")
         // The Simulation should end
         assertNextLine("Simulation Tick: 1")
-        assertNextLine("Event Triggered: 0 triggered")
+        assertNextLine("Event Triggered: 0 triggered.")
         assertNextLine("Simulation Tick: 2")
         assertNextLine("Emergency Assignment: 0 assigned to 0")
         assertNextLine("Asset Allocation: 18 assigned to 0; 102 ticks to arrive.")

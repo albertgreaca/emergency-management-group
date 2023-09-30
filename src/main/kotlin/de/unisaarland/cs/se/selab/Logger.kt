@@ -145,8 +145,11 @@ object Logger {
      *
      */
     fun logAssetsRerouted(numOfAssets: Int): String {
-        val output = "Assets Rerouted: $numOfAssets"
-        pw.println(output)
+        var output = ""
+        if (numOfAssets != 0) {
+            output = "Assets Rerouted: $numOfAssets"
+            pw.println(output)
+        }
         return output
     }
 

@@ -63,7 +63,7 @@ open class Vehicle(
      */
     fun reroute(): Boolean {
         if (requireNotNull(position).isDrivingBack) {
-            val pos = Dijkstra.dijkstraBackToBase(
+            val pos = Dijkstra.dijkstraRerouteBackToBase(
                 requireNotNull(position).roadList[0],
                 requireNotNull(position).distanceFromStart,
                 requireNotNull(position).distanceFromEnd,
@@ -100,13 +100,11 @@ open class Vehicle(
      */
     fun sendBackToBase() {
         val pos = Dijkstra.dijkstraBackToBase(
-            requireNotNull(position).roadList[0],
-            requireNotNull(position).distanceFromStart,
-            requireNotNull(position).distanceFromEnd,
-            requireNotNull(requireNotNull(position).destinationVertex),
-            base.id,
+            requireNotNull(position?.destinationVertex).realid,
+            base.location.realid,
             vehicleHeight
         )
+
         position = pos
     }
 }

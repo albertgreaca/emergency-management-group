@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.events
 
-import de.unisaarland.cs.se.selab.EMCC
 import de.unisaarland.cs.se.selab.Logger
 import de.unisaarland.cs.se.selab.Road
 
@@ -30,7 +29,6 @@ class RushHourEvent(
                 for (albert in roads) {
                     albert.addEvent(this)
                 }
-                EMCC.moveFromStartingToActive(this)
                 return true
             }
         }

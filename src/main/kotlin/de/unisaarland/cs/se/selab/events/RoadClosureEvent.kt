@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.events
 
-import de.unisaarland.cs.se.selab.EMCC
 import de.unisaarland.cs.se.selab.Logger
 import de.unisaarland.cs.se.selab.Road
 
@@ -24,7 +23,6 @@ class RoadClosureEvent(
     override fun executeStart(): Boolean {
         if (road.eventList.isEmpty()) {
             road.addEvent(this)
-            EMCC.moveFromStartingToActive(this)
             Logger.logEventTriggered(id)
             return true
         }

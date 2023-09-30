@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.events
 
-import de.unisaarland.cs.se.selab.EMCC
 import de.unisaarland.cs.se.selab.Logger
 import de.unisaarland.cs.se.selab.Vehicle
 
@@ -23,7 +22,6 @@ class VehicleUnavailableEvent(
     override fun executeStart(): Boolean {
         if (vehicle.available) {
             vehicle.available = false
-            EMCC.moveFromStartingToActive(this)
             Logger.logEventTriggered(id)
             return true
         }

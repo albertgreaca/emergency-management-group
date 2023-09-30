@@ -154,14 +154,6 @@ object EMCC {
     }
 
     /**
-     * moves an event from the startingEvents list to the activeEvents list
-     */
-    fun moveFromStartingToActive(event: Event) {
-        startingEvents.remove(event)
-        activeEvents.add(event)
-    }
-
-    /**
      * updates the state of all driving assets
      */
     fun updateAssets() {
@@ -288,7 +280,7 @@ object EMCC {
         val newlyFailedEmergencies: MutableList<Emergency> = mutableListOf()
 
         for (em in handledEmergencies) {
-            if (em.tick + em.maxDuration >= Simulation.currentTick) {
+            if (em.tick + em.maxDuration <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
                 newlyFailedEmergencies.add(em)
                 for (vec in em.assignedVehicles) {
@@ -300,6 +292,7 @@ object EMCC {
         for (resolvedEm in newlyFailedEmergencies) {
             Logger.logEmergencyFailed(resolvedEm.id)
         }
+        handledEmergencies.removeAll(resolvedOrFailedEmergencies)
     }
 
     /**
@@ -308,19 +301,25 @@ object EMCC {
     fun updateEvents(): Boolean {
         var eventsChanged = false
         // first handle the ending events
+        val removelistActive = mutableListOf<Event>()
         for (event in activeEvents) {
             if (event.tick + event.duration == Simulation.currentTick) {
-                activeEvents.remove(event)
+                removelistActive.add(event)
                 event.stopEvent()
                 eventsChanged = true
             }
         }
+        activeEvents.removeAll(removelistActive)
         // then handle the starting events
+        val removelist = mutableListOf<Event>()
         for (event in startingEvents) {
             if (event.executeStart()) {
+                removelist.add(event)
+                activeEvents.add(event)
                 eventsChanged = true
             }
         }
+        startingEvents.removeAll(removelist)
         return eventsChanged
     }
 
