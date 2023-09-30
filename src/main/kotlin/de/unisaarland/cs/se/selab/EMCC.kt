@@ -197,12 +197,14 @@ object EMCC {
      */
     fun updateEmergencies() {
         // update all emergencies who allocated all resources in this tick
+        val listtoremove = mutableListOf<Emergency>()
         for (em in startingEmergencies) {
             if (em.resources.isEmpty()) {
-                startingEmergencies.remove(em)
+                listtoremove.add(em)
                 handledEmergencies.add(em)
             }
         }
+        startingEmergencies.removeAll(listtoremove)
         // update all emergencies whose handling started in this tick
         updateHandlingStartedEmergencies()
         // update all emergencies that were resolved in this tick
