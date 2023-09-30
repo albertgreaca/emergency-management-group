@@ -718,4 +718,11 @@ class MapParserInvalidTest {
         val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid78.dot"))
         Assertions.assertFalse(parser.parseMap())
     }
+
+    @Test
+    fun invalidSyntaxDotFile79() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid79.dot"))
+        Assertions.assertFalse(parser.parseMap())
+    }
 }
