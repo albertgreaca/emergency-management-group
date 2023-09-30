@@ -306,9 +306,54 @@ object Dijkstra {
     }
 
     /**
-     * Doing dijkstra to the base
+     * determining first path to the base
      */
     fun dijkstraBackToBase(
+        startingNode: Int,
+        endNode: Int,
+        height: Int
+    ): Position? {
+        val gm: GraphMap = requireNotNull(gm2)
+        val n: Int = gm.vertexList.size
+        val dist: Array<Position> = Array<Position>(n) { index ->
+            Position(
+                mutableListOf<Road>(),
+                mutableListOf<Vertex>(),
+                0,
+                0,
+                null,
+                0,
+                0
+            )
+        }
+        for (i in 0..n - 1) {
+            dist[i].distance = Int.MAX_VALUE
+        }
+        dist[startingNode].distance = 0
+        dist[startingNode].vertexList.add(requireNotNull(gm.getVertexFromRealId(startingNode)))
+        val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
+        val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
+        for (i in 0..n - 1) {
+            pq.add(Pair(i, dist[i].distance))
+        }
+        while (!pq.isEmpty()) {
+            val cur: Pair<Int, Int> = pq.remove()
+            if (dist[cur.first].distance != cur.second) {
+                continue
+            }
+            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            if (endNode == v.realid) {
+                return determinePathHeight(cur, dist)
+            }
+            updateNeighborsHeight(cur, dist, pq, height)
+        }
+        return null
+    }
+
+    /**
+     * Doing dijkstra to reroute to the base
+     */
+    fun dijkstraRerouteBackToBase(
         startRoad: Road,
         distStart: Int,
         distEnd: Int,
