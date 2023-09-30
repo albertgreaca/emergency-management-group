@@ -11,6 +11,10 @@ import java.io.File
 class JsonParser(private val gm: GraphMap, private val file1: File, private val file2: File) {
     private val jsonStringConfig1 = file1.readText()
     private val jsonStringConfig2 = file2.readText()
+    private val listBases = mutableMapOf<Base, Boolean>()
+    private var hos = false
+    private var pol = false
+    private var fir = false
 
     /**
      * function to parse the Vehicles
@@ -43,7 +47,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             }
         }
         // res = res && validateVehicles(newVehicle)
-        return res
+        return res && !listBases.containsValue(false)
     }
 
     private fun parseRestVehicle(id: Int, baseId: Int, staffs: Int, height: Int, type: VehicleType): Boolean {
@@ -63,8 +67,12 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         if (type == VehicleType.EMERGENCY_DOCTOR_CAR && base is Hospital && base.doctors == 0) {
             return false
         }
+        if (type == VehicleType.K9_POLICE_CAR && base is PoliceStation && base.dogs == 0) {
+            return false
+        }
         val newVehicle = Vehicle(id, type, requireNotNull(base), staffs, height, null)
         base.addVehicle(newVehicle)
+        listBases.replace(base, false, true)
         return res
     }
 
@@ -73,6 +81,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val base = EMCC.ambulanceDepartment?.findBase(baseId) ?: return false
         val newVehicle = Ambulance(id, base, staffs, height, null, false)
         base.addVehicle(newVehicle)
+        listBases.replace(base, false, true)
         return res
     }
 
@@ -83,6 +92,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val base = EMCC.fireDepartment?.findBase(baseId) ?: return false
         val newVehicle = FireTruckLadder(id, base, staffs, height, null, ladder40)
         base.addVehicle(newVehicle)
+        listBases.replace(base, false, true)
         return res
     }
 
@@ -93,6 +103,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val base = EMCC.fireDepartment?.findBase(baseId) ?: return false
         val newVehicle = FireTruckWater(id, base, staffs, height, null, waterCapacity)
         base.addVehicle(newVehicle)
+        listBases.replace(base, false, true)
         return res
     }
 
@@ -102,6 +113,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val base = EMCC.policeDepartment?.findBase(baseId) ?: return false
         val newVehicle = PoliceCar(id, base, staffs, height, null, crimCapacity, 0)
         base.addVehicle(newVehicle)
+        listBases.replace(base, false, true)
         return res
     }
 
@@ -135,13 +147,17 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                     val newBase = Base(id, staffs, location, mutableListOf())
                     location.base = newBase
                     fireDepartment.addBase(newBase)
+                    listBases[newBase] = false
+                    fir = true
                 }
 
                 "POLICE_STATION" -> {
-                    val dogs = currBase.getInt("dogs") // create Police Station
+                    val dogs = currBase.getInt("dogs") // creat e Police Station
                     val newBase = PoliceStation(id, staffs, location, mutableListOf(), dogs)
                     location.base = newBase
                     policeDepartment.addBase(newBase)
+                    listBases[newBase] = false
+                    pol = true
                 }
 
                 "HOSPITAL" -> {
@@ -149,13 +165,15 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                     val newBase = Hospital(id, staffs, location, mutableListOf(), doctor)
                     location.base = newBase
                     ambulanceDepartment.addBase(newBase)
+                    listBases[newBase] = false
+                    hos = true
                 }
             }
             EMCC.policeDepartment = policeDepartment
             EMCC.fireDepartment = fireDepartment
             EMCC.ambulanceDepartment = ambulanceDepartment
         }
-        return res
+        return res && hos && pol && fir
     }
 
     /**
