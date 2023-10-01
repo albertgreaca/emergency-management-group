@@ -94,8 +94,8 @@ class GraphMap(
             adjacencyList[requireNotNull(getVertexFromId(end)?.realid)].remove(requireNotNull(getVertexFromId(start)))
         } else {
             roadList.remove(adjacencyList[requireNotNull(getVertexFromId(start)?.realid)][getVertexFromId(end)])
-            adjacencyList[requireNotNull(getVertexFromId(start)?.realid)]?.remove(requireNotNull(getVertexFromId(end)))
-            adjacencyList[requireNotNull(getVertexFromId(end)?.realid)]?.remove(requireNotNull(getVertexFromId(start)))
+            adjacencyList[requireNotNull(getVertexFromId(start)?.realid)].remove(requireNotNull(getVertexFromId(end)))
+            adjacencyList[requireNotNull(getVertexFromId(end)?.realid)].remove(requireNotNull(getVertexFromId(start)))
         }
     }
 }

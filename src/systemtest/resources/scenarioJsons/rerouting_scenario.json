@@ -18,7 +18,7 @@
       "emergencyType": "FIRE",
       "severity": 1,
       "handleTime": 3,
-      "maxDuration": 50
+      "maxDuration": 500
     }
   ]
 }
