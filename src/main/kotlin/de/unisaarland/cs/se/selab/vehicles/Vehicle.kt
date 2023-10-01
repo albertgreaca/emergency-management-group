@@ -105,7 +105,7 @@ open class Vehicle(
      */
     fun sendBackToBase() {
         val pos = Dijkstra.dijkstraBackToBase(
-            requireNotNull(position?.destinationVertex).realid,
+            requireNotNull(requireNotNull(position).vertexList[requireNotNull(position).vertexList.size - 1]).realid,
             base.location.realid,
             vehicleHeight
         )

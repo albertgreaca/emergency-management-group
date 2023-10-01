@@ -32,7 +32,7 @@ class AmbulanceDepartment : EmergencyObserver {
      * assigns closest base to the given emergency and logs the assignment
      */
     override fun update(em: Emergency) {
-        em.base = Dijkstra.dijkstraEmergency(em.road.start.id, em.road.end.id, em.type)
+        em.base = Dijkstra.dijkstraEmergency(em.road.start.realid, em.road.end.realid, em.type)
         if (em.base != null) {
             Logger.logEmergencyAssignment(em.id, requireNotNull(em.base).id)
         }
