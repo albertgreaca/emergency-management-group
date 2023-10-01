@@ -44,6 +44,7 @@ class Position(
                 }
             }
         }
+        arrivalTicks--
     }
 
     /**
