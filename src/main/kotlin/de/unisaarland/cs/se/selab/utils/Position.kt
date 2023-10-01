@@ -42,6 +42,11 @@ class Position(
                 if (!roadList.isEmpty()) {
                     distanceFromEnd = roadList[0].getActualWeight()
                 }
+                if (!roadList.isEmpty() && roadList[0].start == destinationVertex) {
+                    destinationVertex = roadList[0].end
+                } else if (!roadList.isEmpty()) {
+                    destinationVertex = roadList[0].start
+                }
             }
         }
         arrivalTicks--

@@ -72,7 +72,7 @@ open class Base(
         }
         loggerlist.sortBy { it.id }
         for (ve in loggerlist) {
-            Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position?.arrivalTicks))
+            Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position?.arrivalTicks) + 1)
         }
         // var availableBaseVehicles = this.vehicles.filter { it.available }.toMutableList()
         // val vehicTypesToRequest = mutableListOf<VehicleType>()

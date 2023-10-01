@@ -131,7 +131,7 @@ object Dijkstra {
             dist[cur.first].distanceFromEnd = dist[cur.first].roadList[0].getActualWeight()
         }
         dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
-        if (dist[cur.first].distance % divisor != 0 || dist[cur.first].distance == 0) {
+        if (dist[cur.first].distance % divisor != 0) {
             dist[cur.first].arrivalTicks++
         }
         return dist[cur.first]
@@ -236,7 +236,7 @@ object Dijkstra {
             )
         }
         dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
-        if (dist[cur.first].distance % divisor != 0 || dist[cur.first].distance == 0) {
+        if (dist[cur.first].distance % divisor != 0) {
             dist[cur.first].arrivalTicks++
         }
         return dist[cur.first]

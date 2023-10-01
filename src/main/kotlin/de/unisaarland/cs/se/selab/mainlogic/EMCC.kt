@@ -146,6 +146,7 @@ object EMCC {
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
                 }
             }
+
             is Hospital -> {
                 // calculate the next closest ambulance base and make a request to this base
                 val nextBase = request.getRequestingBase().getNextHospital(request.getProcessingBase())
@@ -153,6 +154,7 @@ object EMCC {
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
                 }
             }
+
             else -> {
                 // calculate the next closest fire base and make a request to this base
                 val nextBase = request.getRequestingBase().getNextFireBase(request.getProcessingBase())
@@ -236,7 +238,14 @@ object EMCC {
             if (em.handlingStarted || !em.resources.isEmpty()) continue
             var allArrived = true
             for (vec in em.assignedVehicles) {
-                allArrived = if (requireNotNull(vec.position).arrivalTicks == 0) allArrived else false
+                allArrived =
+                    if (requireNotNull(vec.position).arrivalTicks == 0 &&
+                        !requireNotNull(vec.position?.startedThisTick)
+                    ) {
+                        allArrived
+                    } else {
+                        false
+                    }
             }
             if (allArrived) {
                 em.handlingStarted = true
@@ -273,6 +282,8 @@ object EMCC {
                 for (vec in em.assignedVehicles) {
                     vec.sendBackToBase()
                 }
+            } else if (em.handlingStarted) {
+                em.alreadyHandled++
             }
         }
         newlyResolvedEmergencies.sortBy { it.id }

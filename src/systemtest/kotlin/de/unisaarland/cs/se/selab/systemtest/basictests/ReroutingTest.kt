@@ -40,6 +40,8 @@ class ReroutingTest : SystemTest() {
         assertNextLine("Simulation Tick: 9")
         assertNextLine("Simulation Tick: 10")
         assertNextLine("Simulation Tick: 11")
+        assertNextLine("Asset Arrival: 18 arrived at 1.")
+        assertNextLine("Asset Arrival: 22 arrived at 1.")
         assertNextLine("Simulation Tick: 12")
         assertNextLine("Simulation Tick: 13")
         assertNextLine("Simulation Tick: 14")
