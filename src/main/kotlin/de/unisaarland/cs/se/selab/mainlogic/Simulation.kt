@@ -108,6 +108,7 @@ object Simulation {
         val checkEventsChange: Boolean = EMCC.updateEvents()
         if (checkEventsChange) {
             EMCC.rerouteVehicles()
+            EMCC.updatenextBases()
         }
         currentTick++
     }

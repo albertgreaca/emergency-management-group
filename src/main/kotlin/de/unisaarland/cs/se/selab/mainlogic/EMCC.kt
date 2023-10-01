@@ -60,6 +60,14 @@ object EMCC {
     }
 
     /**
+     * Updates Next Bases of all bases
+     */
+    fun updatenextBases() {
+        policeDepartment?.updatenextBases()
+        ambulanceDepartment?.updatenextBases()
+        fireDepartment?.updatenextBases()
+    }
+    /**
      * allocates assets for each starting emergency
      */
     fun allocateAssets() {
@@ -73,7 +81,7 @@ object EMCC {
 
             // if needed, base tries to reallocate resources from other emergencies
             if (!em.resources.isEmpty()) {
-                emBase.reallocateResources(em)
+                em.resources = emBase.reallocateResources(em)
             }
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
@@ -94,7 +102,7 @@ object EMCC {
 
         // make a request for the missing police resources
         if (!policeResources.isEmpty()) {
-            val nextPoliceBase = emBase.getNextPoliceBase(emBase)
+            val nextPoliceBase = emBase.getNextPoliceBase()
             if (nextPoliceBase != null) {
                 emBase.makeRequest(em, nextPoliceBase)
             }
@@ -102,7 +110,7 @@ object EMCC {
 
         // make a request for the missing police resources
         if (!fireResources.isEmpty()) {
-            val nextFireBase = emBase.getNextFireBase(emBase)
+            val nextFireBase = emBase.getNextFireBase()
             if (nextFireBase != null) {
                 emBase.makeRequest(em, nextFireBase)
             }
@@ -110,7 +118,7 @@ object EMCC {
 
         // make a request for the missing ambulance resources
         if (!ambulanceResources.isEmpty()) {
-            val nextAmbulanceBase = emBase.getNextHospital(emBase)
+            val nextAmbulanceBase = emBase.getNextHospital()
             if (nextAmbulanceBase != null) {
                 emBase.makeRequest(em, nextAmbulanceBase)
             }
@@ -141,25 +149,31 @@ object EMCC {
         when (request.getProcessingBase()) {
             is PoliceStation -> {
                 // calculate the next closest police base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextPoliceBase(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextPoliceBase()
                 if (nextBase != null) {
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                } else {
+                    Logger.logRequestFailed(request.getId())
                 }
             }
 
             is Hospital -> {
                 // calculate the next closest ambulance base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextHospital(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextHospital()
                 if (nextBase != null) {
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                } else {
+                    Logger.logRequestFailed(request.getId())
                 }
             }
 
             else -> {
                 // calculate the next closest fire base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextFireBase(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextFireBase()
                 if (nextBase != null) {
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                } else {
+                    Logger.logRequestFailed(request.getId())
                 }
             }
         }

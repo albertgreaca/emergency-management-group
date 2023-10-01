@@ -290,7 +290,7 @@ open class Base(
         for (v in realloctedlist) {
             Logger.logAssetReallocation(v.id, em.id)
         }
-        // ToDo : Richtiger Return Wert
+        // ToDo : Correct Return Value
         return Resource(vehicTypesToRequest, 0, 0, 0, 0)
     }
 
@@ -324,51 +324,44 @@ open class Base(
     /**
      * @return the next Base
      */
-    fun getNextBase(b: Base): Base? {
-        b.id
-        if (this.nextBases.isEmpty()) {
-            return null
-        } else {
-            val returnBase = this.nextBases[0]
-            this.nextBases.removeAt(0)
-            return returnBase
-        }
-    }
 
     /**
      * returns next Base of Type Police Station
      */
-    fun getNextPoliceBase(b: Base): Base? {
-        var nextPoliceBase = getNextBase(b)
-        if (nextPoliceBase == null) {
-            return null
+    fun getNextPoliceBase(): Base? {
+        for (base in nextBases) {
+            if (base is PoliceStation) {
+                nextBases.remove(base)
+                return base
+            }
         }
-        while (!(nextPoliceBase is PoliceStation)) {
-            nextPoliceBase = getNextPoliceBase(requireNotNull(nextPoliceBase))
-        }
-        return nextPoliceBase
+        return null
     }
 
     /**
      * returns next Base of Type Hospital
      */
-    fun getNextHospital(b: Base): Base? {
-        var nextHospital: Base? = getNextBase(b) ?: return null
-        while (nextHospital !is Hospital) {
-            nextHospital = getNextHospital(requireNotNull(nextHospital))
+    fun getNextHospital(): Base? {
+        for (base in nextBases) {
+            if (base is Hospital) {
+                nextBases.remove(base)
+                return base
+            }
         }
-        return nextHospital
+        return null
     }
 
     /**
      * returns next Base of Type Police Station
      */
-    fun getNextFireBase(b: Base): Base? {
-        var nextFireBase: Base? = getNextBase(b) ?: return null
-        while (nextFireBase is PoliceStation || nextFireBase is Hospital) {
-            nextFireBase = getNextFireBase(nextFireBase)
+    fun getNextFireBase(): Base? {
+        for (base in nextBases) {
+            if (base !is Hospital && base !is PoliceStation) {
+                nextBases.remove(base)
+                return base
+            }
         }
-        return nextFireBase
+        return null
     }
 
     /**

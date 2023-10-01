@@ -15,6 +15,11 @@ interface EmergencyObserver {
     fun addBase(b: Base)
 
     /**
+     * Updating Closest Bases for each Base
+     */
+    fun updatenextBases()
+
+    /**
      * find a base via ID
      */
     fun findBase(id: Int): Base?

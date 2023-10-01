@@ -37,4 +37,10 @@ class AmbulanceDepartment : EmergencyObserver {
             Logger.logEmergencyAssignment(em.id, requireNotNull(em.base).id)
         }
     }
+
+    override fun updatenextBases() {
+        for (base in bases) {
+            base.calculateNextBases()
+        }
+    }
 }
