@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.systemtest
 import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest2
 import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
@@ -10,7 +9,6 @@ object SystemTestRegistration {
     fun registerSystemTests(manager: SystemTestManager) {
         manager.registerTest(ExampleTest())
         manager.registerTest(EmergencySimpleTest())
-        manager.registerTest(EmergencySimpleTest2())
         manager.registerTest(ReroutingTest())
         manager.registerTest(CountyRoadDifferentName())
         manager.registerTest(VehicleCapGRBaseCap())

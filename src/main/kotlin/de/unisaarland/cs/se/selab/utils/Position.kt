@@ -18,7 +18,7 @@ class Position(
     var startedThisTick: Boolean = false,
     var isDrivingBack: Boolean = false
 ) {
-
+    var startedThisTickZero = false
     companion object {
         const val WEIGHT_TO_GO = 10
     }
@@ -49,7 +49,9 @@ class Position(
                 }
             }
         }
-        arrivalTicks--
+        if (arrivalTicks != 0) {
+            arrivalTicks--
+        }
     }
 
     /**

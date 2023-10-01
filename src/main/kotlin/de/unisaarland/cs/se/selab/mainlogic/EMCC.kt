@@ -183,11 +183,24 @@ object EMCC {
 
     private fun moveAndLogAsset(vec: Vehicle, newlyArrivedAssets: MutableList<Pair<Int, Int>>) {
         // move each vehicle that is currently driving
-        if (vec.position == null || requireNotNull(vec.position).arrivalTicks == 0) return
+        if (vec.position == null) {
+            return
+        }
+        if (requireNotNull(vec.position).arrivalTicks == 0 && !requireNotNull(vec.position).startedThisTick) {
+            return
+        }
+        requireNotNull(vec.position).startedThisTickZero = requireNotNull(vec.position).startedThisTick
         vec.move()
         // if a vehicle arrived at an emergency after moving, log it
         if (!requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
-            newlyArrivedAssets.add(Pair(vec.id, requireNotNull(requireNotNull(vec.position).destinationVertex).id))
+            newlyArrivedAssets.add(
+                Pair(
+                    vec.id,
+                    requireNotNull(
+                        requireNotNull(vec.position).vertexList[requireNotNull(vec.position).vertexList.size - 1]
+                    ).id
+                )
+            )
         }
         // if a vehicle arrived back at its base after moving, log it
         if (requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
@@ -205,6 +218,8 @@ object EMCC {
         // update all emergencies who allocated all resources in this tick
         val listtoremove = mutableListOf<Emergency>()
         for (em in startingEmergencies) {
+            Simulation.statistics.increaseReceived()
+            Simulation.statistics.increaseOngoing()
             if (em.resources.isEmpty()) {
                 listtoremove.add(em)
                 handledEmergencies.add(em)
@@ -239,9 +254,7 @@ object EMCC {
             var allArrived = true
             for (vec in em.assignedVehicles) {
                 allArrived =
-                    if (requireNotNull(vec.position).arrivalTicks == 0 &&
-                        !requireNotNull(vec.position?.startedThisTick)
-                    ) {
+                    if (requireNotNull(vec.position).arrivalTicks == 0) {
                         allArrived
                     } else {
                         false
@@ -255,8 +268,6 @@ object EMCC {
         newlyHandlingStartedEmergencies.sortBy { it.id }
         for (emergency in newlyHandlingStartedEmergencies) {
             Logger.logEmergencyHandlingStart(emergency.id)
-            Simulation.statistics.increaseOngoing()
-            Simulation.statistics.increaseReceived()
         }
     }
 
@@ -355,7 +366,11 @@ object EMCC {
      */
     fun rerouteVehicles() {
         var numberOfReroutedVehicles = 0
+        Simulation.emergencies.sortBy { it.tick }
         for (em in Simulation.emergencies) {
+            if (em.tick > Simulation.currentTick) {
+                break
+            }
             for (vec in em.assignedVehicles) {
                 if (!vec.reroutable()) continue
                 val wasRerouted = vec.reroute()
