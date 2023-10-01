@@ -2,8 +2,8 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class EmergencySimpleTest : SystemTest() {
-    override val name = "EmergencySimpleTest"
+class EmergencySimpleTest2 : SystemTest() {
+    override val name = "EmergencySimpleTest2"
 
     override val map = "mapFiles/MapEmergencySimple.dot"
     override val assets = "assetsJsons/AssetsEmergencySimple.json"
@@ -35,14 +35,14 @@ class EmergencySimpleTest : SystemTest() {
         assertNextLine("Simulation Tick: 5")
         assertNextLine("Simulation Tick: 6")
         assertNextLine("Emergency Assignment: 2 assigned to 1")
-        assertNextLine("Asset Allocation: 0 allocated to 2; 0 ticks to arrive.")
-        assertNextLine("Asset Arrival: 0 arrived at 1.")
-        assertNextLine("Emergency Handling Start: 2 handling started.")
+        assertNextLine("Asset Allocation: 0 allocated to 2; 1 ticks to arrive.")
         assertNextLine("Simulation Tick: 7")
         assertNextLine("Emergency Assignment: 3 assigned to 2")
-        assertNextLine("Asset Allocation: 42 allocated to 3; 2 ticks to arrive.")
+        assertNextLine("Asset Allocation: 42 allocated to 3; 3 ticks to arrive.")
+        assertNextLine("Asset Arrival: 0 arrived at 1.")
         assertNextLine("Asset Arrival: 19 arrived at 3.")
         assertNextLine("Emergency Handling Start: 1 handling started.")
+        assertNextLine("Emergency Handling Start: 2 handling started.")
         assertNextLine("Simulation Tick: 8")
         assertNextLine("Simulation Tick: 9")
         assertNextLine("Asset Arrival: 42 arrived at 2.")
