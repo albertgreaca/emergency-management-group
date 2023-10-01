@@ -1,6 +1,7 @@
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
@@ -36,7 +37,7 @@ class BaseTest {
 
     @Test
     fun watertrucktest1800w2vehic() {
-        val graph = GraphMap()
+        val graph = Simulation.map
         val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
             graph,
@@ -76,7 +77,7 @@ class BaseTest {
         // 1800, 3 vehic
         // 1800, 1 vehic
         // 600, 1 vehic
-        val graph = GraphMap()
+        val graph = Simulation.map
         val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
             graph,

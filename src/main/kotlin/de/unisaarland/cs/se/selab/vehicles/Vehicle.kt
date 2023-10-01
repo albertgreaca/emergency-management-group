@@ -73,7 +73,7 @@ open class Vehicle(
                 requireNotNull(position).distanceFromStart,
                 requireNotNull(position).distanceFromEnd,
                 requireNotNull(requireNotNull(position).destinationVertex),
-                base.id,
+                base.location.realid,
                 vehicleHeight
             )
             if (!requireNotNull(position).isEqual(requireNotNull(pos))) {
