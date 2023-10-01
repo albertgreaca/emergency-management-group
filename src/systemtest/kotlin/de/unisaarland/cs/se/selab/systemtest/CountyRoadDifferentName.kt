@@ -10,6 +10,7 @@ class CountyRoadDifferentName : SystemTest() {
     override val scenario = "scenarioJsons/example_scenario.json"
     override val maxTicks = 1
     override suspend fun run() {
-        assertNextLine("Initialization Info: countyroadvilnotgraphname.dot invalid")
+        assertNextLine("Initialization Info: countyroadvilnotgraphname.dot successfully parsed and validated")
+        assertNextLine("Initialization Info: vehiclecapgrbasecap.json invalid")
     }
 }

@@ -22,6 +22,8 @@ class MapParser(private val gm: GraphMap, file: File) {
     private val mapVilMain = mutableMapOf<String, Boolean>()
     private val mapVilVer = mutableMapOf<Int, String>()
     private val mapVerCon = mutableMapOf<Int, Boolean>()
+    private val countyList = mutableListOf<String>()
+    private val villist = mutableListOf<String>()
     private var curIndex = 0
     private var i = 0
 
@@ -139,6 +141,7 @@ class MapParser(private val gm: GraphMap, file: File) {
         ret = ret && (validateId(ret2) || isInt) && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
         return Pair(ret2, ret)
     }
+
     private fun validateVertex(v: Vertex): Boolean {
         return v.id >= 0 && gm.getVertexFromId(v.id) == null
     }
@@ -195,13 +198,22 @@ class MapParser(private val gm: GraphMap, file: File) {
             sideStreetCount = true
         }
         if (primarytype == PrimaryRoadType.COUNTYROAD) {
-            ret = ret && resultMap[LexerToken.VILLAGE] == graphName
+            ret = ret && !villist.contains(resultMap[LexerToken.VILLAGE])
+            if (!countyList.contains(resultMap[LexerToken.VILLAGE])) {
+                countyList.add(requireNotNull(resultMap[LexerToken.VILLAGE]))
+            }
+        } else {
+            ret = ret && !countyList.contains(resultMap[LexerToken.VILLAGE])
+            if (!villist.contains(resultMap[LexerToken.VILLAGE])) {
+                villist.add(requireNotNull(resultMap[LexerToken.VILLAGE]))
+            }
         }
         if (primarytype == PrimaryRoadType.MAINSTREET && mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
             mapVilMain.replace(requireNotNull(resultMap[LexerToken.VILLAGE]), false, true)
         }
         return ret && validateNotCountyRoad(resultMap, start, end, primarytype)
     }
+
     private fun validateNotCountyRoad(
         resultMap: Map<LexerToken, String>,
         start: Int,
@@ -248,6 +260,7 @@ class MapParser(private val gm: GraphMap, file: File) {
         gm.addRoad(road, start, end)
         return true
     }
+
     companion object {
         const val minTokens = 10
     }
