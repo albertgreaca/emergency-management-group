@@ -81,9 +81,8 @@ class BasisTesting {
         assertTrue(vehicle3 == em.assignedVehicles[2])
     }
 
-    fun watertrucktest1800w3vehic() {
+    fun watertrucktest1800w1vehic() {
         // some more cases I thought of:
-        // 1800, 1 vehic
         // 600, 1 vehic
         // understaffed so only 1 vehicle can be sent
         val graph = Simulation.map
