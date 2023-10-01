@@ -322,16 +322,14 @@ open class Base(
     }
 
     /**
-     * @return the next Base
-     */
-
-    /**
      * returns next Base of Type Police Station
      */
-    fun getNextPoliceBase(): Base? {
+    fun getNextPoliceBase(b: Base): Base? {
+        var ok = false
         for (base in nextBases) {
-            if (base is PoliceStation) {
-                nextBases.remove(base)
+            if (base == b) {
+                ok = true
+            } else if (base is PoliceStation && ok) {
                 return base
             }
         }
@@ -341,10 +339,12 @@ open class Base(
     /**
      * returns next Base of Type Hospital
      */
-    fun getNextHospital(): Base? {
+    fun getNextHospital(b: Base): Base? {
+        var ok = false
         for (base in nextBases) {
-            if (base is Hospital) {
-                nextBases.remove(base)
+            if (base == b) {
+                ok = true
+            } else if (base is Hospital && ok) {
                 return base
             }
         }
@@ -354,10 +354,12 @@ open class Base(
     /**
      * returns next Base of Type Police Station
      */
-    fun getNextFireBase(): Base? {
+    fun getNextFireBase(b: Base): Base? {
+        var ok = false
         for (base in nextBases) {
-            if (base !is Hospital && base !is PoliceStation) {
-                nextBases.remove(base)
+            if (base == b) {
+                ok = true
+            } else if (base !is Hospital && base !is PoliceStation && ok) {
                 return base
             }
         }
