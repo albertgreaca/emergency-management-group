@@ -26,7 +26,10 @@ object EMCC {
     val startingEvents: MutableList<Event> = mutableListOf()
     var nextRequestId: Int = 1
     val requests: MutableList<Request> = mutableListOf()
+
+    // Global Counters
     var i = 0
+    var k = 0
 
     /**
      * notifies all observers about new emergencies, this initiates the emergency phase
@@ -34,10 +37,15 @@ object EMCC {
     fun notifyObservers() {
         startingEmergencies.sortBy { it.id }
         for (em in startingEmergencies) {
-            when (em.type) {
-                EmergencyType.CRIME -> policeDepartment?.update(em)
-                EmergencyType.FIRE, EmergencyType.ACCIDENT -> fireDepartment?.update(em)
-                else -> ambulanceDepartment?.update(em)
+            if (em.firsttick) {
+                Simulation.statistics.increaseOngoing()
+                Simulation.statistics.increaseReceived()
+                when (em.type) {
+                    EmergencyType.CRIME -> policeDepartment?.update(em)
+                    EmergencyType.FIRE, EmergencyType.ACCIDENT -> fireDepartment?.update(em)
+                    else -> ambulanceDepartment?.update(em)
+                }
+                em.firsttick = false
             }
         }
     }
@@ -73,18 +81,26 @@ object EMCC {
      * allocates assets for each starting emergency
      */
     fun allocateAssets() {
-        // iterate over emergencies
-        for (em in startingEmergencies) {
+        // iterate over
+        k = 0
+        while (k < startingEmergencies.size) {
             // get the base assigned to the emergency
+            val em = startingEmergencies[k]
             val emBase = requireNotNull(em.base)
 
             // base tries to allocate resources for emergency
             emBase.requestResources(em)
 
+            var ok: Boolean = true
             // if needed, base tries to reallocate resources from other emergencies
             if (!em.resources.isEmpty()) {
-                em.resources = emBase.reallocateResources(em)
+                val newre = emBase.reallocateResources(em)
+                if (!newre.isEqual(em.resources)) {
+                    ok = false
+                    em.resources = newre
+                }
             }
+            k++
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
             if (!em.resources.isEmpty()) {
@@ -140,8 +156,9 @@ object EMCC {
                 // if we have resources left, make another request to the next closest base
                 if (!requests[i].getEmergency().resources.isEmpty()) {
                     delegateRequest(requests[i])
+                } else {
+                    requests.removeAt(i)
                 }
-                else requests.removeAt(i)
             }
         }
     }
@@ -230,6 +247,7 @@ object EMCC {
         if (requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
             newlyArrivedAssets.add(Pair(vec.id, requireNotNull(requireNotNull(vec.position).destinationVertex).id))
             requireNotNull(vec.targetEmergency).assignedVehicles.remove(vec)
+            vec.available = true
             vec.targetEmergency = null
             vec.position = null
         }
@@ -242,8 +260,6 @@ object EMCC {
         // update all emergencies who allocated all resources in this tick
         val listtoremove = mutableListOf<Emergency>()
         for (em in startingEmergencies) {
-            Simulation.statistics.increaseReceived()
-            Simulation.statistics.increaseOngoing()
             if (em.resources.isEmpty()) {
                 listtoremove.add(em)
                 handledEmergencies.add(em)

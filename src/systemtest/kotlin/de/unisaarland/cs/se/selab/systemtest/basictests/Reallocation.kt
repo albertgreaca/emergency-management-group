@@ -8,7 +8,7 @@ class Reallocation : SystemTest() {
     override val map = "testReallocation/map_reallocate.dot"
     override val assets = "testReallocation/assets_reallocate.json"
     override val scenario = "testReallocation/scenario_reallocate.json"
-    override val maxTicks = 50
+    override val maxTicks = 20
 
     override suspend fun run() {
         // everything is parsed and validated

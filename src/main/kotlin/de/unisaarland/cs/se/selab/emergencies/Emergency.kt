@@ -23,6 +23,7 @@ class Emergency(
     var alreadyHandled: Int = 0
     var handlingStarted: Boolean = false
     var resolved: Boolean = false
+    var firsttick: Boolean = true
 
     /**
      * @return adds a vehicle to the vehicle list
@@ -36,6 +37,7 @@ class Emergency(
      */
     fun removeVehicle(v: Vehicle) {
         assignedVehicles.remove(v)
+        resources.addVehicle(v.vehicleType)
     }
 
     /**

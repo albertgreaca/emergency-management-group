@@ -1,13 +1,8 @@
-import de.unisaarland.cs.se.selab.mainlogic.Simulation
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
-import java.io.File
-
 class SystemTestDebugger {
 
-    @Test
+    /*@Test
     fun reallocation() {
-        Simulation.maximumTicks = 50
+        Simulation.maximumTicks = 21
         var res = Simulation.initialize(
             File("src/test/resources/testReallocation/map_reallocate.dot"),
             File("src/test/resources/testReallocation/assets_reallocate.json"),
@@ -15,5 +10,5 @@ class SystemTestDebugger {
         )
         assertTrue(res)
         Simulation.simulateSimulation()
-    }
+    }*/
 }

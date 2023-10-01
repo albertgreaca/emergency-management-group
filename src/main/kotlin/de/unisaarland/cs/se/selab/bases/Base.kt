@@ -9,6 +9,7 @@ import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
@@ -266,7 +267,15 @@ open class Base(
             if (vehic != null) {
                 // is staffed already
                 val height = vehic.vehicleHeight
-                val pos = Dijkstra.dijkstraHeight(this.location.realid, em.road, height)
+                val curpos = requireNotNull(vehic.position)
+                val pos = Dijkstra.dijkstraReroute(
+                    curpos.roadList[0],
+                    curpos.distanceFromStart,
+                    curpos.distanceFromEnd,
+                    requireNotNull(curpos.destinationVertex),
+                    em.road,
+                    height
+                )
                 // only thing we need is dijkstra
                 // look if it arrives in time
                 if (requireNotNull(pos).arrivalTicks +
@@ -278,9 +287,14 @@ open class Base(
                 } else {
                     // yes
                     // change position, remove from needed list
+                    reallocateResources(em, vehic)
                     vehic.position = pos
                     realloctedlist.add(vehic)
+                    vehic.targetEmergency?.removeVehicle(vehic)
+                    EMCC.handledEmergencies.remove(vehic.targetEmergency)
+                    EMCC.startingEmergencies.add(requireNotNull(vehic.targetEmergency))
                     vehic.targetEmergency = em
+                    vehic.targetEmergency?.addVehicle(vehic)
                 }
             } else {
                 vehicTypesToRequest.add(vt)
@@ -292,6 +306,25 @@ open class Base(
         }
         // ToDo : Correct Return Value
         return Resource(vehicTypesToRequest, 0, 0, 0, 0)
+    }
+
+    private fun reallocateResources(em: Emergency, vehic: Vehicle) {
+        when (vehic) {
+            is FireTruckWater -> em.resources.waterAmount -= vehic.waterCapacity
+            is Ambulance -> em.resources.patientAmount--
+            is PoliceCar -> em.resources.criminalAmount -= vehic.criminalCapacity
+            is FireTruckLadder -> em.resources.ladderLength = 0
+            else -> {}
+        }
+        if (em.resources.waterAmount < 0) {
+            em.resources.waterAmount = 0
+        }
+        if (em.resources.patientAmount < 0) {
+            em.resources.patientAmount = 0
+        }
+        if (em.resources.criminalAmount < 0) {
+            em.resources.criminalAmount = 0
+        }
     }
 
     /**

@@ -17,9 +17,11 @@ object Logger {
         if (isValid) {
             output = "Initialization Info: $filename successfully parsed and validated"
             pw.println(output)
+            pw.flush()
         } else {
             output = "Initialization Info: $filename invalid"
             pw.println(output)
+            pw.flush()
         }
         return output
     }
@@ -30,6 +32,7 @@ object Logger {
     fun logSimulationStart(): String {
         val output = "Simulation starts"
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -39,6 +42,7 @@ object Logger {
     fun logSimulationTick(t: Int): String {
         val output = "Simulation Tick: $t"
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -48,6 +52,7 @@ object Logger {
     fun logEmergencyAssignment(eid: Int, bid: Int): String {
         val output = "Emergency Assignment: $eid assigned to $bid"
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -57,6 +62,7 @@ object Logger {
     fun logAssetAllocation(aid: Int, eid: Int, t: Int): String {
         val output = "Asset Allocation: $aid allocated to $eid; $t ticks to arrive."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -66,6 +72,7 @@ object Logger {
     fun logAssetReallocation(aid: Int, eid: Int): String {
         val output = "Asset Reallocation: $aid reallocated to $eid."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -75,6 +82,7 @@ object Logger {
     fun logAssetRequest(rid: Int, bid: Int, eid: Int): String {
         val output = "Asset Request: $rid sent to $bid for $eid."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -84,6 +92,7 @@ object Logger {
     fun logRequestFailed(eid: Int): String {
         val output = "Request Failed: $eid failed."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -93,6 +102,7 @@ object Logger {
     fun logAssetArrival(aid: Int, vid: Int): String {
         val output = "Asset Arrival: $aid arrived at $vid."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -102,6 +112,7 @@ object Logger {
     fun logEmergencyHandlingStart(eid: Int): String {
         val output = "Emergency Handling Start: $eid handling started."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -111,6 +122,7 @@ object Logger {
     fun logEmergencyResolved(eid: Int): String {
         val output = "Emergency Resolved: $eid resolved."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -120,6 +132,7 @@ object Logger {
     fun logEmergencyFailed(eid: Int): String {
         val output = "Emergency Failed: $eid failed."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -129,6 +142,7 @@ object Logger {
     fun logEventEnded(evid: Int): String {
         val output = "Event Ended: $evid ended."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -138,6 +152,7 @@ object Logger {
     fun logEventTriggered(evid: Int): String {
         val output = "Event Triggered: $evid triggered."
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -149,6 +164,7 @@ object Logger {
         if (numOfAssets != 0) {
             output = "Assets Rerouted: $numOfAssets"
             pw.println(output)
+            pw.flush()
         }
         return output
     }
@@ -159,6 +175,7 @@ object Logger {
     fun logSimulationEnd(): String {
         val output = "Simulation End"
         pw.println(output)
+        pw.flush()
         return output
     }
 
@@ -172,6 +189,7 @@ object Logger {
             "Simulation Statistics: $failed failed emergencies.\n" +
             "Simulation Statistics: $resolved resolved emergencies."
         pw.println(output)
+        pw.flush()
         return output
     }
 }
