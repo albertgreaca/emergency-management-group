@@ -5,7 +5,9 @@ import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import java.io.File
 
 class BaseTest {
@@ -32,7 +34,6 @@ class BaseTest {
         em.id
     }
 
-    /*
     @Test
     fun watertrucktest1() {
         val graph = GraphMap()
@@ -66,5 +67,4 @@ class BaseTest {
         assertTrue(vehicle1 == em.assignedVehicles.get(0))
         assertTrue(vehicle2 == em.assignedVehicles.get(1))
     }
-     */
 }
