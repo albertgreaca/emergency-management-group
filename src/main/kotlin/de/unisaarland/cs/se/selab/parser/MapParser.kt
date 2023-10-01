@@ -38,8 +38,7 @@ class MapParser(private val gm: GraphMap, file: File) {
             graphName = tokenlist[i++].text
             ret = ret && tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
             ret = ret && validateId(graphName) && parseVertices() && parseEdges() && i == tokenlist.size
-            ret = ret && sideStreetCount && !mapVilMain.containsValue(false) && !mapVerCon.containsValue(false) &&
-                gm.roadList.isNotEmpty()
+            ret = ret && sideStreetCount && !mapVilMain.containsValue(false) && !mapVerCon.containsValue(false)
         } else {
             ret = false
         }
@@ -118,8 +117,14 @@ class MapParser(private val gm: GraphMap, file: File) {
         val primtype = requireNotNull(res.first)
         val sectype = requireNotNull(res.second)
         ret = ret && validateAttributes(resultMap, start, end, primtype)
-        return ret && createObject(resultMap, primtype, sectype, start, end) &&
+        ret = ret && createObject(resultMap, primtype, sectype, start, end) &&
             tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
+        ret = ret && requireNotNull(resultMap[LexerToken.WEIGHT]).toInt() > 0
+        ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() >= 1
+        if (sectype == SecondaryRoadType.TUNNEL) {
+            ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() <= 3
+        }
+        return ret
     }
 
     private fun parsePrimAndSecType(): Triple<PrimaryRoadType?, SecondaryRoadType?, Boolean> {
