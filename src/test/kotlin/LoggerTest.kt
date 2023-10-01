@@ -116,6 +116,13 @@ class LoggerTest {
     }
 
     @Test
+    fun testLogAssetsReroutedNo() {
+        val expected = ""
+        val actual = Logger.logAssetsRerouted(0)
+        assertEquals(expected, actual)
+    }
+
+    @Test
     fun testLogSimulationEnd() {
         val expected = "Simulation End"
         val actual = Logger.logSimulationEnd()

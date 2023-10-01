@@ -1,0 +1,33 @@
+{
+    "events": [
+        {
+            "id": 0,
+            "type": "VEHICLE_UNAVAILABLE",
+            "tick": 120,
+            "duration": 1,
+            "vehicleID": 0
+        }
+    ],
+    "emergencyCalls": [
+        {
+            "id": 0,
+            "tick": 1,
+            "village": "Hamburg",
+            "roadName": "Castle_Avenue",
+            "emergencyType": "FIRE",
+            "severity": 1,
+            "handleTime": 3,
+            "maxDuration": 60
+        },
+        {
+            "id": 1,
+            "tick": 3,
+            "village": "Hamburg",
+            "roadName": "Village_Square",
+            "emergencyType": "FIRE",
+            "severity": 2,
+            "handleTime": 3,
+            "maxDuration": 60
+        }
+    ]
+}
