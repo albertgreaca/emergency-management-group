@@ -11,7 +11,9 @@ class ConstructionSiteEvent(
     override var duration: Int,
     val oneWayStreet: Boolean,
     var road: Road,
-    val factor: Int
+    val factor: Int,
+    val start: Int,
+    val end: Int
 ) : Event(
     id,
     tick,

@@ -1,5 +1,7 @@
 import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.parser.JsonParser
+import de.unisaarland.cs.se.selab.parser.MapParser
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.File
 import kotlin.test.assertFalse
@@ -8,6 +10,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics1() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -20,6 +24,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics2() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -32,6 +38,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics3() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -44,6 +52,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics4() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -56,6 +66,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics5() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -68,6 +80,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics6() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -80,6 +94,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics7() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -92,6 +108,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics8() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -104,6 +122,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics9() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -116,18 +136,23 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics10() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid10.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
-        assertFalse(parser.parseBases())
+        assertTrue(parser.parseBases())
+        assertFalse(parser.parseVehicles())
     }
 
     @Test
     fun invalidTestSemantics11() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -140,6 +165,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics12() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -152,6 +179,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics13() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -164,30 +193,38 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics14() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid14.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
-        assertFalse(parser.parseBases())
+        assertTrue(parser.parseBases())
+        assertFalse(parser.parseVehicles())
     }
 
     @Test
     fun invalidTestSemantics15() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid15.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
-        assertFalse(parser.parseBases())
+        assertTrue(parser.parseBases())
+        assertFalse(parser.parseVehicles())
     }
 
     @Test
     fun invalidTestSemantics16() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -200,6 +237,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics17() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -212,18 +251,23 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics18() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid18.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
-        assertFalse(parser.parseBases())
+        assertTrue(parser.parseBases())
+        assertFalse(parser.parseVehicles())
     }
 
     @Test
     fun invalidTestSemantics20() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -236,18 +280,23 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics21() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid21.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
-        assertFalse(parser.parseBases())
+        assertTrue(parser.parseBases())
+        assertFalse(parser.parseVehicles())
     }
 
     @Test
     fun invalidTestSemantics22() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -260,6 +309,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics23() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -272,6 +323,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics24() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -284,6 +337,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics25() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -296,6 +351,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics26() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -308,6 +365,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics27() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -320,6 +379,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics28() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -332,6 +393,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics29() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -344,6 +407,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics30() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -356,6 +421,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics31() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -368,6 +435,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics32() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -380,6 +449,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics33() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -392,6 +463,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics34() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -404,6 +477,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics35() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -416,6 +491,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics36() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -428,6 +505,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics37() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -440,6 +519,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics38() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -452,6 +533,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics39() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -464,6 +547,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics40() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -476,6 +561,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics41() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -488,6 +575,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics42() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -500,6 +589,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics43() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -512,6 +603,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics44() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -524,6 +617,8 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics45() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -536,58 +631,12 @@ class JsonParserConfig2SemanticsTest {
     @Test
     fun invalidTestSemantics46() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
                 File("src/test/resources/invalidConfig2/Semantics/config2invalid46.json"),
-                File("src/test/resources/validConfig3/config3valid1.json")
-            )
-        assertFalse(parser.parseBases())
-    }
-
-    @Test
-    fun invalidTestSemantics47() {
-        val map = GraphMap()
-        val parser =
-            JsonParser(
-                map,
-                File("src/test/resources/invalidConfig2/Semantics/config2invalid47.json"),
-                File("src/test/resources/validConfig3/config3valid1.json")
-            )
-        assertFalse(parser.parseBases())
-    }
-
-    @Test
-    fun invalidTestSemantics48() {
-        val map = GraphMap()
-        val parser =
-            JsonParser(
-                map,
-                File("src/test/resources/invalidConfig2/Semantics/config2invalid48.json"),
-                File("src/test/resources/validConfig3/config3valid1.json")
-            )
-        assertFalse(parser.parseBases())
-    }
-
-    @Test
-    fun invalidTestSemantics49() {
-        val map = GraphMap()
-        val parser =
-            JsonParser(
-                map,
-                File("src/test/resources/invalidConfig2/Semantics/config2invalid49.json"),
-                File("src/test/resources/validConfig3/config3valid1.json")
-            )
-        assertFalse(parser.parseBases())
-    }
-
-    @Test
-    fun invalidTestSemantics50() {
-        val map = GraphMap()
-        val parser =
-            JsonParser(
-                map,
-                File("src/test/resources/invalidConfig2/Semantics/config2invalid50.json"),
                 File("src/test/resources/validConfig3/config3valid1.json")
             )
         assertFalse(parser.parseBases())

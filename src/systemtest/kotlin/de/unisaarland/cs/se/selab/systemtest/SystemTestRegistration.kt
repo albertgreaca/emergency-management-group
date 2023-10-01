@@ -10,6 +10,8 @@ object SystemTestRegistration {
         manager.registerTest(ExampleTest())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReroutingTest())
+        manager.registerTest(CountyRoadDifferentName())
+        manager.registerTest(VehicleCapGRBaseCap())
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
