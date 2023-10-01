@@ -135,6 +135,7 @@ object Simulation {
      */
     fun simulateSimulation() {
         Logger.logSimulationStart()
+        EMCC.updatenextBases()
         if (maximumTicks == null) {
             while (true) {
                 simulateTick()

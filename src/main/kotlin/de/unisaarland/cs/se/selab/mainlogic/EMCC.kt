@@ -26,6 +26,8 @@ object EMCC {
     val startingEvents: MutableList<Event> = mutableListOf()
     var nextRequestId: Int = 1
     val requests: MutableList<Request> = mutableListOf()
+    var i = 0
+
 
     /**
      * notifies all observers about new emergencies, this initiates the emergency phase
@@ -67,6 +69,7 @@ object EMCC {
         ambulanceDepartment?.updatenextBases()
         fireDepartment?.updatenextBases()
     }
+
     /**
      * allocates assets for each starting emergency
      */
@@ -102,7 +105,7 @@ object EMCC {
 
         // make a request for the missing police resources
         if (!policeResources.isEmpty()) {
-            val nextPoliceBase = emBase.getNextPoliceBase()
+            val nextPoliceBase = emBase.getNextPoliceBase(emBase)
             if (nextPoliceBase != null) {
                 emBase.makeRequest(em, nextPoliceBase)
             }
@@ -110,7 +113,7 @@ object EMCC {
 
         // make a request for the missing police resources
         if (!fireResources.isEmpty()) {
-            val nextFireBase = emBase.getNextFireBase()
+            val nextFireBase = emBase.getNextFireBase(emBase)
             if (nextFireBase != null) {
                 emBase.makeRequest(em, nextFireBase)
             }
@@ -118,7 +121,7 @@ object EMCC {
 
         // make a request for the missing ambulance resources
         if (!ambulanceResources.isEmpty()) {
-            val nextAmbulanceBase = emBase.getNextHospital()
+            val nextAmbulanceBase = emBase.getNextHospital(emBase)
             if (nextAmbulanceBase != null) {
                 emBase.makeRequest(em, nextAmbulanceBase)
             }
@@ -130,13 +133,13 @@ object EMCC {
      */
     fun processRequests() {
         while (!requests.isEmpty()) {
-            for (request in requests) {
+              while (i < requests.size){
                 // try to allocate all requested resources
-                request.getProcessingBase().requestResources(request.getEmergency())
+                requests[i].getProcessingBase().requestResources(requests[i].getEmergency())
 
                 // if we have resources left, make another request to the next closest base
-                if (!request.getEmergency().resources.isEmpty()) {
-                    delegateRequest(request)
+                if (!requests[i].getEmergency().resources.isEmpty()) {
+                    delegateRequest(requests[i])
                 }
             }
         }
@@ -149,30 +152,36 @@ object EMCC {
         when (request.getProcessingBase()) {
             is PoliceStation -> {
                 // calculate the next closest police base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextPoliceBase()
+                val nextBase = request.getRequestingBase().getNextPoliceBase(request.getProcessingBase())
                 if (nextBase != null) {
+                    i++
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
                 } else {
+                    requests.remove(request)
                     Logger.logRequestFailed(request.getId())
                 }
             }
 
             is Hospital -> {
                 // calculate the next closest ambulance base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextHospital()
+                val nextBase = request.getRequestingBase().getNextHospital(request.getProcessingBase())
                 if (nextBase != null) {
+                    i++
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
                 } else {
+                    requests.remove(request)
                     Logger.logRequestFailed(request.getId())
                 }
             }
 
             else -> {
                 // calculate the next closest fire base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextFireBase()
+                val nextBase = request.getRequestingBase().getNextFireBase(request.getProcessingBase())
                 if (nextBase != null) {
+                    i++
                     request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
                 } else {
+                    requests.remove(request)
                     Logger.logRequestFailed(request.getId())
                 }
             }
