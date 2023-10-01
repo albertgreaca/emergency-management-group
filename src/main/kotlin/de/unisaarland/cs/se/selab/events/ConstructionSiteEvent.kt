@@ -1,6 +1,8 @@
 package de.unisaarland.cs.se.selab.events
 
 import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
+import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.utils.Logger
 
 /** Class for the construction site event
@@ -27,6 +29,9 @@ class ConstructionSiteEvent(
     override fun executeStart(): Boolean {
         if (road.eventList.isEmpty()) {
             road.addEvent(this)
+            if (road.secType != SecondaryRoadType.ONEWAYSTREET) {
+                Simulation.map.removeRoad(start, end, oneWayStreet)
+            }
             Logger.logEventTriggered(id)
             return true
         }
@@ -41,6 +46,9 @@ class ConstructionSiteEvent(
      */
     override fun stopEvent() {
         road.eventList.remove(this)
+        if (road.secType != SecondaryRoadType.ONEWAYSTREET) {
+            Simulation.map.toNormal(road, start, end)
+        }
         Logger.logEventEnded(id)
     }
 }

@@ -29,9 +29,20 @@ class GraphMap(
             return false
         }
         roadList.add(road)
-        adjacencyList[vs.realid][ve] = road
-        adjacencyList[ve.realid][vs] = road
+        if (road.secType == SecondaryRoadType.ONEWAYSTREET) {
+            adjacencyList[vs.realid][ve] = road
+        } else {
+            adjacencyList[vs.realid][ve] = road
+            adjacencyList[ve.realid][vs] = road
+        }
         return true
+    }
+
+    /**
+     * Restore OneWay to Normal
+     */
+    fun toNormal(road: Road, start: Int, end: Int) {
+        adjacencyList[requireNotNull(getVertexFromId(end)?.realid)][requireNotNull(getVertexFromId(start))] = road
     }
 
     /**
@@ -73,5 +84,18 @@ class GraphMap(
             }
         }
         return ans
+    }
+
+    /**
+     * Removing Road
+     */
+    fun removeRoad(start: Int, end: Int, oneWay: Boolean) {
+        if (oneWay) {
+            adjacencyList[requireNotNull(getVertexFromId(end)?.realid)].remove(requireNotNull(getVertexFromId(start)))
+        } else {
+            roadList.remove(adjacencyList[requireNotNull(getVertexFromId(start)?.realid)][getVertexFromId(end)])
+            adjacencyList[requireNotNull(getVertexFromId(start)?.realid)]?.remove(requireNotNull(getVertexFromId(end)))
+            adjacencyList[requireNotNull(getVertexFromId(end)?.realid)]?.remove(requireNotNull(getVertexFromId(start)))
+        }
     }
 }
