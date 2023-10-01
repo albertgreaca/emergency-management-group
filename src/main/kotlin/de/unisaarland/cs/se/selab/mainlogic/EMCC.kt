@@ -28,7 +28,6 @@ object EMCC {
     val requests: MutableList<Request> = mutableListOf()
     var i = 0
 
-
     /**
      * notifies all observers about new emergencies, this initiates the emergency phase
      */
@@ -133,7 +132,8 @@ object EMCC {
      */
     fun processRequests() {
         while (!requests.isEmpty()) {
-              while (i < requests.size){
+            i = 0
+            while (i < requests.size) {
                 // try to allocate all requested resources
                 requests[i].getProcessingBase().requestResources(requests[i].getEmergency())
 
@@ -141,6 +141,7 @@ object EMCC {
                 if (!requests[i].getEmergency().resources.isEmpty()) {
                     delegateRequest(requests[i])
                 }
+                else requests.removeAt(i)
             }
         }
     }

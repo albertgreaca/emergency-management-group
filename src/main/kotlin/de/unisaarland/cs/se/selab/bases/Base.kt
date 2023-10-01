@@ -49,7 +49,7 @@ open class Base(
         val neededVehicles = r.vehicles
 
         // create a list of all vehicles in the base which could potentially be allocated
-        val potentialVehicles = requireNotNull(em.base).vehicles.filter {
+        val potentialVehicles = vehicles.filter {
             it.available &&
                 it.vehicleType in neededVehicles
         }.toMutableList()
