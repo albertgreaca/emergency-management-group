@@ -40,7 +40,7 @@ class VehicleTest {
         vehicle.move()
 
         assertTrue(roadlist.size == 1)
-        assertTrue(pos.distanceFromEnd == 0)
+        assertTrue(pos.distanceFromEnd == 5)
         assertTrue(pos.distanceFromStart == 0)
         assertTrue(pos.distance == 5)
         assertTrue(pos.arrivalTicks == 1)

@@ -102,7 +102,7 @@ class EventsTest {
         val roadlist = mutableListOf(road1, road2)
         val event = RushHourEvent(1, 2, 2, roadlist, 2)
         road1.addEvent(event)
-        road1.addEvent(event)
+        road2.addEvent(event)
 
         event.stopEvent()
         assertFalse(road1.eventList.contains(event))
