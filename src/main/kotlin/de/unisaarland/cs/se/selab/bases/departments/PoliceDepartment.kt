@@ -47,9 +47,9 @@ class PoliceDepartment : EmergencyObserver {
             for (v in b.vehicles) {
                 if (v.baseWaitingTicks > 1) {
                     v.baseWaitingTicks--
-                }
-                if (v.baseWaitingTicks == 1) {
+                } else if (v.baseWaitingTicks == 1) {
                     v.available = true
+                    v.baseWaitingTicks--
                 }
             }
         }
