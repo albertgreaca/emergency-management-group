@@ -1,39 +1,16 @@
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
-import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
 class BaseTest {
-    @BeforeEach
-    fun before() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
-        val jsonparse = JsonParser(
-            graph,
-            File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
-        )
-        parse.parseMap()
-        jsonparse.parseBases()
-        jsonparse.parseVehicles()
-        jsonparse.parseEmergency()
-        jsonparse.parseEvents()
-        val vertex1 = requireNotNull(graph.getVertexFromId(0))
-        val vertex2 = requireNotNull(graph.getVertexFromId(1))
-        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
-        val vehicleList = mutableListOf(VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER)
-        val res = Resource(vehicleList, 1800, 0, 0, 0)
-        val em = Emergency(0, 1, road, EmergencyType.FIRE, 2, 1, 20, res)
-        em.id
-    }
+    val test = TestUtils()
 
     @Test
     fun watertrucktest1800w2vehic() {
@@ -67,6 +44,8 @@ class BaseTest {
         assertTrue(em.resources.isEmpty())
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -107,6 +86,8 @@ class BaseTest {
         assertTrue(em.resources.isEmpty())
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -147,6 +128,8 @@ class BaseTest {
         // assertTrue(em.resources.isEqual(testres))
         // assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(true)
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -182,6 +165,8 @@ class BaseTest {
         val testres = Resource(vehicleList, 2400, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
         assertTrue(testres.isEqual(em.resources))
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -225,6 +210,8 @@ class BaseTest {
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
         assertTrue(vehicle3 == em.assignedVehicles[2])
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -258,6 +245,8 @@ class BaseTest {
         val testres = Resource(vehicleList, 1800, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
         assertTrue(testres.isEqual(em.resources))
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -298,6 +287,8 @@ class BaseTest {
         b.requestResources(em)
         val testres = Resource(mutableListOf(VehicleType.FIRE_TRUCK_WATER), 2400, 0, 0, 0)
         assertTrue(testres.isEqual(em.resources))
+        test.clearEMCC()
+        test.clearSimulation()
     }
 
     @Test
@@ -335,5 +326,7 @@ class BaseTest {
         val testres = Resource(mutableListOf(), 0, 0, 0, 0)
         assertTrue(testres.isEqual(em.resources))
         assertTrue(vehic1 == em.assignedVehicles[0])
+        test.clearEMCC()
+        test.clearSimulation()
     }
 }
