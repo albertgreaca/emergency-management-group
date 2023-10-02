@@ -491,7 +491,7 @@ open class Base(
         // add it to the list of requests
         EMCC.requests.add(req)
         // log that a new request was made
-        Logger.logAssetRequest(req.getId(), nextBase.id, em.id)
+        Logger.logAssetRequest(req.id, nextBase.id, em.id)
         // count up the id of the next request
         EMCC.nextRequestId++
     }

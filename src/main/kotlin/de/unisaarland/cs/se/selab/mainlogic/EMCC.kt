@@ -158,10 +158,10 @@ object EMCC {
             i = 0
             while (i < requests.size) {
                 // try to allocate all requested resources
-                requests[i].getProcessingBase().requestResources(requests[i].getEmergency())
+                requests[i].processingBase.requestResources(requests[i].emergency)
 
                 // if we have resources left, make another request to the next closest base
-                if (!requests[i].getEmergency().resources.isEmpty()) {
+                if (!requests[i].emergency.resources.isEmpty()) {
                     delegateRequest(requests[i])
                 } else {
                     requests.removeAt(i)
@@ -174,40 +174,40 @@ object EMCC {
      * creates a new request to the next closest base if the current request could not be handled by the current base
      */
     private fun delegateRequest(request: Request) {
-        when (request.getProcessingBase()) {
+        when (request.processingBase) {
             is PoliceStation -> {
                 // calculate the next closest police base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextPoliceBase(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextPoliceBase(request.processingBase)
                 if (nextBase != null) {
                     i++
-                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                    request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.getId())
+                    Logger.logRequestFailed(request.id)
                 }
             }
 
             is Hospital -> {
                 // calculate the next closest ambulance base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextHospital(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextHospital(request.processingBase)
                 if (nextBase != null) {
                     i++
-                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                    request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.getId())
+                    Logger.logRequestFailed(request.id)
                 }
             }
 
             else -> {
                 // calculate the next closest fire base and make a request to this base
-                val nextBase = request.getRequestingBase().getNextFireBase(request.getProcessingBase())
+                val nextBase = request.getRequestingBase().getNextFireBase(request.processingBase)
                 if (nextBase != null) {
                     i++
-                    request.getRequestingBase().makeRequest(request.getEmergency(), nextBase)
+                    request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.getId())
+                    Logger.logRequestFailed(request.id)
                 }
             }
         }
