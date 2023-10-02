@@ -11,6 +11,7 @@ import java.io.File
 import kotlin.test.assertTrue
 
 class ReallocationTest {
+    val utils = TestUtils()
 
     @Test
     fun simpletest1() {
@@ -45,6 +46,8 @@ class ReallocationTest {
         val vehicle1 = b.vehicles[0]
         assertTrue(vehicle1.targetEmergency == em)
         assertTrue(em.assignedVehicles[0] == vehicle1)
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 
     @Test
@@ -80,5 +83,7 @@ class ReallocationTest {
         val vehicle1 = b.vehicles[0]
         assertTrue(vehicle1.targetEmergency == em)
         assertTrue(em.assignedVehicles[0] == vehicle1)
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 }

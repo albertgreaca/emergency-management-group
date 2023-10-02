@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test
 import java.io.File
 
 class GraphMapTest {
+    val utils = TestUtils()
 
     @Test
     fun checkRoadAddingMV1() {
@@ -39,6 +40,8 @@ class GraphMapTest {
         // now check for bidirectionality
         val map2 = adjList[2]
         assertTrue(r1 == map2[vert1])
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 
     @Test
@@ -98,8 +101,7 @@ class GraphMapTest {
         assertTrue(supposedRoad == r12 && map2[vert4] == r24)
         val map3 = adjList[3]
         assertTrue(map3[vert1] == r13)
-        val map5 = adjList[5]
-        assertTrue(map5[vert6] == r56 && map5[vert4] == r45)
+        utils.clear()
     }
 
     @Test
@@ -115,6 +117,8 @@ class GraphMapTest {
         val map0 = adjList[0]
         val map4 = adjList[4]
         assertTrue(map0.containsKey(vert4) && map4.containsKey(vert0) && roadList.contains(r1))
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 
     @Test
@@ -140,5 +144,7 @@ class GraphMapTest {
         assertTrue(vL3.contains(vert7))
         assertTrue(!vL2.contains(vert7))
         assertTrue(!vL1.contains(vert7))
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 }

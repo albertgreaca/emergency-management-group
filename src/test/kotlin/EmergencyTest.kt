@@ -9,11 +9,19 @@ import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.utils.Position
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import org.junit.jupiter.api.BeforeEach
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class EmergencyTest {
+    val utils = TestUtils()
+
+    @BeforeEach
+    fun restore() {
+        utils.clear()
+    }
+
     @Test
     fun testAdd() {
         val vertex0 = Vertex(0, null, 0)
@@ -30,6 +38,8 @@ class EmergencyTest {
 
         em.addVehicle(vehicle)
         assertTrue(em.assignedVehicles.contains(vehicle))
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 
     @Test
@@ -50,5 +60,7 @@ class EmergencyTest {
         em.removeVehicle(vehicle)
         assertFalse(em.assignedVehicles.contains(vehicle))
         // assertTrue(re.vehicles.contains(VehicleType.AMBULANCE))
+        utils.clearEMCC()
+        utils.clearSimulation()
     }
 }

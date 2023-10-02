@@ -1,7 +1,14 @@
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertTrue
 
 class DijkstraTest {
+
+    @BeforeEach
+    fun restore() {
+        val utils = TestUtils()
+        utils.clear()
+    }
 
     @Test
     fun dijkstraHeight() {
