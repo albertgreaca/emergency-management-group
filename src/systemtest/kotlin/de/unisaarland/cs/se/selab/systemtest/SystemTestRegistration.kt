@@ -3,24 +3,56 @@ import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
 import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser10
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser11
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser12
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser13
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser14
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser15
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser16
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser17
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser2
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser3
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser4
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser5
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser6
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser7
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser8
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser9
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
-    fun registerSystemTests(manager: SystemTestManager) {
-        manager.registerTest(Reallocation())
+    private fun registerSystemTests(manager: SystemTestManager) {
         manager.registerTest(ExampleTest())
-        manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReroutingTest())
+    }
+
+    private fun notPassingReference(manager: SystemTestManager) {
+        manager.registerTest(Reallocation())
+        manager.registerTest(EmergencySimpleTest())
+
+    }
+   fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
+       registerSystemTests(manager)
+       notPassingReference(manager)
+   }
+
+    fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
         manager.registerTest(CountyRoadDifferentName())
         manager.registerTest(VehicleCapGRBaseCap())
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
+        registerSystemTests(manager)
+        config2(manager)
     }
 
+    fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
+       registerSystemTests(manager)
+    }
     private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(FailedParser2())
@@ -144,37 +176,37 @@ object SystemTestRegistration {
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser16())
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser17())
         manager.registerTest(FailedParser18())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser21())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser22())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser23())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser24())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser25())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser26())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser27())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser28())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser29())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser30())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser31())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser32())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser33())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser34())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser35())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser36())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser37())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser38())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser39())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser40())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser41())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser42())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser43())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser44())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser45())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser46())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser47())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser48())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser49())
-        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser50())
+        manager.registerTest(FailedParser19())
+        manager.registerTest(FailedParser20())
+        manager.registerTest(FailedParser21())
+        manager.registerTest(FailedParser22())
+        manager.registerTest(FailedParser23())
+        manager.registerTest(FailedParser24())
+        manager.registerTest(FailedParser25())
+        manager.registerTest(FailedParser26())
+        manager.registerTest(FailedParser27())
+        manager.registerTest(FailedParser28())
+        manager.registerTest(FailedParser29())
+        manager.registerTest(FailedParser30())
+        manager.registerTest(FailedParser31())
+        manager.registerTest(FailedParser32())
+        manager.registerTest(FailedParser33())
+        manager.registerTest(FailedParser34())
+        manager.registerTest(FailedParser35())
+        manager.registerTest(FailedParser36())
+        manager.registerTest(FailedParser37())
+        manager.registerTest(FailedParser38())
+        manager.registerTest(FailedParser39())
+        manager.registerTest(FailedParser40())
+        manager.registerTest(FailedParser41())
+        manager.registerTest(FailedParser42())
+        manager.registerTest(FailedParser43())
+        manager.registerTest(FailedParser44())
+        manager.registerTest(FailedParser45())
+        manager.registerTest(FailedParser46())
+        manager.registerTest(FailedParser47())
+        manager.registerTest(FailedParser48())
+        manager.registerTest(FailedParser49())
+        manager.registerTest(FailedParser50())
     }
 }
