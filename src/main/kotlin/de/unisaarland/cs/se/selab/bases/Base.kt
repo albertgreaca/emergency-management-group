@@ -29,7 +29,7 @@ open class Base(
 ) {
 
     companion object {
-        const val maxCriminalCapacity = 4
+        const val MaxCriminalCapacity = 4
         const val maxWaterCapacity = 2400
         const val ladder40 = 40
         const val ladder30 = 30
@@ -56,7 +56,7 @@ open class Base(
         // create a list of all vehicles in the base which could potentially be allocated
         val potentialVehicles = vehicles.filter {
             it.available &&
-                    it.vehicleType in neededVehicles
+                it.vehicleType in neededVehicles
         }.toMutableList()
 
         val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
@@ -110,15 +110,21 @@ open class Base(
         // remove the vehicle type from the list of needed vehicle types
         em.resources.vehicles.remove(vehicle.vehicleType)
         // special vehicles editen
+        allocateWhen(em, vehicle)
+        if (em.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
+            em.resources.ladderLength = 0
+        }
+        // set vehicle availability false
+        vehicle.available = false
+        // add vehicle to list in emergency
+        em.addVehicle(vehicle)
+        loggerlist.add(vehicle)
+    }
+
+    private fun allocateWhen(em: Emergency, vehicle: Vehicle) {
         when (vehicle) {
             is PoliceCar -> {
-                if (em.resources.criminalAmount >= vehicle.criminalCapacity) {
-                    em.resources.criminalAmount -= vehicle.criminalCapacity
-                    vehicle.transportedCriminals = vehicle.criminalCapacity
-                } else {
-                    vehicle.transportedCriminals = em.resources.criminalAmount
-                    em.resources.criminalAmount = 0
-                }
+                allocatePoliceCar(em, vehicle)
             }
 
             is FireTruckWater -> {
@@ -148,17 +154,20 @@ open class Base(
                     em.resources.ladderLength = 0
                     vehicle.neededByEmergency40 = false
                 }
-
             }
         }
-        if (em.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
-            em.resources.ladderLength = 0
+    }
+
+    private fun allocatePoliceCar(em: Emergency, vehicle: Vehicle) {
+        if (vehicle is PoliceCar) {
+            if (em.resources.criminalAmount >= vehicle.criminalCapacity) {
+                em.resources.criminalAmount -= vehicle.criminalCapacity
+                vehicle.transportedCriminals = vehicle.criminalCapacity
+            } else {
+                vehicle.transportedCriminals = em.resources.criminalAmount
+                em.resources.criminalAmount = 0
+            }
         }
-        // set vehicle availability false
-        vehicle.available = false
-        // add vehicle to list in emergency
-        em.addVehicle(vehicle)
-        loggerlist.add(vehicle)
     }
 
     /**
@@ -221,18 +230,18 @@ open class Base(
         }
         if (staffNeeded > this.staff) validCombination = false
         if (resource.criminalAmount - fittingCriminals >
-            maxCriminalCapacity * (
-                    resource.countInstancesOf(VehicleType.POLICE_CAR) -
-                            numberOfPoliceCars
-                    )
+            MaxCriminalCapacity * (
+                resource.countInstancesOf(VehicleType.POLICE_CAR) -
+                    numberOfPoliceCars
+                )
         ) {
             return false
         }
         if (resource.waterAmount - fittingWater >
             maxWaterCapacity * (
-                    resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
-                            numberOfWaterTrucks
-                    )
+                resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+                    numberOfWaterTrucks
+                )
         ) {
             return false
         }
@@ -319,7 +328,7 @@ open class Base(
 
             // if vehicle cannot arrive in time then skip to next vehicle
             val res = requireNotNull(pos).arrivalTicks +
-                    Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
+                Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
             if (!res) {
                 // set the vehicle's position to the calculated position
                 vehic.position = pos
@@ -356,28 +365,11 @@ open class Base(
     }
     private fun transferResources(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
         when (vehic) {
-            is PoliceCar -> {
-                if (newem.resources.criminalAmount >= vehic.criminalCapacity) {
-                    newem.resources.criminalAmount -= vehic.criminalCapacity
-                    oldem.resources.criminalAmount += vehic.transportedCriminals
-                    vehic.transportedCriminals = vehic.criminalCapacity
-                } else {
-                    oldem.resources.criminalAmount += vehic.transportedCriminals
-                    vehic.transportedCriminals = newem.resources.criminalAmount
-                    newem.resources.criminalAmount = 0
-                }
-            }
+            is PoliceCar ->
+                decreaseResourcePoliceCar(oldem, newem, vehic)
 
             is FireTruckWater -> {
-                if (newem.resources.waterAmount >= vehic.waterCapacity) {
-                    oldem.resources.waterAmount += vehic.waterTransported
-                    newem.resources.waterAmount -= vehic.waterCapacity
-                    vehic.waterTransported = vehic.waterCapacity
-                } else {
-                    oldem.resources.waterAmount += vehic.waterTransported
-                    vehic.waterTransported = newem.resources.waterAmount
-                    newem.resources.waterAmount = 0
-                }
+                decreaseResourceWaterTruck(oldem, newem, vehic)
             }
 
             is Ambulance -> {
@@ -390,14 +382,7 @@ open class Base(
                 }
             }
             is FireTruckLadder -> {
-                if (requireNotNull(newem.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
-                    newem.resources.ladderLength = 0
-                    oldem.resources.ladderLength = if (vehic.neededByEmergency40) 40 else 30
-                }
-                if (requireNotNull(newem.resources.ladderLength) >= ladder30) {
-                    newem.resources.ladderLength = 0
-                    oldem.resources.ladderLength = if (vehic.neededByEmergency40) 40 else 30
-                }
+                decreaseResourcesLadderTruck(oldem, newem, vehic)
             }
         }
         if (newem.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
@@ -407,16 +392,43 @@ open class Base(
         vehic.available = false
     }
 
-    private fun ladderlength(em: Emergency, vehic: Vehicle) {
-        if (vehic is FireTruckLadder) {
-            if (requireNotNull(em.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
-                em.resources.ladderLength = 0
-                vehic.neededByEmergency40 = true
+    private fun decreaseResourcePoliceCar(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
+        if (vehic is PoliceCar) {
+            if (newem.resources.criminalAmount >= vehic.criminalCapacity) {
+                newem.resources.criminalAmount -= vehic.criminalCapacity
+                oldem.resources.criminalAmount += vehic.transportedCriminals
+                vehic.transportedCriminals = vehic.criminalCapacity
+            } else {
+                oldem.resources.criminalAmount += vehic.transportedCriminals
+                vehic.transportedCriminals = newem.resources.criminalAmount
+                newem.resources.criminalAmount = 0
             }
-            if (requireNotNull(em.resources.ladderLength) >= ladder30) {
-                em.resources.ladderLength = 0
-                vehic.neededByEmergency40 = false
+        }
+    }
 
+    private fun decreaseResourceWaterTruck(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
+        if (vehic is FireTruckWater) {
+            if (newem.resources.waterAmount >= vehic.waterCapacity) {
+                oldem.resources.waterAmount += vehic.waterTransported
+                newem.resources.waterAmount -= vehic.waterCapacity
+                vehic.waterTransported = vehic.waterCapacity
+            } else {
+                oldem.resources.waterAmount += vehic.waterTransported
+                vehic.waterTransported = newem.resources.waterAmount
+                newem.resources.waterAmount = 0
+            }
+        }
+    }
+
+    private fun decreaseResourcesLadderTruck(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
+        if (vehic is FireTruckLadder) {
+            if (requireNotNull(newem.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
+                newem.resources.ladderLength = 0
+                oldem.resources.ladderLength = if (vehic.neededByEmergency40) ladder40 else ladder30
+            }
+            if (requireNotNull(newem.resources.ladderLength) >= ladder30) {
+                newem.resources.ladderLength = 0
+                oldem.resources.ladderLength = if (vehic.neededByEmergency40) ladder40 else ladder30
             }
         }
     }
