@@ -179,12 +179,9 @@ class BaseTest {
         val b = requireNotNull(vertex3.base)
         em.base = b
         b.requestResources(em)
-        val vehicles = b.vehicles
-        val vehicle1 = vehicles[0]
-        val vehicle2 = vehicles[1]
         val testres = Resource(vehicleList, 2400, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
-        assertTrue(testres == em.resources)
+        assertTrue(testres.isEqual(em.resources))
     }
 
     @Test
@@ -258,8 +255,8 @@ class BaseTest {
         val b = requireNotNull(vertex3.base)
         em.base = b
         b.requestResources(em)
-        val testres = Resource(vehicleList, 2400, 0, 0, 0)
+        val testres = Resource(vehicleList, 1800, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
-        assertTrue(testres == em.resources)
+        assertTrue(testres.isEqual(em.resources))
     }
 }
