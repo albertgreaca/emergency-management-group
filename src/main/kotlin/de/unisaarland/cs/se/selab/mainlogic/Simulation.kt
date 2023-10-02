@@ -137,14 +137,18 @@ object Simulation {
         Logger.logSimulationStart()
         EMCC.updatenextBases()
         if (maximumTicks == null) {
-            while (true) {
+            while (!emergenciesdone()) {
                 simulateTick()
             }
         } else {
-            while (currentTick < requireNotNull(maximumTicks)) {
+            while (currentTick < requireNotNull(maximumTicks) && !emergenciesdone()) {
                 simulateTick()
             }
         }
         finalEvaluation()
+    }
+
+    private fun emergenciesdone(): Boolean {
+        return statistics.failedEmergencies + statistics.resolvedEmergencies == emergencies.size
     }
 }
