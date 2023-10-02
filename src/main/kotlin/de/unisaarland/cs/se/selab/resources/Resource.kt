@@ -10,7 +10,7 @@ class Resource(
     var waterAmount: Int,
     var criminalAmount: Int,
     var patientAmount: Int,
-    var ladderLength: Int?
+    var ladderLength: Int
 ) {
 
     /**
@@ -46,7 +46,11 @@ class Resource(
         val patientDifference = this.patientAmount - resource.patientAmount
         // compare Ladder Length
         // the weird let thing was a detekt fix I have no clue what it does
-        val ladderDifference = resource.ladderLength?.let { this.ladderLength?.minus(it) }
+        var ladderDifference = if (resource.ladderLength == 0) {
+            0
+        } else {
+            this.ladderLength - resource.ladderLength
+        }
         // compare List of needed Vehicles
         // am I supposed to create a new resource?
         // what is the Int for?
@@ -86,7 +90,7 @@ class Resource(
      * filters out all resources that police stations can provide
      */
     fun filterPoliceResources(): Resource {
-        val policeResource = Resource(mutableListOf(), 0, this.criminalAmount, 0, null)
+        val policeResource = Resource(mutableListOf(), 0, this.criminalAmount, 0, 0)
         for (type in this.vehicles) {
             when (type) {
                 VehicleType.POLICE_CAR, VehicleType.K9_POLICE_CAR, VehicleType.POLICE_MOTORCYCLE ->
@@ -118,7 +122,7 @@ class Resource(
      * filters out all resources that ambulance stations can provide
      */
     fun filterAmbulanceResources(): Resource {
-        val ambulanceResource = Resource(mutableListOf(), 0, 0, this.patientAmount, null)
+        val ambulanceResource = Resource(mutableListOf(), 0, 0, this.patientAmount, 0)
         for (type in this.vehicles) {
             when (type) {
                 VehicleType.AMBULANCE, VehicleType.EMERGENCY_DOCTOR_CAR -> ambulanceResource.addVehicle(type)
