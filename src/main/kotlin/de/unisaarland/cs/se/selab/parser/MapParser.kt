@@ -77,8 +77,8 @@ class MapParser(private val gm: GraphMap, file: File) {
             val end = tokenlist[i++].text.toIntOrNull() ?: return false
             mapVerCon[start] = true
             mapVerCon[end] = true
-            val ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start)) &&
-                    parseAttributes(start, end)
+            var ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start))
+            ret = ret && parseAttributes(start, end)
             if (!ret || i >= tokenlist.size || tokenlist[i++].tokenkind != LexerToken.SEMICOLON) {
                 return false
             }
@@ -116,33 +116,36 @@ class MapParser(private val gm: GraphMap, file: File) {
         }
         val primtype = requireNotNull(res.first)
         val sectype = requireNotNull(res.second)
-        ret = ret && validateAttributes(resultMap, start, end, primtype)
-        ret = ret && createObject(resultMap, primtype, sectype, start, end) &&
-                i < tokenlist.size &&
-                tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
-        ret = ret && requireNotNull(resultMap[LexerToken.WEIGHT]).toInt() > 0
-        ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() >= 1
-        if (sectype == SecondaryRoadType.TUNNEL) {
-            ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() <= 3
-        }
-        return ret
-    }
 
+        return ret && helper(resultMap, start, end, primtype, sectype)
+    }
+private  fun helper(resultMap: Map<LexerToken, String>, start: Int, end: Int, primtype: PrimaryRoadType,
+                    sectype: SecondaryRoadType): Boolean {
+    var ret = validateAttributes(resultMap, start, end, primtype)
+    ret = ret && createObject(resultMap, primtype, sectype, start, end) && i < tokenlist.size
+    ret = ret && tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
+    ret = ret && requireNotNull(resultMap[LexerToken.WEIGHT]).toInt() > 0
+    ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() >= 1
+    if (sectype == SecondaryRoadType.TUNNEL) {
+        ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() <= 3
+    }
+    return ret
+}
     private fun parsePrimAndSecType(): Triple<PrimaryRoadType?, SecondaryRoadType?, Boolean> {
-        var ret = i + SEVEN < tokenlist.size && tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
-                tokenlist[i++].tokenkind == LexerToken.EQUAL
+        var ret = i + SEVEN < tokenlist.size && tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.EQUAL
         val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
-        ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
-                tokenlist[i++].tokenkind == LexerToken.EQUAL
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.EQUAL
         val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
         return Triple(primtype, sectype, ret)
     }
 
     private fun parseAttribute(token: LexerToken, isInt: Boolean): Pair<String, Boolean> {
-        var ret = i + 3 < tokenlist.size && tokenlist[i++].tokenkind == token &&
-                tokenlist[i++].tokenkind == LexerToken.EQUAL
+        var ret = i + 3 < tokenlist.size && tokenlist[i++].tokenkind == token
+        ret = ret && tokenlist[i++].tokenkind == LexerToken.EQUAL
         val ret2 = tokenlist[i++].text
         ret = ret && (validateId(ret2) || isInt) && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
         return Pair(ret2, ret)

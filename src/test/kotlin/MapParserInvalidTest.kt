@@ -7,7 +7,7 @@ import java.io.File
 class MapParserInvalidTest {
 
     /**
-    Testing for unique IDs
+     Testing for unique IDs
      */
     @Test
     fun invalidDotFile1() {
@@ -744,13 +744,6 @@ class MapParserInvalidTest {
     fun invalidSyntaxDotFile82() {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid82.dot"))
-        Assertions.assertFalse(parser.parseMap())
-    }
-
-    @Test
-    fun invalidSyntaxDotFile83() {
-        val graphMap = GraphMap()
-        val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid83.dot"))
         Assertions.assertFalse(parser.parseMap())
     }
 }

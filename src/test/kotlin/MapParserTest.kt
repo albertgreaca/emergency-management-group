@@ -1,5 +1,6 @@
 import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.parser.MapParser
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -44,5 +45,12 @@ class MapParserTest {
         val graphMap = GraphMap()
         val parser = MapParser(graphMap, File("src/test/resources/example_map.dot"))
         assertTrue(parser.parseMap())
+    }
+
+    @Test
+    fun invalidSyntaxDotFile83() {
+        val graphMap = GraphMap()
+        val parser = MapParser(graphMap, File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid83.dot"))
+        Assertions.assertFalse(parser.parseMap())
     }
 }
