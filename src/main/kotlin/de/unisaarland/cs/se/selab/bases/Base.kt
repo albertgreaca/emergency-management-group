@@ -248,27 +248,28 @@ open class Base(
      * @return a Resource with what's still missing
      */
     fun reallocateResources(em: Emergency): Resource {
-        // TODO : implement
-        // Only vehicles that are unavailable can be reallocated
-        // -> filter List for this
-        // also filter if target emergency severity is lower (bcs only then you can reallocate)
-        val realloctedlist = mutableListOf<Vehicle>()
+        // list of all successfully reallocated vehicles for logging
+        val reallocatedList = mutableListOf<Vehicle>()
+
+        // list of all reallocatable vehicles
         val reallocatableVehics = this.vehicles.filter { it.reallocatable(em) }
-        // get emergencies resource
-        val neededVehicles = em.resources.vehicles
-        val vehicTypesToRequest = mutableListOf<VehicleType>()
+
+        // copy of the needed vehicle types so that we have two separate lists for iterating and removing
+        val copyOfNeededTypes = em.resources.vehicles.toMutableList()
+
         // for each vehic type in resource
-        val listread = mutableListOf<Pair<Emergency, VehicleType>>()
-        for (vt in neededVehicles) {
-            // check type special vs normal
-            // check if it is in filtered list
-            val vehic = helperVehicleCompare(vt, reallocatableVehics)
-            if (vehic != null) {
-                // is staffed already
+        // val listread = mutableListOf<Pair<Emergency, VehicleType>>()
+        for (vt in copyOfNeededTypes) {
+            for (vehic in reallocatableVehics) {
+                var successful = false
+                // if vehicle has wrong type skip to next vehicle
+                if (vehic.vehicleType != vt) continue
+
+                // calculate new position of vehicle
                 val height = vehic.vehicleHeight
                 val curpos = requireNotNull(vehic.position)
                 var pos: Position?
-                if (curpos.roadList.isEmpty()) {
+                if (curpos.roadList.isEmpty() || curpos.destinationVertex == null) {
                     val road1: Road = em.road
                     curpos.destinationVertex = this.location
                     pos = Dijkstra.dijkstraReroute(
@@ -290,44 +291,48 @@ open class Base(
                     )
                 }
 
-                // only thing we need is dijkstra
-                // look if it arrives in time
-                if (requireNotNull(pos).arrivalTicks +
-                    Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
-                ) {
-                    // no
-                    // abort
-                    vehicTypesToRequest.add(vt)
-                } else {
-                    // yes
-                    // change position, remove from needed list
-                    reallocateResources(em, vehic)
-                    vehic.position = pos
-                    realloctedlist.add(vehic)
-                    listread.add(
-                        Pair(
-                            requireNotNull(vehic.targetEmergency),
-                            requireNotNull(vehic.targetEmergency?.removeVehicle(vehic))
-                        )
-                    )
+                // if vehicle cannot arrive in time then skip to next vehicle
+                if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                    continue
+                }
+                successful = true
+
+                // set the vehicle's position to the calculated position
+                vehic.position = pos
+
+                // remove the vehicle from the assigned vehicles of previous emergency
+                requireNotNull(vehic.targetEmergency).assignedVehicles.remove(vehic)
+
+                // add the vehicle to the assigned vehicles of new emergency
+                em.assignedVehicles.add(vehic)
+
+                // if previous emergency was in handledEmergencies, move it back to startingEmergencies
+                if (requireNotNull(vehic.targetEmergency) in EMCC.handledEmergencies) {
                     EMCC.handledEmergencies.remove(vehic.targetEmergency)
                     EMCC.startingEmergencies.add(requireNotNull(vehic.targetEmergency))
-                    vehic.targetEmergency = em
-                    vehic.targetEmergency?.addVehicle(vehic)
                 }
-            } else {
-                vehicTypesToRequest.add(vt)
+
+                // set the vehicle's target emergency to the new emergency
+                vehic.targetEmergency = em
+
+                // remove the vehicle type from the list of needed vehicle types
+                em.resources.vehicles.remove(vt)
+
+                // update water/criminals/patients for special vehicle types
+                reallocateResources(em, vehic)
+
+                // add vehicle to logging list
+                reallocatedList.add(vehic)
+
+                if (successful) break
             }
         }
-        for (lis in listread) {
-            lis.first.resources.vehicles.add(lis.second)
-        }
-        realloctedlist.sortBy { it.id }
-        for (v in realloctedlist) {
+
+        // log all reallocations ordered by asset id
+        reallocatedList.sortBy { it.id }
+        for (v in reallocatedList) {
             Logger.logAssetReallocation(v.id, em.id)
         }
-        em.resources.vehicles = vehicTypesToRequest
-        // ToDo : Correct Return Value
         return em.resources
     }
 
@@ -364,7 +369,7 @@ open class Base(
     /**
      * helper function to check available vehicles for corresponding type
      */
-    private fun helperVehicleCompare(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
+    private fun findVehicleofType(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
         for (vehicle in vehicleList) {
             if (vehicle.vehicleType == v) {
                 return vehicle

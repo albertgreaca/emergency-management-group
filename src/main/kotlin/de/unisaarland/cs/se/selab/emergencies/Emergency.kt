@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.graphlogic.Road
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 
 /** Class for the Emergencies
  */
@@ -35,8 +36,8 @@ class Emergency(
     /**
      * @return removes a vehicle from the vehicle list
      */
-    fun removeVehicle(v: Vehicle) {
+    fun removeVehicle(v: Vehicle): VehicleType {
         assignedVehicles.remove(v)
-        resources.addVehicle(v.vehicleType)
+        return v.vehicleType
     }
 }

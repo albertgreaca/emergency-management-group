@@ -46,7 +46,7 @@ open class Vehicle(
      * @return true if reallocatable, else false
      */
     fun reallocatable(em: Emergency): Boolean {
-        if (position == null) {
+        if (position == null || available) {
             return false
         }
         if (requireNotNull(position).arrivalTicks == 0) {
