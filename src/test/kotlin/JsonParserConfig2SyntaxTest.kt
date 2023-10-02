@@ -438,6 +438,20 @@ class JsonParserConfig2SyntaxTest {
     }
 
     @Test
+    fun invalidTestSyntax32() {
+        val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
+        val parser =
+            JsonParser(
+                map,
+                File("src/test/resources/invalidConfig2/Syntax/config2invalid32.json"),
+                File("src/test/resources/validConfig3/config3valid1.json")
+            )
+        assertFalse(parser.parseBases())
+    }
+
+    @Test
     fun invalidTestSemantics48() {
         val map = GraphMap()
         val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))

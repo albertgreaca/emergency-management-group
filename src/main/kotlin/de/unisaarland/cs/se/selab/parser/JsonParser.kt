@@ -207,34 +207,36 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val baseType = currBase.getString("baseType")
             val locationId = currBase.getInt("location")
             val location = gm.getVertexFromId(locationId) ?: return false
+            if (location.base != null) {
+                return false
+            }
             val staffs = currBase.getInt("staff")
+            var newBase: Base? = null
             when (baseType) {
                 "FIRE_STATION" -> {
-                    val newBase = Base(id, staffs, location, mutableListOf())
+                    newBase = Base(id, staffs, location, mutableListOf())
                     location.base = newBase
                     fireDepartment.addBase(newBase)
-                    listBases[newBase] = false
                     fir = true
                 }
 
                 "POLICE_STATION" -> {
                     val dogs = currBase.getInt("dogs") // create Police Station
-                    val newBase = PoliceStation(id, staffs, location, mutableListOf(), dogs)
+                    newBase = PoliceStation(id, staffs, location, mutableListOf(), dogs)
                     location.base = newBase
                     policeDepartment.addBase(newBase)
-                    listBases[newBase] = false
                     pol = true
                 }
 
                 "HOSPITAL" -> {
                     val doctor = currBase.getInt("doctors")
-                    val newBase = Hospital(id, staffs, location, mutableListOf(), doctor)
+                    newBase = Hospital(id, staffs, location, mutableListOf(), doctor)
                     location.base = newBase
                     ambulanceDepartment.addBase(newBase)
-                    listBases[newBase] = false
                     hos = true
                 }
             }
+            listBases[requireNotNull(newBase)] = false
             EMCC.policeDepartment = policeDepartment
             EMCC.fireDepartment = fireDepartment
             EMCC.ambulanceDepartment = ambulanceDepartment
