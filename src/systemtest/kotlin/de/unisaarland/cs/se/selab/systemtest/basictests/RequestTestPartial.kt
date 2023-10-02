@@ -2,24 +2,25 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class RequestTestFailed : SystemTest() {
+class RequestTestPartial : SystemTest() {
     override val name = "Request"
 
     override val map = "mapFiles/request_map.dot"
-    override val assets = "assetsJsons/request_baseNvehiclesFail.json"
-    override val scenario = "scenarioJsons/request_scenario_failed.json"
+    override val assets = "assetsJsons/request_baseNvehiclesPartial.json"
+    override val scenario = "scenarioJsons/request_scenario_partial.json"
     override val maxTicks = 30
     private val rf0 = "Request Failed: 0 failed"
 
     override suspend fun run() {
         assertNextLine("Initialization Info: request_map.dot successfully parsed and validated")
-        assertNextLine("Initialization Info: request_baseNvehiclesFail.json successfully parsed and validated")
-        assertNextLine("Initialization Info: request_scenario_failed.json successfully parsed and validated")
+        assertNextLine("Initialization Info: request_baseNvehiclesPartial.json successfully parsed and validated")
+        assertNextLine("Initialization Info: request_scenario_partial.json successfully parsed and validated")
         assertNextLine("Simulation starts")
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 1")
         assertNextLine("Asset Request: 1 sent to 2 for 0")
+        assertNextLine("Asset Allocation: 0 allocated to 0; 1 ticks to arrive")
         assertNextLine("Asset Request: 2 sent to 3 for 0")
         assertNextLine(rf0)
         assertNextLine("Simulation Tick: 2")

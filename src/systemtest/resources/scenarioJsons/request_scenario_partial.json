@@ -15,7 +15,7 @@
       "tick": 1,
       "village": "Village",
       "roadName": "OneFour",
-      "emergencyType": "CRIME",
+      "emergencyType": "FIRE",
       "severity": 1,
       "handleTime": 1,
       "maxDuration": 3
