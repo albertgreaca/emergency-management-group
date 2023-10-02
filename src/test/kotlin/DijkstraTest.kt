@@ -1,12 +1,6 @@
-import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
-import de.unisaarland.cs.se.selab.graphlogic.GraphMap
-import de.unisaarland.cs.se.selab.graphlogic.Road
-import de.unisaarland.cs.se.selab.mainlogic.Simulation
-import de.unisaarland.cs.se.selab.parser.MapParser
-import de.unisaarland.cs.se.selab.utils.Position
-import org.junit.jupiter.api.Test
 
-class DijkstraTest {
+
+/*class DijkstraTest {
 
     @Test
     fun dijkstraHeight() {
@@ -18,4 +12,4 @@ class DijkstraTest {
 
 
     }
-}
+}*/

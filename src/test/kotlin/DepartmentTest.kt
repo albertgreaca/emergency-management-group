@@ -1,5 +1,4 @@
 
-import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
@@ -13,12 +12,13 @@ import java.io.File
 
 class DepartmentTest {
 
+    var utils: TestUtils = TestUtils()
+
     @Test
     fun testFireDepFindBaseFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -31,14 +31,14 @@ class DepartmentTest {
         val fireDep = EMCC.fireDepartment
 
         assertEquals(0, fireDep?.findBase(0)?.id)
+        utils.clear()
     }
 
     @Test
     fun testFireDepFindBaseNotFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -51,14 +51,14 @@ class DepartmentTest {
         val fireDep = EMCC.fireDepartment
 
         assertNull(fireDep?.findBase(1)?.id)
+        utils.clear()
     }
 
     @Test
     fun testPoliceDepFindBaseFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -71,14 +71,14 @@ class DepartmentTest {
         val policeDep = EMCC.policeDepartment
 
         assertEquals(1, policeDep?.findBase(1)?.id)
+        utils.clear()
     }
 
     @Test
     fun testPoliceDepFindBaseNotFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -91,14 +91,14 @@ class DepartmentTest {
         val policeDep = EMCC.policeDepartment
 
         assertNull(policeDep?.findBase(4)?.id)
+        utils.clear()
     }
 
     @Test
     fun testAmbulanceDepFindBaseFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -111,14 +111,14 @@ class DepartmentTest {
         val ambulanceDep = EMCC.ambulanceDepartment
 
         assertEquals(2, ambulanceDep?.findBase(2)?.id)
+        utils.clear()
     }
 
     @Test
     fun testAmbulanceDepFindBaseNotFound() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -131,14 +131,14 @@ class DepartmentTest {
         val ambulanceDep = EMCC.ambulanceDepartment
 
         assertNull(ambulanceDep?.findBase(1)?.id)
+        utils.clear()
     }
 
     @Test
     fun testAmbulanceDepUpdate() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/medicalEmergency1TrafficJam.json")
         )
@@ -153,14 +153,14 @@ class DepartmentTest {
         ambulanceDep?.update(em)
 
         assertEquals(2, em.base?.id)
+        utils.clear()
     }
 
     @Test
     fun testFireDepUpdate() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
         )
@@ -175,14 +175,14 @@ class DepartmentTest {
         fireDep?.update(em)
 
         assertEquals(0, em.base?.id)
+        utils.clear()
     }
 
     @Test
     fun testPoliceDepUpdate() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
         )
@@ -197,14 +197,14 @@ class DepartmentTest {
         policeDep?.update(em)
 
         assertEquals(1, em.base?.id)
+        utils.clear()
     }
 
     @Test
     fun testAmbulanceDepUpdateVehicles() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
         )
@@ -232,14 +232,14 @@ class DepartmentTest {
         assertFalse(vehicles[1].available)
         assertEquals(0, vehicles[2].baseWaitingTicks)
         assertTrue(vehicles[2].available)
+        utils.clear()
     }
 
     @Test
     fun testFireDepUpdateVehicles() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
         )
@@ -271,14 +271,14 @@ class DepartmentTest {
         assertTrue(vehicles[2].available)
         assertEquals(6, vehicles[3].baseWaitingTicks)
         assertFalse(vehicles[3].available)
+        utils.clear()
     }
 
     @Test
     fun testPoliceDepUpdateVehicles() {
-        val graph = GraphMap()
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(Simulation.map, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
-            graph,
+            Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
             File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
         )
@@ -306,5 +306,6 @@ class DepartmentTest {
         assertTrue(vehicles[1].available)
         assertEquals(3, vehicles[2].baseWaitingTicks)
         assertFalse(vehicles[2].available)
+        utils.clear()
     }
 }
