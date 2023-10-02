@@ -10,6 +10,10 @@ import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.events.Event
 import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.utils.Logger
+import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
+import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
+import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
 
 /**
@@ -30,6 +34,9 @@ object EMCC {
     // Global Counters
     var i = 0
     var k = 0
+    var l = 0
+
+    const val divisor = 300
 
     /**
      * notifies all observers about new emergencies, this initiates the emergency phase
@@ -211,10 +218,12 @@ object EMCC {
      */
     fun updateAssets() {
         val newlyArrivedAssets: MutableList<Pair<Int, Int>> = mutableListOf()
+        val toremove: MutableList<Vehicle> = mutableListOf()
         for (em in Simulation.emergencies) {
             for (vec in em.assignedVehicles) {
-                moveAndLogAsset(vec, newlyArrivedAssets)
+                moveAndLogAsset(vec, newlyArrivedAssets, toremove)
             }
+            em.assignedVehicles.removeAll(toremove)
         }
         newlyArrivedAssets.sortBy { it.first }
         for ((aid, vid) in newlyArrivedAssets) {
@@ -222,7 +231,11 @@ object EMCC {
         }
     }
 
-    private fun moveAndLogAsset(vec: Vehicle, newlyArrivedAssets: MutableList<Pair<Int, Int>>) {
+    private fun moveAndLogAsset(
+        vec: Vehicle,
+        newlyArrivedAssets: MutableList<Pair<Int, Int>>,
+        toremove: MutableList<Vehicle>
+    ) {
         // move each vehicle that is currently driving
         if (vec.position == null) {
             return
@@ -243,13 +256,44 @@ object EMCC {
                 )
             )
         }
+        policeDepartment?.updateVehicles()
+        fireDepartment?.updateVehicles()
+        ambulanceDepartment?.updateVehicles()
         // if a vehicle arrived back at its base after moving, log it
         if (requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
-            newlyArrivedAssets.add(Pair(vec.id, requireNotNull(requireNotNull(vec.position).destinationVertex).id))
-            requireNotNull(vec.targetEmergency).assignedVehicles.remove(vec)
-            vec.available = true
+            newlyArrivedAssets.add(
+                Pair(
+                    vec.id,
+                    requireNotNull(
+                        requireNotNull(vec.position).vertexList[requireNotNull(vec.position).vertexList.size - 1]
+                    ).id
+                )
+            )
+            toremove.add(vec)
+            helperfunction(vec)
             vec.targetEmergency = null
             vec.position = null
+        }
+    }
+
+    private fun helperfunction(vec: Vehicle) {
+        if (vec is FireTruckLadder) {
+            vec.available = true
+        }
+        if (vec !is FireTruckWater && vec !is Ambulance && vec !is PoliceCar) {
+            vec.available = true
+        }
+        if (vec is FireTruckWater) {
+            vec.baseWaitingTicks = (vec.waterCapacity - vec.waterTransported) / divisor
+            if ((vec.waterCapacity - vec.waterTransported) % divisor != 0) {
+                vec.baseWaitingTicks++
+            }
+        }
+        if (vec is Ambulance && vec.patientOnBoard) {
+            vec.baseWaitingTicks = 1
+        }
+        if (vec is PoliceCar && vec.transportedCriminals > 0) {
+            vec.baseWaitingTicks = 2
         }
     }
 
@@ -273,6 +317,15 @@ object EMCC {
         // update all emergencies that failed in this tick
         updateFailedEmergencies()
         // if all assets assigned to an emergency returned to their bases, we don't need to track it anymore
+        var l = 0
+        while (l < resolvedOrFailedEmergencies.size) {
+            val em = resolvedOrFailedEmergencies[l]
+            if (em.assignedVehicles.isEmpty()) {
+                resolvedOrFailedEmergencies.remove(em)
+            } else {
+                l++
+            }
+        }
         for (em in resolvedOrFailedEmergencies) {
             if (em.assignedVehicles.isEmpty()) {
                 resolvedOrFailedEmergencies.remove(em)

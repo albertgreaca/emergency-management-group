@@ -42,4 +42,16 @@ class FireDepartment : EmergencyObserver {
             base.calculateNextBases()
         }
     }
+    override fun updateVehicles() {
+        for (b in bases) {
+            for (v in b.vehicles) {
+                if (v.baseWaitingTicks > 1) {
+                    v.baseWaitingTicks--
+                }
+                if (v.baseWaitingTicks == 1) {
+                    v.available = true
+                }
+            }
+        }
+    }
 }
