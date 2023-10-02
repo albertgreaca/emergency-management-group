@@ -303,9 +303,7 @@ class BaseTest {
     @Test
     fun watertrucktestundertaffed1vehic() {
         // some more cases I thought of:
-        // 600, 1 vehic
         // dikstra doesn't work now
-        // understaffed so only 1 vehicle can be sent
         val graph = Simulation.map
         val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
         val jsonparse = JsonParser(
@@ -338,4 +336,5 @@ class BaseTest {
         assertTrue(testres.isEqual(em.resources))
         assertTrue(vehic1 == em.assignedVehicles[0])
     }
+
 }
