@@ -32,7 +32,7 @@ class Position(
             return
         }
         var weightLeft = WEIGHT_TO_GO
-        while (weightLeft > 0 && roadList.isNotEmpty()) {
+        while (weightLeft > 0 && distance > 0 && roadList.isNotEmpty()) {
             distanceFromEnd--
             distanceFromStart++
             weightLeft--
