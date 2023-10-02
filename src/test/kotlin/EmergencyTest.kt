@@ -20,7 +20,7 @@ class EmergencyTest {
         val vertex1 = Vertex(1, null, 1)
         val road =
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
-        val re = Resource(mutableListOf(), 5, 5, 8, null)
+        val re = Resource(mutableListOf(), 5, 5, 8, 0)
 
         val em = Emergency(0, 1, road, EmergencyType.CRIME, 2, 5, 10, re)
 
@@ -38,7 +38,7 @@ class EmergencyTest {
         val vertex1 = Vertex(1, null, 1)
         val road =
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
-        val re = Resource(mutableListOf(), 5, 5, 8, null)
+        val re = Resource(mutableListOf(), 5, 5, 8, 0)
 
         val em = Emergency(0, 1, road, EmergencyType.CRIME, 2, 5, 10, re)
 
