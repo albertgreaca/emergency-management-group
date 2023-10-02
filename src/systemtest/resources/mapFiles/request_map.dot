@@ -7,6 +7,5 @@ digraph Requester {
 1->2[village=Village; name=OneTwo; heightLimit=10; weight = 10; primaryType=mainStreet; secondaryType=none;];
 2->3[village=Village; name=TwoThree; heightLimit=10; weight = 10; primaryType=mainStreet; secondaryType=none;];
 1->4[village=Village; name=OneFour; heightLimit=10; weight = 10; primaryType=mainStreet; secondaryType=none;];
-3->4[village=Village; name=ThreeFour; heightLimit=10; weight = 10; primaryType=sideStreet; secondaryType=none;];
 3->5[village=Saarbruecken; name=ThreeFive; heightLimit=10; weight = 10; primaryType=sideStreet; secondaryType=none;];
 }

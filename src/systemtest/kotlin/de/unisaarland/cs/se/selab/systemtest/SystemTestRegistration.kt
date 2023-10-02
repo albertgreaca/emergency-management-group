@@ -1,8 +1,5 @@
 package de.unisaarland.cs.se.selab.systemtest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
@@ -38,6 +35,7 @@ object SystemTestRegistration {
    fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
        registerSystemTests(manager)
        notPassingReference(manager)
+       manager.registerTest(RequestTest())
    }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {

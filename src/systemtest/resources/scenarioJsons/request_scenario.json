@@ -17,7 +17,7 @@
       "roadName": "OneFour",
       "emergencyType": "CRIME",
       "severity": 1,
-      "handleTime": 3,
+      "handleTime": 2,
       "maxDuration": 500
     }
   ]
