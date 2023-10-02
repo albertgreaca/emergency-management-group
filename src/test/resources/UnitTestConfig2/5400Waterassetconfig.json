@@ -1,0 +1,60 @@
+{
+  "bases": [
+    {
+      "id": 0,
+      "baseType": "FIRE_STATION",
+      "location": 2,
+      "staff": 100
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 0,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 3,
+      "waterCapacity": 600
+    },
+    {
+      "id": 1,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 2,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 3,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 4,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 5,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    }
+  ]
+}
