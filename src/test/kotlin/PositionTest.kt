@@ -1,4 +1,6 @@
+import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
 import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
 import de.unisaarland.cs.se.selab.graphlogic.Vertex
 import de.unisaarland.cs.se.selab.utils.Position
 import org.junit.jupiter.api.Assertions.assertFalse
@@ -122,5 +124,172 @@ class PositionTest {
             0
         )
         assertTrue(position1.equals(position1))
+    }
+
+    @Test
+    fun isEqual2() {
+        val roadList = mutableListOf<Road>()
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+        val vertexList2 = mutableListOf(v1, v2)
+        val position1 = Position(
+            roadList,
+            vertexList,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+        val position2 = Position(
+            roadList,
+            vertexList2,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+
+        assertFalse(position2.equals(position1))
+        assertFalse(position1.equals(position2))
+    }
+
+    @Test
+    fun isEqual3() {
+        val roadList = mutableListOf<Road>()
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val r1 = Road(PrimaryRoadType.COUNTYROAD, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v1, v2)
+        val roadList2 = mutableListOf<Road>(r1)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+        val position1 = Position(
+            roadList,
+            vertexList,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+        val position2 = Position(
+            roadList2,
+            vertexList,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+        assertFalse(position1.equals(position2))
+        assertFalse(position2.equals(position1))
+    }
+
+    @Test
+    fun isEqual4() {
+        val roadList = mutableListOf<Road>()
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val r1 = Road(PrimaryRoadType.COUNTYROAD, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v1, v2)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+        val position1 = Position(
+            roadList,
+            vertexList,
+            10,
+            10,
+            null,
+            0,
+            0
+        )
+        val position2 = Position(
+            roadList,
+            vertexList,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+        assertFalse(position1.equals(position2))
+        assertFalse(position2.equals(position1))
+    }
+
+    @Test
+    fun isEqual6() {
+        val roadList = mutableListOf<Road>()
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val r1 = Road(PrimaryRoadType.COUNTYROAD, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v1, v2)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+        val position1 = Position(
+            roadList,
+            vertexList,
+            10,
+            0,
+            v2,
+            0,
+            0
+        )
+        val position2 = Position(
+            roadList,
+            vertexList,
+            0,
+            10,
+            null,
+            0,
+            0
+        )
+        assertFalse(position1.equals(position2))
+        assertFalse(position2.equals(position1))
+    }
+
+    @Test
+    fun isEqual5() {
+        val roadList = mutableListOf<Road>()
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val r1 = Road(PrimaryRoadType.COUNTYROAD, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v1, v2)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+        val position1 = Position(
+            roadList,
+            vertexList,
+            10,
+            10,
+            v1,
+            0,
+            0
+        )
+        val position2 = Position(
+            roadList,
+            vertexList,
+            10,
+            10,
+            v1,
+            10,
+            0
+        )
+        assertFalse(position1.equals(position2))
+        assertFalse(position2.equals(position1))
+    }
+
+    @Test
+    fun advance1() {
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val v3 = Vertex(2, null, 2)
+        val vertexList = mutableListOf<Vertex>(v1, v2, v3)
+
+        val r1 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhofstrasse", 20, 5, v1, v2)
+        val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhofstrasse", 20, 5, v2, v3)
+        val roadList = mutableListOf<Road>(r1, r2)
+
+        val pos = Position(roadList, vertexList, 0, 0, null, 0, 0, false, false)
+        pos.isDrivingBack
     }
 }

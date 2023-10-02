@@ -37,6 +37,7 @@ object SystemTestRegistration {
        notPassingReference(manager)
        manager.registerTest(RequestTest())
        manager.registerTest(RequestTestFailed())
+       manager.registerTest(RequestTestPartial())
    }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
