@@ -222,7 +222,7 @@ class MapParser(private val gm: GraphMap, file: File) {
                 villist.add(requireNotNull(resultMap[LexerToken.VILLAGE]))
             }
         }
-        if (!mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
+        if (primarytype != PrimaryRoadType.COUNTYROAD && !mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
             mapVilMain[requireNotNull(resultMap[LexerToken.VILLAGE])] = false
         }
         if (primarytype == PrimaryRoadType.MAINSTREET) {
