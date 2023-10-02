@@ -46,7 +46,7 @@ class Resource(
         val patientDifference = this.patientAmount - resource.patientAmount
         // compare Ladder Length
         // the weird let thing was a detekt fix I have no clue what it does
-        var ladderDifference = if (resource.ladderLength == 0) {
+        val ladderDifference = if (resource.ladderLength == 0) {
             0
         } else {
             this.ladderLength - resource.ladderLength

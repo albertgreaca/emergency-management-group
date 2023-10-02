@@ -336,5 +336,4 @@ class BaseTest {
         assertTrue(testres.isEqual(em.resources))
         assertTrue(vehic1 == em.assignedVehicles[0])
     }
-
 }
