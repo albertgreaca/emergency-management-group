@@ -4,7 +4,10 @@ import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import java.io.File
 
@@ -27,7 +30,7 @@ class DepartmentTest {
 
         val fireDep = EMCC.fireDepartment
 
-        assertEquals(fireDep?.findBase(0)?.id, 0)
+        assertEquals(0, fireDep?.findBase(0)?.id)
     }
 
     @Test
@@ -67,7 +70,7 @@ class DepartmentTest {
 
         val policeDep = EMCC.policeDepartment
 
-        assertEquals(policeDep?.findBase(0)?.id, 0)
+        assertEquals(1, policeDep?.findBase(1)?.id)
     }
 
     @Test
@@ -107,7 +110,7 @@ class DepartmentTest {
 
         val ambulanceDep = EMCC.ambulanceDepartment
 
-        assertEquals(ambulanceDep?.findBase(0)?.id, 0)
+        assertEquals(2, ambulanceDep?.findBase(2)?.id)
     }
 
     @Test
@@ -127,7 +130,7 @@ class DepartmentTest {
 
         val ambulanceDep = EMCC.ambulanceDepartment
 
-        assertNull(ambulanceDep?.findBase(2)?.id)
+        assertNull(ambulanceDep?.findBase(1)?.id)
     }
 
     @Test
