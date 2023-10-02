@@ -19,7 +19,7 @@ object Simulation {
     var maximumTicks: Int? = null
     val emergencies: MutableList<Emergency> = mutableListOf()
     val events: MutableList<Event> = mutableListOf()
-    val map = GraphMap()
+    var map = GraphMap()
     val statistics = Statistics()
 
     /** initializes the simulation setting and returns whether the process was successful
