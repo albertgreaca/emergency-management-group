@@ -39,11 +39,4 @@ class Emergency(
         assignedVehicles.remove(v)
         resources.addVehicle(v.vehicleType)
     }
-
-    /**
-     * @return updates state of the emergency
-     */
-    fun updateEmergency() {
-        TODO("implement")
-    }
 }
