@@ -29,7 +29,7 @@ class ConstructionSiteEvent(
     override fun executeStart(): Boolean {
         if (road.eventList.isEmpty()) {
             road.addEvent(this)
-            if (road.secType != SecondaryRoadType.ONEWAYSTREET) {
+            if (road.secType != SecondaryRoadType.ONEWAYSTREET && oneWayStreet) {
                 Simulation.map.removeRoad(start, end, oneWayStreet)
             }
             Logger.logEventTriggered(id)
@@ -46,7 +46,7 @@ class ConstructionSiteEvent(
      */
     override fun stopEvent() {
         road.eventList.remove(this)
-        if (road.secType != SecondaryRoadType.ONEWAYSTREET) {
+        if (road.secType != SecondaryRoadType.ONEWAYSTREET && oneWayStreet) {
             Simulation.map.toNormal(road, start, end)
         }
         Logger.logEventEnded(id)

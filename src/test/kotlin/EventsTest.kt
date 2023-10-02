@@ -4,10 +4,8 @@ import de.unisaarland.cs.se.selab.events.RoadClosureEvent
 import de.unisaarland.cs.se.selab.events.RushHourEvent
 import de.unisaarland.cs.se.selab.events.TrafficJamEvent
 import de.unisaarland.cs.se.selab.events.VehicleUnavailableEvent
-import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
-import de.unisaarland.cs.se.selab.graphlogic.Road
-import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
-import de.unisaarland.cs.se.selab.graphlogic.Vertex
+import de.unisaarland.cs.se.selab.graphlogic.*
+import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.utils.Position
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
@@ -120,7 +118,7 @@ class EventsTest {
         utils.clearSimulation()
     }
 
-    /*@Test
+    @Test
     fun testExecuteStartConsSiteTrue() {
         val vertex0 = Vertex(0, null, 0)
         val vertex1 = Vertex(1, null, 1)
@@ -133,9 +131,9 @@ class EventsTest {
         assertTrue(road.eventList.contains(event))
         utils.clearEMCC()
         utils.clearSimulation()
-    }*/
+    }
 
-    /*@Test
+    @Test
     fun testExecuteStartConsSiteFalse() {
         val vertex0 = Vertex(0, null, 0)
         val vertex1 = Vertex(1, null, 1)
@@ -151,24 +149,24 @@ class EventsTest {
         assertTrue(event.tick == 2)
         utils.clearEMCC()
         utils.clearSimulation()
-    }*/
+    }
 
-    /* @Test
-     fun testStopConsSite() {
-         val vertex0 = Vertex(0, null, 0)
-         val vertex1 = Vertex(1, null, 1)
+    @Test
+    fun testStopConsSite() {
+        val vertex0 = Vertex(0, null, 0)
+        val vertex1 = Vertex(1, null, 1)
 
-         val road =
-             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
-         val event = ConstructionSiteEvent(0, 1, 2, false, road, 3, 0, 1)
-         road.addEvent(event)
-         event.stopEvent()
-         assertFalse(road.eventList.contains(event))
-         utils.clearEMCC()
-         utils.clearSimulation()
-     }*/
+        val road =
+            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
+        val event = ConstructionSiteEvent(0, 1, 2, false, road, 3, 0, 1)
+        road.addEvent(event)
+        event.stopEvent()
+        assertFalse(road.eventList.contains(event))
+        utils.clearEMCC()
+        utils.clearSimulation()
+    }
 
-    /*@Test
+    @Test
     fun testExecuteStartRoadClosureTrue() {
         val vertex0 = Vertex(0, null, 0)
         val vertex1 = Vertex(1, null, 1)
@@ -177,13 +175,18 @@ class EventsTest {
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
 
         val event = RoadClosureEvent(0, 1, 2, road)
+        var map = GraphMap()
+        Simulation.map = map
+        map.addVertex(vertex0)
+        map.addVertex(vertex1)
+        map.addRoad(road,0,1)
         assertTrue(event.executeStart())
         assertTrue(road.eventList.contains(event))
         utils.clearEMCC()
         utils.clearSimulation()
-    }*/
+    }
 
-    /*@Test
+    @Test
     fun testExecuteRoadClosureFalse() {
         val vertex0 = Vertex(0, null, 0)
         val vertex1 = Vertex(1, null, 1)
@@ -199,7 +202,7 @@ class EventsTest {
         assertTrue(event.tick == 2)
         utils.clearEMCC()
         utils.clearSimulation()
-    }*/
+    }
 
     @Test
     fun testStopRoadClosure() {

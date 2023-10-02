@@ -30,15 +30,14 @@ object SystemTestRegistration {
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
-
     }
-   fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
-       registerSystemTests(manager)
-       notPassingReference(manager)
-       manager.registerTest(RequestTest())
-       manager.registerTest(RequestTestFailed())
-       manager.registerTest(RequestTestPartial())
-   }
+    fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
+        registerSystemTests(manager)
+        notPassingReference(manager)
+        manager.registerTest(RequestTest())
+        manager.registerTest(RequestTestFailed())
+        manager.registerTest(RequestTestPartial())
+    }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
         manager.registerTest(CountyRoadDifferentName())
@@ -51,7 +50,7 @@ object SystemTestRegistration {
     }
 
     fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
-       registerSystemTests(manager)
+        registerSystemTests(manager)
     }
     private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
@@ -157,7 +156,7 @@ object SystemTestRegistration {
         manager.registerTest(FailedParserSyntax78())
     }
 
-    private fun config2(manager:SystemTestManager) {
+    private fun config2(manager: SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser2())
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser3())
