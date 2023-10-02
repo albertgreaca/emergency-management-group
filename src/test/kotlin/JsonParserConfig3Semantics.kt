@@ -11,7 +11,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics1() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -25,7 +25,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics2() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -39,7 +39,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics3() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -53,7 +53,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics4() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -67,7 +67,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics5() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -81,7 +81,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics6() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -95,7 +95,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics7() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -109,7 +109,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics8() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -123,7 +123,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics9() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -137,7 +137,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics10() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -151,7 +151,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics11() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -165,7 +165,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics12() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
@@ -179,7 +179,7 @@ class JsonParserConfig3Semantics {
     @Test
     fun invalidTestSemantics13() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
