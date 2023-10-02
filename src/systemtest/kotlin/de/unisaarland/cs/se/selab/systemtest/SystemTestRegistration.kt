@@ -157,7 +157,7 @@ object SystemTestRegistration {
         manager.registerTest(FailedParserSyntax78())
     }
 
-    fun config2(manager:SystemTestManager) {
+    private fun config2(manager:SystemTestManager) {
         manager.registerTest(FailedParser1())
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser2())
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser3())
