@@ -8,7 +8,7 @@
     },
     {
       "id": 1,
-      "baseType": "POLICE_STATION",
+      "type": "POLICE_STATION",
       "location": 4,
       "staff": 12,
       "dogs": 3

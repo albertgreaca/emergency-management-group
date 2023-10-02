@@ -10,6 +10,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax1() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -34,6 +36,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax3() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -46,6 +50,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax4() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -58,6 +64,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax5() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -70,6 +78,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax6() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -82,6 +92,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax7() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -94,6 +106,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax8() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -106,6 +120,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax9() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -118,6 +134,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax10() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -130,6 +148,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax11() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -142,6 +162,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax12() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -154,6 +176,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax13() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -166,6 +190,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax14() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -178,6 +204,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax15() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -190,6 +218,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax16() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -202,6 +232,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax17() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -214,6 +246,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax18() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -226,6 +260,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax19() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -238,6 +274,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax20() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -250,6 +288,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax21() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -262,6 +302,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax22() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -274,6 +316,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax23() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -286,6 +330,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax24() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -298,6 +344,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax25() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -310,6 +358,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax26() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -322,6 +372,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax27() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -334,6 +386,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax28() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -346,6 +400,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax29() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -370,6 +426,8 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSyntax31() {
         val map = GraphMap()
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
+        mapparser.parseMap()
         val parser =
             JsonParser(
                 map,
@@ -382,7 +440,7 @@ class JsonParserConfig2SyntaxTest {
     @Test
     fun invalidTestSemantics48() {
         val map = GraphMap()
-        val mapparser = MapParser(map, File("src/test/resources/example_map.dot"))
+        val mapparser = MapParser(map, File("src/test/resources/mapforJSONTests.dot"))
         mapparser.parseMap()
         val parser =
             JsonParser(
