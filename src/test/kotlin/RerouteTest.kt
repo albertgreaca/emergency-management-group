@@ -9,6 +9,7 @@ import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import java.io.File
 import kotlin.test.Test
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class RerouteTest {
@@ -29,7 +30,11 @@ class RerouteTest {
         val vehicle = Vehicle(0, VehicleType.AMBULANCE, base, 4, 1, null)
         base.addVehicle(vehicle)
         emergency.addVehicle(vehicle)
+        vehicle.targetEmergency = emergency
         vehicle.position = Dijkstra.dijkstraHeight(vertex0.realid, emergency.road, vehicle.vehicleHeight)
         assertTrue(requireNotNull(vehicle.position).distance == 20)
+        vehicle.move()
+        assertTrue(requireNotNull(vehicle.position).distance == 10)
+        assertFalse(vehicle.reroute())
     }
 }
