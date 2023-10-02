@@ -1,4 +1,3 @@
-
 import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
@@ -12,6 +11,8 @@ class TestUtils {
         EMCC.startingEmergencies.clear()
         EMCC.startingEvents.clear()
         EMCC.activeEvents.clear()
+        EMCC.requests.clear()
+        EMCC.resolvedOrFailedEmergencies.clear()
     }
 
     fun clearSimulation() {

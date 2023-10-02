@@ -228,7 +228,9 @@ object Dijkstra {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
                 requireNotNull(
-                    requireNotNull(requireNotNull(Simulation.map)).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
+                    requireNotNull(
+                        requireNotNull(Simulation.map)
+                    ).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
                 )
             )
         }

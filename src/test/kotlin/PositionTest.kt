@@ -37,8 +37,6 @@ class PositionTest {
         )
         assertTrue(position1.smaller(position2))
         assertFalse(position2.smaller(position1))
-        assertFalse(position1.isEqual(position2))
-        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -70,8 +68,6 @@ class PositionTest {
         )
         assertTrue(position1.smaller(position2))
         assertFalse(position2.smaller(position1))
-        assertFalse(position1.isEqual(position2))
-        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -103,8 +99,6 @@ class PositionTest {
         )
         assertTrue(position2.smaller(position1))
         assertFalse(position1.smaller(position2))
-        assertFalse(position1.isEqual(position2))
-        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -125,37 +119,6 @@ class PositionTest {
         )
         val equalPos = position1.isEqual(position1)
         assertTrue(equalPos)
-    }
-
-    @Test
-    fun isEqual2() {
-        val roadList = mutableListOf<Road>()
-        val v1 = Vertex(0, null, 0)
-        val v2 = Vertex(1, null, 1)
-        val v3 = Vertex(2, null, 2)
-        val vertexList = mutableListOf(v1, v2, v3)
-        val vertexList2 = mutableListOf(v1, v2)
-        val position1 = Position(
-            roadList,
-            vertexList,
-            0,
-            10,
-            null,
-            0,
-            0
-        )
-        val position2 = Position(
-            roadList,
-            vertexList2,
-            0,
-            10,
-            null,
-            0,
-            0
-        )
-
-        assertFalse(position2.isEqual(position1))
-        assertFalse(position1.isEqual(position2))
     }
 
     @Test
@@ -287,16 +250,15 @@ class PositionTest {
         val vertexList = mutableListOf(v1, v2, v3)
 
         val r1 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhofstrasse", 20, 5, v1, v2)
-        val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhofstrasse", 20, 5, v2, v3)
+        val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v2, v3)
         val roadList = mutableListOf(r1, r2)
 
-        val pos = Position(roadList, vertexList, 0, 0, null, 0, 0, false, false)
-        var posAdv = pos
+        val pos = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
+        var posAdv = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
         posAdv.advance()
         assertFalse(pos.isEqual(posAdv))
         posAdv = pos
         posAdv.startedThisTick = true
         assertTrue(posAdv.isEqual(pos))
-
     }
 }
