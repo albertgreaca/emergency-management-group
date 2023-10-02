@@ -1,0 +1,24 @@
+digraph G {
+	0;
+	1;
+	2;
+	3;
+	4;
+	5;
+	6;
+
+	0 -> 1 [village=Saarbruecken; name=Main_Street; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	1 -> 2 [village=Saarbruecken; name=Railway_Station_Road; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+	2 -> 3 [village=Munich; name=Garden_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+	3 -> 1 [village=Stuttgart; name=Church_Lane; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+	3 -> 2 [village=Osnabrueck; name=Main_Street; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	3 -> 4 [village=Osnabrueck; name=Railway_Station_Road; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	4 -> 5 [village=Osnabrueck; name=Friedrich_Street; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+	5 -> 6 [village=Osnabrueck; name=Ash_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	6 -> 4 [village=Osnabrueck; name=Chestnut_Avenue; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	6 -> 1 [village=Osnabrueck; name=Market_Street; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+}
