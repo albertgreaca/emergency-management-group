@@ -20,6 +20,7 @@ class Lexer {
         string = string.replace("=", " = ")
         string = string.replace("-", " -")
         string = string.replace(">", "> ")
+        string = string.trim()
         val list = string.split("\\s+".toRegex()).toMutableList()
         val tokenlist = mutableListOf<LexerIDToken>()
         for (element in list) {

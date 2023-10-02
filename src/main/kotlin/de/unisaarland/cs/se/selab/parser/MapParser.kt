@@ -33,7 +33,7 @@ class MapParser(private val gm: GraphMap, file: File) {
      */
     fun parseMap(): Boolean {
         var ret: Boolean
-        if (i < tokenlist.size && tokenlist.size > minTokens) {
+        if (i + 2 < tokenlist.size) {
             ret = tokenlist[i++].tokenkind == LexerToken.DIGRAPH
             graphName = tokenlist[i++].text
             ret = ret && tokenlist[i++].tokenkind == LexerToken.CLPARENTHESES
@@ -78,8 +78,8 @@ class MapParser(private val gm: GraphMap, file: File) {
             mapVerCon[start] = true
             mapVerCon[end] = true
             val ret = start != end && !verToVer.contains(Pair(start, end)) && !verToVer.contains(Pair(end, start)) &&
-                parseAttributes(start, end)
-            if (!ret || tokenlist[i++].tokenkind != LexerToken.SEMICOLON) {
+                    parseAttributes(start, end)
+            if (!ret || i >= tokenlist.size || tokenlist[i++].tokenkind != LexerToken.SEMICOLON) {
                 return false
             }
             verToVer.add(Pair(start, end))
@@ -94,7 +94,7 @@ class MapParser(private val gm: GraphMap, file: File) {
      * @return Parsing Successful or not
      */
     private fun parseAttributes(start: Int, end: Int): Boolean {
-        var ret = tokenlist[i++].tokenkind == LexerToken.LPARENTHESES
+        var ret = i < tokenlist.size && tokenlist[i++].tokenkind == LexerToken.LPARENTHESES
         val attributeslist =
             mutableListOf(LexerToken.VILLAGE, LexerToken.NAME, LexerToken.HEIGHTLIMIT, LexerToken.WEIGHT)
         val resultMap = mutableMapOf<LexerToken, String>()
@@ -118,7 +118,8 @@ class MapParser(private val gm: GraphMap, file: File) {
         val sectype = requireNotNull(res.second)
         ret = ret && validateAttributes(resultMap, start, end, primtype)
         ret = ret && createObject(resultMap, primtype, sectype, start, end) &&
-            tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
+                i < tokenlist.size &&
+                tokenlist[i++].tokenkind == LexerToken.RPARENTHESES
         ret = ret && requireNotNull(resultMap[LexerToken.WEIGHT]).toInt() > 0
         ret = ret && requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]).toInt() >= 1
         if (sectype == SecondaryRoadType.TUNNEL) {
@@ -128,20 +129,20 @@ class MapParser(private val gm: GraphMap, file: File) {
     }
 
     private fun parsePrimAndSecType(): Triple<PrimaryRoadType?, SecondaryRoadType?, Boolean> {
-        var ret = tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
-            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        var ret = i + SEVEN < tokenlist.size && tokenlist[i++].tokenkind == LexerToken.PRIMARYTYPE &&
+                tokenlist[i++].tokenkind == LexerToken.EQUAL
         val primtype = validatePrimaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SECONDARYTYPE &&
-            tokenlist[i++].tokenkind == LexerToken.EQUAL
+                tokenlist[i++].tokenkind == LexerToken.EQUAL
         val sectype = validateSecondaryType(tokenlist[i++].tokenkind) ?: return Triple(null, null, false)
         ret = ret && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
-        return Triple(primtype, sectype, true)
+        return Triple(primtype, sectype, ret)
     }
 
     private fun parseAttribute(token: LexerToken, isInt: Boolean): Pair<String, Boolean> {
-        var ret = tokenlist[i++].tokenkind == token &&
-            tokenlist[i++].tokenkind == LexerToken.EQUAL
+        var ret = i + 3 < tokenlist.size && tokenlist[i++].tokenkind == token &&
+                tokenlist[i++].tokenkind == LexerToken.EQUAL
         val ret2 = tokenlist[i++].text
         ret = ret && (validateId(ret2) || isInt) && tokenlist[i++].tokenkind == LexerToken.SEMICOLON
         return Pair(ret2, ret)
@@ -213,7 +214,10 @@ class MapParser(private val gm: GraphMap, file: File) {
                 villist.add(requireNotNull(resultMap[LexerToken.VILLAGE]))
             }
         }
-        if (primarytype == PrimaryRoadType.MAINSTREET && mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
+        if (!mapVilMain.contains(resultMap[LexerToken.VILLAGE])) {
+            mapVilMain[requireNotNull(resultMap[LexerToken.VILLAGE])] = false
+        }
+        if (primarytype == PrimaryRoadType.MAINSTREET) {
             mapVilMain.replace(requireNotNull(resultMap[LexerToken.VILLAGE]), false, true)
         }
         return ret && validateNotCountyRoad(resultMap, start, end, primarytype)
@@ -227,9 +231,6 @@ class MapParser(private val gm: GraphMap, file: File) {
     ): Boolean {
         var ret = true
         if (primarytype != PrimaryRoadType.COUNTYROAD) {
-            if (!mapVilMain.contains(requireNotNull(resultMap[LexerToken.VILLAGE]))) {
-                mapVilMain[requireNotNull(resultMap[LexerToken.VILLAGE])] = primarytype == PrimaryRoadType.MAINSTREET
-            }
             ret = ret && resultMap[LexerToken.VILLAGE] != graphName
             if (mapVilVer.contains(start)) {
                 ret = ret && mapVilVer[start] == resultMap[LexerToken.VILLAGE]
@@ -267,6 +268,6 @@ class MapParser(private val gm: GraphMap, file: File) {
     }
 
     companion object {
-        const val minTokens = 10
+        const val SEVEN = 7
     }
 }
