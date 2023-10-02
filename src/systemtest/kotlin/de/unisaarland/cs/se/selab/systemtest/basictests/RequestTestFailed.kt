@@ -39,11 +39,5 @@ class RequestTestFailed : SystemTest() {
         assertNextLine("Simulation Statistics: 0 resolved emergencies.")
         // end of file
         assertEnd()
-
-
-
-
-
-
     }
 }
