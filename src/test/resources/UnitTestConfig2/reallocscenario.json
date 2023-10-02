@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "ROAD_CLOSURE",
+      "tick": 1,
+      "duration": 5,
+      "source": 0,
+      "target": 1
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "Berlin",
+      "roadName": "Riverside_Street",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 10
+    }
+  ]
+}

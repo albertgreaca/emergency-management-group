@@ -46,4 +46,39 @@ class ReallocationTest {
         assertTrue(vehicle1.targetEmergency == em)
         assertTrue(em.assignedVehicles[0] == vehicle1)
     }
+
+    @Test
+    fun simpletest2() {
+        val graph = Simulation.map
+        val parse = MapParser(graph, File("src/systemtest/resources/mapFiles/RoadClosureMap.dot"))
+        val jsonparse = JsonParser(
+            graph,
+            File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
+            File("src/test/resources/UnitTestConfig2/reallocscenario.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+        val vertex1 = requireNotNull(graph.getVertexFromId(0))
+        val vertex2 = requireNotNull(graph.getVertexFromId(1))
+        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
+        val vehicleList = mutableListOf(VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER)
+        val res = Resource(vehicleList, 2400, 0, 0, 0)
+        val em = Emergency(0, 1, road, EmergencyType.FIRE, 2, 1, 20, res)
+        val emless = Emergency(1, 1, road, EmergencyType.FIRE, 1, 2, 20, res)
+        val vertex3 = requireNotNull(graph.getVertexFromId(2))
+        val b = requireNotNull(vertex3.base)
+        em.base = b
+        for (vehicle in b.vehicles) {
+            vehicle.available = false
+            vehicle.targetEmergency = emless
+            vehicle.position = Dijkstra.dijkstraHeight(2, road, vehicle.vehicleHeight)
+        }
+        b.reallocateResources(em)
+        val vehicle1 = b.vehicles[0]
+        assertTrue(vehicle1.targetEmergency == em)
+        assertTrue(em.assignedVehicles[0] == vehicle1)
+    }
 }
