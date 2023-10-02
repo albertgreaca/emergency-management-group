@@ -1,0 +1,34 @@
+{
+  "bases": [
+    {
+      "id": 0,
+      "baseType": "HOSPITAL",
+      "location": 2,
+      "staff": 49,
+      "doctors": 1
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 0,
+      "baseID": 0,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 2,
+      "staffCapacity": 3
+    },
+    {
+      "id": 1,
+      "baseID": 0,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 2,
+      "staffCapacity": 5
+    },
+    {
+      "id": 2,
+      "baseID": 0,
+      "vehicleType": "EMERGENCY_DOCTOR_CAR",
+      "vehicleHeight": 3,
+      "staffCapacity": 4
+    }
+  ]
+}
