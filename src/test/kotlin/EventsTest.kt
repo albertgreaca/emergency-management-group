@@ -4,7 +4,11 @@ import de.unisaarland.cs.se.selab.events.RoadClosureEvent
 import de.unisaarland.cs.se.selab.events.RushHourEvent
 import de.unisaarland.cs.se.selab.events.TrafficJamEvent
 import de.unisaarland.cs.se.selab.events.VehicleUnavailableEvent
-import de.unisaarland.cs.se.selab.graphlogic.*
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
+import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Road
+import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
+import de.unisaarland.cs.se.selab.graphlogic.Vertex
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.utils.Position
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
@@ -179,7 +183,7 @@ class EventsTest {
         Simulation.map = map
         map.addVertex(vertex0)
         map.addVertex(vertex1)
-        map.addRoad(road,0,1)
+        map.addRoad(road, 0, 1)
         assertTrue(event.executeStart())
         assertTrue(road.eventList.contains(event))
         utils.clearEMCC()
