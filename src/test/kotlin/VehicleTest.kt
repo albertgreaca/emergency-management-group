@@ -31,7 +31,7 @@ class VehicleTest {
         val vertexlist = mutableListOf(vertex1, vertex2, vertex3)
         val expected = mutableListOf(road2)
 
-        var pos = Position(roadlist, vertexlist, 10, 10, vertex3, 15, 2, startedThisTick = false, isDrivingBack = false)
+        var pos = Position(roadlist, vertexlist, 10, 10, vertex2, 15, 2, startedThisTick = false, isDrivingBack = false)
 
         val base = Base(10, 20, vertex0, mutableListOf<Vehicle>())
         var vehicle = Vehicle(1, VehicleType.AMBULANCE, base, 10, 2, pos)

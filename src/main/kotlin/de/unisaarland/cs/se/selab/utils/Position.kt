@@ -36,6 +36,7 @@ class Position(
             distanceFromEnd--
             distanceFromStart++
             weightLeft--
+            distance--
             if (distanceFromEnd == 0) {
                 roadList.removeAt(0)
                 distanceFromStart = 0
