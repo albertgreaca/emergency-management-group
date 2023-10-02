@@ -7,12 +7,18 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
 class DepartmentTest {
 
     var utils: TestUtils = TestUtils()
+
+    @BeforeEach
+    fun beforeEach() {
+        utils.clear()
+    }
 
     @Test
     fun testFireDepFindBaseFound() {
@@ -31,7 +37,6 @@ class DepartmentTest {
         val fireDep = EMCC.fireDepartment
 
         assertEquals(0, fireDep?.findBase(0)?.id)
-        utils.clear()
     }
 
     @Test
@@ -51,7 +56,6 @@ class DepartmentTest {
         val fireDep = EMCC.fireDepartment
 
         assertNull(fireDep?.findBase(1)?.id)
-        utils.clear()
     }
 
     @Test
@@ -71,7 +75,6 @@ class DepartmentTest {
         val policeDep = EMCC.policeDepartment
 
         assertEquals(1, policeDep?.findBase(1)?.id)
-        utils.clear()
     }
 
     @Test
@@ -91,7 +94,6 @@ class DepartmentTest {
         val policeDep = EMCC.policeDepartment
 
         assertNull(policeDep?.findBase(4)?.id)
-        utils.clear()
     }
 
     @Test
@@ -111,7 +113,6 @@ class DepartmentTest {
         val ambulanceDep = EMCC.ambulanceDepartment
 
         assertEquals(2, ambulanceDep?.findBase(2)?.id)
-        utils.clear()
     }
 
     @Test
@@ -131,7 +132,6 @@ class DepartmentTest {
         val ambulanceDep = EMCC.ambulanceDepartment
 
         assertNull(ambulanceDep?.findBase(1)?.id)
-        utils.clear()
     }
 
     @Test
@@ -153,7 +153,6 @@ class DepartmentTest {
         ambulanceDep?.update(em)
 
         assertEquals(2, em.base?.id)
-        utils.clear()
     }
 
     @Test
@@ -175,7 +174,6 @@ class DepartmentTest {
         fireDep?.update(em)
 
         assertEquals(0, em.base?.id)
-        utils.clear()
     }
 
     @Test
@@ -197,7 +195,6 @@ class DepartmentTest {
         policeDep?.update(em)
 
         assertEquals(1, em.base?.id)
-        utils.clear()
     }
 
     @Test
@@ -232,7 +229,6 @@ class DepartmentTest {
         assertFalse(vehicles[1].available)
         assertEquals(0, vehicles[2].baseWaitingTicks)
         assertTrue(vehicles[2].available)
-        utils.clear()
     }
 
     @Test
@@ -271,7 +267,6 @@ class DepartmentTest {
         assertTrue(vehicles[2].available)
         assertEquals(6, vehicles[3].baseWaitingTicks)
         assertFalse(vehicles[3].available)
-        utils.clear()
     }
 
     @Test
@@ -306,6 +301,5 @@ class DepartmentTest {
         assertTrue(vehicles[1].available)
         assertEquals(3, vehicles[2].baseWaitingTicks)
         assertFalse(vehicles[2].available)
-        utils.clear()
     }
 }
