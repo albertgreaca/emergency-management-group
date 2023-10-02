@@ -52,11 +52,10 @@ open class Vehicle(
         if (requireNotNull(position).arrivalTicks == 0) {
             return false
         }
-        if (targetEmergency == null || em.severity < requireNotNull(targetEmergency).severity) {
+        if (baseWaitingTicks != 0) {
             return false
         }
-
-        if (baseWaitingTicks != 0) {
+        if (targetEmergency != null && em.severity <= requireNotNull(targetEmergency).severity) {
             return false
         }
         return true
