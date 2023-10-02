@@ -12,7 +12,6 @@ import java.util.PriorityQueue
  * Class representing Dijkstra
  */
 object Dijkstra {
-    var gm2: GraphMap = Simulation.map
     const val divisor = 10
 
     private fun determineBaseEmergency(et: EmergencyType, b: Base): Base? {
@@ -32,7 +31,7 @@ object Dijkstra {
     }
 
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
-        val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
+        val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (dist[node.realid] > dist[cur.first] + edge.weight) {
                 dist[node.realid] = dist[cur.first] + edge.weight
@@ -45,8 +44,7 @@ object Dijkstra {
      * Doing dijkstra for emergencies
      */
     fun dijkstraEmergency(startingNode: Int, startingNode2: Int, et: EmergencyType): Base? {
-        val gm: GraphMap = requireNotNull(gm2)
-        val n: Int = gm.vertexList.size
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist = IntArray(n)
         for (i in 0..n - 1) {
             dist[i] = Int.MAX_VALUE
@@ -63,7 +61,7 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 if (determineBaseEmergency(et, b) != null) {
@@ -79,8 +77,7 @@ object Dijkstra {
      * Doing dijkstra for requesting
      */
     fun dijkstraRequest(startingNode: Int): MutableList<Base> {
-        val gm: GraphMap = requireNotNull(gm2)
-        val n: Int = gm.vertexList.size
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist = IntArray(n)
         for (i in 0..n - 1) {
             dist[i] = Int.MAX_VALUE
@@ -97,12 +94,12 @@ object Dijkstra {
             if (dist[cur.first] != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 ans.add(b)
             }
-            val nex: Map<Vertex, Road> = gm.adjacencyList[cur.first]
+            val nex: Map<Vertex, Road> = requireNotNull(Simulation.map).adjacencyList[cur.first]
             for ((node, edge) in nex) {
                 if (dist[node.realid] > dist[cur.first] + edge.getActualWeight()) {
                     dist[node.realid] = dist[cur.first] + edge.getActualWeight()
@@ -117,7 +114,7 @@ object Dijkstra {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
                 requireNotNull(
-                    requireNotNull(gm2).getRoad(
+                    requireNotNull(requireNotNull(Simulation.map)).getRoad(
                         dist[cur.first].vertexList[i],
                         dist[cur.first].vertexList[i + 1]
                     )
@@ -143,7 +140,7 @@ object Dijkstra {
         pq: PriorityQueue<Pair<Int, Int>>,
         height: Int,
     ) {
-        val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
+        val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
@@ -164,7 +161,7 @@ object Dijkstra {
      * Doing Dijkstra respecting the height of vehicles and roads
      */
     fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position? {
-        val gm: GraphMap = requireNotNull(gm2)
+        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
         val n: Int = gm.vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
@@ -220,7 +217,7 @@ object Dijkstra {
                     dist[cur.first].distanceFromStart = 0
                     dist[cur.first].distanceFromEnd =
                         requireNotNull(
-                            requireNotNull(gm2).getRoad(
+                            requireNotNull(requireNotNull(Simulation.map)).getRoad(
                                 dist[cur.first].vertexList[0],
                                 dist[cur.first].vertexList[1]
                             )
@@ -231,7 +228,7 @@ object Dijkstra {
         for (i in 0..dist[cur.first].vertexList.size - 2) {
             dist[cur.first].roadList.add(
                 requireNotNull(
-                    requireNotNull(gm2).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
+                    requireNotNull(requireNotNull(Simulation.map)).getRoad(dist[cur.first].vertexList[i], dist[cur.first].vertexList[i + 1])
                 )
             )
         }
@@ -248,7 +245,7 @@ object Dijkstra {
         pq: PriorityQueue<Pair<Int, Int>>,
         height: Int,
     ) {
-        val nex: Map<Vertex, Road> = requireNotNull(gm2).adjacencyList[cur.first]
+        val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height >= height) {
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
@@ -276,7 +273,7 @@ object Dijkstra {
         endRoad: Road,
         height: Int
     ): Position? {
-        val gm: GraphMap = requireNotNull(gm2)
+        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
         val n: Int = gm.vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
@@ -328,7 +325,7 @@ object Dijkstra {
         endNode: Int,
         height: Int
     ): Position? {
-        val gm: GraphMap = requireNotNull(gm2)
+        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
         val n: Int = gm.vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
@@ -376,7 +373,7 @@ object Dijkstra {
         endNode: Int,
         height: Int
     ): Position? {
-        val gm: GraphMap = requireNotNull(gm2)
+        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
         val n: Int = gm.vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
