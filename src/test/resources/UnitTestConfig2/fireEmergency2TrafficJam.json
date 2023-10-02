@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "ROAD_CLOSURE",
+      "tick": 1,
+      "duration": 1,
+      "source": 1,
+      "target": 2
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "FIRE",
+      "severity": 2,
+      "handleTime": 3,
+      "maxDuration": 7
+    }
+  ]
+}
