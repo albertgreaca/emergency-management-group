@@ -142,6 +142,7 @@ class ResourceTest {
         // cool seems to work
         // now maybe with null in ladder??? Edge case?
     }
+
     @Test
     fun diffTestnullLadder() {
         val vehicleList = mutableListOf<VehicleType>(
