@@ -1,4 +1,4 @@
-import de.unisaarland.cs.se.selab.graphlogic.*
+import de.unisaarland.cs.se.selab.graphlogic.GraphMap
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import java.io.File
@@ -48,6 +48,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax4() {
         val map = GraphMap()
@@ -61,6 +62,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax5() {
         val map = GraphMap()
@@ -74,6 +76,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax6() {
         val map = GraphMap()
@@ -87,6 +90,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax7() {
         val map = GraphMap()
@@ -100,6 +104,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax8() {
         val map = GraphMap()
@@ -113,6 +118,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax9() {
         val map = GraphMap()
@@ -126,6 +132,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax10() {
         val map = GraphMap()
@@ -139,6 +146,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax11() {
         val map = GraphMap()
@@ -152,6 +160,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax12() {
         val map = GraphMap()
@@ -165,6 +174,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax13() {
         val map = GraphMap()
@@ -178,6 +188,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax14() {
         val map = GraphMap()
@@ -191,6 +202,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax15() {
         val map = GraphMap()
@@ -204,6 +216,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax16() {
         val map = GraphMap()
@@ -217,6 +230,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax17() {
         val map = GraphMap()
@@ -230,6 +244,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax18() {
         val map = GraphMap()
@@ -243,6 +258,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax19() {
         val map = GraphMap()
@@ -256,6 +272,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax20() {
         val map = GraphMap()
@@ -269,6 +286,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax21() {
         val map = GraphMap()
@@ -282,6 +300,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax22() {
         val map = GraphMap()
@@ -294,7 +313,9 @@ class JsonParserConfig3SyntaxTest {
                 File("src/test/resources/invalidConfig3/Syntax/config3invalid22.json")
             )
         assertFalse(parser.parseBases())
-    }    @Test
+    }
+
+    @Test
     fun invalidTestSyntax23() {
         val map = GraphMap()
         val mapParser = MapParser(map, File("src/test/resources/mapForJSONConfig3Test.dot"))
@@ -307,6 +328,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax24() {
         val map = GraphMap()
@@ -320,6 +342,7 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
+
     @Test
     fun invalidTestSyntax25() {
         val map = GraphMap()
@@ -333,5 +356,4 @@ class JsonParserConfig3SyntaxTest {
             )
         assertFalse(parser.parseBases())
     }
-
 }

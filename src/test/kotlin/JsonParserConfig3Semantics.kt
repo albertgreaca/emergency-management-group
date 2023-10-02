@@ -17,7 +17,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid1.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid1.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -31,7 +31,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid2.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid2.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -45,7 +45,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid3.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid3.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -59,7 +59,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid4.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid4.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -73,7 +73,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid5.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid5.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -87,7 +87,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid6.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid6.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -101,7 +101,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid7.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid7.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -115,7 +115,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid8.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid8.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -129,7 +129,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid9.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid9.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -143,7 +143,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid10.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid10.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -157,7 +157,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid11.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid11.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -171,7 +171,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid12.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid12.json")
             )
         assertFalse(parser.parseBases())
     }
@@ -185,7 +185,7 @@ class JsonParserConfig3Semantics {
             JsonParser(
                 map,
                 File("src/test/resources/validConfig2/config2valid1.json"),
-                File("src/test/resources/invalidConfig2/Sematics/config3invalid13.json")
+                File("src/test/resources/invalidConfig3/Sematics/config3invalid13.json")
             )
         assertFalse(parser.parseBases())
     }
