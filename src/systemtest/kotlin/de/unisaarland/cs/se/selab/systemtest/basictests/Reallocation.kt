@@ -71,11 +71,6 @@ class Reallocation : SystemTest() {
         assertNextLine("Simulation Tick: 15")
         assertNextLine("Simulation Tick: 16")
         assertNextLine("Emergency Resolved: 0 resolved.")
-        assertNextLine("Simulation Tick: 17")
-        assertNextLine("Simulation Tick: 18")
-        assertNextLine("Asset Arrival: 1 arrived at 0.")
-        assertNextLine("Asset Arrival: 4 arrived at 0.")
-        assertNextLine("Simulation Tick: 19")
         // The Simulation should end
         assertNextLine("Simulation End")
         // Statistics

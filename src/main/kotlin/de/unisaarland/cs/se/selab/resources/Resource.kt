@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.vehicles.VehicleType
  * Resource class to save needs for emergency
  */
 class Resource(
-    val vehicles: MutableList<VehicleType>,
+    var vehicles: MutableList<VehicleType>,
     var waterAmount: Int,
     var criminalAmount: Int,
     var patientAmount: Int,

@@ -116,4 +116,29 @@ class GraphMapTest {
         val map4 = adjList[4]
         assertTrue(map0.containsKey(vert4) && map4.containsKey(vert0) && roadList.contains(r1))
     }
+
+    @Test
+    fun vertexTest() {
+        val gm1 = GraphMap()
+        val parser1 = MapParser(gm1, File("src/test/resources/mapvalid1.dot"))
+        parser1.parseMap()
+        val gm2 = GraphMap()
+        val parser2 = MapParser(gm2, File("src/test/resources/mapvalid2.dot"))
+        parser2.parseMap()
+        val gm3 = GraphMap()
+        val parser3 = MapParser(gm3, File("src/test/resources/mapvalid3.dot"))
+        parser3.parseMap()
+        val vert1 = Vertex(1, null, 1)
+        val vL1 = gm1.vertexList
+        val vL2 = gm2.vertexList
+        val vL3 = gm3.vertexList
+        assertTrue(vL1.contains(vert1) && vL2.contains(vert1) && vL3.contains(vert1))
+        val vert5 = Vertex(5, null, 5)
+        assertTrue(!vL1.contains(vert5))
+        assertTrue(vL2.contains(vert5) && vL3.contains(vert5))
+        val vert7 = Vertex(7, null, 7)
+        assertTrue(vL3.contains(vert7))
+        assertTrue(!vL2.contains(vert7))
+        assertTrue(!vL1.contains(vert7))
+    }
 }

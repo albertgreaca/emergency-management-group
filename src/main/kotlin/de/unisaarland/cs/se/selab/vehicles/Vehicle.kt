@@ -109,6 +109,7 @@ open class Vehicle(
             base.location.realid,
             vehicleHeight
         )
+        pos?.isDrivingBack = true
 
         position = pos
     }

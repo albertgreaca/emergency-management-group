@@ -28,4 +28,9 @@ interface EmergencyObserver {
      give the departments the list of Emergencies to handle
      */
     fun update(em: Emergency)
+
+    /**
+     * Reduces Vehicle Available In Ticks and makes them available
+     */
+    fun updateVehicles()
 }

@@ -29,6 +29,8 @@ open class Base(
     companion object {
         const val maxCriminalCapacity = 4
         const val maxWaterCapacity = 2400
+        const val ladder40 = 40
+        const val ladder30 = 30
     }
 
     private val nextBases: MutableList<Base> = mutableListOf()
@@ -304,8 +306,9 @@ open class Base(
         for (v in realloctedlist) {
             Logger.logAssetReallocation(v.id, em.id)
         }
+        em.resources.vehicles = vehicTypesToRequest
         // ToDo : Correct Return Value
-        return Resource(vehicTypesToRequest, 0, 0, 0, 0)
+        return em.resources
     }
 
     private fun reallocateResources(em: Emergency, vehic: Vehicle) {
@@ -313,7 +316,7 @@ open class Base(
             is FireTruckWater -> em.resources.waterAmount -= vehic.waterCapacity
             is Ambulance -> em.resources.patientAmount--
             is PoliceCar -> em.resources.criminalAmount -= vehic.criminalCapacity
-            is FireTruckLadder -> em.resources.ladderLength = 0
+            is FireTruckLadder -> ladderlength(em, vehic)
             else -> {}
         }
         if (em.resources.waterAmount < 0) {
@@ -324,6 +327,17 @@ open class Base(
         }
         if (em.resources.criminalAmount < 0) {
             em.resources.criminalAmount = 0
+        }
+    }
+
+    private fun ladderlength(em: Emergency, vehic: Vehicle) {
+        if (vehic is FireTruckLadder) {
+            if (requireNotNull(em.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
+                em.resources.ladderLength = 0
+            }
+            if (requireNotNull(em.resources.ladderLength) >= ladder30) {
+                em.resources.ladderLength = 0
+            }
         }
     }
 
