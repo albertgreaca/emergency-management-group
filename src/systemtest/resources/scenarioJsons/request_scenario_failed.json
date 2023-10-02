@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "RUSH_HOUR",
+      "tick": 6009,
+      "duration": 2,
+      "roadTypes": ["SIDE_STREET"],
+      "factor": 2
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Village",
+      "roadName": "OneFour",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 3
+    }
+  ]
+}
