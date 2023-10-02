@@ -2,7 +2,6 @@ package de.unisaarland.cs.se.selab.graphlogic
 
 import de.unisaarland.cs.se.selab.events.ConstructionSiteEvent
 import de.unisaarland.cs.se.selab.events.Event
-import de.unisaarland.cs.se.selab.events.RoadClosureEvent
 import de.unisaarland.cs.se.selab.events.RushHourEvent
 import de.unisaarland.cs.se.selab.events.TrafficJamEvent
 
@@ -39,9 +38,6 @@ class Road(
         }
         if (ev is TrafficJamEvent) {
             factor = ev.factor
-        }
-        if (ev is RoadClosureEvent) {
-            return Integer.MIN_VALUE
         }
         return factor * weight
     }

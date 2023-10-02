@@ -1,0 +1,19 @@
+digraph Test {
+0;
+1;
+2;
+3;
+4;
+5;
+6;
+7;
+0->1[village = Uni; name = Math_area; heightLimit = 2; weight = 9; primaryType = mainStreet; secondaryType = tunnel;];
+0->2[village = Uni; name = Informatics_area; heightLimit = 6; weight = 10; primaryType = mainStreet; secondaryType = oneWayStreet;];
+0->4[village = Uni; name = Business_area; heightLimit = 5; weight = 20; primaryType = sideStreet; secondaryType = none;];
+0->3[village = Test; name = KVSBus; heightLimit = 6; weight = 9; primaryType = countyRoad; secondaryType = none;];
+1->5[village = Uni; name = Physics_area; heightLimit = 6; weight = 10; primaryType = mainStreet; secondaryType = none;];
+2->5[village = Uni; name = Politics_area; heightLimit = 7; weight = 7; primaryType = mainStreet; secondaryType = none;];
+2->6[village = Uni; name = Germanistics_area; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+4->6[village = Uni; name = Mensa; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+3->7[village = Azkaban; name = Jail; heightLimit = 6; weight = 5; primaryType = mainStreet; secondaryType = none;];
+}

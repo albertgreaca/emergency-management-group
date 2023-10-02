@@ -114,6 +114,5 @@ class RoadTest {
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
         val event = RoadClosureEvent(0, 1, 2, road)
         road.eventList.add(event)
-        // assertTrue(road.getActualWeight() == Integer.MIN_VALUE * 20)
     }
 }
