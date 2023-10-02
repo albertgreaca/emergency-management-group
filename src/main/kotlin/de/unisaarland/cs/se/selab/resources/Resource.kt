@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.resources
 
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import kotlin.math.max
 
 /**
  * Resource class to save needs for emergency
@@ -37,13 +38,13 @@ class Resource(
         // compare WaterAmount
         // this assumes first resource always has more?
         // abs fix?
-        val waterDifference = this.waterAmount - resource.waterAmount
+        val waterDifference = max(this.waterAmount - resource.waterAmount, 0)
         // compare CriminalAmount
         // abs fix?
-        val criminalDifference = this.criminalAmount - resource.criminalAmount
+        val criminalDifference = max(this.criminalAmount - resource.criminalAmount, 0)
         // compare patientAmount
         // abs fix?
-        val patientDifference = this.patientAmount - resource.patientAmount
+        val patientDifference = max(this.patientAmount - resource.patientAmount, 0)
         // compare Ladder Length
         // the weird let thing was a detekt fix I have no clue what it does
         val ladderDifference = if (resource.ladderLength == 0) {

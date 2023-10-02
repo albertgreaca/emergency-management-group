@@ -20,6 +20,7 @@ class FireTruckLadder(
     vehicleHeight,
     position
 ) {
+    var neededByEmergency40 = false
 
     /**
      * getter for the ladder length

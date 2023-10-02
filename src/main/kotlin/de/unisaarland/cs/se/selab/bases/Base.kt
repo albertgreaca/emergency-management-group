@@ -56,7 +56,7 @@ open class Base(
         // create a list of all vehicles in the base which could potentially be allocated
         val potentialVehicles = vehicles.filter {
             it.available &&
-                it.vehicleType in neededVehicles
+                    it.vehicleType in neededVehicles
         }.toMutableList()
 
         val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
@@ -139,6 +139,17 @@ open class Base(
                     vehicle.patientOnBoard = false
                 }
             }
+            is FireTruckLadder -> {
+                if (requireNotNull(em.resources.ladderLength) >= ladder40 && vehicle.getLadderLength40()) {
+                    em.resources.ladderLength = 0
+                    vehicle.neededByEmergency40 = true
+                }
+                if (requireNotNull(em.resources.ladderLength) >= ladder30) {
+                    em.resources.ladderLength = 0
+                    vehicle.neededByEmergency40 = false
+                }
+
+            }
         }
         if (em.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
             em.resources.ladderLength = 0
@@ -211,17 +222,17 @@ open class Base(
         if (staffNeeded > this.staff) validCombination = false
         if (resource.criminalAmount - fittingCriminals >
             maxCriminalCapacity * (
-                resource.countInstancesOf(VehicleType.POLICE_CAR) -
-                    numberOfPoliceCars
-                )
+                    resource.countInstancesOf(VehicleType.POLICE_CAR) -
+                            numberOfPoliceCars
+                    )
         ) {
             return false
         }
         if (resource.waterAmount - fittingWater >
             maxWaterCapacity * (
-                resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
-                    numberOfWaterTrucks
-                )
+                    resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+                            numberOfWaterTrucks
+                    )
         ) {
             return false
         }
@@ -260,43 +271,56 @@ open class Base(
         // for each vehic type in resource
         // val listread = mutableListOf<Pair<Emergency, VehicleType>>()
         for (vt in copyOfNeededTypes) {
-            for (vehic in reallocatableVehics) {
-                var successful = false
-                // if vehicle has wrong type skip to next vehicle
-                if (vehic.vehicleType != vt) continue
+            innerloop(reallocatableVehics, vt, em, reallocatedList)
+        }
 
-                // calculate new position of vehicle
-                val height = vehic.vehicleHeight
-                val curpos = requireNotNull(vehic.position)
-                var pos: Position?
-                if (curpos.roadList.isEmpty() || curpos.destinationVertex == null) {
-                    val road1: Road = em.road
-                    curpos.destinationVertex = this.location
-                    pos = Dijkstra.dijkstraReroute(
-                        road1,
-                        0,
-                        0,
-                        requireNotNull(curpos.destinationVertex),
-                        em.road,
-                        height
-                    )
-                } else {
-                    pos = Dijkstra.dijkstraReroute(
-                        curpos.roadList[0],
-                        curpos.distanceFromStart,
-                        curpos.distanceFromEnd,
-                        requireNotNull(curpos.destinationVertex),
-                        em.road,
-                        height
-                    )
-                }
+        // log all reallocations ordered by asset id
+        reallocatedList.sortBy { it.id }
+        for (v in reallocatedList) {
+            Logger.logAssetReallocation(v.id, em.id)
+        }
+        return em.resources
+    }
+    private fun innerloop(
+        reallocatableVehics: List<Vehicle>,
+        vt: VehicleType,
+        em: Emergency,
+        reallocatedList: MutableList<Vehicle>
+    ) {
+        for (vehic in reallocatableVehics) {
+            // if vehicle has wrong type skip to next vehicle
+            if (vehic.vehicleType != vt) continue
 
-                // if vehicle cannot arrive in time then skip to next vehicle
-                if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
-                    continue
-                }
-                successful = true
+            // calculate new position of vehicle
+            val height = vehic.vehicleHeight
+            val curpos = requireNotNull(vehic.position)
+            var pos: Position?
+            if (curpos.roadList.isEmpty() || curpos.destinationVertex == null) {
+                val road1: Road = em.road
+                curpos.destinationVertex = this.location
+                pos = Dijkstra.dijkstraReroute(
+                    road1,
+                    0,
+                    0,
+                    requireNotNull(curpos.destinationVertex),
+                    em.road,
+                    height
+                )
+            } else {
+                pos = Dijkstra.dijkstraReroute(
+                    curpos.roadList[0],
+                    curpos.distanceFromStart,
+                    curpos.distanceFromEnd,
+                    requireNotNull(curpos.destinationVertex),
+                    em.road,
+                    height
+                )
+            }
 
+            // if vehicle cannot arrive in time then skip to next vehicle
+            val res = requireNotNull(pos).arrivalTicks +
+                    Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
+            if (!res) {
                 // set the vehicle's position to the calculated position
                 vehic.position = pos
 
@@ -312,70 +336,89 @@ open class Base(
                     EMCC.startingEmergencies.add(requireNotNull(vehic.targetEmergency))
                 }
 
+                // add vehicle type to resource of previous emergency
+                vehic.targetEmergency?.resources?.addVehicle(vt)
+
+                // update water/criminals/patients for special vehicle types
+                transferResources(requireNotNull(vehic.targetEmergency), em, vehic)
+
                 // set the vehicle's target emergency to the new emergency
                 vehic.targetEmergency = em
 
                 // remove the vehicle type from the list of needed vehicle types
                 em.resources.vehicles.remove(vt)
 
-                // update water/criminals/patients for special vehicle types
-                reallocateResources(em, vehic)
-
                 // add vehicle to logging list
                 reallocatedList.add(vehic)
-
-                if (successful) break
+                return
             }
         }
-
-        // log all reallocations ordered by asset id
-        reallocatedList.sortBy { it.id }
-        for (v in reallocatedList) {
-            Logger.logAssetReallocation(v.id, em.id)
-        }
-        return em.resources
     }
-
-    private fun reallocateResources(em: Emergency, vehic: Vehicle) {
+    private fun transferResources(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
         when (vehic) {
-            is FireTruckWater -> em.resources.waterAmount -= vehic.waterCapacity
-            is Ambulance -> em.resources.patientAmount--
-            is PoliceCar -> em.resources.criminalAmount -= vehic.criminalCapacity
-            is FireTruckLadder -> ladderlength(em, vehic)
-            else -> {}
+            is PoliceCar -> {
+                if (newem.resources.criminalAmount >= vehic.criminalCapacity) {
+                    newem.resources.criminalAmount -= vehic.criminalCapacity
+                    oldem.resources.criminalAmount += vehic.transportedCriminals
+                    vehic.transportedCriminals = vehic.criminalCapacity
+                } else {
+                    oldem.resources.criminalAmount += vehic.transportedCriminals
+                    vehic.transportedCriminals = newem.resources.criminalAmount
+                    newem.resources.criminalAmount = 0
+                }
+            }
+
+            is FireTruckWater -> {
+                if (newem.resources.waterAmount >= vehic.waterCapacity) {
+                    oldem.resources.waterAmount += vehic.waterTransported
+                    newem.resources.waterAmount -= vehic.waterCapacity
+                    vehic.waterTransported = vehic.waterCapacity
+                } else {
+                    oldem.resources.waterAmount += vehic.waterTransported
+                    vehic.waterTransported = newem.resources.waterAmount
+                    newem.resources.waterAmount = 0
+                }
+            }
+
+            is Ambulance -> {
+                if (newem.resources.patientAmount >= 1) {
+                    newem.resources.patientAmount -= 1
+                    oldem.resources.patientAmount += 1
+                    vehic.patientOnBoard = true
+                } else {
+                    vehic.patientOnBoard = false
+                }
+            }
+            is FireTruckLadder -> {
+                if (requireNotNull(newem.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
+                    newem.resources.ladderLength = 0
+                    oldem.resources.ladderLength = if (vehic.neededByEmergency40) 40 else 30
+                }
+                if (requireNotNull(newem.resources.ladderLength) >= ladder30) {
+                    newem.resources.ladderLength = 0
+                    oldem.resources.ladderLength = if (vehic.neededByEmergency40) 40 else 30
+                }
+            }
         }
-        if (em.resources.waterAmount < 0) {
-            em.resources.waterAmount = 0
+        if (newem.resources.countInstancesOf(VehicleType.FIRE_TRUCK_LADDER) == 0) {
+            newem.resources.ladderLength = 0
         }
-        if (em.resources.patientAmount < 0) {
-            em.resources.patientAmount = 0
-        }
-        if (em.resources.criminalAmount < 0) {
-            em.resources.criminalAmount = 0
-        }
+        // set vehicle availability false
+        vehic.available = false
     }
 
     private fun ladderlength(em: Emergency, vehic: Vehicle) {
         if (vehic is FireTruckLadder) {
             if (requireNotNull(em.resources.ladderLength) >= ladder40 && vehic.getLadderLength40()) {
                 em.resources.ladderLength = 0
+                vehic.neededByEmergency40 = true
             }
             if (requireNotNull(em.resources.ladderLength) >= ladder30) {
                 em.resources.ladderLength = 0
-            }
-        }
-    }
+                vehic.neededByEmergency40 = false
 
-    /**
-     * helper function to check available vehicles for corresponding type
-     */
-    private fun findVehicleofType(v: VehicleType, vehicleList: List<Vehicle>): Vehicle? {
-        for (vehicle in vehicleList) {
-            if (vehicle.vehicleType == v) {
-                return vehicle
             }
         }
-        return null
     }
 
     /**

@@ -7,9 +7,9 @@ import de.unisaarland.cs.se.selab.emergencies.Emergency
  * Class to save requests
  */
 class Request(
-    private val id: Int,
-    private val emergency: Emergency,
-    private val processingBase: Base
+    val id: Int,
+    val emergency: Emergency,
+    val processingBase: Base
 ) {
     /**
      * @return Request ID
