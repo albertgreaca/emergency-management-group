@@ -12,6 +12,5 @@ class FailedParser43 : SystemTest() {
     override suspend fun run() {
         assertNextLine("Initialization Info: example_map.dot successfully parsed and validated")
         assertNextLine("Initialization Info:config2invalid1.json invalid")
-
     }
 }
