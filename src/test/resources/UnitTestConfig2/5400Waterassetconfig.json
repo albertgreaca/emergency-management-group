@@ -13,7 +13,7 @@
       "baseID": 0,
       "vehicleType": "FIRE_TRUCK_WATER",
       "vehicleHeight": 1,
-      "staffCapacity": 3,
+      "staffCapacity": 6,
       "waterCapacity": 600
     },
     {

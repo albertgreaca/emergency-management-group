@@ -264,6 +264,7 @@ class BaseTest {
     fun watertrucktest5400w6vehic() {
         // some more cases I thought of:
         // 600, 1 vehic
+        // dikstra doesn't work now
         // understaffed so only 1 vehicle can be sent
         val graph = Simulation.map
         val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
@@ -297,5 +298,44 @@ class BaseTest {
         b.requestResources(em)
         val testres = Resource(mutableListOf(VehicleType.FIRE_TRUCK_WATER), 2400, 0, 0, 0)
         assertTrue(testres.isEqual(em.resources))
+    }
+
+    @Test
+    fun watertrucktestundertaffed1vehic() {
+        // some more cases I thought of:
+        // 600, 1 vehic
+        // dikstra doesn't work now
+        // understaffed so only 1 vehicle can be sent
+        val graph = Simulation.map
+        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val jsonparse = JsonParser(
+            graph,
+            File("src/test/resources/UnitTestConfig2/5400Waterassetconfig.json"),
+            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+        val vertex1 = requireNotNull(graph.getVertexFromId(0))
+        val vertex2 = requireNotNull(graph.getVertexFromId(1))
+        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
+        val vehicleList = mutableListOf(
+            VehicleType.FIRE_TRUCK_WATER,
+        )
+        val res = Resource(vehicleList, 600, 0, 0, 0)
+        val em = Emergency(0, 1, road, EmergencyType.FIRE, 2, 1, 20, res)
+        em.id
+        val vertex3 = requireNotNull(graph.getVertexFromId(2))
+        val b = requireNotNull(vertex3.base)
+        b.staff = 3
+        em.base = b
+        b.requestResources(em)
+        val vehicles = b.vehicles
+        val vehic1 = vehicles[1]
+        val testres = Resource(mutableListOf(), 0, 0, 0, 0)
+        assertTrue(testres.isEqual(em.resources))
+        assertTrue(vehic1 == em.assignedVehicles[0])
     }
 }
