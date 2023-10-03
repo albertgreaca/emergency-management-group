@@ -23,7 +23,7 @@ class ReallocationTest {
     /*@Test
     fun simpletest1() {
         val graph = Simulation.map
-        val parse = MapParser(graph, File("src/test/resources/mapvalid1.dot"))
+        val parse = MapParser(graph, File("src/test/resources/mapvalid6reallocation.dot"))
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
