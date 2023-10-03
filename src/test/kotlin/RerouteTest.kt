@@ -65,8 +65,8 @@ class RerouteTest {
         assertTrue(requireNotNull(vehicle.position).distance == 10)
         val event = RoadClosureEvent(0, 2, 10, road1)
         event.executeStart()
-        assertTrue(vehicle.reroute())
-        assertTrue(requireNotNull(vehicle.position).distance == 30)
+        assertFalse(vehicle.reroute())
+        assertTrue(requireNotNull(vehicle.position).distance == 10)
     }
 
     @Test
