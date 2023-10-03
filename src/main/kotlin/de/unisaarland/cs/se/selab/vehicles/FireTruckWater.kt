@@ -20,5 +20,5 @@ class FireTruckWater(
     vehicleHeight,
     position
 ) {
-    var waterTransported: Int = 0
+    var waterTransported: Int = waterCapacity
 }

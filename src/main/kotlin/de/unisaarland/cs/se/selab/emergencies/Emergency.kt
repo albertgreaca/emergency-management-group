@@ -25,7 +25,14 @@ class Emergency(
     var handlingStarted: Boolean = false
     var resolved: Boolean = false
     var firsttick: Boolean = true
-    var currentResources = originalResources
+    var currentResources =
+        Resource(
+            originalResources.vehicles.toMutableList(),
+            originalResources.waterAmount,
+            originalResources.criminalAmount,
+            originalResources.patientAmount,
+            originalResources.patientAmount
+        )
 
     /**
      * @return adds a vehicle to the vehicle list

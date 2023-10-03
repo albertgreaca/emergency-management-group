@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
+import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
@@ -32,10 +33,11 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(RoadClosureTest())
         manager.registerTest(RushHour1Test())
+        manager.registerTest(ManyEvents())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
-        registerSystemTests(manager)
         notPassingReference(manager)
+        registerSystemTests(manager)
         registerSystemTestsMutantValidation(manager)
         registerSystemTestsMutantSimulation(manager)
         manager.registerTest(RequestTest())
@@ -50,7 +52,6 @@ object SystemTestRegistration {
         registerMapParserSyntaxFail1(manager)
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
-        registerSystemTests(manager)
         config2(manager)
     }
 

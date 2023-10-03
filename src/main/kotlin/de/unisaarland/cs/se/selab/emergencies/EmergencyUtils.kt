@@ -66,15 +66,16 @@ class EmergencyUtils {
     fun updateWaterTruckResources(em: Emergency) {
         val waterTrucks2 = em.assignedVehicles.filter { it is FireTruckWater }.sortedBy { it.id }
         if (!waterTrucks2.isEmpty()) {
+            var l = 0
             val waterTrucks = waterTrucks2 as MutableList<FireTruckWater>
             var waterToDistribute = em.originalResources.waterAmount
             while (waterToDistribute > 0) {
-                if (waterToDistribute >= waterTrucks[0].waterTransported) {
-                    waterToDistribute -= waterTrucks[0].waterTransported
-                    waterTrucks[0].waterTransported = 0
-                    waterTrucks.removeAt(0)
+                if (waterToDistribute >= waterTrucks[l].waterTransported) {
+                    waterToDistribute -= waterTrucks[l].waterTransported
+                    waterTrucks[l].waterTransported = 0
+                    l++
                 } else {
-                    waterTrucks[0].waterTransported -= waterToDistribute
+                    waterTrucks[l].waterTransported -= waterToDistribute
                     waterToDistribute = 0
                 }
             }
@@ -89,13 +90,14 @@ class EmergencyUtils {
         if (!policeCars2.isEmpty()) {
             val policeCars = policeCars2 as MutableList<PoliceCar>
             var criminalsToDistribute = em.originalResources.criminalAmount
+            var l = 0
             while (criminalsToDistribute > 0) {
-                if (criminalsToDistribute >= policeCars[0].criminalsStillFitting) {
-                    criminalsToDistribute -= policeCars[0].criminalsStillFitting
-                    policeCars[0].transportedCriminals = policeCars[0].criminalCapacity
-                    policeCars.removeAt(0)
+                if (criminalsToDistribute >= policeCars[l].criminalsStillFitting) {
+                    criminalsToDistribute -= policeCars[l].criminalsStillFitting
+                    policeCars[l].transportedCriminals = policeCars[l].criminalCapacity
+                    l++
                 } else {
-                    policeCars[0].transportedCriminals += criminalsToDistribute
+                    policeCars[l].transportedCriminals += criminalsToDistribute
                     criminalsToDistribute = 0
                 }
             }
@@ -109,13 +111,14 @@ class EmergencyUtils {
         val ambulances2 = em.assignedVehicles.filter { it is Ambulance }.sortedBy { it.id }
         if (!ambulances2.isEmpty()) {
             val ambulances = ambulances2 as MutableList<Ambulance>
+            var l = 0
             var patientsToDistribute = em.originalResources.patientAmount
             while (patientsToDistribute > 0) {
-                if (!ambulances[0].patientOnBoard) {
+                if (!ambulances[l].patientOnBoard) {
                     patientsToDistribute -= 1
-                    ambulances[0].patientOnBoard = true
+                    ambulances[l].patientOnBoard = true
                 }
-                ambulances.removeAt(0)
+                l++
             }
         }
     }
