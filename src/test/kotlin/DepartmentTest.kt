@@ -1,11 +1,9 @@
+
 import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
-import org.junit.jupiter.api.Assertions.assertNull
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -25,7 +23,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -45,7 +43,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -65,7 +63,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -85,7 +83,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -105,7 +103,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -125,7 +123,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -145,7 +143,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/medicalEmergency1TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/medicalEmergency1TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -167,7 +165,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/fireEmergency2TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/fireEmergency2TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -189,7 +187,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/crimeEmergency3TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -211,7 +209,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/crimeEmergency3TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -246,7 +244,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/crimeEmergency3TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -285,7 +283,7 @@ class DepartmentTest {
         val jsonparse = JsonParser(
             Simulation.map,
             File("src/test/resources/UnitTestConfig2/basesSimple.json"),
-            File("src/test/resources/UnitTestConfig2/crimeEmergency3TrafficJam.json")
+            File("src/test/resources/UnitTestConfig3/crimeEmergency3TrafficJam.json")
         )
         parse.parseMap()
         jsonparse.parseBases()

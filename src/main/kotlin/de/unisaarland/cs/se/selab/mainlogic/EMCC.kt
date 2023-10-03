@@ -10,11 +10,7 @@ import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.events.Event
 import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.utils.Logger
-import de.unisaarland.cs.se.selab.vehicles.Ambulance
-import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
-import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
-import de.unisaarland.cs.se.selab.vehicles.PoliceCar
-import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.*
 
 /**
  * This is the class responsible for simulating the different phases of a tick
@@ -72,7 +68,7 @@ object EMCC {
      * orders the starting emergencies by severity, then by ID
      */
     fun orderEmergencies() {
-        startingEmergencies.sortWith(compareBy({ it.severity }, { it.id }))
+        startingEmergencies.sortWith(compareByDescending<Emergency> { it.severity }.thenBy { it.id })
     }
 
     /**

@@ -1,0 +1,84 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "ROAD_CLOSURE",
+      "tick": 1,
+      "duration": 1,
+      "source": 1,
+      "target": 2
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 3,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "FIRE",
+      "severity": 3,
+      "handleTime": 3,
+      "maxDuration": 5
+    },
+    {
+      "id": 1,
+      "tick": 4,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "CRIME",
+      "severity": 2,
+      "handleTime": 4,
+      "maxDuration": 8
+    },
+    {
+      "id": 2,
+      "tick": 2,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 3
+    },
+    {
+      "id": 3,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "FIRE",
+      "severity": 2,
+      "handleTime": 2,
+      "maxDuration": 5
+    },
+    {
+      "id": 4,
+      "tick": 5,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "MEDICAL",
+      "severity": 3,
+      "handleTime": 3,
+      "maxDuration": 6
+    },
+    {
+      "id": 5,
+      "tick": 3,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 4
+    },
+    {
+      "id": 6,
+      "tick": 4,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "CRIME",
+      "severity": 3,
+      "handleTime": 8,
+      "maxDuration": 11
+    }
+  ]
+}
