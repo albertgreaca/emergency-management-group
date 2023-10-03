@@ -20,7 +20,7 @@ class RequestTest : SystemTest() {
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 1")
-        //police base numero uno e numero dos don't have the needed asset
+        // police base numero uno e numero dos don't have the needed asset
         assertNextLine("Asset Request: 1 sent to 2 for 0")
         assertNextLine("Asset Request: 2 sent to 3 for 0")
         assertNextLine("Asset Allocated: 0 allocated to 0; 2 ticks to arrive.")
@@ -43,11 +43,5 @@ class RequestTest : SystemTest() {
         assertNextLine("Simulation Statistics: 1 resolved emergencies.")
         // end of file
         assertEnd()
-
-
-
-
-
-
     }
 }
