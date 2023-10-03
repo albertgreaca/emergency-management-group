@@ -386,7 +386,7 @@
       "vehicleType": "FIRE_TRUCK_LADDER",
       "vehicleHeight": 4,
       "staffCapacity": 5,
-      "ladderLength": 10
+      "ladderLength": 60
     },
     {
       "id": 41,
