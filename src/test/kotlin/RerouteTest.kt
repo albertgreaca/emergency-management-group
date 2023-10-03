@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.BeforeEach
+
 /*import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
@@ -16,6 +18,11 @@ import kotlin.test.assertTrue*/
 
 class RerouteTest {
     val utils = TestUtils()
+
+    @BeforeEach
+    fun beforeEach() {
+        utils.clear()
+    }
 
     /*@Test
     fun rerouteTestnoRerouting() {

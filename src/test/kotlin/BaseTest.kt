@@ -6,11 +6,17 @@ import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
 class BaseTest {
     val test = TestUtils()
+
+    @BeforeEach
+    fun beforeEach() {
+        test.clear()
+    }
 
     @Test
     fun watertrucktest1800w2vehic() {

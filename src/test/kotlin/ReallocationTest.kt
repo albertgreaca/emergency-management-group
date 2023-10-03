@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.BeforeEach
+
 /*import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
@@ -12,6 +14,11 @@ import kotlin.test.assertTrue*/
 
 class ReallocationTest {
     val utils = TestUtils()
+
+    @BeforeEach
+    fun beforeEach() {
+        utils.clear()
+    }
 
     /*@Test
     fun simpletest1() {
