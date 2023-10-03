@@ -139,12 +139,32 @@ class Resource(
      */
     fun isEqual(other: Any?): Boolean {
         if (other is Resource) {
-            val vehiclesEqual = this.vehicles == other.vehicles
+            val vehiclesEqual = this.resListisEqual(other)
             val waterEqual = this.waterAmount == other.waterAmount
             val patientEqual = this.patientAmount == other.patientAmount
             val criminalEqual = this.criminalAmount == other.criminalAmount
             val ladderEqual = this.ladderLength == other.ladderLength
             return vehiclesEqual && waterEqual && patientEqual && criminalEqual && ladderEqual
+        }
+        return false
+    }
+
+    private fun resListisEqual(compare: Resource): Boolean {
+        val startlist = this.vehicles
+        val comparelist = compare.vehicles
+        var copylist = comparelist.toMutableList()
+        if (!(startlist.size == comparelist.size)) {
+            return false
+        }
+        for (vt in startlist) {
+            for (type in comparelist) {
+                if (vt == type) {
+                    copylist.remove(type)
+                }
+            }
+        }
+        if (copylist.isEmpty()) {
+            return true
         }
         return false
     }
