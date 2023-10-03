@@ -29,6 +29,7 @@ class RushHourEvent(
                 for (albert in roads) {
                     albert.addEvent(this)
                 }
+                Logger.logEventTriggered(id)
                 return true
             }
         }
