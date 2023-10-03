@@ -3,7 +3,10 @@ import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
