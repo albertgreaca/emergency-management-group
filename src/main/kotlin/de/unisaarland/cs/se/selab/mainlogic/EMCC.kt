@@ -45,8 +45,8 @@ object EMCC {
         startingEmergencies.sortBy { it.id }
         for (em in startingEmergencies) {
             if (em.firsttick) {
-                Simulation.statistics.increaseOngoing()
-                Simulation.statistics.increaseReceived()
+                Simulation.statistics.ongoingEmergencies++
+                Simulation.statistics.receivedEmergencies++
                 when (em.type) {
                     EmergencyType.CRIME -> policeDepartment?.update(em)
                     EmergencyType.FIRE, EmergencyType.ACCIDENT -> fireDepartment?.update(em)
@@ -393,8 +393,8 @@ object EMCC {
         newlyResolvedEmergencies.sortBy { it.id }
         for (resolvedEm in newlyResolvedEmergencies) {
             Logger.logEmergencyResolved(resolvedEm.id)
-            Simulation.statistics.decreaseOngoing()
-            Simulation.statistics.increaseResolved()
+            Simulation.statistics.ongoingEmergencies--
+            Simulation.statistics.resolvedEmergencies++
         }
     }
 
@@ -420,8 +420,8 @@ object EMCC {
         newlyFailedEmergencies.sortBy { it.id }
         for (resolvedEm in newlyFailedEmergencies) {
             Logger.logEmergencyFailed(resolvedEm.id)
-            Simulation.statistics.decreaseOngoing()
-            Simulation.statistics.increaseFailed()
+            Simulation.statistics.ongoingEmergencies--
+            Simulation.statistics.failedEmergencies++
         }
         handledEmergencies.removeAll(resolvedOrFailedEmergencies)
     }
@@ -475,6 +475,6 @@ object EMCC {
             }
         }
         Logger.logAssetsRerouted(numberOfReroutedVehicles)
-        Simulation.statistics.increaseRerouted(numberOfReroutedVehicles)
+        Simulation.statistics.reroutedAssets += numberOfReroutedVehicles
     }
 }
