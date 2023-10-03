@@ -19,7 +19,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -61,7 +61,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -103,7 +103,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -144,7 +144,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -180,7 +180,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -224,7 +224,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -260,7 +260,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/5400Waterassetconfig.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
@@ -300,7 +300,7 @@ class BaseTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/5400Waterassetconfig.json"),
-            File("src/test/resources/UnitTestConfig2/emergencysimple.json")
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
