@@ -1,5 +1,5 @@
+
 import de.unisaarland.cs.se.selab.events.ConstructionSiteEvent
-import de.unisaarland.cs.se.selab.events.RoadClosureEvent
 import de.unisaarland.cs.se.selab.events.RushHourEvent
 import de.unisaarland.cs.se.selab.events.TrafficJamEvent
 import de.unisaarland.cs.se.selab.graphlogic.PrimaryRoadType
@@ -107,12 +107,22 @@ class RoadTest {
     }
 
     @Test
-    fun testActualWeightRoadClosure() {
-        val vertex0 = Vertex(0, null, 0)
-        val vertex1 = Vertex(1, null, 1)
-        val road =
-            Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
-        val event = RoadClosureEvent(0, 1, 2, road)
-        road.eventList.add(event)
+    fun testEqualsTrue() {
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        var r1 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Village", "Street", 20, 4, v1, v2)
+        var r2 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Village", "Street", 20, 4, v1, v2)
+        assertTrue(r1.equals(r2))
+        assertTrue(r2.equals(r1))
+    }
+
+    @Test
+    fun testEqualsFalse() {
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        var r1 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Village", "Street", 20, 4, v1, v2)
+        var r2 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Village", "Street", 20, 4, v2, v1)
+        assertFalse(r1.equals(r2))
+        assertFalse(r2.equals(r1))
     }
 }
