@@ -211,5 +211,6 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser48())
         manager.registerTest(FailedParser49())
         manager.registerTest(FailedParser50())
+        manager.registerTest(FailedParser51())
     }
 }
