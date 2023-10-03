@@ -66,6 +66,9 @@ class ManyEvents : SystemTest() {
         assertNextLine("Simulation Tick: 29")
         assertNextLine("Event Ended: 0 ended.")
         assertNextLine("Simulation Tick: 30")
+        continueWithIt()
+    }
+    suspend fun continueWithIt() {
         assertNextLine("Asset Arrival: 0 arrived at 2.")
         assertNextLine("Emergency Handling Start: 2 handling started.")
         assertNextLine("Simulation Tick: 31")
