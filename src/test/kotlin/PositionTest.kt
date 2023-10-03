@@ -266,8 +266,12 @@ class PositionTest {
         val v2 = Vertex(1, null, 1)
         val vertList = mutableListOf(v1, v2)
         val r = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "SimpleStreet", 10, 5, v1, v2)
-        val roadList = mutableListOf(r)
-        val pos1 = Position(roadList, vertList, 0, 10, v2, 10, 1, false, false)
-        val pos2 = Position(roadList, vertList, 3, 7, v2, 7, 1, true)
+        val roadList1 = mutableListOf(r)
+        val roadList2 = mutableListOf(r)
+        val pos1 = Position(roadList1, vertList, 0, 10, v2, 10, 1, false, false)
+        val pos2 = Position(roadList2, vertList, 3, 7, v2, 7, 1, false, false)
+        pos1.advance()
+        pos2.advance()
+        assertTrue(pos1.isEqual(pos2))
     }
 }

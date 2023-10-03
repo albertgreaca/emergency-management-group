@@ -12,7 +12,7 @@ class PoliceCar(
     override val vehicleHeight: Int,
     override var position: Position? = null,
     val criminalCapacity: Int,
-    var transportedCriminals: Int
+    var transportedCriminals: Int = 0,
 ) : Vehicle(
     id,
     VehicleType.POLICE_CAR,

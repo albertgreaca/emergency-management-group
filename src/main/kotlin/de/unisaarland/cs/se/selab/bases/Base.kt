@@ -16,6 +16,7 @@ import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -123,16 +124,12 @@ open class Base(
 
     private fun allocateWhen(em: Emergency, vehicle: Vehicle) {
         when (vehicle) {
-            is PoliceCar -> {
-                allocatePoliceCar(em, vehicle)
-            }
-
             is FireTruckWater -> {
                 if (em.resources.waterAmount >= vehicle.waterCapacity) {
                     em.resources.waterAmount -= vehicle.waterCapacity
-                    vehicle.waterTransported = vehicle.waterCapacity
+                    // vehicle.waterPlannedTransported = vehicle.waterCapacity
                 } else {
-                    vehicle.waterTransported = em.resources.waterAmount
+                    // vehicle.waterPlannedTransported = em.resources.waterAmount
                     em.resources.waterAmount = 0
                 }
             }
@@ -140,33 +137,11 @@ open class Base(
             is Ambulance -> {
                 if (em.resources.patientAmount >= 1) {
                     em.resources.patientAmount -= 1
-                    vehicle.patientOnBoard = true
-                } else {
-                    vehicle.patientOnBoard = false
+                    // vehicle.patientPlannedOnBoard = true
                 }
             }
-            is FireTruckLadder -> {
-                if (requireNotNull(em.resources.ladderLength) >= ladder40 && vehicle.getLadderLength40()) {
-                    em.resources.ladderLength = 0
-                    vehicle.neededByEmergency40 = true
-                }
-                if (requireNotNull(em.resources.ladderLength) >= ladder30) {
-                    em.resources.ladderLength = 0
-                    vehicle.neededByEmergency40 = false
-                }
-            }
-        }
-    }
+            is PoliceCar -> em.resources.criminalAmount = max(0, em.resources.criminalAmount - vehicle.criminalCapacity)
 
-    private fun allocatePoliceCar(em: Emergency, vehicle: Vehicle) {
-        if (vehicle is PoliceCar) {
-            if (em.resources.criminalAmount >= vehicle.criminalCapacity) {
-                em.resources.criminalAmount -= vehicle.criminalCapacity
-                vehicle.transportedCriminals = vehicle.criminalCapacity
-            } else {
-                vehicle.transportedCriminals = em.resources.criminalAmount
-                em.resources.criminalAmount = 0
-            }
         }
     }
 
@@ -348,8 +323,8 @@ open class Base(
                 // add vehicle type to resource of previous emergency
                 vehic.targetEmergency?.resources?.addVehicle(vt)
 
-                // update water/criminals/patients for special vehicle types
                 transferResources(requireNotNull(vehic.targetEmergency), em, vehic)
+                // update water/criminals/patients for special vehicle types
 
                 // set the vehicle's target emergency to the new emergency
                 vehic.targetEmergency = em
@@ -373,12 +348,18 @@ open class Base(
             }
 
             is Ambulance -> {
-                if (newem.resources.patientAmount >= 1) {
-                    newem.resources.patientAmount -= 1
-                    oldem.resources.patientAmount += 1
-                    vehic.patientOnBoard = true
+                if(!EMCC.resolvedOrFailedEmergencies.contains(oldem)) {
+                    newem.resources.patientAmount = max(0, newem.resources.patientAmount-1)
+
+                    if (newem.resources.patientAmount >= 1) {
+                        newem.resources.patientAmount -= 1
+                        oldem.resources.patientAmount += 1
+                        // vehic.patientPlannedOnBoard = true
+                    } else {
+                        // vehic.patientPlannedOnBoard = false
+                    }
                 } else {
-                    vehic.patientOnBoard = false
+
                 }
             }
             is FireTruckLadder -> {
@@ -392,8 +373,9 @@ open class Base(
         vehic.available = false
     }
 
-    private fun decreaseResourcePoliceCar(oldem: Emergency, newem: Emergency, vehic: Vehicle) {
-        if (vehic is PoliceCar) {
+    private fun decreaseResourcePoliceCar(oldem: Emergency, newem: Emergency, vehic: PoliceCar) {
+        if (!EMCC.resolvedOrFailedEmergencies.contains(oldem)) {
+            val newcriminalscap = vehic.criminalCapacity-vehic.transportedCriminals
             if (newem.resources.criminalAmount >= vehic.criminalCapacity) {
                 newem.resources.criminalAmount -= vehic.criminalCapacity
                 oldem.resources.criminalAmount += vehic.transportedCriminals
@@ -404,6 +386,8 @@ open class Base(
                 newem.resources.criminalAmount = 0
             }
         }
+    } else {
+
     }
 
     private fun decreaseResourceWaterTruck(oldem: Emergency, newem: Emergency, vehic: Vehicle) {

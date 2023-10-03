@@ -6,7 +6,7 @@ class FailedParser22 : SystemTest() {
     override val name = "FailedParser22"
 
     override val map = "mapFiles/example_map.dot"
-    override val assets = "config2Invalid/Semantics/config2invalid2FailedParser22.json"
+    override val assets = "config2Invalid/Semantics/config2invalid22.json"
     override val scenario = "scenarioJsons/example_scenario.json"
     override val maxTicks = 1
     override suspend fun run() {

@@ -154,7 +154,7 @@ object EMCC {
      * handles all requests made in the allocation phase of the current tick
      */
     fun processRequests() {
-        while (!requests.isEmpty()) {
+        while (requests.isNotEmpty()) {
             i = 0
             while (i < requests.size) {
                 // try to allocate all requested resources
@@ -179,11 +179,11 @@ object EMCC {
                 // calculate the next closest police base and make a request to this base
                 val nextBase = request.getRequestingBase().getNextPoliceBase(request.processingBase)
                 if (nextBase != null) {
-                    i++
+                    requests.remove(request)
                     request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.id)
+                    Logger.logRequestFailed(request.emergency.id)
                 }
             }
 
@@ -191,11 +191,11 @@ object EMCC {
                 // calculate the next closest ambulance base and make a request to this base
                 val nextBase = request.getRequestingBase().getNextHospital(request.processingBase)
                 if (nextBase != null) {
-                    i++
+                    requests.remove(request)
                     request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.id)
+                    Logger.logRequestFailed(request.emergency.id)
                 }
             }
 
@@ -203,11 +203,11 @@ object EMCC {
                 // calculate the next closest fire base and make a request to this base
                 val nextBase = request.getRequestingBase().getNextFireBase(request.processingBase)
                 if (nextBase != null) {
-                    i++
+                    requests.remove(request)
                     request.getRequestingBase().makeRequest(request.emergency, nextBase)
                 } else {
                     requests.remove(request)
-                    Logger.logRequestFailed(request.id)
+                    Logger.logRequestFailed(request.emergency.id)
                 }
             }
         }
@@ -256,9 +256,6 @@ object EMCC {
                 )
             )
         }
-        policeDepartment?.updateVehicles()
-        fireDepartment?.updateVehicles()
-        ambulanceDepartment?.updateVehicles()
         // if a vehicle arrived back at its base after moving, log it
         if (requireNotNull(vec.position).isDrivingBack && requireNotNull(vec.position).arrivalTicks == 0) {
             newlyArrivedAssets.add(
@@ -284,16 +281,16 @@ object EMCC {
             vec.available = true
         }
         if (vec is FireTruckWater) {
-            vec.baseWaitingTicks = (vec.waterCapacity - vec.waterTransported) / divisor
+            vec.baseWaitingTicks = (vec.waterCapacity - vec.waterTransported) / divisor + 1
             if ((vec.waterCapacity - vec.waterTransported) % divisor != 0) {
                 vec.baseWaitingTicks++
             }
         }
-        if (vec is Ambulance && vec.patientOnBoard) {
-            vec.baseWaitingTicks = 1
+        if (vec is Ambulance && vec.patientPlannedOnBoard) {
+            vec.baseWaitingTicks = 2
         }
         if (vec is PoliceCar && vec.transportedCriminals > 0) {
-            vec.baseWaitingTicks = 2
+            vec.baseWaitingTicks = 3
         }
     }
 
@@ -408,6 +405,15 @@ object EMCC {
     private fun updateFailedEmergencies() {
         val newlyFailedEmergencies: MutableList<Emergency> = mutableListOf()
 
+        for (em in startingEmergencies) {
+            if (em.tick + em.maxDuration <= Simulation.currentTick) {
+                resolvedOrFailedEmergencies.add(em)
+                newlyFailedEmergencies.add(em)
+                for (vec in em.assignedVehicles) {
+                    vec.sendBackToBase()
+                }
+            }
+        }
         for (em in handledEmergencies) {
             if (em.tick + em.maxDuration <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)

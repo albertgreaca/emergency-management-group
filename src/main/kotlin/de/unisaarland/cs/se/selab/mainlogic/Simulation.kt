@@ -110,6 +110,9 @@ object Simulation {
             EMCC.rerouteVehicles()
             EMCC.updatenextBases()
         }
+        EMCC.policeDepartment?.updateVehicles()
+        EMCC.fireDepartment?.updateVehicles()
+        EMCC.ambulanceDepartment?.updateVehicles()
         currentTick++
     }
 
@@ -129,6 +132,7 @@ object Simulation {
         simulatePlanningPhase()
         simulateRequestPhase()
         simulateUpdatePhase()
+
     }
 
     /** perform the entire simulation
