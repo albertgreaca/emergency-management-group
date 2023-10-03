@@ -178,8 +178,8 @@ class PositionTest {
             0,
             0
         )
-        assertFalse(position1 == position2)
-        assertFalse(position2 == position1)
+        assertFalse(position1.isEqual(position2))
+        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -208,8 +208,8 @@ class PositionTest {
             0,
             0
         )
-        assertFalse(position1 == position2)
-        assertFalse(position2 == position1)
+        assertFalse(position1.isEqual(position2))
+        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -238,8 +238,8 @@ class PositionTest {
             10,
             0
         )
-        assertFalse(position1 == position2)
-        assertFalse(position2 == position1)
+        assertFalse(position1.isEqual(position2))
+        assertFalse(position2.isEqual(position1))
     }
 
     @Test
@@ -253,12 +253,21 @@ class PositionTest {
         val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v2, v3)
         val roadList = mutableListOf(r1, r2)
 
-        val pos = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
-        var posAdv = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
-        posAdv.advance()
-        assertFalse(pos.isEqual(posAdv))
-        posAdv = pos
-        posAdv.startedThisTick = true
-        assertTrue(posAdv.isEqual(pos))
+        val pos1 = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
+        val pos2 = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
+        pos2.advance()
+        assertFalse(pos1.isEqual(pos2))
+        assertFalse(pos2.isEqual(pos1))
+    }
+
+    @Test
+    fun advance2() {
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val vertList = mutableListOf(v1, v2)
+        val r = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "SimpleStreet", 10, 5, v1, v2)
+        val roadList = mutableListOf(r)
+        val pos1 = Position(roadList, vertList, 0, 10, v2, 10, 1, false, false)
+        val pos2 = Position(roadList, vertList, 3, 7, v2, 7, 1, true)
     }
 }

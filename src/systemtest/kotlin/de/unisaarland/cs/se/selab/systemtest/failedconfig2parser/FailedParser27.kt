@@ -11,6 +11,6 @@ class FailedParser27 : SystemTest() {
     override val maxTicks = 1
     override suspend fun run() {
         assertNextLine("Initialization Info: example_map.dot successfully parsed and validated")
-        assertNextLine("Initialization Info: config2invalid1.json invalid")
+        assertNextLine("Initialization Info: config2invalid27.json invalid")
     }
 }
