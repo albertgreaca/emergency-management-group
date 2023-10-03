@@ -1,0 +1,13 @@
+digraph Requester {
+0;
+1;
+2;
+3;
+4;
+0->1[village=Saarland; name=Motorway; heightLimit=10; weight = 16; primaryType=sideStreet; secondaryType=none;];
+0->2[village=County; name=Landstrasse; heightLimit=10; weight = 11; primaryType=countyRoad; secondaryType=none;];
+1->2[village=Saarland; name=Hauptstrasse; heightLimit=10; weight = 14; primaryType=mainStreet; secondaryType=none;];
+1->4[village=Saarland; name=Rathausstrasse; heightLimit=10; weight = 17; primaryType=mainStreet; secondaryType=none;];
+4->3[village=Saarland; name=Bahnhofstrasse; heightLimit=10; weight = 21; primaryType=mainStreet; secondaryType=none;];
+3->2[village=Saarland; name=Seitenstrasse; heightLimit=10; weight = 9; primaryType=sideStreet; secondaryType=none;];
+}

@@ -1,0 +1,71 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "RUSH_HOUR",
+      "tick": 7,
+      "duration": 19,
+      "roadTypes": ["MAIN_STREET","SIDE_STREET"],
+      "factor": 2
+    },
+    {
+      "id": 1,
+      "type": "TRAFFIC_JAM",
+      "tick": 1,
+      "duration": 22,
+      "source": 2,
+      "target": 3,
+      "factor": 3
+    },
+    {
+      "id": 2,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 600,
+      "duration": 5,
+      "source": 0,
+      "target": 1,
+      "oneWayStreet": true,
+      "factor": 6
+    },
+    {
+      "id": 3,
+      "type": "ROAD_CLOSURE",
+      "tick": 600,
+      "duration": 5,
+      "source": 0,
+      "target": 1
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "County",
+      "roadName": "Landstrasse",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 3,
+      "maxDuration": 25
+    },
+    {
+      "id": 1,
+      "tick": 12,
+      "village": "Saarland",
+      "roadName": "Rathausstrasse",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 25
+    },
+    {
+      "id": 2,
+      "tick": 24,
+      "village": "County",
+      "roadName": "Landstrasse",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 25
+    }
+  ]
+}
