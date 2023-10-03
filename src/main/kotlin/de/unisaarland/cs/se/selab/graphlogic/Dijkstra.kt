@@ -169,7 +169,9 @@ object Dijkstra {
             Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
         }
         dist[startingNode].distance = 0
-        dist[startingNode].vertexList.add(requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode)))
+        dist[startingNode].vertexList.add(
+            requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode))
+        )
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
@@ -189,10 +191,13 @@ object Dijkstra {
             }
             updateNeighborsHeight(cur, dist, pq, height)
         }
-        if (requireNotNull(position1).distance < requireNotNull(position2).distance || (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2)))
+        if (requireNotNull(position1).distance < requireNotNull(position2).distance ||
+            (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2))
+        ) {
             return position1
-        else
+        } else {
             return position2
+        }
     }
 
     private fun determinePathRB(
@@ -323,10 +328,13 @@ object Dijkstra {
             }
             updateNeighborsRB(cur, dist, pq, height)
         }
-        if (requireNotNull(position1).distance < requireNotNull(position2).distance || (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2)))
+        if (requireNotNull(position1).distance < requireNotNull(position2).distance ||
+            (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2))
+        ) {
             return position1
-        else
+        } else {
             return position2
+        }
     }
 
     /**
@@ -350,7 +358,9 @@ object Dijkstra {
             )
         }
         dist[startingNode].distance = 0
-        dist[startingNode].vertexList.add(requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode)))
+        dist[startingNode].vertexList.add(
+            requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode))
+        )
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
