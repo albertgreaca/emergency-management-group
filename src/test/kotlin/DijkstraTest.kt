@@ -53,4 +53,23 @@ class DijkstraTest {
         val base = EMCC.fireDepartment?.bases?.get(0) ?: return
         assertEquals(base.id, baseDijkstra.id)
     }
+
+    @Test
+    fun dijkstraRequestTest() {
+        val parser = MapParser(Simulation.map, File("src/systemtest/resources/mapFiles/MapEmergencySimple.dot"))
+        parser.parseMap()
+        val jsonParser = JsonParser(
+            Simulation.map,
+            File("src/systemtest/resources/assetsJsons/AssetsEmergencySimple.json"),
+            File("src/systemtest/resources/scenarioJsons/ScenarioEmergencySimple.json")
+        )
+        jsonParser.parseBases()
+        val baseListComparable = mutableListOf(
+            requireNotNull(EMCC.fireDepartment?.bases?.get(0)),
+            requireNotNull(EMCC.policeDepartment?.bases?.get(0)),
+            requireNotNull(EMCC.ambulanceDepartment?.bases?.get(0))
+        )
+        val baseListDijkstra = Dijkstra.dijkstraRequest(0)
+        assertEquals(baseListDijkstra, baseListComparable)
+    }
 }
