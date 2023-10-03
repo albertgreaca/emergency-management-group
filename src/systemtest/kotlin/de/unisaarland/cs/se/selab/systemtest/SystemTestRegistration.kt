@@ -30,6 +30,7 @@ object SystemTestRegistration {
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
+        manager.registerTest(RoadClosureTest())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         registerSystemTests(manager)
