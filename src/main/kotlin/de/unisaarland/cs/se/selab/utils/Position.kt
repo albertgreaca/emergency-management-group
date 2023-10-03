@@ -82,4 +82,14 @@ class Position(
         }
         return n < m
     }
+
+    /**
+     * determine which path is better
+     */
+    fun determine(o: Position): Position {
+        if (this.distance < o.distance || (this.distance == o.distance && this.smaller(o))) {
+            return this
+        }
+        return o
+    }
 }

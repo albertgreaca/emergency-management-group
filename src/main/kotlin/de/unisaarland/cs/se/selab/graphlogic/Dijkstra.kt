@@ -191,13 +191,7 @@ object Dijkstra {
             }
             updateNeighborsHeight(cur, dist, pq, height)
         }
-        if (requireNotNull(position1).distance < requireNotNull(position2).distance ||
-            (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2))
-        ) {
-            return position1
-        } else {
-            return position2
-        }
+        return requireNotNull(position1).determine(requireNotNull(position2))
     }
 
     private fun determinePathRB(
@@ -328,13 +322,7 @@ object Dijkstra {
             }
             updateNeighborsRB(cur, dist, pq, height)
         }
-        if (requireNotNull(position1).distance < requireNotNull(position2).distance ||
-            (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2))
-        ) {
-            return position1
-        } else {
-            return position2
-        }
+        return requireNotNull(position1).determine(requireNotNull(position2))
     }
 
     /**
