@@ -20,19 +20,17 @@ class RequestTest : SystemTest() {
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 1")
-        // police base numero uno e numero dos don't have the needed asset
-        assertNextLine("Asset Request: 1 sent to 2 for 0")
-        assertNextLine("Asset Request: 2 sent to 3 for 0")
-        assertNextLine("Asset Allocated: 0 allocated to 0; 2 ticks to arrive.")
+        //police base numero uno e numero dos don't have the needed asset
+        assertNextLine("Asset Request: 1 sent to 2 for 0.")
+        assertNextLine("Asset Request: 2 sent to 3 for 0.")
+        assertNextLine("Asset Allocation: 0 allocated to 0; 2 ticks to arrive.")
         assertNextLine("Simulation Tick: 2")
         assertNextLine("Simulation Tick: 3")
+        assertNextLine("Asset Arrival: 0 arrived at 1.")
+        assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Simulation Tick: 4")
-        assertNextLine("Asset Arrival: 0 arrived at 4")
-        assertNextLine("Emergency Handling Start: 0 handling started")
         assertNextLine("Simulation Tick: 5")
-        assertNextLine("Simulation Tick: 6")
-        assertNextLine("Simulation Tick: 7")
-        assertNextLine("Emergency Resolved: 0 resolved")
+        assertNextLine("Emergency Resolved: 0 resolved.")
         // Simulation is over
         assertNextLine("Simulation End")
         // Statistics
@@ -43,5 +41,7 @@ class RequestTest : SystemTest() {
         assertNextLine("Simulation Statistics: 1 resolved emergencies.")
         // end of file
         assertEnd()
+
+
     }
 }

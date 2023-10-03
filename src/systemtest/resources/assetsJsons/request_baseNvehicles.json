@@ -53,7 +53,7 @@
     },
     {
       "id": 2,
-      "baseID": 0,
+      "baseID": 2,
       "vehicleType": "K9_POLICE_CAR",
       "vehicleHeight": 2,
       "staffCapacity": 5

@@ -5,7 +5,9 @@
       "type": "RUSH_HOUR",
       "tick": 6009,
       "duration": 2,
-      "roadTypes": ["SIDE_STREET"],
+      "roadTypes": [
+        "SIDE_STREET"
+      ],
       "factor": 2
     }
   ],

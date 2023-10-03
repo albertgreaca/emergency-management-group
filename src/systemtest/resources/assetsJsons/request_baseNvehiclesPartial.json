@@ -51,7 +51,7 @@
     },
     {
       "id": 2,
-      "baseID": 2,
+      "baseID": 3,
       "vehicleType": "FIRE_TRUCK_TECHNICAL",
       "vehicleHeight": 3,
       "staffCapacity": 4

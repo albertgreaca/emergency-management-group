@@ -9,7 +9,6 @@ class RequestTestFailed : SystemTest() {
     override val assets = "assetsJsons/request_baseNvehiclesFail.json"
     override val scenario = "scenarioJsons/request_scenario_failed.json"
     override val maxTicks = 30
-    private val rf0 = "Request Failed: 0 failed"
 
     override suspend fun run() {
         assertNextLine("Initialization Info: request_map.dot successfully parsed and validated")
@@ -19,18 +18,18 @@ class RequestTestFailed : SystemTest() {
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 1")
-        assertNextLine("Asset Request: 1 sent to 2 for 0")
-        assertNextLine("Asset Request: 2 sent to 3 for 0")
-        assertNextLine(rf0)
+        assertNextLine("Asset Request: 1 sent to 2 for 0.")
+        assertNextLine("Asset Request: 2 sent to 3 for 0.")
+        assertNextLine("Request Failed: 2 failed.")
         assertNextLine("Simulation Tick: 2")
-        assertNextLine("Asset Request: 3 sent to 2 for 0")
-        assertNextLine("Asset Request: 4 sent to 3 for 0")
-        assertNextLine(rf0)
+        assertNextLine("Asset Request: 3 sent to 2 for 0.")
+        assertNextLine("Asset Request: 4 sent to 3 for 0.")
+        assertNextLine("Request Failed: 4 failed.")
         assertNextLine("Simulation Tick: 3")
-        assertNextLine("Asset Request: 5 sent to 2 for 0")
-        assertNextLine("Asset Request: 6 sent to 3 for 0")
-        assertNextLine(rf0)
-        assertNextLine("Emergency Failed: 0 failed")
+        assertNextLine("Asset Request: 5 sent to 2 for 0.")
+        assertNextLine("Asset Request: 6 sent to 3 for 0.")
+        assertNextLine("Request Failed: 6 failed.")
+        assertNextLine("Emergency Failed: 0 failed.")
         assertNextLine("Simulation End")
         // Statistics
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
