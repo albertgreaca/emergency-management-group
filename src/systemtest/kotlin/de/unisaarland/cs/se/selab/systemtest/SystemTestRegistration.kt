@@ -34,6 +34,8 @@ object SystemTestRegistration {
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         registerSystemTests(manager)
         notPassingReference(manager)
+        registerSystemTestsMutantValidation(manager)
+        registerSystemTestsMutantSimulation(manager)
         manager.registerTest(RequestTest())
         manager.registerTest(RequestTestFailed())
         manager.registerTest(RequestTestPartial())
