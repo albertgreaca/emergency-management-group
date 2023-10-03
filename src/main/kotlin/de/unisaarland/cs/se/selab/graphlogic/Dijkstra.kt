@@ -160,34 +160,39 @@ object Dijkstra {
     /**
      * Doing Dijkstra respecting the height of vehicles and roads
      */
-    fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position? {
-        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
-        val n: Int = gm.vertexList.size
+    fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position {
+        var position1: Position? = null
+        var position2: Position? = null
+
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
-            Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
-        }
-        for (i in 0..n - 1) {
-            dist[i].distance = Int.MAX_VALUE
+            Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
         }
         dist[startingNode].distance = 0
-        dist[startingNode].vertexList.add(requireNotNull(gm.getVertexFromRealId(startingNode)))
+        dist[startingNode].vertexList.add(requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode)))
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        while (!pq.isEmpty()) {
+        while (!pq.isEmpty() && (position1 == null || position2 == null)) {
             val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
-            if (endRoad.start == v || endRoad.end == v) {
-                return determinePathHeight(cur, dist)
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
+            if (endRoad.start == v) {
+                position1 = determinePathHeight(cur, dist)
+            }
+            if (endRoad.end == v) {
+                position2 = determinePathHeight(cur, dist)
             }
             updateNeighborsHeight(cur, dist, pq, height)
         }
-        return null
+        if (requireNotNull(position1).distance < requireNotNull(position2).distance || (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2)))
+            return position1
+        else
+            return position2
     }
 
     private fun determinePathRB(
@@ -274,9 +279,11 @@ object Dijkstra {
         dir: Vertex,
         endRoad: Road,
         height: Int
-    ): Position? {
-        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
-        val n: Int = gm.vertexList.size
+    ): Position {
+        var position1: Position? = null
+        var position2: Position? = null
+
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
                 mutableListOf<Road>(),
@@ -284,12 +291,9 @@ object Dijkstra {
                 0,
                 0,
                 null,
-                0,
+                Int.MAX_VALUE,
                 0
             )
-        }
-        for (i in 0..n - 1) {
-            dist[i].distance = Int.MAX_VALUE
         }
         if (startRoad.start != dir) {
             dist[startRoad.start.realid].distance = distStart
@@ -305,18 +309,24 @@ object Dijkstra {
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        while (!pq.isEmpty()) {
+        while (!pq.isEmpty() && (position1 == null || position2 == null)) {
             val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
-            if (endRoad.start == v || endRoad.end == v) {
-                return determinePathRB(cur, dist, startRoad, distStart, distEnd)
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
+            if (endRoad.start == v) {
+                position1 = determinePathRB(cur, dist, startRoad, distStart, distEnd)
+            }
+            if (endRoad.end == v) {
+                position2 = determinePathRB(cur, dist, startRoad, distStart, distEnd)
             }
             updateNeighborsRB(cur, dist, pq, height)
         }
-        return null
+        if (requireNotNull(position1).distance < requireNotNull(position2).distance || (requireNotNull(position1).distance == requireNotNull(position2).distance && position1.smaller(position2)))
+            return position1
+        else
+            return position2
     }
 
     /**
@@ -327,8 +337,7 @@ object Dijkstra {
         endNode: Int,
         height: Int
     ): Position? {
-        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
-        val n: Int = gm.vertexList.size
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
                 mutableListOf<Road>(),
@@ -336,15 +345,12 @@ object Dijkstra {
                 0,
                 0,
                 null,
-                0,
+                Int.MAX_VALUE,
                 0
             )
         }
-        for (i in 0..n - 1) {
-            dist[i].distance = Int.MAX_VALUE
-        }
         dist[startingNode].distance = 0
-        dist[startingNode].vertexList.add(requireNotNull(gm.getVertexFromRealId(startingNode)))
+        dist[startingNode].vertexList.add(requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(startingNode)))
         val compare: Comparator<Pair<Int, Int>> = compareBy { it.second }
         val pq: PriorityQueue<Pair<Int, Int>> = PriorityQueue<Pair<Int, Int>>(compare)
         for (i in 0..n - 1) {
@@ -355,7 +361,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (endNode == v.realid) {
                 return determinePathHeight(cur, dist)
             }
@@ -375,8 +381,7 @@ object Dijkstra {
         endNode: Int,
         height: Int
     ): Position? {
-        val gm: GraphMap = requireNotNull(requireNotNull(Simulation.map))
-        val n: Int = gm.vertexList.size
+        val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
             Position(
                 mutableListOf<Road>(),
@@ -410,7 +415,7 @@ object Dijkstra {
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
-            val v: Vertex = requireNotNull(gm.getVertexFromRealId(cur.first))
+            val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (endNode == v.realid) {
                 return determinePathRB(cur, dist, startRoad, distStart, distEnd)
             }
