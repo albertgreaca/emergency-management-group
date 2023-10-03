@@ -1,10 +1,13 @@
+
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
+import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -334,5 +337,125 @@ class BaseTest {
         assertTrue(vehic1 == em.assignedVehicles[0])
         test.clearEMCC()
         test.clearSimulation()
+    }
+
+    @Test
+    fun testGetNextFireBase() {
+        // Scenario: FB1 ---- FB2 ---- FB3 ---- PB1 ---- AB1
+        val parse =
+            MapParser(Simulation.map, File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"))
+        val jsonparse = JsonParser(
+            Simulation.map,
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+
+        val fb1 = EMCC.fireDepartment?.bases?.get(0)!!
+        val fb2 = EMCC.fireDepartment?.bases?.get(1)!!
+        val fb3 = EMCC.fireDepartment?.bases?.get(2)!!
+
+        fb1.calculateNextBases()
+        fb2.calculateNextBases()
+        fb3.calculateNextBases()
+
+        // closest bases from FB1
+        assertEquals(fb2, fb1.getNextFireBase(fb1))
+        assertEquals(fb3, fb1.getNextFireBase(fb2))
+        assertEquals(null, fb1.getNextFireBase(fb3))
+
+        // closest bases from FB2
+        assertEquals(fb1, fb2.getNextFireBase(fb2))
+        assertEquals(fb3, fb2.getNextFireBase(fb1))
+        assertEquals(null, fb2.getNextFireBase(fb3))
+
+        // closest bases from FB3
+        assertEquals(fb2, fb3.getNextFireBase(fb3))
+        assertEquals(fb1, fb3.getNextFireBase(fb2))
+        assertEquals(null, fb3.getNextFireBase(fb1))
+    }
+
+    @Test
+    fun testGetNextPoliceBase() {
+        // Scenario: PB1 ---- PB2 ---- PB3 ---- FB1 ---- AB1
+        val parse =
+            MapParser(Simulation.map, File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"))
+        val jsonparse = JsonParser(
+            Simulation.map,
+            File("src/test/resources/UnitTestConfig2/ThreePoliceBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+
+        val pb1 = EMCC.policeDepartment?.bases?.get(0)!!
+        val pb2 = EMCC.policeDepartment?.bases?.get(1)!!
+        val pb3 = EMCC.policeDepartment?.bases?.get(2)!!
+
+        pb1.calculateNextBases()
+        pb2.calculateNextBases()
+        pb3.calculateNextBases()
+
+        // closest bases from FB1
+        assertEquals(pb2, pb1.getNextPoliceBase(pb1))
+        assertEquals(pb3, pb1.getNextPoliceBase(pb2))
+        assertEquals(null, pb1.getNextPoliceBase(pb3))
+
+        // closest bases from FB2
+        assertEquals(pb1, pb2.getNextPoliceBase(pb2))
+        assertEquals(pb3, pb2.getNextPoliceBase(pb1))
+        assertEquals(null, pb2.getNextPoliceBase(pb3))
+
+        // closest bases from FB3
+        assertEquals(pb2, pb3.getNextPoliceBase(pb3))
+        assertEquals(pb1, pb3.getNextPoliceBase(pb2))
+        assertEquals(null, pb3.getNextPoliceBase(pb1))
+    }
+
+    @Test
+    fun testGetNextHospital() {
+        // Scenario: AB1 ---- AB2 ---- AB3 ---- FB1 ---- PB1
+        val parse =
+            MapParser(Simulation.map, File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"))
+        val jsonparse = JsonParser(
+            Simulation.map,
+            File("src/test/resources/UnitTestConfig2/ThreeHospitals.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+
+        val ab1 = EMCC.ambulanceDepartment?.bases?.get(0)!!
+        val ab2 = EMCC.ambulanceDepartment?.bases?.get(1)!!
+        val ab3 = EMCC.ambulanceDepartment?.bases?.get(2)!!
+
+        ab1.calculateNextBases()
+        ab2.calculateNextBases()
+        ab3.calculateNextBases()
+
+        // closest bases from FB1
+        assertEquals(ab2, ab1.getNextHospital(ab1))
+        assertEquals(ab3, ab1.getNextHospital(ab2))
+        assertEquals(null, ab1.getNextHospital(ab3))
+
+        // closest bases from FB2
+        assertEquals(ab1, ab2.getNextHospital(ab2))
+        assertEquals(ab3, ab2.getNextHospital(ab1))
+        assertEquals(null, ab2.getNextHospital(ab3))
+
+        // closest bases from FB3
+        assertEquals(ab2, ab3.getNextHospital(ab3))
+        assertEquals(ab1, ab3.getNextHospital(ab2))
+        assertEquals(null, ab3.getNextHospital(ab1))
     }
 }
