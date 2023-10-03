@@ -1,10 +1,14 @@
+import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
+import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
+import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.utils.Position
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class DijkstraTest {
@@ -33,5 +37,20 @@ class DijkstraTest {
         val posway: Position = Position(roadList, vertexList, 0, 7, vertex1, 25, 3, false, false)
 
         assertTrue(posdijkstra.isEqual(posway))
+    }
+
+    @Test
+    fun dijkstraEmergencyTest() {
+        val parser = MapParser(Simulation.map, File("src/systemtest/resources/mapFiles/MapEmergencySimple.dot"))
+        parser.parseMap()
+        val jsonParser = JsonParser(
+            Simulation.map,
+            File("src/systemtest/resources/assetsJsons/AssetsEmergencySimple.json"),
+            File("src/systemtest/resources/scenarioJsons/ScenarioEmergencySimple.json")
+        )
+        jsonParser.parseBases()
+        val baseDijkstra = Dijkstra.dijkstraEmergency(3, 4, EmergencyType.FIRE) ?: return
+        val base = EMCC.fireDepartment?.bases?.get(0) ?: return
+        assertEquals(base.id, baseDijkstra.id)
     }
 }
