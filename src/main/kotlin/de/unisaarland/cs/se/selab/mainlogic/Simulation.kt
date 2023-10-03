@@ -132,7 +132,6 @@ object Simulation {
         simulatePlanningPhase()
         simulateRequestPhase()
         simulateUpdatePhase()
-
     }
 
     /** perform the entire simulation

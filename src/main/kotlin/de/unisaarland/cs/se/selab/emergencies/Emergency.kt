@@ -16,7 +16,7 @@ class Emergency(
     val severity: Int,
     val handleTime: Int,
     val maxDuration: Int,
-    var resources: Resource
+    var originalResources: Resource
 ) {
 
     var base: Base? = null
@@ -25,6 +25,7 @@ class Emergency(
     var handlingStarted: Boolean = false
     var resolved: Boolean = false
     var firsttick: Boolean = true
+    var currentResources = originalResources
 
     /**
      * @return adds a vehicle to the vehicle list

@@ -50,7 +50,7 @@ class BaseTest {
         val vehicles = b.vehicles
         val vehicle1 = vehicles[0]
         val vehicle2 = vehicles[3]
-        assertTrue(em.resources.isEmpty())
+        assertTrue(em.currentResources.isEmpty())
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
         test.clearEMCC()
@@ -92,7 +92,7 @@ class BaseTest {
         val vehicles = b.vehicles
         val vehicle1 = vehicles[0]
         val vehicle2 = vehicles[1]
-        assertTrue(em.resources.isEmpty())
+        assertTrue(em.currentResources.isEmpty())
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
         test.clearEMCC()
@@ -173,7 +173,7 @@ class BaseTest {
         b.requestResources(em)
         val testres = Resource(vehicleList, 2400, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
-        assertTrue(testres.isEqual(em.resources))
+        assertTrue(testres.isEqual(em.currentResources))
         test.clearEMCC()
         test.clearSimulation()
     }
@@ -215,7 +215,7 @@ class BaseTest {
         val vehicle1 = vehicles[0]
         val vehicle2 = vehicles[1]
         val vehicle3 = vehicles[2]
-        assertTrue(em.resources.isEmpty())
+        assertTrue(em.currentResources.isEmpty())
         assertTrue(vehicle1 == em.assignedVehicles[0])
         assertTrue(vehicle2 == em.assignedVehicles[1])
         assertTrue(vehicle3 == em.assignedVehicles[2])
@@ -253,7 +253,7 @@ class BaseTest {
         b.requestResources(em)
         val testres = Resource(vehicleList, 1800, 0, 0, 0)
         assertTrue(em.assignedVehicles.isEmpty())
-        assertTrue(testres.isEqual(em.resources))
+        assertTrue(testres.isEqual(em.currentResources))
         test.clearEMCC()
         test.clearSimulation()
     }
@@ -295,7 +295,7 @@ class BaseTest {
         em.base = b
         b.requestResources(em)
         val testres = Resource(mutableListOf(VehicleType.FIRE_TRUCK_WATER), 2400, 0, 0, 0)
-        assertTrue(testres.isEqual(em.resources))
+        assertTrue(testres.isEqual(em.currentResources))
         test.clearEMCC()
         test.clearSimulation()
     }
@@ -333,7 +333,7 @@ class BaseTest {
         val vehicles = b.vehicles
         val vehic1 = vehicles[1]
         val testres = Resource(mutableListOf(), 0, 0, 0, 0)
-        assertTrue(testres.isEqual(em.resources))
+        assertTrue(testres.isEqual(em.currentResources))
         assertTrue(vehic1 == em.assignedVehicles[0])
         test.clearEMCC()
         test.clearSimulation()

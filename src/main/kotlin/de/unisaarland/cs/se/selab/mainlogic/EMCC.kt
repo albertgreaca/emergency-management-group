@@ -100,17 +100,17 @@ object EMCC {
 
             var ok: Boolean = true
             // if needed, base tries to reallocate resources from other emergencies
-            if (!em.resources.isEmpty()) {
+            if (!em.currentResources.isEmpty()) {
                 val newre = emBase.reallocateResources(em)
-                if (!newre.isEqual(em.resources)) {
+                if (!newre.isEqual(em.currentResources)) {
                     ok = false
-                    em.resources = newre
+                    em.currentResources = newre
                 }
             }
             k++
 
             // if there are remaining resources after reallocating, a request to the next base has to be created
-            if (!em.resources.isEmpty()) {
+            if (!em.currentResources.isEmpty()) {
                 makeRequest(em)
             }
         }
@@ -121,9 +121,9 @@ object EMCC {
      */
     private fun makeRequest(em: Emergency) {
         val emBase = requireNotNull(em.base)
-        val policeResources = em.resources.filterPoliceResources()
-        val fireResources = em.resources.filterFireResources()
-        val ambulanceResources = em.resources.filterAmbulanceResources()
+        val policeResources = em.currentResources.filterPoliceResources()
+        val fireResources = em.currentResources.filterFireResources()
+        val ambulanceResources = em.currentResources.filterAmbulanceResources()
 
         // make a request for the missing police resources
         if (!policeResources.isEmpty()) {
@@ -161,7 +161,7 @@ object EMCC {
                 requests[i].processingBase.requestResources(requests[i].emergency)
 
                 // if we have resources left, make another request to the next closest base
-                if (!requests[i].emergency.resources.isEmpty()) {
+                if (!requests[i].emergency.currentResources.isEmpty()) {
                     delegateRequest(requests[i])
                 } else {
                     requests.removeAt(i)
@@ -286,7 +286,7 @@ object EMCC {
                 vec.baseWaitingTicks++
             }
         }
-        if (vec is Ambulance && vec.patientPlannedOnBoard) {
+        if (vec is Ambulance && vec.patientOnBoard) {
             vec.baseWaitingTicks = 2
         }
         if (vec is PoliceCar && vec.transportedCriminals > 0) {
@@ -301,7 +301,7 @@ object EMCC {
         // update all emergencies who allocated all resources in this tick
         val listtoremove = mutableListOf<Emergency>()
         for (em in startingEmergencies) {
-            if (em.resources.isEmpty()) {
+            if (em.currentResources.isEmpty()) {
                 listtoremove.add(em)
                 handledEmergencies.add(em)
             }
@@ -340,7 +340,7 @@ object EMCC {
     private fun updateHandlingStartedEmergencies() {
         val newlyHandlingStartedEmergencies: MutableList<Emergency> = mutableListOf()
         for (em in handledEmergencies) {
-            if (em.handlingStarted || !em.resources.isEmpty()) continue
+            if (em.handlingStarted || !em.currentResources.isEmpty()) continue
             var allArrived = true
             for (vec in em.assignedVehicles) {
                 allArrived =

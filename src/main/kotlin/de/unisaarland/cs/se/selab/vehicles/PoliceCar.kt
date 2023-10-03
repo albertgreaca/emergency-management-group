@@ -20,4 +20,6 @@ class PoliceCar(
     staffCapacity,
     vehicleHeight,
     position
-)
+) {
+    val criminalsStillFitting get() = criminalCapacity - transportedCriminals
+}
