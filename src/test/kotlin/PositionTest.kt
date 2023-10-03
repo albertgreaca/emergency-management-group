@@ -251,10 +251,11 @@ class PositionTest {
 
         val r1 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhofstrasse", 20, 5, v1, v2)
         val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "Bahnhof", 20, 5, v2, v3)
-        val roadList = mutableListOf(r1, r2)
+        val roadList1 = mutableListOf(r1, r2)
+        val roadList2 = mutableListOf(r1, r2)
 
-        val pos1 = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
-        val pos2 = Position(roadList, vertexList, 0, 10, v2, 20, 2, false, false)
+        val pos1 = Position(roadList1, vertexList, 0, 10, v2, 20, 2, false, false)
+        val pos2 = Position(roadList2, vertexList, 0, 10, v2, 20, 2, false, false)
         pos2.advance()
         assertFalse(pos1.isEqual(pos2))
         assertFalse(pos2.isEqual(pos1))
@@ -273,5 +274,23 @@ class PositionTest {
         pos1.advance()
         pos2.advance()
         assertTrue(pos1.isEqual(pos2))
+    }
+
+    @Test
+    fun advance3() {
+        val v0 = Vertex(0, null, 0)
+        val v1 = Vertex(1, null, 1)
+        val v2 = Vertex(2, null, 2)
+        val vertList = mutableListOf(v0, v1, v2)
+        val r1 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "SimpleStreet", 10, 5, v0, v1)
+        val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "SimplerStreet", 10, 5, v1, v2)
+        val rL1 = mutableListOf(r1, r2)
+        val rL2 = mutableListOf(r1, r2)
+        val rL3 = mutableListOf(r1, r2)
+        val pos1 = Position(rL1, vertList, 3, 7, v1, 17, 2, false, false)
+        val pos2 = Position(rL2, vertList, 2, 8, v1, 18, 2, false, false)
+        val pos3 = Position(rL3, vertList, 2, 8, v2, 8, 1, true, false)
+        assertFalse(pos1.isEqual(pos2))
+        assertTrue(pos2.isEqual(pos3))
     }
 }
