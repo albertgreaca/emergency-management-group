@@ -57,7 +57,7 @@ class ReallocationTest {
         val jsonparse = JsonParser(
             graph,
             File("src/test/resources/UnitTestConfig2/firebasesimple.json"),
-            File("src/test/resources/UnitTestConfig3/reallocscenario.json")
+            File("src/test/resources/UnitTestConfig2/reallocscenario.json")
         )
         parse.parseMap()
         jsonparse.parseBases()
