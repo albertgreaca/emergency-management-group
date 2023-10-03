@@ -31,6 +31,7 @@ object SystemTestRegistration {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(RoadClosureTest())
+        manager.registerTest((RushHour1Test()))
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         registerSystemTests(manager)
