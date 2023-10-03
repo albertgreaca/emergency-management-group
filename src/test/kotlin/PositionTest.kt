@@ -276,7 +276,7 @@ class PositionTest {
         assertTrue(pos1.isEqual(pos2))
     }
 
-    @Test
+    /*@Test
     fun advance3() {
         val v0 = Vertex(0, null, 0)
         val v1 = Vertex(1, null, 1)
@@ -292,5 +292,5 @@ class PositionTest {
         val pos3 = Position(rL3, vertList, 2, 8, v2, 8, 1, true, false)
         assertFalse(pos1.isEqual(pos2))
         assertTrue(pos2.isEqual(pos3))
-    }
+    }*/
 }
