@@ -8,6 +8,7 @@ import de.unisaarland.cs.se.selab.bases.departments.FireDepartment
 import de.unisaarland.cs.se.selab.bases.departments.PoliceDepartment
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
+import de.unisaarland.cs.se.selab.emergencies.EmergencyUtils
 import de.unisaarland.cs.se.selab.events.Event
 import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.utils.Logger
@@ -357,46 +358,15 @@ object EMCC {
     }
 
     private fun updateResourcesOfAssets(em: Emergency) {
+        val emUt = EmergencyUtils()
         // water
-        val waterTrucks = em.assignedVehicles.filter { it is FireTruckWater }.sortedBy { it.id }
-            as MutableList<FireTruckWater>
-        var waterToDistribute = em.originalResources.waterAmount
-        while (waterToDistribute > 0) {
-            if (waterToDistribute >= waterTrucks[0].waterTransported) {
-                waterToDistribute -= waterTrucks[0].waterTransported
-                waterTrucks[0].waterTransported = 0
-                waterTrucks.removeAt(0)
-            } else {
-                waterTrucks[0].waterTransported -= waterToDistribute
-                waterToDistribute = 0
-            }
-        }
+        emUt.updateWaterTruckResources(em)
 
         // criminals
-        val policeCars = em.assignedVehicles.filter { it is PoliceCar }.sortedBy { it.id } as MutableList<PoliceCar>
-        var criminalsToDistribute = em.originalResources.criminalAmount
-        while (criminalsToDistribute > 0) {
-            if (criminalsToDistribute >= policeCars[0].criminalsStillFitting) {
-                criminalsToDistribute -= policeCars[0].criminalsStillFitting
-                policeCars[0].transportedCriminals = policeCars[0].criminalCapacity
-                policeCars.removeAt(0)
-            } else {
-                policeCars[0].transportedCriminals += criminalsToDistribute
-                criminalsToDistribute = 0
-            }
-        }
+        emUt.updatePoliceCarResources(em)
 
         // patients
-        val ambulances = em.assignedVehicles.filter { it is Ambulance }.sortedBy { it.id } as MutableList<Ambulance>
-        var patientsToDistribute = em.originalResources.patientAmount
-        while (patientsToDistribute > 0) {
-            if (!ambulances[0].patientOnBoard) {
-                patientsToDistribute -= 1
-                ambulances[0].patientOnBoard = true
-            }
-            ambulances.removeAt(0)
-        }
-        return
+        emUt.updateAmbulanceResources(em)
     }
 
     /**

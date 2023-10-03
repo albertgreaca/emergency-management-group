@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.emergencies
 
-import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
@@ -64,16 +63,60 @@ class EmergencyUtils {
     /**
      * @returns the
      */
-    fun differenceNeededAllocated(em: Emergency): Resource {
-        val patientsNeeded = em.originalResources.patientAmount - potentialPatients(em)
-        val waterNeeded = em.originalResources.waterAmount - potentialWater(em)
-        val criminalsNeeded = em.originalResources.criminalAmount - potentialCriminals(em)
-        return Resource(
-            em.currentResources.vehicles,
-            waterNeeded,
-            criminalsNeeded,
-            patientsNeeded,
-            em.currentResources.ladderLength
-        )
+    fun updateWaterTruckResources(em: Emergency) {
+        val waterTrucks2 = em.assignedVehicles.filter { it is FireTruckWater }.sortedBy { it.id }
+        if (!waterTrucks2.isEmpty()) {
+            val waterTrucks = waterTrucks2 as MutableList<FireTruckWater>
+            var waterToDistribute = em.originalResources.waterAmount
+            while (waterToDistribute > 0) {
+                if (waterToDistribute >= waterTrucks[0].waterTransported) {
+                    waterToDistribute -= waterTrucks[0].waterTransported
+                    waterTrucks[0].waterTransported = 0
+                    waterTrucks.removeAt(0)
+                } else {
+                    waterTrucks[0].waterTransported -= waterToDistribute
+                    waterToDistribute = 0
+                }
+            }
+        }
+    }
+
+    /**
+     * @returns the
+     */
+    fun updatePoliceCarResources(em: Emergency) {
+        val policeCars2 = em.assignedVehicles.filter { it is PoliceCar }.sortedBy { it.id }
+        if (!policeCars2.isEmpty()) {
+            val policeCars = policeCars2 as MutableList<PoliceCar>
+            var criminalsToDistribute = em.originalResources.criminalAmount
+            while (criminalsToDistribute > 0) {
+                if (criminalsToDistribute >= policeCars[0].criminalsStillFitting) {
+                    criminalsToDistribute -= policeCars[0].criminalsStillFitting
+                    policeCars[0].transportedCriminals = policeCars[0].criminalCapacity
+                    policeCars.removeAt(0)
+                } else {
+                    policeCars[0].transportedCriminals += criminalsToDistribute
+                    criminalsToDistribute = 0
+                }
+            }
+        }
+    }
+
+    /**
+     * @returns the
+     */
+    fun updateAmbulanceResources(em: Emergency) {
+        val ambulances2 = em.assignedVehicles.filter { it is Ambulance }.sortedBy { it.id }
+        if (!ambulances2.isEmpty()) {
+            val ambulances = ambulances2 as MutableList<Ambulance>
+            var patientsToDistribute = em.originalResources.patientAmount
+            while (patientsToDistribute > 0) {
+                if (!ambulances[0].patientOnBoard) {
+                    patientsToDistribute -= 1
+                    ambulances[0].patientOnBoard = true
+                }
+                ambulances.removeAt(0)
+            }
+        }
     }
 }
