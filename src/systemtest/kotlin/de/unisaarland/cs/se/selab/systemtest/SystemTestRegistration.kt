@@ -55,7 +55,7 @@ object SystemTestRegistration {
         registerSystemTests(manager)
     }
     private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
-        manager.registerTest(FailedParser1())
+        manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser1())
         manager.registerTest(FailedParser2())
         manager.registerTest(FailedParser3())
         manager.registerTest(FailedParser4())
