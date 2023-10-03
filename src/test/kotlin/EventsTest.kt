@@ -179,7 +179,7 @@ class EventsTest {
             Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbruecken", "Weg", 20, 4, vertex0, vertex1)
 
         val event = RoadClosureEvent(0, 1, 2, road)
-        var map = GraphMap()
+        val map = GraphMap()
         Simulation.map = map
         map.addVertex(vertex0)
         map.addVertex(vertex1)
