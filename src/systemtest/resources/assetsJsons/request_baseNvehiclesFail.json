@@ -30,7 +30,7 @@
     {
       "id": 5,
       "baseType": "HOSPITAL",
-      "location": 2,
+      "location": 5,
       "staff": 60,
       "doctors": 3
     }
