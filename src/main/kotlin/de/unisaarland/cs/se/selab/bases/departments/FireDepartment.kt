@@ -4,6 +4,8 @@ import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
 import de.unisaarland.cs.se.selab.utils.Logger
+import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
 
 /**
  * Class representing all Fire bases
@@ -50,8 +52,15 @@ class FireDepartment : EmergencyObserver {
                 } else if (v.baseWaitingTicks == 1) {
                     v.available = true
                     v.baseWaitingTicks--
+                    rechargeVehicle(v)
                 }
             }
+        }
+    }
+
+    private fun rechargeVehicle(v: Vehicle) {
+        if (v is FireTruckWater) {
+            v.waterTransported = v.waterCapacity
         }
     }
 }

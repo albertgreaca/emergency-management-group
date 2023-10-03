@@ -1,5 +1,6 @@
 package de.unisaarland.cs.se.selab.mainlogic
 
+import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.bases.Hospital
 import de.unisaarland.cs.se.selab.bases.PoliceStation
 import de.unisaarland.cs.se.selab.bases.departments.AmbulanceDepartment
@@ -125,28 +126,21 @@ object EMCC {
         val fireResources = em.currentResources.filterFireResources()
         val ambulanceResources = em.currentResources.filterAmbulanceResources()
 
+        val nextPoliceBase = if (policeResources.isEmpty()) null else emBase.getNextPoliceBase(emBase)
+        val nextFireBase = if (fireResources.isEmpty()) null else emBase.getNextFireBase(emBase)
+        val nextAmbulanceBase = if (ambulanceResources.isEmpty()) null else emBase.getNextHospital(emBase)
         // make a request for the missing police resources
-        if (!policeResources.isEmpty()) {
-            val nextPoliceBase = emBase.getNextPoliceBase(emBase)
-            if (nextPoliceBase != null) {
-                emBase.makeRequest(em, nextPoliceBase)
-            }
-        }
 
-        // make a request for the missing police resources
-        if (!fireResources.isEmpty()) {
-            val nextFireBase = emBase.getNextFireBase(emBase)
-            if (nextFireBase != null) {
-                emBase.makeRequest(em, nextFireBase)
-            }
-        }
+        val bases = (
+            mutableListOf(
+                nextPoliceBase,
+                nextFireBase,
+                nextAmbulanceBase
+            ).filter { !(it == null) } as List<Base>
+            ).sortedBy { it.id }
 
-        // make a request for the missing ambulance resources
-        if (!ambulanceResources.isEmpty()) {
-            val nextAmbulanceBase = emBase.getNextHospital(emBase)
-            if (nextAmbulanceBase != null) {
-                emBase.makeRequest(em, nextAmbulanceBase)
-            }
+        for (b in bases) {
+            emBase.makeRequest(em, b)
         }
     }
 
@@ -353,12 +347,56 @@ object EMCC {
             if (allArrived) {
                 em.handlingStarted = true
                 newlyHandlingStartedEmergencies.add(em)
+                updateResourcesOfAssets(em)
             }
         }
         newlyHandlingStartedEmergencies.sortBy { it.id }
         for (emergency in newlyHandlingStartedEmergencies) {
             Logger.logEmergencyHandlingStart(emergency.id)
         }
+    }
+
+    private fun updateResourcesOfAssets(em: Emergency) {
+        // water
+        val waterTrucks = em.assignedVehicles.filter { it is FireTruckWater }.sortedBy { it.id }
+            as MutableList<FireTruckWater>
+        var waterToDistribute = em.originalResources.waterAmount
+        while (waterToDistribute > 0) {
+            if (waterToDistribute >= waterTrucks[0].waterTransported) {
+                waterToDistribute -= waterTrucks[0].waterTransported
+                waterTrucks[0].waterTransported = 0
+                waterTrucks.removeAt(0)
+            } else {
+                waterTrucks[0].waterTransported -= waterToDistribute
+                waterToDistribute = 0
+            }
+        }
+
+        // criminals
+        val policeCars = em.assignedVehicles.filter { it is PoliceCar }.sortedBy { it.id } as MutableList<PoliceCar>
+        var criminalsToDistribute = em.originalResources.criminalAmount
+        while (criminalsToDistribute > 0) {
+            if (criminalsToDistribute >= policeCars[0].criminalsStillFitting) {
+                criminalsToDistribute -= policeCars[0].criminalsStillFitting
+                policeCars[0].transportedCriminals = policeCars[0].criminalCapacity
+                policeCars.removeAt(0)
+            } else {
+                policeCars[0].transportedCriminals += criminalsToDistribute
+                criminalsToDistribute = 0
+            }
+        }
+
+        // patients
+        val ambulances = em.assignedVehicles.filter { it is Ambulance }.sortedBy { it.id } as MutableList<Ambulance>
+        var patientsToDistribute = em.originalResources.patientAmount
+        while (patientsToDistribute > 0) {
+            if (!ambulances[0].patientOnBoard) {
+                patientsToDistribute -= 1
+                ambulances[0].patientOnBoard = true
+            }
+            ambulances.removeAt(0)
+        }
+        return
     }
 
     /**
