@@ -1,0 +1,36 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 1,
+      "duration": 10,
+      "source": 5,
+      "target": 1,
+      "factor": 1,
+      "oneWayStreet": true
+    },
+    {
+      "id": 1,
+      "type": "RUSH_HOUR",
+      "tick": 3,
+      "duration": 2,
+      "factor": 20,
+      "roadTypes": [
+        "SIDE_STREET"
+      ]
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 3,
+      "village": "Luebeck",
+      "roadName": "Linden_Avenue",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 10
+    }
+  ]
+}

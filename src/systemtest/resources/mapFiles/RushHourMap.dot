@@ -1,0 +1,17 @@
+digraph G {
+	0;
+	1;
+	2;
+	3;
+	4;
+	5;
+
+	0 -> 1 [village=Luebeck; name=Valley_Road; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	1 -> 2 [village=Luebeck; name=Linden_Avenue; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	2 -> 3 [village=Luebeck; name=By_the_Pond; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	3 -> 4 [village=Luebeck; name=Railway_Station_Road; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	4 -> 5 [village=Luebeck; name=Rose_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	5 -> 0 [village=Luebeck; name=Meadow_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	5 -> 1 [village=Luebeck; name=By_the_Stream; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+
+}
