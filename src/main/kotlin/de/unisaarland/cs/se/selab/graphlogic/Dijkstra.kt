@@ -111,8 +111,10 @@ object Dijkstra {
     }
 
     private fun determinePathHeight(cur: Pair<Int, Int>, dist: Array<Position>): Position {
+        val ansp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+        ansp.vertexList = dist[cur.first].vertexList.toMutableList()
         for (i in 0..dist[cur.first].vertexList.size - 2) {
-            dist[cur.first].roadList.add(
+            ansp.roadList.add(
                 requireNotNull(
                     requireNotNull(requireNotNull(Simulation.map)).getRoad(
                         dist[cur.first].vertexList[i],
@@ -121,17 +123,17 @@ object Dijkstra {
                 )
             )
         }
-        dist[cur.first].distance = cur.second
+        ansp.distance = cur.second
         if (dist[cur.first].vertexList.size >= 2) {
-            dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
-            dist[cur.first].distanceFromStart = 0
-            dist[cur.first].distanceFromEnd = dist[cur.first].roadList[0].getActualWeight()
+            ansp.destinationVertex = ansp.vertexList[1]
+            ansp.distanceFromStart = 0
+            ansp.distanceFromEnd = ansp.roadList[0].getActualWeight()
         }
-        dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
-        if (dist[cur.first].distance % divisor != 0 || dist[cur.first].distance == 0) {
-            dist[cur.first].arrivalTicks++
+        ansp.arrivalTicks = ansp.distance / divisor
+        if (ansp.distance % divisor != 0 || ansp.distance == 0) {
+            ansp.arrivalTicks++
         }
-        return dist[cur.first]
+        return ansp
     }
 
     private fun updateNeighborsHeight(
@@ -161,8 +163,8 @@ object Dijkstra {
      * Doing Dijkstra respecting the height of vehicles and roads
      */
     fun dijkstraHeight(startingNode: Int, endRoad: Road, height: Int): Position {
-        var position1: Position? = null
-        var position2: Position? = null
+        var position1 = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
+        var position2 = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
 
         val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
@@ -177,21 +179,21 @@ object Dijkstra {
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        while (!pq.isEmpty() && (position1 == null || position2 == null)) {
+        while (!pq.isEmpty()) {
             val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
             val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (endRoad.start == v) {
-                position1 = determinePathHeight(cur, dist)
+                position1 = position1.determine(determinePathHeight(cur, dist))
             }
             if (endRoad.end == v) {
-                position2 = determinePathHeight(cur, dist)
+                position2 = position2.determine(determinePathHeight(cur, dist))
             }
             updateNeighborsHeight(cur, dist, pq, height)
         }
-        return requireNotNull(position1).determine(requireNotNull(position2))
+        return position1.determine(position2)
     }
 
     private fun determinePathRB(
@@ -201,25 +203,27 @@ object Dijkstra {
         distStart: Int,
         distEnd: Int
     ): Position {
+        val ansp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
+        ansp.vertexList = dist[cur.first].vertexList.toMutableList()
         if (dist[cur.first].vertexList[0] == startRoad.start && distStart != 0) {
-            dist[cur.first].roadList.add(startRoad)
-            dist[cur.first].distance = cur.second
-            dist[cur.first].destinationVertex = startRoad.start
-            dist[cur.first].distanceFromStart = distEnd
-            dist[cur.first].distanceFromEnd = distStart
+            ansp.roadList.add(startRoad)
+            ansp.distance = cur.second
+            ansp.destinationVertex = startRoad.start
+            ansp.distanceFromStart = distEnd
+            ansp.distanceFromEnd = distStart
         } else {
             if (dist[cur.first].vertexList[0] == startRoad.end && distEnd != 0) {
-                dist[cur.first].roadList.add(startRoad)
-                dist[cur.first].distance = cur.second
-                dist[cur.first].destinationVertex = startRoad.end
-                dist[cur.first].distanceFromStart = distStart
-                dist[cur.first].distanceFromEnd = distEnd
+                ansp.roadList.add(startRoad)
+                ansp.distance = cur.second
+                ansp.destinationVertex = startRoad.end
+                ansp.distanceFromStart = distStart
+                ansp.distanceFromEnd = distEnd
             } else {
-                dist[cur.first].distance = cur.second
+                ansp.distance = cur.second
                 if (dist[cur.first].vertexList.size >= 2) {
-                    dist[cur.first].destinationVertex = dist[cur.first].vertexList[1]
-                    dist[cur.first].distanceFromStart = 0
-                    dist[cur.first].distanceFromEnd =
+                    ansp.destinationVertex = dist[cur.first].vertexList[1]
+                    ansp.distanceFromStart = 0
+                    ansp.distanceFromEnd =
                         requireNotNull(
                             requireNotNull(requireNotNull(Simulation.map)).getRoad(
                                 dist[cur.first].vertexList[0],
@@ -230,7 +234,7 @@ object Dijkstra {
             }
         }
         for (i in 0..dist[cur.first].vertexList.size - 2) {
-            dist[cur.first].roadList.add(
+            ansp.roadList.add(
                 requireNotNull(
                     requireNotNull(
                         requireNotNull(Simulation.map)
@@ -238,11 +242,11 @@ object Dijkstra {
                 )
             )
         }
-        dist[cur.first].arrivalTicks = dist[cur.first].distance / divisor
-        if (dist[cur.first].distance % divisor != 0 || dist[cur.first].distance == 0) {
-            dist[cur.first].arrivalTicks++
+        ansp.arrivalTicks = ansp.distance / divisor
+        if (ansp.distance % divisor != 0 || ansp.distance == 0) {
+            ansp.arrivalTicks++
         }
-        return dist[cur.first]
+        return ansp
     }
 
     private fun updateNeighborsRB(
@@ -279,8 +283,8 @@ object Dijkstra {
         endRoad: Road,
         height: Int
     ): Position {
-        var position1: Position? = null
-        var position2: Position? = null
+        var position1 = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
+        var position2 = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, Int.MAX_VALUE, 0)
 
         val n: Int = requireNotNull(Simulation.map).vertexList.size
         val dist: Array<Position> = Array<Position>(n) { index ->
@@ -308,21 +312,21 @@ object Dijkstra {
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i].distance))
         }
-        while (!pq.isEmpty() && (position1 == null || position2 == null)) {
+        while (!pq.isEmpty()) {
             val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first].distance != cur.second) {
                 continue
             }
             val v: Vertex = requireNotNull(requireNotNull(Simulation.map).getVertexFromRealId(cur.first))
             if (endRoad.start == v) {
-                position1 = determinePathRB(cur, dist, startRoad, distStart, distEnd)
+                position1 = position1.determine(determinePathRB(cur, dist, startRoad, distStart, distEnd))
             }
             if (endRoad.end == v) {
-                position2 = determinePathRB(cur, dist, startRoad, distStart, distEnd)
+                position2 = position2.determine(determinePathRB(cur, dist, startRoad, distStart, distEnd))
             }
             updateNeighborsRB(cur, dist, pq, height)
         }
-        return requireNotNull(position1).determine(requireNotNull(position2))
+        return position1.determine(position2)
     }
 
     /**
