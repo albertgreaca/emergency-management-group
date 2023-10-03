@@ -152,7 +152,7 @@ class Resource(
     private fun resListisEqual(compare: Resource): Boolean {
         val startlist = this.vehicles
         val comparelist = compare.vehicles
-        var copylist = comparelist.toMutableList()
+        val copylist = comparelist.toMutableList()
         if (!(startlist.size == comparelist.size)) {
             return false
         }
