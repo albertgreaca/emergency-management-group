@@ -78,21 +78,21 @@ class SimulationTest {
     }
 
     @Test
-    fun testInitializeInvalidConfig3Semantically() {
-        val res = Simulation.initialize(
-            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
-            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
-            File("src/test/resources/invalidConfig3/Sematics/config3invalid7.json")
-        )
-        assertFalse(res)
-    }
-
-    @Test
     fun testInitializeInvalidConfig2Syntactically() {
         val res = Simulation.initialize(
             File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
             File("src/test/resources/invalidConfig2/Syntax/config2invalid21.json"),
             File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        assertFalse(res)
+    }
+
+    @Test
+    fun testInitializeInvalidConfig3Semantically() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/invalidConfig3/Sematics/config3invalid7.json")
         )
         assertFalse(res)
     }
@@ -105,5 +105,56 @@ class SimulationTest {
             File("src/test/resources/invalidConfig3/Syntax/config3invalid10.json")
         )
         assertFalse(res)
+    }
+
+    @Test
+    fun testsimulateSimulationMaxTicksNull() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+
+        assertTrue(res)
+
+        Simulation.simulateSimulation()
+
+        val resolvedEms = Simulation.statistics.resolvedEmergencies
+        val receivedEms = Simulation.statistics.receivedEmergencies
+        val reroutedAssets = Simulation.statistics.reroutedAssets
+        val failedEms = Simulation.statistics.failedEmergencies
+        val ongoingEms = Simulation.statistics.ongoingEmergencies
+
+        assertEquals(0, resolvedEms)
+        assertEquals(1, receivedEms)
+        assertEquals(0, reroutedAssets)
+        assertEquals(1, failedEms)
+        assertEquals(0, ongoingEms)
+    }
+
+    @Test
+    fun testsimulateSimulationBasic() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+
+        assertTrue(res)
+
+        Simulation.maximumTicks = 10
+        Simulation.simulateSimulation()
+
+        val resolvedEms = Simulation.statistics.resolvedEmergencies
+        val receivedEms = Simulation.statistics.receivedEmergencies
+        val reroutedAssets = Simulation.statistics.reroutedAssets
+        val failedEms = Simulation.statistics.failedEmergencies
+        val ongoingEms = Simulation.statistics.ongoingEmergencies
+
+        assertEquals(0, resolvedEms)
+        assertEquals(1, receivedEms)
+        assertEquals(0, reroutedAssets)
+        assertEquals(1, failedEms)
+        assertEquals(0, ongoingEms)
     }
 }
