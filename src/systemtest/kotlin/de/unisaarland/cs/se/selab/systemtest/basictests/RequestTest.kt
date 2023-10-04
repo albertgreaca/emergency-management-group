@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class RequestTest : SystemTest() {
-    override val name = "Request"
+    override val name = "Request Success"
 
     override val map = "mapFiles/request_map.dot"
     override val assets = "assetsJsons/request_baseNvehicles.json"

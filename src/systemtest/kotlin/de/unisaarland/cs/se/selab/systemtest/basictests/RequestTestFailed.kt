@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class RequestTestFailed : SystemTest() {
-    override val name = "Request"
+    override val name = "Request Failed"
 
     override val map = "mapFiles/request_map.dot"
     override val assets = "assetsJsons/request_baseNvehiclesFail.json"
