@@ -49,7 +49,7 @@ class Reallocation : SystemTest() {
         assertNextLine("Simulation Tick: 8")
         assertNextLine("Emergency Resolved: 1 resolved.")
         assertNextLine("Simulation Tick: 9")
-        assertNextLine("Asset Reallocation: 3 reallocated to 0; 4 ticks to arrive.")
+        assertNextLine("Asset Reallocation: 3 reallocated to 0.")
         assertNextLine("Simulation Tick: 10")
         assertNextLine("Asset Arrival: 0 arrived at 0.")
         assertNextLine("Asset Arrival: 2 arrived at 0.")
@@ -59,16 +59,15 @@ class Reallocation : SystemTest() {
         assertNextLine("Asset Arrival: 8 arrived at 5.")
         assertNextLine("Simulation Tick: 11")
         assertNextLine("Simulation Tick: 12")
-        assertNextLine("Simulation Tick: 13")
         assertNextLine("Asset Arrival: 3 arrived at 2.")
+        assertNextLine("Emergency Handling Start: 0 handling started.")
         continueWith()
     }
 
     suspend fun continueWith() {
-        assertNextLine("Emergency Handling Start: 0 handling started.")
+        assertNextLine("Simulation Tick: 13")
         assertNextLine("Simulation Tick: 14")
         assertNextLine("Simulation Tick: 15")
-        assertNextLine("Simulation Tick: 16")
         assertNextLine("Emergency Resolved: 0 resolved.")
         // The Simulation should end
         assertNextLine("Simulation End")
