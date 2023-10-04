@@ -12,7 +12,11 @@ import de.unisaarland.cs.se.selab.emergencies.EmergencyUtils
 import de.unisaarland.cs.se.selab.events.Event
 import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.utils.Logger
-import de.unisaarland.cs.se.selab.vehicles.*
+import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
+import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
+import de.unisaarland.cs.se.selab.vehicles.PoliceCar
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
 
 /**
  * This is the class responsible for simulating the different phases of a tick
