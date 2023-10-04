@@ -185,4 +185,35 @@ class DijkstraTest {
 
         assertTrue(posDijkstra.isEqual(posComparable))
     }
+
+    @Test
+    fun dijkstraRerouteTestIntIssue() {
+        val parser = MapParser(Simulation.map, File("src/systemtest/resources/mapFiles/MapEmergencySimple.dot"))
+        parser.parseMap()
+        val jsonParser = JsonParser(
+            Simulation.map,
+            File("src/systemtest/resources/assetsJsons/AssetsEmergencySimple.json"),
+            File("src/systemtest/resources/scenarioJsons/ScenarioEmergencySimple.json")
+        )
+        jsonParser.parseBases()
+        val startroad = Simulation.map.getRoad("Campus", "Chemistry") ?: return
+        val endRoad = Simulation.map.getRoad("Campus", "Bioinfostr") ?: return
+        val vertex = Simulation.map.getVertexFromId(4) ?: return
+
+        val road2 = requireNotNull(Simulation.map.getRoad("UdS", "Biochemie"))
+        val roadList = mutableListOf(startroad, road2)
+
+        val vertex1 = requireNotNull(Simulation.map.getVertexFromId(4))
+        val vertex2 = requireNotNull(Simulation.map.getVertexFromId(2))
+        val vertexList = mutableListOf(vertex1, vertex2)
+
+        val roadEvent = requireNotNull(Simulation.map.getRoad("UdS", "Art"))
+        val event = TrafficJamEvent(50, 1, 50, roadEvent, Int.MAX_VALUE)
+        roadEvent.eventList.add(event)
+
+        val posDijkstra = Dijkstra.dijkstraReroute(startroad, 8, 10, vertex, endRoad, 2)
+        val posComparable = Position(roadList, vertexList, 10, 8, vertex, 22, 3, false, false)
+
+        assertTrue(posDijkstra.isEqual(posComparable))
+    }
 }
