@@ -39,7 +39,9 @@ class Road(
         if (ev is TrafficJamEvent) {
             factor = ev.factor
         }
-        return factor * weight
+        var actualWeight: Long = factor as Long * weight as Long
+        if (actualWeight > Int.MAX_VALUE) actualWeight = Int.MAX_VALUE as Long
+        return actualWeight as Int
     }
 
     /**
