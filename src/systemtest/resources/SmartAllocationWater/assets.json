@@ -1,0 +1,141 @@
+{
+  "bases": [
+    {
+    "id": 0,
+    "baseType": "FIRE_STATION",
+    "location": 1,
+    "staff": 100
+    },
+    {
+      "id": 1,
+      "baseType": "POLICE_STATION",
+      "location": 2,
+      "staff": 60,
+      "dogs": 0
+    },
+    {
+      "id": 2,
+      "baseType": "HOSPITAL",
+      "location": 4,
+      "staff": 60,
+      "doctors": 0
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 0,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 600
+    },
+    {
+      "id": 1,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 600
+    },
+    {
+      "id": 2,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 600
+    },
+    {
+      "id": 3,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 600
+    },
+    {
+      "id": 4,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 600
+    },
+    {
+      "id": 5,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 1200
+    },
+    {
+      "id": 6,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "waterCapacity": 1200
+    },
+    {
+      "id": 7,
+      "baseID": 0,
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleHeight": 2,
+      "staffCapacity": 7
+    },
+    {
+      "id": 8,
+      "baseID": 0,
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleHeight": 2,
+      "staffCapacity": 7
+    },
+    {
+      "id": 9,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 4,
+      "staffCapacity": 5,
+      "ladderLength": 60
+    },
+    {
+      "id": 10,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 4,
+      "staffCapacity": 5,
+      "ladderLength": 60
+    },
+    {
+      "id": 11,
+      "baseID": 1,
+      "vehicleType": "POLICE_CAR",
+      "vehicleHeight": 2,
+      "staffCapacity": 5,
+      "criminalCapacity": 3
+    },
+    {
+      "id": 12,
+      "baseID": 2,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 5
+    },
+    {
+      "id": 13,
+      "baseID": 2,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 5
+    },
+    {
+      "id": 14,
+      "baseID": 2,
+      "vehicleType": "EMERGENCY_DOCTOR_CAR",
+      "vehicleHeight": 3,
+      "staffCapacity": 2
+    }
+  ]
+}
