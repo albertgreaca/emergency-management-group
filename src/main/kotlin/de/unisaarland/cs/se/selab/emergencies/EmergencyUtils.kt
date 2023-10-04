@@ -10,6 +10,10 @@ import de.unisaarland.cs.se.selab.vehicles.VehicleType
  */
 class EmergencyUtils {
 
+    companion object {
+        const val divisor = 300
+    }
+
     /**
      * @returns number of patients that could be transported with the currently allocated vehicles
      */
@@ -60,10 +64,7 @@ class EmergencyUtils {
         return types
     }
 
-    /**
-     * @returns the
-     */
-    fun updateWaterTruckResources(em: Emergency) {
+    private fun updateWaterTruckResources(em: Emergency) {
         val waterTrucks2 = em.assignedVehicles.filter { it is FireTruckWater }.sortedBy { it.id }
         if (!waterTrucks2.isEmpty()) {
             var l = 0
@@ -82,10 +83,7 @@ class EmergencyUtils {
         }
     }
 
-    /**
-     * @returns the
-     */
-    fun updatePoliceCarResources(em: Emergency) {
+    private fun updatePoliceCarResources(em: Emergency) {
         val policeCars2 = em.assignedVehicles.filter { it is PoliceCar }.sortedBy { it.id }
         if (!policeCars2.isEmpty()) {
             val policeCars = policeCars2 as MutableList<PoliceCar>
@@ -104,10 +102,7 @@ class EmergencyUtils {
         }
     }
 
-    /**
-     * @returns the
-     */
-    fun updateAmbulanceResources(em: Emergency) {
+    private fun updateAmbulanceResources(em: Emergency) {
         val ambulances2 = em.assignedVehicles.filter { it is Ambulance }.sortedBy { it.id }
         if (!ambulances2.isEmpty()) {
             val ambulances = ambulances2 as MutableList<Ambulance>
@@ -121,5 +116,49 @@ class EmergencyUtils {
                 l++
             }
         }
+    }
+
+    /**
+     *
+     */
+    fun updateResourcesOfAssets(em: Emergency) {
+        // water
+        updateWaterTruckResources(em)
+        // criminals
+        updatePoliceCarResources(em)
+        // patients
+        updateAmbulanceResources(em)
+    }
+
+    private fun updateAmbulanceBaseWaitingTicks(em: Emergency) {
+        val fullAmbulances = em.assignedVehicles.filter { it is Ambulance && it.patientOnBoard }
+        for (a in fullAmbulances) {
+            a.baseWaitingTicks = 2
+        }
+    }
+
+    private fun updateWaterTruckBaseWaitingTicks(em: Emergency) {
+        val emptyWaterTrucks = em.assignedVehicles.filter { it is FireTruckWater && it.waterTransported == 0 }
+            as List<FireTruckWater>
+        for (a in emptyWaterTrucks) {
+            a.baseWaitingTicks = a.waterCapacity / divisor + 1
+        }
+    }
+
+    private fun updatePoliceCarBaseWaitingTicks(em: Emergency) {
+        val fullPoliceCars = em.assignedVehicles.filter { it is PoliceCar && it.criminalsStillFitting == 0 }
+            as List<PoliceCar>
+        for (a in fullPoliceCars) {
+            a.baseWaitingTicks = 3
+        }
+    }
+
+    /**
+     *
+     */
+    fun updateBaseWaitingTicksOfAssets(em: Emergency) {
+        updateAmbulanceBaseWaitingTicks(em)
+        updatePoliceCarBaseWaitingTicks(em)
+        updateWaterTruckBaseWaitingTicks(em)
     }
 }

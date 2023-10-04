@@ -4,9 +4,7 @@ package de.unisaarland.cs.se.selab.graphlogic
  * Class representing that graph of map
  */
 class GraphMap(
-    val adjacencyList: MutableList<MutableMap<Vertex, Road>> = mutableListOf(
-        mutableMapOf()
-    ),
+    val adjacencyList: MutableList<MutableMap<Vertex, Road>> = mutableListOf(),
     val vertexList: MutableList<Vertex> = mutableListOf(),
     val roadList: MutableList<Road> = mutableListOf(),
     var name: String? = null

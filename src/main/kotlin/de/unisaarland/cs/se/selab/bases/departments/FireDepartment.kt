@@ -47,6 +47,9 @@ class FireDepartment : EmergencyObserver {
     override fun updateVehicles() {
         for (b in bases) {
             for (v in b.vehicles) {
+                if (v.position != null) {
+                    continue
+                }
                 if (v.baseWaitingTicks > 1) {
                     v.baseWaitingTicks--
                 } else if (v.baseWaitingTicks == 1) {

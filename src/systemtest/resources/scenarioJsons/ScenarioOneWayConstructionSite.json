@@ -1,0 +1,26 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 1,
+      "duration": 50,
+      "source": 1,
+      "target": 0,
+      "factor": 1,
+      "oneWayStreet": true
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 3,
+      "village": "Village",
+      "roadName": "Mill_Lane",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 10
+    }
+  ]
+}

@@ -44,6 +44,8 @@ object SystemTestRegistration {
         manager.registerTest(RequestTestFailed())
         manager.registerTest(RequestTestPartial())
         manager.registerTest(FailedParser51())
+        manager.registerTest(EventIdTest())
+        manager.registerTest(EmergencySameTickTest())
     }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {

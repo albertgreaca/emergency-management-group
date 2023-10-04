@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class RequestTestFailed : SystemTest() {
-    override val name = "Request"
+    override val name = "Request Failed"
 
     override val map = "mapFiles/request_map.dot"
     override val assets = "assetsJsons/request_baseNvehiclesFail.json"
@@ -29,10 +29,6 @@ class RequestTestFailed : SystemTest() {
         assertNextLine("Simulation Tick: 3")
         assertNextLine("Asset Request: 5 sent to 2 for 0.")
         assertNextLine("Asset Request: 6 sent to 3 for 0.")
-        assertNextLine(fail)
-        assertNextLine("Simulation Tick: 4")
-        assertNextLine("Asset Request: 7 sent to 2 for 0.")
-        assertNextLine("Asset Request: 8 sent to 3 for 0.")
         assertNextLine(fail)
         assertNextLine("Emergency Failed: 0 failed.")
         assertNextLine("Simulation End")

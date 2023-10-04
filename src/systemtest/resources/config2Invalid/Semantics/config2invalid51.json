@@ -11,7 +11,7 @@
       "baseType": "POLICE_STATION",
       "location": 4,
       "staff": 12,
-      "dogs": 3
+      "dogs": 0
     },
     {
       "id": 2,
@@ -72,27 +72,6 @@
     },
     {
       "id": 1,
-      "baseID": 1,
-      "vehicleType": "K9_POLICE_CAR",
-      "vehicleHeight": 1,
-      "staffCapacity": 2
-    },
-    {
-      "id": 54,
-      "baseID": 1,
-      "vehicleType": "K9_POLICE_CAR",
-      "vehicleHeight": 1,
-      "staffCapacity": 2
-    },
-    {
-      "id": 55,
-      "baseID": 1,
-      "vehicleType": "K9_POLICE_CAR",
-      "vehicleHeight": 1,
-      "staffCapacity": 2
-    },
-    {
-      "id": 56,
       "baseID": 1,
       "vehicleType": "K9_POLICE_CAR",
       "vehicleHeight": 1,
