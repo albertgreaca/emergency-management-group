@@ -47,18 +47,18 @@ class Lexer {
 
     private fun whencyclo2(element: String, tokenList: MutableList<LexerIDToken>) {
         when (element) {
-            "village" -> tokenList.add(LexerIDToken(LexerToken.VILLAGE, Space))
-            "name" -> tokenList.add(LexerIDToken(LexerToken.NAME, Space))
-            "heightLimit" -> tokenList.add(LexerIDToken(LexerToken.HEIGHTLIMIT, Space))
-            "weight" -> tokenList.add(LexerIDToken(LexerToken.WEIGHT, Space))
-            "primaryType" -> tokenList.add(LexerIDToken(LexerToken.PRIMARYTYPE, Space))
-            "secondaryType" -> tokenList.add(LexerIDToken(LexerToken.SECONDARYTYPE, Space))
-            "mainStreet" -> tokenList.add(LexerIDToken(LexerToken.MAINSTREET, Space))
-            "sideStreet" -> tokenList.add(LexerIDToken(LexerToken.SIDESTREET, Space))
-            "countyRoad" -> tokenList.add(LexerIDToken(LexerToken.COUNTYROAD, Space))
-            "oneWayStreet" -> tokenList.add(LexerIDToken(LexerToken.ONEWAYSTREET, Space))
-            "tunnel" -> tokenList.add(LexerIDToken(LexerToken.TUNNEL, Space))
-            "none" -> tokenList.add(LexerIDToken(LexerToken.NONE, Space))
+            "village" -> tokenList.add(LexerIDToken(LexerToken.VILLAGE, "village"))
+            "name" -> tokenList.add(LexerIDToken(LexerToken.NAME, "name"))
+            "heightLimit" -> tokenList.add(LexerIDToken(LexerToken.HEIGHTLIMIT, "heightLimit"))
+            "weight" -> tokenList.add(LexerIDToken(LexerToken.WEIGHT, "weight"))
+            "primaryType" -> tokenList.add(LexerIDToken(LexerToken.PRIMARYTYPE, "primaryType"))
+            "secondaryType" -> tokenList.add(LexerIDToken(LexerToken.SECONDARYTYPE, "secondaryType"))
+            "mainStreet" -> tokenList.add(LexerIDToken(LexerToken.MAINSTREET, "mainStreet"))
+            "sideStreet" -> tokenList.add(LexerIDToken(LexerToken.SIDESTREET, "sideStreet"))
+            "countyRoad" -> tokenList.add(LexerIDToken(LexerToken.COUNTYROAD, "countyRoad"))
+            "oneWayStreet" -> tokenList.add(LexerIDToken(LexerToken.ONEWAYSTREET, "oneWayStreet"))
+            "tunnel" -> tokenList.add(LexerIDToken(LexerToken.TUNNEL, "tunnel"))
+            "none" -> tokenList.add(LexerIDToken(LexerToken.NONE, "none"))
             else -> tokenList.add(this.lexString(element))
         }
     }
