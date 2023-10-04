@@ -130,7 +130,7 @@ object Dijkstra {
             ansp.distanceFromEnd = ansp.roadList[0].getActualWeight()
         }
         ansp.arrivalTicks = ansp.distance / divisor
-        if (ansp.distance % divisor != 0 || ansp.distance == 0) {
+        if (ansp.distance % divisor != 0) {
             ansp.arrivalTicks++
         }
         return ansp
@@ -246,7 +246,7 @@ object Dijkstra {
             )
         }
         ansp.arrivalTicks = ansp.distance / divisor
-        if (ansp.distance % divisor != 0 || ansp.distance == 0) {
+        if (ansp.distance % divisor != 0) {
             ansp.arrivalTicks++
         }
         return ansp
