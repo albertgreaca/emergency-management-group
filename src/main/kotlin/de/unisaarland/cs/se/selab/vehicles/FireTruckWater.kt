@@ -34,7 +34,9 @@ class FireTruckWater(
         if (baseWaitingTicks != 0 || waterTransported == 0) {
             return false
         }
-        if (targetEmergency != null && !EMCC.resolvedOrFailedEmergencies.contains(targetEmergency) && em.severity <= requireNotNull(targetEmergency).severity) {
+        if (targetEmergency != null && !EMCC.resolvedOrFailedEmergencies.contains(targetEmergency) &&
+            em.severity <= requireNotNull(targetEmergency).severity
+        ) {
             return false
         }
         return true

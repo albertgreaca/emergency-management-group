@@ -68,6 +68,6 @@ class DoubleRealloc : SystemTest() {
         assertNextLine("Simulate Tick: 18")
         assertNextLine("Asset Arrival: 3 arrived at 5.")
         assertNextLine("Asset Arrival: 4 arrived at 5.")
-        assertNextLine("Emergency Handling Start: 1 handling started.") //to finish sev 1 em
+        assertNextLine("Emergency Handling Start: 1 handling started.") // to finish sev 1 em
     }
 }

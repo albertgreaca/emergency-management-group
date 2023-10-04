@@ -3,9 +3,9 @@
 1;
 2;
 0->1[village =
-village;     name = Campus;
+Saarbruecken;     name = Campus;
    heightLimit = 1; weight = 10;
    primaryType = sideStreet; secondaryType = none;];
 
-1->2[village = village; name = Teststrasse; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+1->2[village = Saarbruecken; name = Teststrasse; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
 }

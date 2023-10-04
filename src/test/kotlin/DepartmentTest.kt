@@ -193,10 +193,10 @@ class DepartmentTest {
             File("src/test/resources/UnitTestConfig3/crimeEmergency3TrafficJam.json")
         )
         parse.parseMap()
-        jsonparse.parseBases()
-        jsonparse.parseVehicles()
-        jsonparse.parseEmergency()
-        jsonparse.parseEvents()
+        var res = jsonparse.parseBases()
+        res = jsonparse.parseVehicles()
+        res = jsonparse.parseEmergency()
+        res = jsonparse.parseEvents()
 
         val policeDep = EMCC.policeDepartment
         val em = Simulation.emergencies[0]
