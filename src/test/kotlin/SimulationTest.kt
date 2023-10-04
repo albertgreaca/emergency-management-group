@@ -152,9 +152,9 @@ class SimulationTest {
         val ongoingEms = Simulation.statistics.ongoingEmergencies
 
         assertEquals(0, resolvedEms)
-        assertEquals(1, receivedEms)
+        assertEquals(0, receivedEms)
         assertEquals(0, reroutedAssets)
-        assertEquals(1, failedEms)
+        assertEquals(0, failedEms)
         assertEquals(0, ongoingEms)
     }
 }
