@@ -56,4 +56,24 @@ class SimulationTest {
         )
         assertFalse(res)
     }
+
+    @Test
+    fun testInitializeInvalidConfig2() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/invalidConfig2/Semantics/config2invalid5.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        assertFalse(res)
+    }
+
+    @Test
+    fun testInitializeInvalidConfig3() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/invalidConfig3/Sematics/config3invalid7.json")
+        )
+        assertFalse(res)
+    }
 }
