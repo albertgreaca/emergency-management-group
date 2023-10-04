@@ -5,7 +5,7 @@ import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 class RoadsWithoutVertex : SystemTest() {
     override val name = "RoadsWithoutVertex"
 
-    override val map = "invalidMaps/failedmapparser/testnameguesses/roadwithoutvertex.dot"
+    override val map = "invalidMaps/testnameguesses/roadwithoutvertex.dot"
     override val assets = "assetsJsons/example_assets.json"
     override val scenario = "scenarioJsons/example_scenario.json"
     override val maxTicks = 1
