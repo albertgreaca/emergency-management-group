@@ -19,6 +19,12 @@ class TestUtils {
         Simulation.emergencies.clear()
         Simulation.events.clear()
         Simulation.map = GraphMap()
+        Simulation.maximumTicks = null
+        Simulation.statistics.resolvedEmergencies = 0
+        Simulation.statistics.receivedEmergencies = 0
+        Simulation.statistics.ongoingEmergencies = 0
+        Simulation.statistics.reroutedAssets = 0
+        Simulation.statistics.failedEmergencies = 0
     }
 
     fun clear() {
