@@ -11,11 +11,7 @@ import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.utils.Position
-import de.unisaarland.cs.se.selab.vehicles.Ambulance
-import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
-import de.unisaarland.cs.se.selab.vehicles.PoliceCar
-import de.unisaarland.cs.se.selab.vehicles.Vehicle
-import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import de.unisaarland.cs.se.selab.vehicles.*
 import kotlin.math.max
 import kotlin.math.min
 
@@ -36,7 +32,7 @@ open class Base(
         const val ladder30 = 30
     }
 
-    private val nextBases: MutableList<Base> = mutableListOf()
+    val nextBases: MutableList<Base> = mutableListOf()
 
     /**
      * add Vehicle to Base Vehicle List

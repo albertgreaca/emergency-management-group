@@ -12,11 +12,7 @@ import de.unisaarland.cs.se.selab.emergencies.EmergencyUtils
 import de.unisaarland.cs.se.selab.events.Event
 import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.utils.Logger
-import de.unisaarland.cs.se.selab.vehicles.Ambulance
-import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
-import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
-import de.unisaarland.cs.se.selab.vehicles.PoliceCar
-import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.*
 
 /**
  * This is the class responsible for simulating the different phases of a tick
@@ -414,7 +410,7 @@ object EMCC {
         val newlyFailedEmergencies: MutableList<Emergency> = mutableListOf()
 
         for (em in startingEmergencies) {
-            if (em.tick + em.maxDuration <= Simulation.currentTick) {
+            if (em.tick + em.maxDuration - em.handleTime <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
                 newlyFailedEmergencies.add(em)
                 for (vec in em.assignedVehicles) {
@@ -422,7 +418,7 @@ object EMCC {
                 }
             }
         }
-        for (em in handledEmergencies) {
+        /*for (em in handledEmergencies) {
             if (em.tick + em.maxDuration <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
                 newlyFailedEmergencies.add(em)
@@ -430,7 +426,7 @@ object EMCC {
                     vec.sendBackToBase()
                 }
             }
-        }
+        }*/
         newlyFailedEmergencies.sortBy { it.id }
         for (resolvedEm in newlyFailedEmergencies) {
             Logger.logEmergencyFailed(resolvedEm.id)

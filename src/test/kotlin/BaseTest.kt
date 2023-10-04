@@ -340,6 +340,47 @@ class BaseTest {
     }
 
     @Test
+    fun testcalculateNextBases() {
+        // Scenario: FB1 ---- FB2 ---- FB3 ---- PB1 ---- AB1
+        val parse =
+            MapParser(Simulation.map, File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"))
+        val jsonparse = JsonParser(
+            Simulation.map,
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+
+        val fb1 = EMCC.fireDepartment?.bases?.get(0)!!
+        val fb2 = EMCC.fireDepartment?.bases?.get(1)!!
+        val fb3 = EMCC.fireDepartment?.bases?.get(2)!!
+        val pb1 = EMCC.policeDepartment?.bases?.get(0)!!
+        val ab1 = EMCC.ambulanceDepartment?.bases?.get(0)!!
+
+        val expectedListForFb1 = mutableListOf(fb1, fb2, fb3, pb1, ab1)
+        val expectedListForFb2 = mutableListOf(fb2, fb1, fb3, pb1, ab1)
+        val expectedListForFb3 = mutableListOf(fb3, fb2, pb1, fb1, ab1)
+        val expectedListForPb1 = mutableListOf(pb1, fb3, ab1, fb2, fb1)
+        val expectedListForAb1 = mutableListOf(ab1, pb1, fb3, fb2, fb1)
+
+        fb1.calculateNextBases()
+        fb2.calculateNextBases()
+        fb3.calculateNextBases()
+        pb1.calculateNextBases()
+        ab1.calculateNextBases()
+
+        assertEquals(expectedListForFb1, fb1.nextBases)
+        assertEquals(expectedListForFb2, fb2.nextBases)
+        assertEquals(expectedListForFb3, fb3.nextBases)
+        assertEquals(expectedListForPb1, pb1.nextBases)
+        assertEquals(expectedListForAb1, ab1.nextBases)
+    }
+
+    @Test
     fun testGetNextFireBase() {
         // Scenario: FB1 ---- FB2 ---- FB3 ---- PB1 ---- AB1
         val parse =
