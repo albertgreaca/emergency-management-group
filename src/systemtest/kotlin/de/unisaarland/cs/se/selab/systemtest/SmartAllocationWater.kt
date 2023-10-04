@@ -1,4 +1,4 @@
-package SmartAllocationWater
+package de.unisaarland.cs.se.selab.systemtest
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 

@@ -1,6 +1,5 @@
 package de.unisaarland.cs.se.selab.systemtest
 import FailedParserConfig3Semantics1
-import SmartAllocationWater.SmartAllocationWater
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
@@ -202,6 +201,7 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(ReallocationBackTest())
         manager.registerTest(ReallocationBackTest2())
+        manager.registerTest(NotEnoughStaffTest())
         manager.registerTest(SmartAllocationWater())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {

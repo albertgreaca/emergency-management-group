@@ -1,4 +1,4 @@
-package NotEnoughStaff
+package de.unisaarland.cs.se.selab.systemtest
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
@@ -26,13 +26,11 @@ class NotEnoughStaffTest : SystemTest() {
         assertNextLine("Simulation Tick: 3")
         assertNextLine("Emergency Resolved: 0 resolved.")
         assertNextLine("Simulation Tick: 4")
-        assertNextLine("Asset Arrival: 1 arrived at 1.")
+        assertNextLine("Asset Reallocation: 1 reallocated at 1.")
         assertNextLine("Simulation Tick: 5")
-        assertNextLine("Asset Allocation: 1 allocated to 1; 1 ticks to arrive.")
-        assertNextLine("Simulation Tick: 6")
         assertNextLine("Asset Arrival: 1 arrived at 4.")
         assertNextLine("Emergency Handling Start: 1 handling started.")
-        assertNextLine("Simulation Tick: 7")
+        assertNextLine("Simulation Tick: 6")
         assertNextLine("Emergency Resolved: 1 resolved.")
         assertNextLine("Simulation End")
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
