@@ -48,7 +48,7 @@ class SimulationTest {
     }
 
     @Test
-    fun testInitializeInvalidMap() {
+    fun testInitializeInvalidMapSemantically() {
         val res = Simulation.initialize(
             File("src/test/resources/invalidMaps/SemanticIssues/mapinvalid9.dot"),
             File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
@@ -58,7 +58,17 @@ class SimulationTest {
     }
 
     @Test
-    fun testInitializeInvalidConfig2() {
+    fun testInitializeInvalidMapSyntactically() {
+        val res = Simulation.initialize(
+            File("src/test/resources/invalidMaps/SyntaxIssues/mapinvalid61.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        assertFalse(res)
+    }
+
+    @Test
+    fun testInitializeInvalidConfig2Semantically() {
         val res = Simulation.initialize(
             File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
             File("src/test/resources/invalidConfig2/Semantics/config2invalid5.json"),
@@ -68,11 +78,31 @@ class SimulationTest {
     }
 
     @Test
-    fun testInitializeInvalidConfig3() {
+    fun testInitializeInvalidConfig3Semantically() {
         val res = Simulation.initialize(
             File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
             File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
             File("src/test/resources/invalidConfig3/Sematics/config3invalid7.json")
+        )
+        assertFalse(res)
+    }
+
+    @Test
+    fun testInitializeInvalidConfig2Syntactically() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/invalidConfig2/Syntax/config2invalid21.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        assertFalse(res)
+    }
+
+    @Test
+    fun testInitializeInvalidConfig3Syntactically() {
+        val res = Simulation.initialize(
+            File("src/test/resources/UnitTestMapConfig/Saarbruecken5VerticesLinear.dot"),
+            File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
+            File("src/test/resources/invalidConfig3/Syntax/config3invalid10.json")
         )
         assertFalse(res)
     }
