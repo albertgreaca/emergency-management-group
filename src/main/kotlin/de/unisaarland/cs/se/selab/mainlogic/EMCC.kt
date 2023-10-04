@@ -265,6 +265,8 @@ object EMCC {
             helperfunction(vec)
             vec.targetEmergency = null
             vec.position = null
+            // give back the staff to the base
+            vec.base.staff += vec.staffCapacity
         }
     }
 
