@@ -7,6 +7,7 @@ import de.unisaarland.cs.se.selab.graphlogic.Road
 import de.unisaarland.cs.se.selab.graphlogic.SecondaryRoadType
 import de.unisaarland.cs.se.selab.graphlogic.Vertex
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -124,5 +125,15 @@ class RoadTest {
         val r2 = Road(PrimaryRoadType.SIDESTREET, SecondaryRoadType.NONE, "Village", "Street", 20, 4, v2, v1)
         assertFalse(r1.equals(r2))
         assertFalse(r2.equals(r1))
+    }
+
+    @Test
+    fun getActualWeightOverflowTest() {
+        val v1 = Vertex(0, null, 0)
+        val v2 = Vertex(1, null, 1)
+        val road = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbrueken", "Meerwiesertalweg", 2147483642, 5, v1, v2)
+        val event = TrafficJamEvent(0, 0, 60, road, 5465624)
+        val weight = road.getActualWeight()
+        assertEquals(weight, Int.MAX_VALUE)
     }
 }
