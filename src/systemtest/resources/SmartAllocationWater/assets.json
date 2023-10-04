@@ -18,7 +18,7 @@
       "baseType": "HOSPITAL",
       "location": 4,
       "staff": 60,
-      "doctors": 0
+      "doctors": 1
     }
   ],
   "vehicles": [
@@ -81,9 +81,10 @@
     {
       "id": 7,
       "baseID": 0,
-      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleType": "FIRE_TRUCK_WATER",
       "vehicleHeight": 2,
-      "staffCapacity": 7
+      "staffCapacity": 5,
+      "waterCapacity": 2400
     },
     {
       "id": 8,
@@ -95,10 +96,9 @@
     {
       "id": 9,
       "baseID": 0,
-      "vehicleType": "FIRE_TRUCK_LADDER",
-      "vehicleHeight": 4,
-      "staffCapacity": 5,
-      "ladderLength": 60
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleHeight": 2,
+      "staffCapacity": 7
     },
     {
       "id": 10,
@@ -110,18 +110,19 @@
     },
     {
       "id": 11,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 4,
+      "staffCapacity": 5,
+      "ladderLength": 60
+    },
+    {
+      "id": 12,
       "baseID": 1,
       "vehicleType": "POLICE_CAR",
       "vehicleHeight": 2,
       "staffCapacity": 5,
       "criminalCapacity": 3
-    },
-    {
-      "id": 12,
-      "baseID": 2,
-      "vehicleType": "AMBULANCE",
-      "vehicleHeight": 4,
-      "staffCapacity": 5
     },
     {
       "id": 13,
@@ -132,6 +133,13 @@
     },
     {
       "id": 14,
+      "baseID": 2,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 5
+    },
+    {
+      "id": 15,
       "baseID": 2,
       "vehicleType": "EMERGENCY_DOCTOR_CAR",
       "vehicleHeight": 3,
