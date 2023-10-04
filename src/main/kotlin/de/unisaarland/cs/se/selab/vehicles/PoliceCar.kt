@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.vehicles
 
 import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.emergencies.Emergency
+import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.utils.Position
 
 /** Class for the Police Car
@@ -38,7 +39,9 @@ class PoliceCar(
         if (baseWaitingTicks != 0 || criminalsStillFitting == 0) {
             return false
         }
-        if (targetEmergency != null && em.severity <= requireNotNull(targetEmergency).severity) {
+        if (targetEmergency != null && !EMCC.resolvedOrFailedEmergencies.contains(targetEmergency) &&
+            em.severity <= requireNotNull(targetEmergency).severity
+        ) {
             return false
         }
         return true
