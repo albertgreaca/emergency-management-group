@@ -1,0 +1,35 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "type": "TRAFFIC_JAM",
+      "tick": 6009,
+      "duration": 1,
+      "source": 1,
+      "target": 2,
+      "factor": 3
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "City",
+      "roadName": "CityStreetOne",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 5
+    },
+    {
+      "id": 1,
+      "tick": 5,
+      "village": "City",
+      "roadName": "CityStreetFour",
+      "emergencyType": "CRIME",
+      "severity": 2,
+      "handleTime": 1,
+      "maxDuration": 10
+    }
+  ]
+}
