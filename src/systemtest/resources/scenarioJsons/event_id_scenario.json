@@ -1,0 +1,35 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 0,
+      "duration": 10,
+      "source": 2,
+      "target": 3,
+      "factor": 3
+    },
+    {
+      "id": 1,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 0,
+      "duration": 15,
+      "source": 2,
+      "target": 3,
+      "factor": 2,
+      "oneWayStreet": false
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "City",
+      "roadName": "CityStreetOne",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 200
+    }
+  ]
+}
