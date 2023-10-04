@@ -141,7 +141,7 @@ class RoadTest {
             v1,
             v2
         )
-        val event = TrafficJamEvent(0, 0, 60, road, 5465624)
+        val event = TrafficJamEvent(0, 1, 60, road, 5465624)
         road.eventList.add(event)
         val weight = road.getActualWeight()
         assertEquals(weight, Int.MAX_VALUE)
