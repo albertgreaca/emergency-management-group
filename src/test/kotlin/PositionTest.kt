@@ -276,7 +276,7 @@ class PositionTest {
         assertTrue(pos1.isEqual(pos2))
     }
 
-    /*@Test
+    @Test
     fun advance3() {
         val v0 = Vertex(0, null, 0)
         val v1 = Vertex(1, null, 1)
@@ -286,11 +286,13 @@ class PositionTest {
         val r2 = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Test", "SimplerStreet", 10, 5, v1, v2)
         val rL1 = mutableListOf(r1, r2)
         val rL2 = mutableListOf(r1, r2)
-        val rL3 = mutableListOf(r1, r2)
+        val rL3 = mutableListOf(r2)
         val pos1 = Position(rL1, vertList, 3, 7, v1, 17, 2, false, false)
         val pos2 = Position(rL2, vertList, 2, 8, v1, 18, 2, false, false)
         val pos3 = Position(rL3, vertList, 2, 8, v2, 8, 1, true, false)
+        pos1.advance()
+        pos2.advance()
         assertFalse(pos1.isEqual(pos2))
         assertTrue(pos2.isEqual(pos3))
-    }*/
+    }
 }
