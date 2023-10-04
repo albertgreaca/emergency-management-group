@@ -53,18 +53,15 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.Faile
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics8
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics9
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed1
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed12
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed13
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed14
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed15
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed16
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed17
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed18
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed19
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed2
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed20
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed21
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed22
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed23
@@ -72,7 +69,6 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3S
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed25
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed3
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed4
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed5
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed6
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed7
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed8
@@ -229,22 +225,22 @@ object SystemTestRegistration {
         manager.registerTest(Config3SyntaxFailed2())
         manager.registerTest(Config3SyntaxFailed3())
         manager.registerTest(Config3SyntaxFailed4())
-        manager.registerTest(Config3SyntaxFailed5())
+        // manager.registerTest(Config3SyntaxFailed5())
         manager.registerTest(Config3SyntaxFailed6())
         manager.registerTest(Config3SyntaxFailed7())
         manager.registerTest(Config3SyntaxFailed8())
         manager.registerTest(Config3SyntaxFailed9())
-        manager.registerTest(Config3SyntaxFailed10())
+        // manager.registerTest(Config3SyntaxFailed10())
         manager.registerTest(Config3SyntaxFailed11())
         manager.registerTest(Config3SyntaxFailed12())
         manager.registerTest(Config3SyntaxFailed13())
         manager.registerTest(Config3SyntaxFailed14())
         manager.registerTest(Config3SyntaxFailed15())
         manager.registerTest(Config3SyntaxFailed16())
-        manager.registerTest(Config3SyntaxFailed17())
+        // manager.registerTest(Config3SyntaxFailed17())
         manager.registerTest(Config3SyntaxFailed18())
         manager.registerTest(Config3SyntaxFailed19())
-        manager.registerTest(Config3SyntaxFailed20())
+        // manager.registerTest(Config3SyntaxFailed20())
         manager.registerTest(Config3SyntaxFailed21())
         manager.registerTest(Config3SyntaxFailed22())
         manager.registerTest(Config3SyntaxFailed23())

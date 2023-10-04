@@ -1,5 +1,4 @@
-config3invalid3.json{
-  "events": [
+{ "events": [
     {
       "id": 0,
       "type": "RUSH_OUR",
