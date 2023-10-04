@@ -33,7 +33,7 @@ object Dijkstra {
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (dist[node.realid] > dist[cur.first] + edge.weight) {
+            if (dist[node.realid].toLong() > dist[cur.first].toLong() + edge.weight.toLong()) {
                 dist[node.realid] = dist[cur.first] + edge.weight
                 pq.add(Pair(node.realid, dist[node.realid]))
             }
@@ -101,7 +101,7 @@ object Dijkstra {
             }
             val nex: Map<Vertex, Road> = requireNotNull(Simulation.map).adjacencyList[cur.first]
             for ((node, edge) in nex) {
-                if (dist[node.realid] > dist[cur.first] + edge.getActualWeight()) {
+                if (dist[node.realid].toLong() > dist[cur.first].toLong() + edge.getActualWeight().toLong()) {
                     dist[node.realid] = dist[cur.first] + edge.getActualWeight()
                     pq.add(Pair(node.realid, dist[node.realid]))
                 }
@@ -145,6 +145,8 @@ object Dijkstra {
         val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height >= height) {
+                if (dist[cur.first].distance.toLong() + edge.getActualWeight().toLong() > Int.MAX_VALUE.toLong())
+                    continue
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
@@ -258,6 +260,8 @@ object Dijkstra {
         val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
             if (edge.height >= height) {
+                if (dist[cur.first].distance.toLong() + edge.getActualWeight().toLong() > Int.MAX_VALUE.toLong())
+                    continue
                 val newp = Position(mutableListOf<Road>(), mutableListOf<Vertex>(), 0, 0, null, 0, 0)
                 newp.distance = dist[cur.first].distance + edge.getActualWeight()
                 newp.vertexList = dist[cur.first].vertexList.toMutableList()
