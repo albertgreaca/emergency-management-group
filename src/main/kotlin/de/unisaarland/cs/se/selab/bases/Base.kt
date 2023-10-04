@@ -36,7 +36,7 @@ open class Base(
         const val ladder30 = 30
     }
 
-    private val nextBases: MutableList<Base> = mutableListOf()
+    val nextBases: MutableList<Base> = mutableListOf()
 
     /**
      * add Vehicle to Base Vehicle List

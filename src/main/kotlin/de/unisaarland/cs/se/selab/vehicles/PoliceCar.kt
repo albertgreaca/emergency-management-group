@@ -1,6 +1,7 @@
 package de.unisaarland.cs.se.selab.vehicles
 
 import de.unisaarland.cs.se.selab.bases.Base
+import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.utils.Position
 
 /** Class for the Police Car
@@ -22,4 +23,24 @@ class PoliceCar(
     position
 ) {
     val criminalsStillFitting get() = criminalCapacity - transportedCriminals
+
+    /**
+     * checks if the vehicle is reallocatable
+     * @return true if reallocatable, else false
+     */
+    override fun reallocatable(em: Emergency): Boolean {
+        if (position == null) {
+            return false
+        }
+        if (requireNotNull(position).arrivalTicks == 0) {
+            return false
+        }
+        if (baseWaitingTicks != 0 || criminalsStillFitting == 0) {
+            return false
+        }
+        if (targetEmergency != null && em.severity <= requireNotNull(targetEmergency).severity) {
+            return false
+        }
+        return true
+    }
 }

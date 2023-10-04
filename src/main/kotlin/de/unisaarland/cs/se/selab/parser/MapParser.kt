@@ -52,7 +52,11 @@ class MapParser(private val gm: GraphMap, file: File) {
      */
     private fun parseVertices(): Boolean {
         while (i + 1 < tokenlist.size && tokenlist[i + 1].tokenkind == LexerToken.SEMICOLON) {
-            val vertexID = tokenlist[i++].text.toIntOrNull() ?: return false
+            val vertexIDS = tokenlist[i++].text
+            if (!validateNumber(vertexIDS)) {
+                return false
+            }
+            val vertexID = vertexIDS.toIntOrNull() ?: return false
             val vert = Vertex(vertexID, null, curIndex)
             if (!validateVertex(vert)) {
                 return false
@@ -263,7 +267,14 @@ class MapParser(private val gm: GraphMap, file: File) {
     ): Boolean {
         val village = resultMap[LexerToken.VILLAGE]
         val name = resultMap[LexerToken.NAME]
+        var res = true
+        if (resultMap[LexerToken.HEIGHTLIMIT] != null) {
+            res = res && validateNumber(requireNotNull(resultMap[LexerToken.HEIGHTLIMIT]))
+        }
         val heightlimit = resultMap[LexerToken.HEIGHTLIMIT]?.toIntOrNull()
+        if (resultMap[LexerToken.WEIGHT] != null) {
+            res = res && validateNumber(requireNotNull(resultMap[LexerToken.WEIGHT]))
+        }
         val weight = resultMap[LexerToken.WEIGHT]?.toIntOrNull() ?: return false
         val startv = gm.getVertexFromId(start) ?: return false
         val endv = gm.getVertexFromId(end) ?: return false
@@ -272,7 +283,17 @@ class MapParser(private val gm: GraphMap, file: File) {
         }
         val road = Road(pty, sty, village, name, weight, heightlimit, startv, endv)
         gm.addRoad(road, start, end)
-        return true
+        return res
+    }
+
+    private fun validateNumber(id: String): Boolean {
+        if (id == "0") {
+            return true
+        } else if (id[0] == '0') {
+            return false
+        } else {
+            return true
+        }
     }
 
     companion object {

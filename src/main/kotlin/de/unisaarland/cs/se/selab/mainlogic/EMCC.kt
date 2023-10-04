@@ -414,7 +414,7 @@ object EMCC {
         val newlyFailedEmergencies: MutableList<Emergency> = mutableListOf()
 
         for (em in startingEmergencies) {
-            if (em.tick + em.maxDuration <= Simulation.currentTick) {
+            if (em.tick + em.maxDuration - em.handleTime <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
                 newlyFailedEmergencies.add(em)
                 for (vec in em.assignedVehicles) {
@@ -422,7 +422,7 @@ object EMCC {
                 }
             }
         }
-        for (em in handledEmergencies) {
+        /*for (em in handledEmergencies) {
             if (em.tick + em.maxDuration <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
                 newlyFailedEmergencies.add(em)
@@ -430,7 +430,7 @@ object EMCC {
                     vec.sendBackToBase()
                 }
             }
-        }
+        }*/
         newlyFailedEmergencies.sortBy { it.id }
         for (resolvedEm in newlyFailedEmergencies) {
             Logger.logEmergencyFailed(resolvedEm.id)

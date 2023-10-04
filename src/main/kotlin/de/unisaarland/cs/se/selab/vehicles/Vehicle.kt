@@ -45,7 +45,7 @@ open class Vehicle(
      * checks if the vehicle is reallocatable
      * @return true if reallocatable, else false
      */
-    fun reallocatable(em: Emergency): Boolean {
+    open fun reallocatable(em: Emergency): Boolean {
         if (position == null) {
             return false
         }

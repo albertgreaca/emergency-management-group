@@ -23,7 +23,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser9
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
-    private fun registerSystemTests(manager: SystemTestManager) {
+    private fun registerSystemTest(manager: SystemTestManager) {
         manager.registerTest(ExampleTest())
         manager.registerTest(ReroutingTest())
     }
@@ -37,7 +37,7 @@ object SystemTestRegistration {
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
-        registerSystemTests(manager)
+        registerSystemTest(manager)
         registerSystemTestsMutantValidation(manager)
         registerSystemTestsMutantSimulation(manager)
         manager.registerTest(RequestTest())
@@ -56,7 +56,7 @@ object SystemTestRegistration {
     }
 
     fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
-        registerSystemTests(manager)
+        registerSystemTest(manager)
     }
     private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser1())
