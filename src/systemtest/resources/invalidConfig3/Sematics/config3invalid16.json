@@ -1,0 +1,143 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 4,
+      "source": 3,
+      "target": 4,
+      "oneWayStreet": false,
+      "factor": 4,
+      "duration": 5
+    },
+    {
+      "id": 1,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 8,
+      "source": 3,
+      "target": 4,
+      "oneWayStreet": false,
+      "factor": 3,
+      "duration": 3
+    },
+    {
+      "id": 2,
+      "type": "RUSH_HOUR",
+      "tick": 4,
+      "duration": 4,
+      "roadTypes": [
+        "SIDE_STREET","COUNTY_ROAD"
+      ],
+      "factor": 2
+    },
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 1,
+      "factor": 6,
+      "source": 5,
+      "target": 6,
+      "duration": 3
+    },
+    {
+      "id": 4,
+      "type": "TRAFFIC_JAM",
+      "tick": 10,
+      "factor": 2,
+      "source": 1,
+      "target": 3,
+      "duration": 5
+    },
+    {
+      "id": 5,
+      "type": "TRAFFIC_JAM",
+      "tick": 15,
+      "factor": 4,
+      "source": 3,
+      "target": 6,
+      "duration": 5
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Village1",
+      "roadName": "OneTwoStreet",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 5,
+      "maxDuration": 9
+    },
+    {
+      "id": 1,
+      "tick": 1,
+      "village": "Village1",
+      "roadName": "OneThreeStreet",
+      "emergencyType": "ACCIDENT",
+      "severity": 3,
+      "handleTime": 10,
+      "maxDuration": 45
+    },
+    {
+      "id": 2,
+      "tick": 1,
+      "village": "Village2",
+      "roadName": "FiveSixStreet",
+      "emergencyType": "CRIME",
+      "severity": 2,
+      "handleTime": 4,
+      "maxDuration": 20
+    },
+    {
+      "id": 3,
+      "tick": 1,
+      "village": "Contribution",
+      "roadName": "ZeroOneStreet",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 4,
+      "maxDuration": 6
+    },
+    {
+      "id": 4,
+      "tick": 2,
+      "village": "Village1",
+      "roadName": "FourSevenStreet",
+      "emergencyType": "MEDICAL",
+      "severity": 2,
+      "handleTime": 9,
+      "maxDuration": 22
+    },
+    {
+      "id": 5,
+      "tick": 4,
+      "village": "Village1",
+      "roadName": "ThreeFourStreet",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 3,
+      "maxDuration": 13
+    },
+    {
+      "id": 6,
+      "tick": 8,
+      "village": "Village1",
+      "roadName": "OneTwoStreet",
+      "emergencyType": "MEDICAL",
+      "severity": 3,
+      "handleTime": 10,
+      "maxDuration": 30
+    },
+    {
+      "id": 7,
+      "tick": 10,
+      "village": "Village2",
+      "roadName": "FiveSixStreet",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 8
+    }
+  ]
+}

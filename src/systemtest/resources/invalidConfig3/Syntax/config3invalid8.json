@@ -1,0 +1,111 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "RUSH_HOUR",
+      "tick": 3,
+      "duratin": 2,
+      "roadTypes": [
+        "SIDE_STREET"
+      ],
+      "factor": 2
+    },
+    {
+      "id": 1,
+      "type": "TRAFFIC_JAM",
+      "tick": 5,
+      "factor": 2,
+      "source": 1,
+      "target": 3,
+      "duration": 5
+    },
+    {
+      "id": 2,
+      "type": "RUSH_HOUR",
+      "tick": 5,
+      "roadTypes": [
+        "MAIN_STREET",
+        "SIDE_STREET"
+      ],
+      "factor": 20,
+      "duration": 10
+    },
+    {
+      "id": 3,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 9,
+      "source": 3,
+      "target": 4,
+      "oneWayStreet": false,
+      "factor": 7,
+      "duration": 10
+    },
+    {
+      "id": 4,
+      "type": "ROAD_CLOSURE",
+      "tick": 10,
+      "source": 5,
+      "target": 6,
+      "duration": 7
+    },
+    {
+      "id": 5,
+      "type": "VEHICLE_UNAVAILABLE",
+      "tick": 12,
+      "vehicleID": 3,
+      "duration": 11
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Main_Street",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 7,
+      "maxDuration": 20
+    },
+    {
+      "id": 1,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Railway_Station_Road",
+      "emergencyType": "ACCIDENT",
+      "severity": 2,
+      "handleTime": 15,
+      "maxDuration": 18
+    },
+    {
+      "id": 2,
+      "tick": 1,
+      "village": "Munich",
+      "roadName": "Garden_Way",
+      "emergencyType": "CRIME",
+      "severity": 3,
+      "handleTime": 20,
+      "maxDuration": 25
+    },
+    {
+      "id": 3,
+      "tick": 1,
+      "village": "Stuttgart",
+      "roadName": "Church_Lane",
+      "emergencyType": "ACCIDENT",
+      "severity": 3,
+      "handleTime": 29,
+      "maxDuration": 9
+    },
+    {
+      "id": 4,
+      "tick": 1,
+      "village": "Osnabrueck",
+      "roadName": "Main_Street",
+      "emergencyType": "MEDICAL",
+      "severity": 2,
+      "handleTime": 19,
+      "maxDuration": 15
+    }
+  ]
+}
