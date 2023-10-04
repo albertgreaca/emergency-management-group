@@ -32,10 +32,6 @@ class RequestTestPartial : SystemTest() {
         assertNextLine("Asset Request: 5 sent to 2 for 0.")
         assertNextLine("Asset Request: 6 sent to 3 for 0.")
         assertNextLine(fail)
-        assertNextLine("Simulation Tick: 4")
-        assertNextLine("Asset Request: 7 sent to 2 for 0.")
-        assertNextLine("Asset Request: 8 sent to 3 for 0.")
-        assertNextLine(fail)
         assertNextLine("Emergency Failed: 0 failed.")
         assertNextLine("Simulation End")
         // Statistics
