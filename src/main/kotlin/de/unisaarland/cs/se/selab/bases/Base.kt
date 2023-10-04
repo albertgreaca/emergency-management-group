@@ -160,7 +160,7 @@ open class Base(
     /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
-    fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
+    open fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
         var validCombination = true
         val resource = em.currentResources
         var staffNeeded = 0

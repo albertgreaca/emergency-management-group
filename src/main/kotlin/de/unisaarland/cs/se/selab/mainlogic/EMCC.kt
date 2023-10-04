@@ -17,6 +17,7 @@ import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 
 /**
  * This is the class responsible for simulating the different phases of a tick
@@ -267,6 +268,14 @@ object EMCC {
             vec.position = null
             // give back the staff to the base
             vec.base.staff += vec.staffCapacity
+            // give back dogs to the police station
+            if (vec.base is PoliceStation && vec.vehicleType == VehicleType.K9_POLICE_CAR) {
+                (vec.base as PoliceStation).dogs++
+            }
+            // give back doctors to the hospital
+            if (vec.base is Hospital && vec.vehicleType == VehicleType.EMERGENCY_DOCTOR_CAR) {
+                (vec.base as Hospital).doctors++
+            }
         }
     }
 
