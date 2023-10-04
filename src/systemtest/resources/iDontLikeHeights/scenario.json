@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 420,
+      "duration": 10,
+      "source": 2,
+      "target": 3,
+      "factor": 3
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Bucharest",
+      "roadName": "E",
+      "emergencyType": "FIRE",
+      "severity": 1,
+      "handleTime": 5,
+      "maxDuration": 200
+    }
+  ]
+}

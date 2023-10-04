@@ -1,16 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest
 import FailedParserConfig3Semantics1
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySameTickTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EventIdTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestFailed
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestPartial
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RoadClosureTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RushHour1Test
+import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
@@ -200,6 +190,7 @@ object SystemTestRegistration {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ManyEvents())
+        manager.registerTest(iDontLikeHeights())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
