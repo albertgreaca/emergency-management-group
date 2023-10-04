@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class iDontLikeHeights : SystemTest() {
+class IDontLikeHeights : SystemTest() {
     override val name = "iDontLikeHeights"
 
     override val map = "iDontLikeHeights/map.dot"
