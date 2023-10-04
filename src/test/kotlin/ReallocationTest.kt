@@ -1,6 +1,4 @@
-import org.junit.jupiter.api.BeforeEach
-
-/*import de.unisaarland.cs.se.selab.emergencies.Emergency
+import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
@@ -8,9 +6,10 @@ import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
-import kotlin.test.assertTrue*/
+import kotlin.test.assertTrue
 
 class ReallocationTest {
     val utils = TestUtils()
@@ -20,7 +19,7 @@ class ReallocationTest {
         utils.clear()
     }
 
-    /*@Test
+    @Test
     fun simpletest1() {
         val graph = Simulation.map
         val parse = MapParser(graph, File("src/test/resources/mapvalid6reallocation.dot"))
@@ -92,5 +91,5 @@ class ReallocationTest {
         assertTrue(em.assignedVehicles[0] == vehicle1)
         utils.clearEMCC()
         utils.clearSimulation()
-    }*/
+    }
 }
