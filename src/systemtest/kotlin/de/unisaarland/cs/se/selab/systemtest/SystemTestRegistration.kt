@@ -183,10 +183,10 @@ object SystemTestRegistration {
         manager.registerTest(RushHour1Test())
         manager.registerTest(ManyEvents())
         manager.registerTest(IDontLikeHeights())
+        manager.registerTest(Reallocation())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(HeightNegative())
         manager.registerTest(HeightZero())
