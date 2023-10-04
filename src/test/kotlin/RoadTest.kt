@@ -131,8 +131,18 @@ class RoadTest {
     fun getActualWeightOverflowTest() {
         val v1 = Vertex(0, null, 0)
         val v2 = Vertex(1, null, 1)
-        val road = Road(PrimaryRoadType.MAINSTREET, SecondaryRoadType.NONE, "Saarbrueken", "Meerwiesertalweg", 2147483642, 5, v1, v2)
+        val road = Road(
+            PrimaryRoadType.MAINSTREET,
+            SecondaryRoadType.NONE,
+            "Saarbrueken",
+            "Meerwiesertalweg",
+            2147483642,
+            5,
+            v1,
+            v2
+        )
         val event = TrafficJamEvent(0, 0, 60, road, 5465624)
+        road.eventList.add(event)
         val weight = road.getActualWeight()
         assertEquals(weight, Int.MAX_VALUE)
     }
