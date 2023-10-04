@@ -3,11 +3,11 @@ package de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class Config3SyntaxFailed25 : SystemTest() {
-    override val name = "Config3SyntaxFailed24"
+    override val name = "Config3SyntaxFailed25"
 
     override val map = "mapFiles/example_map.dot"
     override val assets = "assetsJsons/example_assets.json"
-    override val scenario = "invalidConfig3/Syntax/config3invalid24.json"
+    override val scenario = "invalidConfig3/Syntax/config3invalid25.json"
     override val maxTicks = 1
     override suspend fun run() {
         assertNextLine("Initialization Info: example_map.dot successfully parsed and validated")
