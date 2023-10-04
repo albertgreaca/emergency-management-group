@@ -339,7 +339,9 @@ object EMCC {
             var allArrived = true
             for (vec in em.assignedVehicles) {
                 allArrived =
-                    if (requireNotNull(vec.position).arrivalTicks == 0 && !requireNotNull((vec.position)?.startedThisTick)) {
+                    if (requireNotNull(vec.position).arrivalTicks == 0 &&
+                        !requireNotNull(vec.position?.startedThisTick)
+                    ) {
                         allArrived
                     } else {
                         false
