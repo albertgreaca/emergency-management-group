@@ -1,9 +1,92 @@
 package de.unisaarland.cs.se.selab.systemtest
-import de.unisaarland.cs.se.selab.systemtest.basictests.*
+import FailedParserConfig3Semantics1
+import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySameTickTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.EventIdTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestFailed
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestPartial
+import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RoadClosureTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RushHour1Test
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser21
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser22
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser23
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser24
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser25
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser26
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser27
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser28
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser29
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser30
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser31
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser32
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser33
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser34
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser35
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser36
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser37
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser38
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser39
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser40
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser41
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser42
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser43
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser44
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser45
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser46
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser47
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser48
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser49
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser50
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser51
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics13
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics14
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics15
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics16
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics2
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics3
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics4
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics5
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics6
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics7
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics8
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics9
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed1
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed10
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed11
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed12
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed13
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed14
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed15
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed16
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed17
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed18
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed19
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed2
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed20
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed21
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed22
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed23
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed24
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed25
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed3
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed4
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed5
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed6
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed7
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed8
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed9
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser10
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser11
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser12
@@ -20,8 +103,85 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser6
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser7
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser8
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser9
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax1
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax10
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax11
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax12
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax13
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax14
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax15
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax16
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax17
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax18
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax19
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax2
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax20
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax21
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax22
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax23
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax24
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax25
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax26
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax27
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax28
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax29
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax3
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax30
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax31
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax32
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax33
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax34
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax35
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax36
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax37
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax38
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax39
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax4
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax40
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax41
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax42
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax43
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax44
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax45
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax46
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax47
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax48
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax49
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax5
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax50
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax51
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax52
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax53
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax54
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax55
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax56
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax57
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax58
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax59
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax6
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax60
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax61
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax62
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax63
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax64
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax65
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax66
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax67
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax68
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax69
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax7
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax70
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax71
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax72
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax73
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax74
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax75
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax76
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax77
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax78
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax8
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax9
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
 
 object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
@@ -57,6 +217,7 @@ object SystemTestRegistration {
         registerMapParserSemanticFail1(manager)
         config2(manager)
         registerConfig3Syntax(manager)
+        registerConfig3Semantics(manager)
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
@@ -85,12 +246,27 @@ object SystemTestRegistration {
         manager.registerTest(Config3SyntaxFailed23())
         manager.registerTest(Config3SyntaxFailed24())
         manager.registerTest(Config3SyntaxFailed25())
-
-
-
-
-
     }
+
+    fun registerConfig3Semantics(manager: SystemTestManager) {
+        manager.registerTest(FailedParserConfig3Semantics1())
+        manager.registerTest(FailedParserConfig3Semantics2())
+        manager.registerTest(FailedParserConfig3Semantics3())
+        manager.registerTest(FailedParserConfig3Semantics4())
+        manager.registerTest(FailedParserConfig3Semantics5())
+        manager.registerTest(FailedParserConfig3Semantics6())
+        manager.registerTest(FailedParserConfig3Semantics7())
+        manager.registerTest(FailedParserConfig3Semantics8())
+        manager.registerTest(FailedParserConfig3Semantics9())
+        manager.registerTest(FailedParserConfig3Semantics10())
+        manager.registerTest(FailedParserConfig3Semantics11())
+        manager.registerTest(FailedParserConfig3Semantics12())
+        manager.registerTest(FailedParserConfig3Semantics13())
+        manager.registerTest(FailedParserConfig3Semantics14())
+        manager.registerTest(FailedParserConfig3Semantics15())
+        manager.registerTest(FailedParserConfig3Semantics16())
+    }
+
     fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
         registerSystemTest(manager)
     }
