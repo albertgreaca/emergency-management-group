@@ -5,8 +5,8 @@ class FailedParserConfig3Semantics12 : SystemTest() {
     override val name = "FailedParserConfig3Semantics12"
 
     override val map = "mapFiles/example_map.dot"
-    override val assets = "src/systemtest/resources/assetsJsons/example_assets.json"
-    override val scenario = "src/systemtest/resources/invalidConfig3/Sematics/config3invalid12.json"
+    override val assets = "assetsJsons/example_assets.json"
+    override val scenario = "invalidConfig3/Sematics/config3invalid12.json"
     override val maxTicks = 1
     override suspend fun run() {
         assertNextLine("Initialization Info: example_map.dot successfully parsed and validated")
