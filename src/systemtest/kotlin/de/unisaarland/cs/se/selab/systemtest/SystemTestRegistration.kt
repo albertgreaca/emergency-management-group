@@ -26,13 +26,13 @@ object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
         manager.registerTest(ExampleTest())
         manager.registerTest(ReroutingTest())
-        manager.registerTest(RoadClosureTest())
-        manager.registerTest(RushHour1Test())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
+        manager.registerTest(RoadClosureTest())
+        manager.registerTest(RushHour1Test())
         manager.registerTest(ManyEvents())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
@@ -44,6 +44,7 @@ object SystemTestRegistration {
         manager.registerTest(RequestTestFailed())
         manager.registerTest(RequestTestPartial())
         manager.registerTest(FailedParser51())
+        manager.registerTest(EventIdTest())
         manager.registerTest(EmergencySameTickTest())
     }
 

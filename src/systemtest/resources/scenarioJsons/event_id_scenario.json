@@ -4,10 +4,10 @@
       "id": 0,
       "type": "TRAFFIC_JAM",
       "tick": 0,
-      "duration": 10,
+      "duration": 5,
       "source": 2,
       "target": 3,
-      "factor": 3
+      "factor": 2
     },
     {
       "id": 1,
@@ -26,9 +26,9 @@
       "tick": 1,
       "village": "City",
       "roadName": "CityStreetOne",
-      "emergencyType": "FIRE",
+      "emergencyType": "CRIME",
       "severity": 1,
-      "handleTime": 2,
+      "handleTime": 4,
       "maxDuration": 200
     }
   ]
