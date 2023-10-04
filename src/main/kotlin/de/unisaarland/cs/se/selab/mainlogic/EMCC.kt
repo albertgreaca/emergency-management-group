@@ -348,25 +348,15 @@ object EMCC {
             if (allArrived) {
                 em.handlingStarted = true
                 newlyHandlingStartedEmergencies.add(em)
-                updateResourcesOfAssets(em)
+                val emUt = EmergencyUtils()
+                emUt.updateResourcesOfAssets(em)
+                emUt.updateBaseWaitingTicksOfAssets(em)
             }
         }
         newlyHandlingStartedEmergencies.sortBy { it.id }
         for (emergency in newlyHandlingStartedEmergencies) {
             Logger.logEmergencyHandlingStart(emergency.id)
         }
-    }
-
-    private fun updateResourcesOfAssets(em: Emergency) {
-        val emUt = EmergencyUtils()
-        // water
-        emUt.updateWaterTruckResources(em)
-
-        // criminals
-        emUt.updatePoliceCarResources(em)
-
-        // patients
-        emUt.updateAmbulanceResources(em)
     }
 
     /**
