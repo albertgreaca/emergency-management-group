@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class IDontLikeHeights : SystemTest() {
-    override val name = "iDontLikeHeights"
+    override val name = "IDontLikeHeights"
 
     override val map = "iDontLikeHeights/map.dot"
     override val assets = "iDontLikeHeights/assets.json"
