@@ -12,6 +12,6 @@ class Config3SyntaxFailed16 : SystemTest() {
     override suspend fun run() {
         assertNextLine("Initialization Info: example_map.dot successfully parsed and validated")
         assertNextLine("Initialization Info: example_assets.json successfully parsed and validated")
-        assertNextLine("Initialization Info: config3invalid1.json invalid")
+        assertNextLine("Initialization Info: config3invalid16.json invalid")
     }
 }
