@@ -21,6 +21,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser7
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser8
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser9
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
 
 object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
@@ -55,8 +56,41 @@ object SystemTestRegistration {
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
         config2(manager)
+        registerConfig3Syntax(manager)
     }
 
+    fun registerConfig3Syntax(manager: SystemTestManager) {
+        manager.registerTest(Config3SyntaxFailed1())
+        manager.registerTest(Config3SyntaxFailed2())
+        manager.registerTest(Config3SyntaxFailed3())
+        manager.registerTest(Config3SyntaxFailed4())
+        manager.registerTest(Config3SyntaxFailed5())
+        manager.registerTest(Config3SyntaxFailed6())
+        manager.registerTest(Config3SyntaxFailed7())
+        manager.registerTest(Config3SyntaxFailed8())
+        manager.registerTest(Config3SyntaxFailed9())
+        manager.registerTest(Config3SyntaxFailed10())
+        manager.registerTest(Config3SyntaxFailed11())
+        manager.registerTest(Config3SyntaxFailed12())
+        manager.registerTest(Config3SyntaxFailed13())
+        manager.registerTest(Config3SyntaxFailed14())
+        manager.registerTest(Config3SyntaxFailed15())
+        manager.registerTest(Config3SyntaxFailed16())
+        manager.registerTest(Config3SyntaxFailed17())
+        manager.registerTest(Config3SyntaxFailed18())
+        manager.registerTest(Config3SyntaxFailed19())
+        manager.registerTest(Config3SyntaxFailed20())
+        manager.registerTest(Config3SyntaxFailed21())
+        manager.registerTest(Config3SyntaxFailed22())
+        manager.registerTest(Config3SyntaxFailed23())
+        manager.registerTest(Config3SyntaxFailed24())
+        manager.registerTest(Config3SyntaxFailed25())
+
+
+
+
+
+    }
     fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
         registerSystemTest(manager)
     }
