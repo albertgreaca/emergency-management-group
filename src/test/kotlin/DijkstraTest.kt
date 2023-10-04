@@ -155,4 +155,34 @@ class DijkstraTest {
 
         assertTrue(posdijkstra.isEqual(posway))
     }
+
+    @Test
+    fun dijkstraRerouteTurnAroundTest() {
+        val parser = MapParser(Simulation.map, File("src/systemtest/resources/mapFiles/MapEmergencySimple.dot"))
+        parser.parseMap()
+        val jsonParser = JsonParser(
+            Simulation.map,
+            File("src/systemtest/resources/assetsJsons/AssetsEmergencySimple.json"),
+            File("src/systemtest/resources/scenarioJsons/ScenarioEmergencySimple.json")
+        )
+        jsonParser.parseBases()
+        val startroad = Simulation.map.getRoad("Campus", "Chemistry") ?: return
+        val endRoad = Simulation.map.getRoad("Campus", "Bioinfostr") ?: return
+        val vertexdirdijkstra = Simulation.map.getVertexFromId(4) ?: return
+        val vertexdircompare = Simulation.map.getVertexFromId(5) ?: return
+
+        val road2 = requireNotNull(Simulation.map.getRoad("UdS", "Art"))
+        val road3 = requireNotNull(Simulation.map.getRoad("UdS", "Naturkunst"))
+        val roadList = mutableListOf(startroad, road2, road3)
+
+        val vertex1 = requireNotNull(Simulation.map.getVertexFromId(5))
+        val vertex2 = requireNotNull(Simulation.map.getVertexFromId(3))
+        val vertex3 = requireNotNull(Simulation.map.getVertexFromId(2))
+        val vertexList = mutableListOf(vertex1, vertex2, vertex3)
+
+        val posDijkstra = Dijkstra.dijkstraReroute(startroad, 8, 10, vertexdirdijkstra, endRoad, 2)
+        val posComparable = Position(roadList, vertexList, 8, 10, vertexdircompare, 16, 2, false, false)
+
+        assertTrue(posDijkstra.isEqual(posComparable))
+    }
 }
