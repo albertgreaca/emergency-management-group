@@ -1,0 +1,20 @@
+digraph ReallocXTwo {
+	0;
+	1;
+	2;
+	3;
+	4;
+	5;
+	6;
+	7;
+	8;
+
+	0->1[village=Village; name=ZeroOne; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+	1->2[village=Village; name=OneTwo; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+	2->3[village=Village; name=TwoThree; heightLimit=5; weight=50; primaryType=sideStreet; secondaryType=none;];
+	3->4[village=Village; name=ThreeFour; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+	2->5[village=Village; name=TwoFive; heightLimit=5; weight=50; primaryType=mainStreet; secondaryType=none;];
+	5->6[village=Village; name=FiveSix; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+    2->7[village=Village; name=TwoSeven; heightLimit=5; weight=50; primaryType=mainStreet; secondaryType=none;];
+    7->8[village=Village; name=SevenEight; heightLimit=5; weight=10; primaryType=sideStreet; secondaryType=none;];
+	}
