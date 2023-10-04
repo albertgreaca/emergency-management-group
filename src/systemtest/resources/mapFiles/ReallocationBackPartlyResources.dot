@@ -1,0 +1,11 @@
+digraph Digraph {
+	1;
+	2;
+	3;
+	4;
+	5;
+	1->2[village=City; name=CityStreetOne; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+    2->3[village=City; name=CityStreetTwo; heightLimit=5; weight=10; primaryType=sideStreet; secondaryType=none;];
+    3->4[village=City; name=CityStreetThree; heightLimit=5; weight=5; primaryType=sideStreet; secondaryType=none;];
+    3->5[village=City; name=CityStreetFour; heightLimit=5; weight=20; primaryType=sideStreet; secondaryType=none;];
+}

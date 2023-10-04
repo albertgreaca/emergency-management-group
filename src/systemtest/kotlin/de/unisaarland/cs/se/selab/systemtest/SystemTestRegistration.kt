@@ -209,6 +209,7 @@ object SystemTestRegistration {
         registerSystemTestsMutantValidation(manager)
         registerSystemTestsMutantSimulation(manager)
         manager.registerTest(EmergencySameTickTest())
+        manager.registerTest(ReallocationBackTest())
     }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
