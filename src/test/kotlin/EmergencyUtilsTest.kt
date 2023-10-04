@@ -45,8 +45,74 @@ class EmergencyUtilsTest {
             em.assignedVehicles.add(vehic1)
             em.assignedVehicles.add(vehic2)
             em.assignedVehicles.add(vehic3)
-            val result = emUtil.potentialPatients(em)
-            assertTrue(result == 2)
         }
+        val result = emUtil.potentialPatients(em)
+        assertTrue(result == 2)
+    }
+
+    @Test
+    fun waterAmountTest1() {
+        val graph = Simulation.map
+        val parse = MapParser(graph, File("src/test/resources/mapvalid6reallocation.dot"))
+        val jsonparse = JsonParser(
+            graph,
+            File("src/test/resources/UnitTestConfig2/basesSimple.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+        val vertex1 = requireNotNull(graph.getVertexFromId(0))
+        val vertex2 = requireNotNull(graph.getVertexFromId(1))
+        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
+        val vehicleList = mutableListOf(VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER)
+        val res = Resource(vehicleList, 0, 0, 2, 0)
+        val em = Emergency(0, 1, road, EmergencyType.FIRE, 2, 1, 20, res)
+        val vertex3 = requireNotNull(graph.getVertexFromId(0))
+        val b = requireNotNull(vertex3.base)
+        em.base = b
+        val vehic1 = b.vehicles[0]
+        val vehic4 = b.vehicles[3]
+        val emUtil = EmergencyUtils()
+        em.assignedVehicles.add(vehic1)
+        em.assignedVehicles.add(vehic4)
+        val result = emUtil.potentialWater(em)
+        assertTrue(result == 1800)
+    }
+
+    @Test
+    fun criminalAmountTest1() {
+        val graph = Simulation.map
+        val parse = MapParser(graph, File("src/test/resources/mapvalid6reallocation.dot"))
+        val jsonparse = JsonParser(
+            graph,
+            File("src/test/resources/UnitTestConfig2/basesSimple.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+        val vertex1 = requireNotNull(graph.getVertexFromId(0))
+        val vertex2 = requireNotNull(graph.getVertexFromId(1))
+        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
+        val vehicleList = mutableListOf(VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_MOTORCYCLE)
+        val res = Resource(vehicleList, 0, 0, 2, 0)
+        val em = Emergency(0, 1, road, EmergencyType.CRIME, 2, 1, 20, res)
+        val vertex3 = requireNotNull(graph.getVertexFromId(1))
+        val b = requireNotNull(vertex3.base)
+        em.base = b
+        val vehic1 = b.vehicles[0]
+        val vehic2 = b.vehicles[1]
+        val vehic3 = b.vehicles[2]
+        val emUtil = EmergencyUtils()
+        em.assignedVehicles.add(vehic1)
+        em.assignedVehicles.add(vehic2)
+        em.assignedVehicles.add(vehic3)
+        val result = emUtil.potentialCriminals(em)
+        assertTrue(result == 3)
     }
 }
