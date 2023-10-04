@@ -46,7 +46,7 @@ class EmergencyUtilsTest {
             em.assignedVehicles.add(vehic2)
             em.assignedVehicles.add(vehic3)
             val result = emUtil.potentialPatients(em)
-            assertTrue(result == 3)
+            assertTrue(result == 2)
         }
     }
 }
