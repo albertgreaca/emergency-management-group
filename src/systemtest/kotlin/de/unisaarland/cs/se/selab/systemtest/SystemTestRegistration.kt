@@ -191,7 +191,7 @@ object SystemTestRegistration {
         manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ManyEvents())
-        manager.registerTest(iDontLikeHeights())
+        manager.registerTest(IDontLikeHeights())
         manager.registerTest(HeightNegative())
         manager.registerTest(HeightZero())
         manager.registerTest(NoMain())
