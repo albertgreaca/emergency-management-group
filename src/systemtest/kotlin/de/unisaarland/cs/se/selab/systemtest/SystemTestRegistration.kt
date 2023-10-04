@@ -171,6 +171,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax7
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax78
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax8
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax9
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.*
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
@@ -191,6 +192,16 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ManyEvents())
         manager.registerTest(iDontLikeHeights())
+        manager.registerTest(HeightNegative())
+        manager.registerTest(HeightZero())
+        manager.registerTest(NoMain())
+        manager.registerTest(NoRoads())
+        manager.registerTest(RoadsWithoutVertex())
+        manager.registerTest(SameRoadName())
+        manager.registerTest(SameRoadVertex())
+        manager.registerTest(SameVertexID())
+        manager.registerTest(Tunnel4())
+        manager.registerTest(UnEqualWeight())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
