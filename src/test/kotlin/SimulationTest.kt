@@ -2,6 +2,7 @@
 import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -46,17 +47,13 @@ class SimulationTest {
         assertEquals(1, Simulation.events.size)
     }
 
-    /*@Test
+    @Test
     fun testInitializeInvalidMap() {
         val res = Simulation.initialize(
             File("src/test/resources/invalidMaps/SemanticIssues/mapinvalid9.dot"),
             File("src/test/resources/UnitTestConfig2/ThreeFireBases.json"),
             File("src/test/resources/UnitTestConfig3/emergencysimple.json")
         )
-
         assertFalse(res)
-        assertTrue(false, Simulation.map.)
-        assertTrue(Simulation.map.roadList.isEmpty())
-        assertTrue(Simulation.map.vertexList.isEmpty())
-    }*/
+    }
 }
