@@ -134,12 +134,12 @@ object EMCC {
         // make a request for the missing police resources
 
         val bases = (
-            mutableListOf(
-                nextPoliceBase,
-                nextFireBase,
-                nextAmbulanceBase
-            ).filter { !(it == null) } as List<Base>
-            ).sortedBy { it.id }
+                mutableListOf(
+                    nextPoliceBase,
+                    nextFireBase,
+                    nextAmbulanceBase
+                ).filter { !(it == null) } as List<Base>
+                ).sortedBy { it.id }
 
         for (b in bases) {
             emBase.makeRequest(em, b)
@@ -425,6 +425,7 @@ object EMCC {
                 }
             }
         }
+        startingEmergencies.removeAll(newlyFailedEmergencies)
         /*for (em in handledEmergencies) {
             if (em.tick + em.maxDuration <= Simulation.currentTick) {
                 resolvedOrFailedEmergencies.add(em)
