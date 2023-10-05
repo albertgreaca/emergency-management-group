@@ -188,16 +188,6 @@ object SystemTestRegistration {
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(EmergencySimpleTest())
-        manager.registerTest(HeightNegative())
-        manager.registerTest(HeightZero())
-        manager.registerTest(NoMain())
-        manager.registerTest(NoRoads())
-        manager.registerTest(RoadsWithoutVertex())
-        manager.registerTest(SameRoadName())
-        manager.registerTest(SameRoadVertex())
-        manager.registerTest(SameVertexID())
-        manager.registerTest(Tunnel4())
-        manager.registerTest(UnEqualWeight())
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(ReallocationBackTest())
         manager.registerTest(ReallocationBackTest2())
@@ -220,6 +210,16 @@ object SystemTestRegistration {
         config2(manager)
         registerConfig3Syntax(manager)
         registerConfig3Semantics(manager)
+        manager.registerTest(HeightNegative())
+        manager.registerTest(HeightZero())
+        manager.registerTest(NoMain())
+        manager.registerTest(NoRoads())
+        manager.registerTest(RoadsWithoutVertex())
+        manager.registerTest(SameRoadName())
+        manager.registerTest(SameRoadVertex())
+        manager.registerTest(SameVertexID())
+        manager.registerTest(Tunnel4())
+        manager.registerTest(UnEqualWeight())
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
