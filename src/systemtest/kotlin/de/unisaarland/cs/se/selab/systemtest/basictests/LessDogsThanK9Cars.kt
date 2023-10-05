@@ -80,17 +80,16 @@ class LessDogsThanK9Cars : SystemTest() {
         assertNextLine("Asset Arrival: 1 arrived at 1.")
         assertNextLine("Asset Arrival: 2 arrived at 1.")
         assertNextLine("Asset Arrival: 3 arrived at 1.")
-
-        assertNextLine("Simulation Tick: 8")
         // dogCar8 arrived at em1
         assertNextLine("Asset Arrival: 8 arrived at 3.")
-        // amb10 returned to hospital
-        assertNextLine("Asset Arrival: 10 arrived at 5.")
         // em1 can start handling since all assets arrived
         assertNextLine("Emergency Handling Start: 1 handling started.")
 
+        assertNextLine("Simulation Tick: 8")
+        // amb10 returned to hospital
+        assertNextLine("Asset Arrival: 10 arrived at 5.")
+
         assertNextLine("Simulation Tick: 9")
-        assertNextLine("Simulation Tick: 10")
         // after two ticks of handling, em1 is resolved
         assertNextLine("Emergency Resolved: 1 resolved.")
         assertNextLine("Simulation End")
