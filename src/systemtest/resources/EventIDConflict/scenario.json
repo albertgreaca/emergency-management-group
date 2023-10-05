@@ -1,0 +1,35 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 0,
+      "duration": 5,
+      "source": 1,
+      "target": 3,
+      "factor": 2
+    },
+    {
+      "id": 1,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 0,
+      "duration": 3,
+      "source": 3,
+      "target": 1,
+      "factor": 2,
+      "oneWayStreet": true
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Munich",
+      "roadName": "E",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 10,
+      "maxDuration": 200
+    }
+  ]
+}
