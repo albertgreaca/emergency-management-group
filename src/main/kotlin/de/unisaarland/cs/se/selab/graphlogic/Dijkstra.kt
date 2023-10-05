@@ -133,6 +133,10 @@ object Dijkstra {
         if (ansp.distance % divisor != 0) {
             ansp.arrivalTicks++
         }
+        if (ansp.distance == 0) {
+            ansp.startedThisTickZero = true
+            ansp.arrivalTicks++
+        }
         return ansp
     }
 
@@ -247,6 +251,10 @@ object Dijkstra {
         }
         ansp.arrivalTicks = ansp.distance / divisor
         if (ansp.distance % divisor != 0) {
+            ansp.arrivalTicks++
+        }
+        if (ansp.distance == 0) {
+            ansp.startedThisTickZero = true
             ansp.arrivalTicks++
         }
         return ansp
