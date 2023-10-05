@@ -6,11 +6,11 @@ digraph G {
 	4;
 	5;
 
-	0 -> 1 [village=Village; name=Church_Lane; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+	0 -> 1 [village=Village; name=Church_Lane; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
 	1 -> 2 [village=Village; name=Mill_Lane; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
 	2 -> 3 [village=Village; name=Birch_Way; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
-	3 -> 4 [village=Village; name=School_Lane; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
-	4 -> 5 [village=Village; name=Mountain_Street; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
-	5 -> 0 [village=Village; name=Friedrich_Street; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
+	3 -> 4 [village=Villageri; name=School_Lane; heightLimit=3; weight=20; primaryType=countyRoad; secondaryType=none;];
+	4 -> 5 [village=Villageri; name=Mountain_Street; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];
+	5 -> 0 [village=Villageri; name=Friedrich_Street; heightLimit=3; weight=20; primaryType=countyRoad; secondaryType=none;];
 
 }
