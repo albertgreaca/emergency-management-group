@@ -78,7 +78,11 @@ open class Base(
         }
         loggerlist.sortBy { it.id }
         for (ve in loggerlist) {
-            Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position?.arrivalTicks))
+            if (ve.position?.arrivalTicks == 1 && requireNotNull(ve.position).startedThisTickZero) {
+                Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position).arrivalTicks - 1)
+            } else {
+                Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position).arrivalTicks)
+            }
         }
     }
 
