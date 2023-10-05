@@ -34,6 +34,7 @@ object EMCC {
     var nextRequestId: Int = 1
     val requests: MutableList<Request> = mutableListOf()
     val rehandleNextTick: MutableList<Emergency> = mutableListOf()
+
     // Global Counters
     var i = 0
     var k = 0
@@ -134,12 +135,12 @@ object EMCC {
         // make a request for the missing police resources
 
         val bases = (
-                mutableListOf(
-                    nextPoliceBase,
-                    nextFireBase,
-                    nextAmbulanceBase
-                ).filter { !(it == null) } as List<Base>
-                ).sortedBy { it.id }
+            mutableListOf(
+                nextPoliceBase,
+                nextFireBase,
+                nextAmbulanceBase
+            ).filter { !(it == null) } as List<Base>
+            ).sortedBy { it.id }
 
         for (b in bases) {
             emBase.makeRequest(em, b)

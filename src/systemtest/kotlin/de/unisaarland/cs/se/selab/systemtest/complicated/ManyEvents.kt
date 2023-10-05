@@ -79,5 +79,6 @@ class ManyEvents : SystemTest() {
         assertNextLine("Simulation Statistics: 0 ongoing emergencies.")
         assertNextLine("Simulation Statistics: 0 failed emergencies.")
         assertNextLine("Simulation Statistics: 3 resolved emergencies.")
+        assertEnd()
     }
 }
