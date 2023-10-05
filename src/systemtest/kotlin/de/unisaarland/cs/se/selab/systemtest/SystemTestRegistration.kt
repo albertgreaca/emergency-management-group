@@ -20,7 +20,17 @@ import de.unisaarland.cs.se.selab.systemtest.basictests.RoadClosureTest
 import de.unisaarland.cs.se.selab.systemtest.basictests.RushHour1Test
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDoctors
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDogs
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.HospitalWithDogs
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.PoliceWithDoctors
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.additionalattributes.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20
@@ -218,30 +228,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.SameVer
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.Tunnel4
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.UnEqualWeight
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.AmbulanceCrimeTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.AmbulanceLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.AmbulanceWater
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.CarLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.CarWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.EDCCriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.EDCLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.EDCWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.K9CriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.K9LadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.K9WaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.LadderCriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.LadderWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.MotorCycleTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.MotorcycleLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.MotorcycleWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TechnicalCriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TechnicalLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TechnicalWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TransportCriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TransportLadderTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.TransportWaterTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.WaterCriminalTest
-import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.WaterLadderTest
+import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.*
 
 object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
@@ -266,32 +253,6 @@ object SystemTestRegistration {
         manager.registerTest(FinishingTooLate())
         manager.registerTest(MultipleReallocationsTest())
         manager.registerTest(EventIDCollision())
-        manager.registerTest(AmbulanceCrimeTest())
-        manager.registerTest(AmbulanceLadderTest())
-        manager.registerTest(AmbulanceWater())
-        manager.registerTest(CarLadderTest())
-        manager.registerTest(CarWaterTest())
-        manager.registerTest(EDCCriminalTest())
-        manager.registerTest(EDCLadderTest())
-        manager.registerTest(EDCWaterTest())
-        manager.registerTest(K9CriminalTest())
-        manager.registerTest(K9LadderTest())
-        manager.registerTest(K9WaterTest())
-        manager.registerTest(LadderCriminalTest())
-        manager.registerTest(LadderWaterTest())
-        manager.registerTest(MotorCycleTest())
-        manager.registerTest(MotorcycleLadderTest())
-        manager.registerTest(MotorcycleWaterTest())
-        manager.registerTest(TechnicalCriminalTest())
-        manager.registerTest(TechnicalLadderTest())
-        manager.registerTest(TechnicalWaterTest())
-        manager.registerTest(TransportCriminalTest())
-        manager.registerTest(TransportLadderTest())
-        manager.registerTest(TransportWaterTest())
-        manager.registerTest(WaterCriminalTest())
-        manager.registerTest(WaterLadderTest())
-        manager.registerTest(EmergencySimpleTest())
-        manager.registerTest(ReallocationBackTest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
@@ -330,8 +291,62 @@ object SystemTestRegistration {
         manager.registerTest(FromVertexDiffrentVillage())
         manager.registerTest(CountyVillageName())
         registerVehiclesWrongBase(manager)
+        registerVehicleWrongProperties(manager)
+        manager.registerTest(FireWithDogs())
+        manager.registerTest(FireWithDoctors())
+        manager.registerTest(PoliceWithDoctors())
+        manager.registerTest(HospitalWithDogs())
+        registerEventWrongProperties(manager)
     }
 
+    private fun registerEventWrongProperties(manager: SystemTestManager){
+        manager.registerTest(ConstructionSiteHasRoadTypes())
+        manager.registerTest(ConstructionSiteHasVehicleID())
+        manager.registerTest(RoadClosureHasFactor())
+        manager.registerTest(RoadClosureHasOneWayStreet())
+        manager.registerTest(RoadClosureHasRoadTypes())
+        manager.registerTest(RoadClosureHasVehicleID())
+        manager.registerTest(RushHourHasOneWayStreet())
+        manager.registerTest(RushHourHasSource())
+        manager.registerTest(RushHourHasTarget())
+        manager.registerTest(RushHourHasVehicleID())
+        manager.registerTest(TrafficJamHasOneWayStreet())
+        manager.registerTest(TrafficJamHasRoadTypes())
+        manager.registerTest(TrafficJamHasVehicleID())
+        manager.registerTest(VehicleUnavailableHasFactor())
+        manager.registerTest(VehicleUnavailableHasOneWayStreet())
+        manager.registerTest(VehicleUnavailableHasSource())
+        manager.registerTest(VehicleUnavailableHasTarget())
+        manager.registerTest(VehicleUnavailableHasRoadTypes())
+    }
+    private fun registerVehicleWrongProperties(manager: SystemTestManager){
+        manager.registerTest(AmbulanceCrimeTest())
+        manager.registerTest(AmbulanceLadderTest())
+        manager.registerTest(AmbulanceWater())
+        manager.registerTest(CarLadderTest())
+        manager.registerTest(CarWaterTest())
+        manager.registerTest(EDCCriminalTest())
+        manager.registerTest(EDCLadderTest())
+        manager.registerTest(EDCWaterTest())
+        manager.registerTest(K9CriminalTest())
+        manager.registerTest(K9LadderTest())
+        manager.registerTest(K9WaterTest())
+        manager.registerTest(LadderCriminalTest())
+        manager.registerTest(LadderWaterTest())
+        manager.registerTest(MotorCycleTest())
+        manager.registerTest(MotorcycleLadderTest())
+        manager.registerTest(MotorcycleWaterTest())
+        manager.registerTest(TechnicalCriminalTest())
+        manager.registerTest(TechnicalLadderTest())
+        manager.registerTest(TechnicalWaterTest())
+        manager.registerTest(TransportCriminalTest())
+        manager.registerTest(TransportLadderTest())
+        manager.registerTest(TransportWaterTest())
+        manager.registerTest(WaterCriminalTest())
+        manager.registerTest(WaterLadderTest())
+        manager.registerTest(EmergencySimpleTest())
+        manager.registerTest(ReallocationBackTest())
+    }
     private fun registerVehiclesWrongBase(manager: SystemTestManager) {
         manager.registerTest(AMatFire())
         manager.registerTest(AMatPolice())
