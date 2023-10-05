@@ -57,7 +57,7 @@ open class Base(
         // create a list of all vehicles in the base which could potentially be allocated
         val potentialVehicles = vehicles.filter {
             it.available &&
-                it.vehicleType in neededVehicles
+                    it.vehicleType in neededVehicles
         }.toMutableList()
 
         val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
@@ -110,13 +110,13 @@ open class Base(
             is FireTruckWater -> em.currentResources.waterAmount = max(
                 0,
                 em.currentResources.waterAmount -
-                    vehicle.waterCapacity
+                        vehicle.waterCapacity
             )
             is Ambulance -> em.currentResources.patientAmount = max(0, em.currentResources.patientAmount - 1)
             is PoliceCar -> em.currentResources.criminalAmount = max(
                 0,
                 em.currentResources.criminalAmount -
-                    vehicle.criminalCapacity
+                        vehicle.criminalCapacity
             )
         }
     }
@@ -182,17 +182,17 @@ open class Base(
         if (staffNeeded > this.staff) validCombination = false
         if (resource.criminalAmount - fittingCriminals >
             MaxCriminalCapacity * (
-                resource.countInstancesOf(VehicleType.POLICE_CAR) -
-                    numberOfPoliceCars
-                )
+                    resource.countInstancesOf(VehicleType.POLICE_CAR) -
+                            numberOfPoliceCars
+                    )
         ) {
             return false
         }
         if (resource.waterAmount - fittingWater >
             maxWaterCapacity * (
-                resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
-                    numberOfWaterTrucks
-                )
+                    resource.countInstancesOf(VehicleType.FIRE_TRUCK_WATER) -
+                            numberOfWaterTrucks
+                    )
         ) {
             return false
         }
@@ -223,13 +223,13 @@ open class Base(
         val reallocatedList = mutableListOf<Vehicle>()
 
         // list of all reallocatable vehicles
-        val reallocatableVehics = this.vehicles.filter { it.reallocatable(em) }
 
         // copy of the needed vehicle types so that we have two separate lists for iterating and removing
         val copyOfNeededTypes = em.currentResources.vehicles.toMutableList()
 
         // for each vehic type in resource
         for (vt in copyOfNeededTypes) {
+            val reallocatableVehics = this.vehicles.filter { it.reallocatable(em) }
             innerloop(reallocatableVehics, vt, em, reallocatedList)
         }
 
@@ -278,7 +278,7 @@ open class Base(
 
             // if vehicle cannot arrive in time then skip to next vehicle
             val res = requireNotNull(pos).arrivalTicks +
-                Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
+                    Simulation.currentTick + em.handleTime > em.tick + em.maxDuration
             if (!res) {
                 // set the vehicle's position to the calculated position
                 vehic.position = pos
@@ -292,7 +292,7 @@ open class Base(
                 // if previous emergency was in handledEmergencies, move it back to startingEmergencies
                 if (requireNotNull(vehic.targetEmergency) in EMCC.handledEmergencies) {
                     EMCC.handledEmergencies.remove(vehic.targetEmergency)
-                    EMCC.startingEmergencies.add(requireNotNull(vehic.targetEmergency))
+                    EMCC.rehandleNextTick.add(requireNotNull(vehic.targetEmergency))
                 }
 
                 // transfer the resources needed from new emergency to previous emergency
@@ -329,14 +329,14 @@ open class Base(
             oldem.currentResources.criminalAmount = max(
                 0,
                 oldem.originalResources.criminalAmount -
-                    emUt.potentialCriminals(oldem)
+                        emUt.potentialCriminals(oldem)
             )
         }
         // criminals still needed for newem decrease by vehic.criminalsStillFitting but cannot be less than 0
         newem.currentResources.criminalAmount = max(
             0,
             newem.currentResources.criminalAmount -
-                vehic.criminalsStillFitting
+                    vehic.criminalsStillFitting
         )
     }
 
