@@ -106,7 +106,7 @@ open class Base(
         loggerlist.add(vehicle)
     }
 
-    private fun allocateWhen(em: Emergency, vehicle: Vehicle) {
+    protected fun allocateWhen(em: Emergency, vehicle: Vehicle) {
         when (vehicle) {
             is FireTruckWater -> em.currentResources.waterAmount = max(
                 0,

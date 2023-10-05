@@ -27,6 +27,31 @@ class Hospital(id: Int, staff: Int, location: Vertex, vehicles: MutableList<Vehi
     }
 
     /**
+     * allocates Vehicles
+     */
+    override fun allocateVehicle(vehicle: Vehicle, em: Emergency, loggerlist: MutableList<Vehicle>) {
+        // calculate and set the position of the vehicle
+        vehicle.position = Dijkstra.dijkstraHeight(this.location.realid, em.road, vehicle.vehicleHeight)
+        // set position to started this tick
+        requireNotNull(vehicle.position).startedThisTick = true
+        // reduce the available staff of the vehicle
+        this.staff -= vehicle.staffCapacity
+        // reduce doctors if vehicle is emergency doctor car
+        if (vehicle.vehicleType == VehicleType.EMERGENCY_DOCTOR_CAR) this.doctors--
+        // set the target emergency of the vehicle
+        vehicle.targetEmergency = em
+        // remove the vehicle type from the list of needed vehicle types
+        em.currentResources.vehicles.remove(vehicle.vehicleType)
+        // reduce needed patients/water/criminals for special vehicles
+        allocateWhen(em, vehicle)
+        // set vehicle availability false
+        vehicle.available = false
+        // add vehicle to list in emergency
+        em.addVehicle(vehicle)
+        loggerlist.add(vehicle)
+    }
+
+    /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
     override fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
