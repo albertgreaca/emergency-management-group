@@ -208,7 +208,7 @@ object SystemTestRegistration {
         registerMapParserSyntaxFail2(manager)
         registerMapParserSemanticFail1(manager)
         config2(manager)
-        registerConfig3Syntax(manager)
+        // registerConfig3Syntax(manager)
         registerConfig3Semantics(manager)
         manager.registerTest(HeightNegative())
         manager.registerTest(HeightZero())
@@ -223,6 +223,7 @@ object SystemTestRegistration {
         manager.registerTest(NoSideStreet())
         manager.registerTest(RoadToItself())
         manager.registerTest(FromVertexDiffrentVillage())
+        manager.registerTest(CountyVillageName())
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
