@@ -2,41 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest
 import FailedParserConfig3Semantics1
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser21
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser22
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser23
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser24
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser25
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser26
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser27
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser28
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser29
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser30
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser31
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser32
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser33
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser34
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser35
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser36
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser37
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser38
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser39
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser40
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser41
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser42
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser43
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser44
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser45
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser46
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser47
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser48
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser49
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser50
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser51
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
@@ -431,5 +397,6 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser48())
         manager.registerTest(FailedParser49())
         manager.registerTest(FailedParser50())
+        manager.registerTest(AllVehiclesWrongBase())
     }
 }
