@@ -31,9 +31,9 @@ class LessDoctorsThanDoctorCars : SystemTest() {
         assertNextLine("Simulation Tick: 3")
         // em1 is assigned to hospital (id 0)
         assertNextLine("Emergency Assignment: 1 assigned to 0")
-        // amb2 and amb3 allocated to em1, 1 tick needed
-        assertNextLine("Asset Allocation: 2 allocated to 1; 1 ticks to arrive.")
-        assertNextLine("Asset Allocation: 3 allocated to 1; 1 ticks to arrive.")
+        // amb2 and amb3 allocated to em1, 2 ticks needed
+        assertNextLine("Asset Allocation: 2 allocated to 1; 2 ticks to arrive.")
+        assertNextLine("Asset Allocation: 3 allocated to 1; 2 ticks to arrive.")
         // amb0, amb1, and docCar4 arrived at em0
         assertNextLine("Asset Arrival: 0 arrived at 2.")
         assertNextLine("Asset Arrival: 1 arrived at 2.")
