@@ -68,6 +68,8 @@ object SystemTestRegistration {
         manager.registerTest(DoubleRealloc())
         manager.registerTest(ArrivalTickFailWithRequest())
         manager.registerTest(RequestNotReallocate())
+        manager.registerTest(LessDoctorsThanDoctorCars())
+        manager.registerTest(RequestAgainStaff())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
