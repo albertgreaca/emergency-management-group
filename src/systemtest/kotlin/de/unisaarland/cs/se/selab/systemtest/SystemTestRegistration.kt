@@ -4,7 +4,7 @@ import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.AMatFire
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
@@ -195,6 +195,28 @@ object SystemTestRegistration {
         manager.registerTest(RoadToItself())
         manager.registerTest(FromVertexDiffrentVillage())
         manager.registerTest(CountyVillageName())
+        registerVehiclesWrongBase(manager)
+    }
+
+    private fun registerVehiclesWrongBase(manager: SystemTestManager) {
+        manager.registerTest(AMatFire())
+        manager.registerTest(AMatPolice())
+        manager.registerTest(EDatFire())
+        manager.registerTest(EDatPolice())
+        manager.registerTest(FTWatHostpital())
+        manager.registerTest(FTWatPolice())
+        manager.registerTest(FTTatHostpital())
+        manager.registerTest(FTTatPolice())
+        manager.registerTest(FTPatHostpital())
+        manager.registerTest(FTPatPolice())
+        manager.registerTest(FTLatHostpital())
+        manager.registerTest(FTLatPolice())
+        manager.registerTest(PCatFire())
+        manager.registerTest(PCatHostpital())
+        manager.registerTest(PMatHostpital())
+        manager.registerTest(PMatFire())
+        manager.registerTest(K9atFire())
+        manager.registerTest(K9atHostpital())
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
@@ -402,6 +424,5 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser48())
         manager.registerTest(FailedParser49())
         manager.registerTest(FailedParser50())
-        manager.registerTest(AMatFire())
     }
 }
