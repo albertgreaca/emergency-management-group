@@ -1,10 +1,10 @@
 {
   "bases": [
     {
-      "id": 0,
-      "baseType": "HOSPITAL",
-      "location": 1,
-      "staff": 100,
+    "id": 0,
+    "baseType": "HOSPITAL",
+    "location": 1,
+    "staff": 100,
       "doctors": 0
     },
     {
