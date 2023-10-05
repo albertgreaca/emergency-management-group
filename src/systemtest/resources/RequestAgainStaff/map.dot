@@ -1,0 +1,13 @@
+digraph Pow {
+    1;
+    2;
+    3;
+    4;
+    5;
+    1 -> 2 [village = Boom; name = B; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+    1 -> 4 [village = Boom; name = A; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
+    2 -> 3 [village = Boom; name = C; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
+    4 -> 5 [village = Boom; name = E; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
+    5 -> 6 [village = Boom; name = F; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+    3 -> 6 [village = Boom; name = D; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
+}
