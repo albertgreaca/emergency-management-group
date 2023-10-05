@@ -22,8 +22,8 @@ class EmergencySameTickTest : SystemTest() {
         // Two emergencies assigned to the same fire base
         assertNextLine("Emergency Assignment: 0 assigned to 2")
         assertNextLine("Emergency Assignment: 1 assigned to 2")
-        assertNextLine("Asset Allocation: 10 allocated to 0; 0 ticks to arrive.")
-        assertNextLine("Asset Allocation: 20 allocated to 1; 0 ticks to arrive.")
+        assertNextLine("Asset Allocation: 10 allocated to 0; 1 ticks to arrive.")
+        assertNextLine("Asset Allocation: 20 allocated to 1; 1 ticks to arrive.")
         assertNextLine("Simulation Tick: 2")
         assertNextLine("Asset Arrival: 10 arrived at 2.")
         assertNextLine("Asset Arrival: 20 arrived at 2.")
