@@ -59,14 +59,14 @@ object SystemTestRegistration {
         manager.registerTest(EventIDCollision())
         manager.registerTest(NotInTimeTest())
         manager.registerTest(RequestEverywhere())
-        manager.registerTest(ArrivalTickFailWithRequest())
+        manager.registerTest(DijTieSimple())
+        manager.registerTest(LessDogsThanK9Cars())
+        manager.registerTest(EmergencySameTickTest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(EmergencySameTickTest())
         manager.registerTest(DoubleRealloc())
-        manager.registerTest(DijTieSimple())
-        manager.registerTest(LessDogsThanK9Cars())
+        manager.registerTest(ArrivalTickFailWithRequest())
         manager.registerTest(RequestNotReallocate())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
