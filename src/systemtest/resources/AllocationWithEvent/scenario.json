@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 0,
+      "duration": 10,
+      "source": 1,
+      "target": 2,
+      "factor": 200
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Boom",
+      "roadName": "B",
+      "emergencyType": "MEDICAL",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 100
+    }
+  ]
+}
