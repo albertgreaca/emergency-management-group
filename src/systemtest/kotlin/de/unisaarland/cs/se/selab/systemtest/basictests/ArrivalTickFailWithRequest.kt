@@ -19,9 +19,11 @@ class ArrivalTickFailWithRequest : SystemTest() {
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 3")
-        assertNextLine("Asset Request: 0 sent to 0 for 0.")
+        assertNextLine("Asset Request: 1 sent to 0 for 0.")
         assertNextLine("Request Failed: 0 failed.")
         assertNextLine("Simulation Tick: 2")
+        assertNextLine("Asset Request: 2 sent to 0 for 0.")
+        assertNextLine("Request Failed: 0 failed.")
         assertNextLine("Emergency Failed: 0 failed.")
 
         assertNextLine("Simulation End")
