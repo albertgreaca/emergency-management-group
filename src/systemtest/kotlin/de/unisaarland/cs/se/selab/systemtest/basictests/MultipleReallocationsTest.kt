@@ -9,7 +9,7 @@ class MultipleReallocationsTest : SystemTest() {
     override val map = "testcases/multipleReallocations/map.dot"
     override val assets = "testcases/multipleReallocations/config2.json"
     override val scenario = "testcases/multipleReallocations/config3.json"
-    override val maxTicks = 100
+    override val maxTicks = 30
     override suspend fun run() {
         // everything is parsed and validated
         assertNextLine("Initialization Info: ReallocationBackPartlyResources.dot successfully parsed and validated")
@@ -72,15 +72,19 @@ class MultipleReallocationsTest : SystemTest() {
         assertNextLine("Asset Arrival: 7 arrived at 3.")
         assertNextLine("Emergency Handling Start: 2 handling started.")
         assertNextLine("Simulation Tick: 11")
+        // em1 fails since it has not been started handling by tick 11 (emDocCar5 is driving back)
+        assertNextLine("Emergency Failed: 1 failed.")
         assertNextLine("Simulation Tick: 12")
         assertNextLine("Simulation Tick: 13")
         assertNextLine("Simulation Tick: 14")
-        // em2 is resolved in tick 14, all ambulances carry patients and need to go back to base
+        // em2 is resolved in tick 14, this is end of simulation since it was the last emergency
         assertNextLine("Emergency Resolved: 2 resolved.")
-        assertNextLine("Simulation Tick: 15")
-        assertNextLine("Simulation Tick: 16")
-        assertNextLine("Simulation Tick: 17")
-        assertNextLine("Simulation Tick: 18")
-        // TODO : continue
+        assertNextLine("Simulation End")
+        assertNextLine("Simulation Statistics: 0 assets rerouted.")
+        assertNextLine("Simulation Statistics: 3 received emergencies.")
+        assertNextLine("Simulation Statistics: 0 ongoing emergencies.")
+        assertNextLine("Simulation Statistics: 2 failed emergencies.")
+        assertNextLine("Simulation Statistics: 1 resolved emergencies.")
+        assertEnd()
     }
 }
