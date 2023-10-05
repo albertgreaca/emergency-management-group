@@ -101,7 +101,7 @@ object Simulation {
         EMCC.updateAssets()
         EMCC.updateEmergencies()
         for (ev in events) {
-            if (ev.tick == currentTick) {
+            if (ev.tick == currentTick && !ev.postponed) {
                 EMCC.startingEvents.add(ev)
             }
         }

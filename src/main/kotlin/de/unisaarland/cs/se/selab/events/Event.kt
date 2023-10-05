@@ -5,7 +5,8 @@ package de.unisaarland.cs.se.selab.events
 abstract class Event(
     open val id: Int,
     open var tick: Int,
-    open var duration: Int
+    open var duration: Int,
+    open var postponed: Boolean = false
 ) {
     /**
      * starts event for the first time

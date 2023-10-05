@@ -35,6 +35,7 @@ class ConstructionSiteEvent(
             Logger.logEventTriggered(id)
             return true
         }
+        postponed = true
         tick++
         return false
     }
@@ -45,6 +46,7 @@ class ConstructionSiteEvent(
      * logs
      */
     override fun stopEvent() {
+        postponed = false
         road.eventList.remove(this)
         if (road.secType != SecondaryRoadType.ONEWAYSTREET && oneWayStreet) {
             Simulation.map.toNormal(road, start, end)

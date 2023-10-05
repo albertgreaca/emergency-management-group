@@ -25,6 +25,7 @@ class VehicleUnavailableEvent(
             Logger.logEventTriggered(id)
             return true
         }
+        postponed = true
         tick++
         return false
     }
@@ -35,6 +36,7 @@ class VehicleUnavailableEvent(
      * logs
      */
     override fun stopEvent() {
+        postponed = false
         vehicle.available = true
         Logger.logEventEnded(id)
     }
