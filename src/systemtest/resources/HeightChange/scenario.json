@@ -4,7 +4,7 @@
       "id": 0,
       "type": "ROAD_CLOSURE",
       "tick": 0,
-      "duration": 1,
+      "duration": 3,
       "source": 1,
       "target": 2
     }

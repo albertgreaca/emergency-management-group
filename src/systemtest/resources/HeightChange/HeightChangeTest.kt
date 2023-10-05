@@ -2,12 +2,12 @@ package NotEnoughStaff
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class NotEnoughStaffTest : SystemTest() {
-    override val name = "NotEnoughStaff"
+class HeightChangeTest : SystemTest() {
+    override val name = "HeightChange"
 
-    override val map = "NotEnoughStaff/map.dot"
-    override val assets = "NotEnoughStaff/assets.json"
-    override val scenario = "NotEnoughStaff/scenario.json"
+    override val map = "HeightChange/map.dot"
+    override val assets = "HeightChange/assets.json"
+    override val scenario = "HeightChange/scenario.json"
     override val maxTicks = 100
 
     override suspend fun run() {
@@ -16,6 +16,7 @@ class NotEnoughStaffTest : SystemTest() {
         assertNextLine("Initialization Info: scenario.json successfully parsed and validated")
         assertNextLine("Simulation starts")
         assertNextLine("Simulation Tick: 0")
+        assertNextLine("Event Triggered: 0 triggered.")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 0")
         assertNextLine("Asset Allocation: 1 allocated to 0; 1 ticks to arrive.")
