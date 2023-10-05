@@ -158,7 +158,10 @@ object EMCC {
                 requests[i].processingBase.requestResources(requests[i].emergency)
 
                 // if we have resources left, make another request to the next closest base
-                if (!requests[i].emergency.currentResources.isEmpty()) {
+                if (!requireNotNull(
+                        requests[i].emergency.currentResources.filterResourcesOfKind(requests[i].kind)
+                    ).isEmpty()
+                ) {
                     delegateRequest(requests[i])
                 } else {
                     requests.removeAt(i)

@@ -422,9 +422,9 @@ open class Base(
      * send a request to the next closest Base
      * adds request to Requestlist in EMCC
      */
-    fun makeRequest(em: Emergency, nextBase: Base) {
+    open fun makeRequest(em: Emergency, nextBase: Base) {
         // create a request
-        val req = Request(EMCC.nextRequestId, em, nextBase)
+        val req = Request(EMCC.nextRequestId, em, nextBase, 0)
         // add it to the list of requests
         EMCC.requests.add(req)
         // log that a new request was made

@@ -1,23 +1,6 @@
 package de.unisaarland.cs.se.selab.systemtest
 import FailedParserConfig3Semantics1
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySameTickTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.EventIDCollision
-import de.unisaarland.cs.se.selab.systemtest.basictests.EventIdTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.FinishingTooLate
-import de.unisaarland.cs.se.selab.systemtest.basictests.IDontLikeHeights
-import de.unisaarland.cs.se.selab.systemtest.basictests.LessDogsThanK9Cars
-import de.unisaarland.cs.se.selab.systemtest.basictests.MultipleReallocationsTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReallocationBackTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReallocationBackTest2
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestFailed
-import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestPartial
-import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RoadClosureTest
-import de.unisaarland.cs.se.selab.systemtest.basictests.RushHour1Test
+import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
@@ -259,6 +242,7 @@ object SystemTestRegistration {
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(DoubleRealloc())
+        manager.registerTest(DijTieSimple())
         manager.registerTest(LessDogsThanK9Cars())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {

@@ -3,8 +3,11 @@ package de.unisaarland.cs.se.selab.bases
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
 import de.unisaarland.cs.se.selab.graphlogic.Vertex
+import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
+import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.resources.Resource
+import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
@@ -97,5 +100,15 @@ class Hospital(id: Int, staff: Int, location: Vertex, vehicles: MutableList<Vehi
             }
         }
         return true
+    }
+    override fun makeRequest(em: Emergency, nextBase: Base) {
+        // create a request
+        val req = Request(EMCC.nextRequestId, em, nextBase, 1)
+        // add it to the list of requests
+        EMCC.requests.add(req)
+        // log that a new request was made
+        Logger.logAssetRequest(req.id, nextBase.id, em.id)
+        // count up the id of the next request
+        EMCC.nextRequestId++
     }
 }

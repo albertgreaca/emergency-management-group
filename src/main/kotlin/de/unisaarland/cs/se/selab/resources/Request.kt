@@ -9,7 +9,8 @@ import de.unisaarland.cs.se.selab.emergencies.Emergency
 class Request(
     val id: Int,
     val emergency: Emergency,
-    val processingBase: Base
+    val processingBase: Base,
+    val kind: Int
 ) {
     /**
      * @return Base which requested (responsible base for emergency)
