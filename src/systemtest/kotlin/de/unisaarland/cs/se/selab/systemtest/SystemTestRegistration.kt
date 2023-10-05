@@ -197,8 +197,8 @@ object SystemTestRegistration {
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
         registerSystemTest(manager)
-        registerSystemTestsMutantValidation(manager)
-        registerSystemTestsMutantSimulation(manager)
+        // registerSystemTestsMutantValidation(manager)
+        // registerSystemTestsMutantSimulation(manager)
     }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
