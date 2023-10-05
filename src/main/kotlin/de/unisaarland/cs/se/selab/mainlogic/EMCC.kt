@@ -33,7 +33,6 @@ object EMCC {
     val startingEvents: MutableList<Event> = mutableListOf()
     var nextRequestId: Int = 1
     val requests: MutableList<Request> = mutableListOf()
-    val rehandleNextTick: MutableList<Emergency> = mutableListOf()
 
     // Global Counters
     var i = 0
@@ -308,8 +307,6 @@ object EMCC {
      * updates the state of all emergencies
      */
     fun updateEmergencies() {
-        startingEmergencies.addAll(rehandleNextTick)
-        rehandleNextTick.clear()
         // update all emergencies who allocated all resources in this tick
         val listtoremove = mutableListOf<Emergency>()
         for (em in startingEmergencies) {

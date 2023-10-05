@@ -292,7 +292,7 @@ open class Base(
                 // if previous emergency was in handledEmergencies, move it back to startingEmergencies
                 if (requireNotNull(vehic.targetEmergency) in EMCC.handledEmergencies) {
                     EMCC.handledEmergencies.remove(vehic.targetEmergency)
-                    EMCC.rehandleNextTick.add(requireNotNull(vehic.targetEmergency))
+                    EMCC.startingEmergencies.add(requireNotNull(vehic.targetEmergency))
                 }
 
                 // transfer the resources needed from new emergency to previous emergency
