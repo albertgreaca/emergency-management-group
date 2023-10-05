@@ -185,14 +185,14 @@ object SystemTestRegistration {
         manager.registerTest(IDontLikeHeights())
         manager.registerTest(Reallocation())
         manager.registerTest(ReallocationBackTest2())
+        manager.registerTest(NotEnoughStaffTest())
+        manager.registerTest(SmartAllocationWater())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(ReallocationBackTest())
-        manager.registerTest(NotEnoughStaffTest())
-        manager.registerTest(SmartAllocationWater())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
