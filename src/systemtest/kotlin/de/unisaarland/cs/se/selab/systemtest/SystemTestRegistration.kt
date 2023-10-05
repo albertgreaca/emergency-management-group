@@ -1,6 +1,20 @@
 package de.unisaarland.cs.se.selab.systemtest
 import FailedParserConfig3Semantics1
-import de.unisaarland.cs.se.selab.systemtest.basictests.*
+import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySameTickTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.EmergencySimpleTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.EventIdTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.ExampleTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.IDontLikeHeights
+import de.unisaarland.cs.se.selab.systemtest.basictests.MultipleReallocationsTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.Reallocation
+import de.unisaarland.cs.se.selab.systemtest.basictests.ReallocationBackTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.ReallocationBackTest2
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestFailed
+import de.unisaarland.cs.se.selab.systemtest.basictests.RequestTestPartial
+import de.unisaarland.cs.se.selab.systemtest.basictests.ReroutingTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RoadClosureTest
+import de.unisaarland.cs.se.selab.systemtest.basictests.RushHour1Test
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
@@ -133,7 +147,19 @@ import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax7
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax78
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax8
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParserSyntax9
-import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.*
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.FromVertexDiffrentVillage
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.HeightNegative
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.HeightZero
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.NoMain
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.NoRoads
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.NoSideStreet
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.RoadToItself
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.RoadsWithoutVertex
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.SameRoadName
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.SameRoadVertex
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.SameVertexID
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.Tunnel4
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.testguesses.UnEqualWeight
 import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
@@ -159,6 +185,7 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(ReallocationBackTest())
+        manager.registerTest(MultipleReallocationsTest())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)

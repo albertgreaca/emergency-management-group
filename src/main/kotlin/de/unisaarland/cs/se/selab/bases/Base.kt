@@ -78,11 +78,7 @@ open class Base(
         }
         loggerlist.sortBy { it.id }
         for (ve in loggerlist) {
-            if (ve.position?.arrivalTicks == 1 && requireNotNull(ve.position).startedThisTickZero) {
-                Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position).arrivalTicks - 1)
-            } else {
-                Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position).arrivalTicks)
-            }
+            Logger.logAssetAllocation(ve.id, em.id, requireNotNull(ve.position).arrivalTicks)
         }
     }
 
@@ -96,6 +92,13 @@ open class Base(
         requireNotNull(vehicle.position).startedThisTick = true
         // reduce the available staff of the vehicle
         this.staff -= vehicle.staffCapacity
+        // reduce special staff
+        if (this is Hospital && vehicle.vehicleType == VehicleType.EMERGENCY_DOCTOR_CAR) {
+            this.doctors--
+        }
+        if (this is PoliceStation && vehicle.vehicleType == VehicleType.K9_POLICE_CAR) {
+            this.dogs--
+        }
         // set the target emergency of the vehicle
         vehicle.targetEmergency = em
         // remove the vehicle type from the list of needed vehicle types

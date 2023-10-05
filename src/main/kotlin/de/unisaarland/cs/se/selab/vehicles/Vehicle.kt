@@ -47,15 +47,21 @@ open class Vehicle(
      * @return true if reallocatable, else false
      */
     open fun reallocatable(em: Emergency): Boolean {
+        // if vehicle is currently at base, it cannot be reallocated
         if (position == null) {
             return false
         }
+        // if vehicle is currently at emergency, it cannot yet be reallocated
+        // TODO : do we have to check if vehicle started driving?
+        //  Edgecase where emergency is directly at base and asset with arrival ticks 0 has to be reallocated
         if (requireNotNull(position).arrivalTicks == 0) {
             return false
         }
+        // if the vehicle has to go back to the base, it cannot yet be reallocated
         if (baseWaitingTicks != 0) {
             return false
         }
+        // if vehicle is currently assigned to emergency of at least equal severity which is not yet resolved or failed
         if (targetEmergency != null && !EMCC.resolvedOrFailedEmergencies.contains(targetEmergency) &&
             em.severity <= requireNotNull(targetEmergency).severity
         ) {

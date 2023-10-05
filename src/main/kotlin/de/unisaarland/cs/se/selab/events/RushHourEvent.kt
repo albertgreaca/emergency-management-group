@@ -33,6 +33,7 @@ class RushHourEvent(
                 return true
             }
         }
+        postponed = true
         tick++
         return false
     }
@@ -46,6 +47,7 @@ class RushHourEvent(
         for (road in roads) {
             road.eventList.remove(this)
         }
+        postponed = false
         Logger.logEventEnded(id)
     }
 }

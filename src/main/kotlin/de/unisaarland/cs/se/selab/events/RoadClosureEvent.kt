@@ -28,6 +28,7 @@ class RoadClosureEvent(
             Logger.logEventTriggered(id)
             return true
         }
+        postponed = true
         tick++
         return false
     }
@@ -38,6 +39,7 @@ class RoadClosureEvent(
      * logs
      */
     override fun stopEvent() {
+        postponed = false
         road.eventList.remove(this)
         Simulation.map.addRoad(road, road.start.id, road.end.id)
         Logger.logEventEnded(id)
