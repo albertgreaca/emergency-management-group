@@ -271,7 +271,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val staffs = currBase.getInt("staff")
             var newBase: Base? = null
             val utils = JsonParserUtils()
-            res = utils.okib(baseType, currBase)
+            res = res && utils.okib(baseType, currBase)
             when (baseType) {
                 "FIRE_STATION" -> {
                     newBase = Base(id, staffs, location, mutableListOf())
