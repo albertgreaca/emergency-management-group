@@ -5,9 +5,9 @@ import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 class EventIDCollision : SystemTest() {
     override val name = "EventIDCollision"
 
-    override val map = "mapFiles/MapEmergencySimple.dot"
-    override val assets = "assetsJsons/AssetsEmergencySimple.json"
-    override val scenario = "scenarioJsons/ScenarioEmergencySimple.json"
+    override val map = "EventIDConflict/map.dot"
+    override val assets = "EventIDConflict/assets.json"
+    override val scenario = "EventIDConflict/scenario.json"
     override val maxTicks = 20
 
     override suspend fun run() {
