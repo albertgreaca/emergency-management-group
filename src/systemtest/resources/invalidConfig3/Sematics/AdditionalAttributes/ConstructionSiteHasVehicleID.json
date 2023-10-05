@@ -1,0 +1,27 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 0,
+      "duration": 1,
+      "factor": 1,
+      "oneWayStreet": false,
+      "source": 2,
+      "target": 4,
+      "vehicleID": 4
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "Saarbruecken",
+      "roadName": "Bergstrasse",
+      "emergencyType": "MEDICAL",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 30
+    }
+  ]
+}

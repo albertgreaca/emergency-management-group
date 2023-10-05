@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "ROAD_CLOSURE",
+      "tick": 0,
+      "duration": 1,
+      "source": 2,
+      "target": 4,
+      "factor": 2
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "Saarbruecken",
+      "roadName": "Bergstrasse",
+      "emergencyType": "MEDICAL",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 30
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "VEHICLE_UNAVAILABLE",
+      "tick": 0,
+      "duration": 1,
+      "vehicleID": 4,
+      "target": 4
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 2,
+      "village": "Saarbruecken",
+      "roadName": "Bergstrasse",
+      "emergencyType": "MEDICAL",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 30
+    }
+  ]
+}
