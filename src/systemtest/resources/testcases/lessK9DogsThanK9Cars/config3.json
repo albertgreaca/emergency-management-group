@@ -3,7 +3,7 @@
     {
       "id": 0,
       "type": "TRAFFIC_JAM",
-      "tick": 500,
+      "tick": 100,
       "duration": 1,
       "factor": 1,
       "source": 1,
@@ -13,13 +13,23 @@
   "emergencyCalls": [
     {
       "id": 0,
-      "tick": 4,
+      "tick": 2,
       "village": "Saarbruecken",
       "roadName": "Campus",
       "emergencyType": "CRIME",
       "severity": 2,
       "handleTime": 2,
-      "maxDuration": 4
+      "maxDuration": 8
+    },
+    {
+      "id": 1,
+      "tick": 3,
+      "village": "Saarbruecken",
+      "roadName": "Main_Street",
+      "emergencyType": "CRIME",
+      "severity": 2,
+      "handleTime": 2,
+      "maxDuration": 10
     }
   ]
 }
