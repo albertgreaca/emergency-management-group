@@ -1,0 +1,36 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 1,
+      "duration": 1,
+      "factor": 1,
+      "oneWayStreet": false,
+      "source": 4,
+      "target": 3
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Munich",
+      "roadName": "Alder_Way",
+      "emergencyType": "CRIME",
+      "severity": 1,
+      "handleTime": 2,
+      "maxDuration": 10
+    },
+    {
+      "id": 1,
+      "tick": 3,
+      "village": "Munich",
+      "roadName": "Field_Lane",
+      "emergencyType": "CRIME",
+      "severity": 2,
+      "handleTime": 2,
+      "maxDuration": 10
+    }
+  ]
+}
