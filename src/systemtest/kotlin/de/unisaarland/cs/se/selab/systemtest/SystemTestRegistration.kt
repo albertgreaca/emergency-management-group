@@ -73,6 +73,7 @@ object SystemTestRegistration {
         manager.registerTest(RequestAgainStaff())
         manager.registerTest(VehUnavPp())
         manager.registerTest(DijTieNodesSimple())
+        manager.registerTest(AllocationWithEvent())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
