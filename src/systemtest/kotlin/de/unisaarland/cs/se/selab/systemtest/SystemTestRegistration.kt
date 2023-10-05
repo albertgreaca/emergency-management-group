@@ -156,6 +156,9 @@ object SystemTestRegistration {
         manager.registerTest(NotEnoughStaffTest())
         manager.registerTest(SmartAllocationWater())
         manager.registerTest(HeightChangeTest())
+        manager.registerTest(MultipleReallocationsTest())
+        manager.registerTest(EventIDCollision())
+        manager.registerTest(FinishingTooLate())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
@@ -163,15 +166,12 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(ReallocationBackTest())
         manager.registerTest(DoubleRealloc())
-        manager.registerTest(MultipleReallocationsTest())
-        manager.registerTest(EventIDCollision())
-        manager.registerTest(FinishingTooLate())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
         registerSystemTest(manager)
-        // registerSystemTestsMutantValidation(manager)
-        // registerSystemTestsMutantSimulation(manager)
+        registerSystemTestsMutantValidation(manager)
+        registerSystemTestsMutantSimulation(manager)
     }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {

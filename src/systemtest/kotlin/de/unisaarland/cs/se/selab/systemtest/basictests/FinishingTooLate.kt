@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class FinishingTooLate : SystemTest() {
-    override val name = "EventIDCollision"
+    override val name = "EventIDCollision Finishing Too Late"
 
     override val map = "EventIDConflict/map.dot"
     override val assets = "EventIDConflict/assets.json"
