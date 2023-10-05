@@ -42,11 +42,11 @@ class LessDoctorsThanDoctorCars : SystemTest() {
         assertNextLine("Emergency Handling Start: 0 handling started.")
 
         assertNextLine("Simulation Tick: 4")
+
+        assertNextLine("Simulation Tick: 5")
         // amb2 and amb3 arrived at em1
         assertNextLine("Asset Arrival: 2 arrived at 3.")
         assertNextLine("Asset Arrival: 3 arrived at 3.")
-
-        assertNextLine("Simulation Tick: 5")
         // after two ticks of handling, em0 is resolved
         assertNextLine("Emergency Resolved: 0 resolved.")
 
