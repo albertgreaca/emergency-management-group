@@ -70,8 +70,8 @@ class DoubleRealloc : SystemTest() {
 
     private suspend fun continueWith() {
         assertNextLine("Emergency Resolved: 0 resolved.")
-        assertNextLine("Simulation Tick: 9")
         assertNextLine("Emergency Resolved: 1 resolved.")
+        assertNextLine("Simulation Tick: 9")
         assertNextLine("Emergency Resolved: 2 resolved.")
         // Simulation is over
         assertNextLine("Simulation End")
