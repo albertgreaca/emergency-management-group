@@ -50,13 +50,6 @@ object SystemTestRegistration {
         manager.registerTest(MultipleReallocationsTest())
         manager.registerTest(EventIDCollision())
         manager.registerTest(FinishingTooLate())
-    }
-
-    private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(EmergencySimpleTest())
-        manager.registerTest(EmergencySameTickTest())
-        manager.registerTest(ReallocationBackTest())
-        manager.registerTest(DoubleRealloc())
         manager.registerTest(MultipleReallocationsTest())
         manager.registerTest(EventIDCollision())
         manager.registerTest(AmbulanceCrimeTest())
@@ -83,6 +76,13 @@ object SystemTestRegistration {
         manager.registerTest(TransportWaterTest())
         manager.registerTest(WaterCriminalTest())
         manager.registerTest(WaterLadderTest())
+        manager.registerTest(EmergencySimpleTest())
+        manager.registerTest(ReallocationBackTest())
+    }
+
+    private fun notPassingReference(manager: SystemTestManager) {
+        manager.registerTest(EmergencySameTickTest())
+        manager.registerTest(DoubleRealloc())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
