@@ -3,11 +3,8 @@ package de.unisaarland.cs.se.selab.bases
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
 import de.unisaarland.cs.se.selab.graphlogic.Vertex
-import de.unisaarland.cs.se.selab.mainlogic.EMCC
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
-import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.resources.Resource
-import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
