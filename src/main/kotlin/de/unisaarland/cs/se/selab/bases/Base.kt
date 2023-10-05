@@ -12,6 +12,7 @@ import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.utils.Position
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
@@ -85,7 +86,7 @@ open class Base(
     /**
      * allocates Vehicles
      */
-    fun allocateVehicle(vehicle: Vehicle, em: Emergency, loggerlist: MutableList<Vehicle>) {
+    open fun allocateVehicle(vehicle: Vehicle, em: Emergency, loggerlist: MutableList<Vehicle>) {
         // calculate and set the position of the vehicle
         vehicle.position = Dijkstra.dijkstraHeight(this.location.realid, em.road, vehicle.vehicleHeight)
         // set position to started this tick
@@ -179,6 +180,8 @@ open class Base(
                 numberOfWaterTrucks++
             }
         }
+
+        ladderlength(resource)
         if (staffNeeded > this.staff) validCombination = false
         if (resource.criminalAmount - fittingCriminals >
             MaxCriminalCapacity * (
@@ -212,6 +215,17 @@ open class Base(
             }
         }
         return validCombination
+    }
+
+    private fun ladderlength(re: Resource): Boolean {
+        if (re.ladderLength == ladder40) {
+            for (vec in vehicles) {
+                if (vec is FireTruckLadder && !vec.getLadderLength40()) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 
     /**
