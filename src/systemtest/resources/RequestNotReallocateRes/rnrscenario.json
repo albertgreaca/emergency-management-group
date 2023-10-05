@@ -16,7 +16,7 @@
       "id": 0,
       "tick": 1,
       "village": "Munich",
-      "roadName": "Alder_Way",
+      "roadName": "Duplikatstr",
       "emergencyType": "CRIME",
       "severity": 1,
       "handleTime": 2,
@@ -30,7 +30,7 @@
       "emergencyType": "CRIME",
       "severity": 2,
       "handleTime": 2,
-      "maxDuration": 10
+      "maxDuration": 5
     }
   ]
 }
