@@ -30,6 +30,7 @@ class EmergencySameTickTest : SystemTest() {
         assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Emergency Handling Start: 1 handling started.")
         assertNextLine("Simulation Tick: 3")
+        assertNextLine("Simulation Tick: 4")
         assertNextLine("Emergency Resolved: 0 resolved.")
         assertNextLine("Emergency Resolved: 1 resolved.")
         // Simulation is over
