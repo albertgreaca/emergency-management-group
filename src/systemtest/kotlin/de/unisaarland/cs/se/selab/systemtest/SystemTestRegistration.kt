@@ -220,6 +220,9 @@ object SystemTestRegistration {
         manager.registerTest(SameVertexID())
         manager.registerTest(Tunnel4())
         manager.registerTest(UnEqualWeight())
+        manager.registerTest(NoSideStreet())
+        manager.registerTest(RoadToItself())
+        manager.registerTest(FromVertexDiffrentVillage())
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
