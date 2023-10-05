@@ -43,8 +43,7 @@ class DoubleRealloc : SystemTest() {
         assertNextLine("Asset Allocation: 11 allocated to 1; 4 ticks to arrive.")
         assertNextLine("Asset Allocation: 12 allocated to 1; 4 ticks to arrive.")
         assertNextLine("Asset Allocation: 13 allocated to 1; 4 ticks to arrive.")
-        assertNextLine("Simulation Tick: 4") // to do: request for sev1
-        assertNextLine("Simulation Tick: 4") // everything is on its way
+        assertNextLine("Simulation Tick: 4")
         assertNextLine("Simulation Tick: 5")
         assertNextLine("Asset Arrival: 4 arrived 7.")
         assertNextLine("Asset Arrival: 5 arrived 7.")
@@ -52,6 +51,7 @@ class DoubleRealloc : SystemTest() {
         assertNextLine("Asset Arrival: 3 arrived 7.")
         assertNextLine("Asset Arrival: 6 arrived 7.")
         assertNextLine("Asset Arrival: 10 arrived 3.")
+        assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Simulation Tick: 7")
         assertNextLine("Asset Arrival: 1 arrived 7.")
         assertNextLine("Asset Arrival: 2 arrived 7.")
@@ -62,7 +62,6 @@ class DoubleRealloc : SystemTest() {
         assertNextLine("Asset Arrival: 11 arrived 5.")
         assertNextLine("Asset Arrival: 12 arrived 5.")
         assertNextLine("Asset Arrival: 13 arrived 5.")
-        assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Emergency Handling Start: 1 handling started.")
         assertNextLine("Emergency Handling Start: 2 handling started.")
         assertNextLine("Simulation Tick: 8")
