@@ -155,6 +155,7 @@ object SystemTestRegistration {
         manager.registerTest(ReallocationBackTest2())
         manager.registerTest(NotEnoughStaffTest())
         manager.registerTest(SmartAllocationWater())
+        manager.registerTest(HeightChangeTest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
