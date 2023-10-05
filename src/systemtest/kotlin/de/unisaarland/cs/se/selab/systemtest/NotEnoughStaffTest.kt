@@ -26,7 +26,7 @@ class NotEnoughStaffTest : SystemTest() {
         assertNextLine("Simulation Tick: 3")
         assertNextLine("Emergency Resolved: 0 resolved.")
         assertNextLine("Simulation Tick: 4")
-        assertNextLine("Asset Reallocation: 1 reallocated at 1.")
+        assertNextLine("Asset Reallocation: 1 reallocated to 1.")
         assertNextLine("Simulation Tick: 5")
         assertNextLine("Asset Arrival: 1 arrived at 4.")
         assertNextLine("Emergency Handling Start: 1 handling started.")
