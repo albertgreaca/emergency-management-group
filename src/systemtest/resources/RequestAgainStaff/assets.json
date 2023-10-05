@@ -16,8 +16,7 @@
       "id": 2,
       "baseType": "FIRE_STATION",
       "location": 4,
-      "staff": 100,
-      "dogs": 0
+      "staff": 100
     },
     {
       "id": 3,

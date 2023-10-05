@@ -4,6 +4,7 @@ digraph Pow {
     3;
     4;
     5;
+    6;
     1 -> 2 [village = Boom; name = B; heightLimit = 5; weight = 10; primaryType = mainStreet; secondaryType = none;];
     1 -> 4 [village = Boom; name = A; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
     2 -> 3 [village = Boom; name = C; heightLimit = 5; weight = 10; primaryType = sideStreet; secondaryType = none;];
