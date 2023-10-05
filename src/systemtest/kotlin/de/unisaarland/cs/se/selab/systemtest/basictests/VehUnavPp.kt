@@ -35,9 +35,6 @@ class VehUnavPp : SystemTest() {
         assertNextLine("Asset Arrival: 1 arrived at 2.")
         assertNextLine("Emergency Handling Start: 0 handling started.")
 
-
-
-
         assertNextLine("Simulation End")
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
         assertNextLine("Simulation Statistics: 2 received emergencies.")
