@@ -47,7 +47,7 @@
     },
     {
       "id": 2,
-      "baseID": 2,
+      "baseID": 3,
       "vehicleType": "AMBULANCE",
       "vehicleHeight": 3,
       "staffCapacity": 4

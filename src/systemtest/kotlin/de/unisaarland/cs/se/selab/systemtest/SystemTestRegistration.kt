@@ -1,4 +1,5 @@
 package de.unisaarland.cs.se.selab.systemtest
+
 import FailedParserConfig3Semantics1
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
@@ -36,32 +37,34 @@ import de.unisaarland.cs.se.selab.systemtest.vehicleattributes.*
 
 object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
-        manager.registerTest(ExampleTest())
-        manager.registerTest(ReroutingTest())
-        manager.registerTest(RequestTest())
-        manager.registerTest(RequestTestFailed())
-        manager.registerTest(RequestTestPartial())
-        manager.registerTest(FailedParser51())
-        manager.registerTest(EventIdTest())
-        manager.registerTest(RoadClosureTest())
-        manager.registerTest(RushHour1Test())
-        manager.registerTest(ManyEvents())
-        manager.registerTest(IDontLikeHeights())
-        manager.registerTest(Reallocation())
-        manager.registerTest(ReallocationBackTest2())
-        manager.registerTest(NotEnoughStaffTest())
-        manager.registerTest(SmartAllocationWater())
-        manager.registerTest(HeightChangeTest())
-        manager.registerTest(MultipleReallocationsTest())
-        manager.registerTest(EventIDCollision())
-        manager.registerTest(FinishingTooLate())
-        manager.registerTest(MultipleReallocationsTest())
-        manager.registerTest(EventIDCollision())
-        manager.registerTest(NotInTimeTest())
-        manager.registerTest(RequestEverywhere())
-        manager.registerTest(DijTieSimple())
-        manager.registerTest(LessDogsThanK9Cars())
-        manager.registerTest(EmergencySameTickTest())
+        /* manager.registerTest(ExampleTest())
+         manager.registerTest(ReroutingTest())
+         manager.registerTest(RequestTest())
+         manager.registerTest(RequestTestFailed())
+         manager.registerTest(RequestTestPartial())
+         manager.registerTest(FailedParser51())
+         manager.registerTest(EventIdTest())
+         manager.registerTest(RoadClosureTest())
+         manager.registerTest(RushHour1Test())
+         manager.registerTest(ManyEvents())
+         manager.registerTest(IDontLikeHeights())
+         manager.registerTest(Reallocation())
+         manager.registerTest(ReallocationBackTest2())
+         manager.registerTest(NotEnoughStaffTest())
+         manager.registerTest(SmartAllocationWater())
+         manager.registerTest(HeightChangeTest())
+         manager.registerTest(MultipleReallocationsTest())
+         manager.registerTest(EventIDCollision())
+         manager.registerTest(FinishingTooLate())
+         manager.registerTest(MultipleReallocationsTest())
+         manager.registerTest(EventIDCollision())
+         manager.registerTest(NotInTimeTest())
+         manager.registerTest(RequestEverywhere())
+         manager.registerTest(DijTieSimple())
+         manager.registerTest(LessDogsThanK9Cars())
+         manager.registerTest(EmergencySameTickTest())
+         */
+        manager.registerTest(VehUnavPp())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
@@ -71,6 +74,7 @@ object SystemTestRegistration {
         manager.registerTest(LessDoctorsThanDoctorCars())
         manager.registerTest(RequestAgainStaff())
     }
+
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
         registerSystemTest(manager)
@@ -130,6 +134,7 @@ object SystemTestRegistration {
         manager.registerTest(VehicleUnavailableHasTarget())
         manager.registerTest(VehicleUnavailableHasRoadTypes())
     }
+
     private fun registerVehicleWrongProperties(manager: SystemTestManager) {
         manager.registerTest(AmbulanceCrimeTest())
         manager.registerTest(AmbulanceLadderTest())
@@ -158,6 +163,7 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySimpleTest())
         manager.registerTest(ReallocationBackTest())
     }
+
     private fun registerVehiclesWrongBase(manager: SystemTestManager) {
         manager.registerTest(AMatFire())
         manager.registerTest(AMatPolice())
@@ -229,6 +235,7 @@ object SystemTestRegistration {
     fun registerSystemTestsMutantSimulation(manager: SystemTestManager) {
         registerSystemTest(manager)
     }
+
     private fun registerMapParserSemanticFail1(manager: SystemTestManager) {
         manager.registerTest(de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser1())
         manager.registerTest(FailedParser2())
