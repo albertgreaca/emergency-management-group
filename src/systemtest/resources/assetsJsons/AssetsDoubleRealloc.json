@@ -99,6 +99,34 @@
       "vehicleType": "AMBULANCE",
       "vehicleHeight": 4,
       "staffCapacity": 2
+    },
+    {
+      "id": 10,
+      "baseID": 3,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
+    },
+    {
+      "id": 11,
+      "baseID": 3,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
+    },
+    {
+      "id": 12,
+      "baseID": 3,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
+    },
+    {
+      "id": 13,
+      "baseID": 3,
+      "vehicleType": "EMERGENCY_DOCTOR_CAR",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
     }
   ]
 }
