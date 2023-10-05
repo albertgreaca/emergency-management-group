@@ -165,6 +165,7 @@ object SystemTestRegistration {
         manager.registerTest(DoubleRealloc())
         manager.registerTest(MultipleReallocationsTest())
         manager.registerTest(EventIDCollision())
+        manager.registerTest(FinishingTooLate())
     }
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
         notPassingReference(manager)
