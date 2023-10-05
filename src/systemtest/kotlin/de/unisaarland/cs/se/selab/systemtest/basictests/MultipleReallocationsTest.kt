@@ -12,9 +12,9 @@ class MultipleReallocationsTest : SystemTest() {
     override val maxTicks = 30
     override suspend fun run() {
         // everything is parsed and validated
-        assertNextLine("Initialization Info: ReallocationBackPartlyResources.dot successfully parsed and validated")
-        assertNextLine("Initialization Info: reallocationBackAssets2.json successfully parsed and validated")
-        assertNextLine("Initialization Info: ReallocationBackEmergencies2.json successfully parsed and validated")
+        assertNextLine("Initialization Info: map.dot successfully parsed and validated")
+        assertNextLine("Initialization Info: config2.json successfully parsed and validated")
+        assertNextLine("Initialization Info: config3.json successfully parsed and validated")
         // The Simulation starts with tick 0
         assertNextLine("Simulation starts")
         assertNextLine("Simulation Tick: 0")
