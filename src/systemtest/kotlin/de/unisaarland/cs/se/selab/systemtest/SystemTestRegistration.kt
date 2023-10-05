@@ -4,6 +4,7 @@ import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.AMatFire
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
@@ -401,6 +402,6 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser48())
         manager.registerTest(FailedParser49())
         manager.registerTest(FailedParser50())
-        manager.registerTest(AllVehiclesWrongBase())
+        manager.registerTest(AMatFire())
     }
 }
