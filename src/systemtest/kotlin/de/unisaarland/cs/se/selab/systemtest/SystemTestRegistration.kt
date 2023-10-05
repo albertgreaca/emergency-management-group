@@ -3,41 +3,7 @@ import FailedParserConfig3Semantics1
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser21
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser22
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser23
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser24
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser25
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser26
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser27
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser28
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser29
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser30
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser31
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser32
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser33
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser34
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser35
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser36
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser37
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser38
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser39
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser40
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser41
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser42
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser43
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser44
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser45
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser46
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser47
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser48
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser49
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser50
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser51
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
@@ -173,7 +139,7 @@ import de.unisaarland.cs.se.selab.systemtest.runner.SystemTestManager
 
 object SystemTestRegistration {
     private fun registerSystemTest(manager: SystemTestManager) {
-        /*manager.registerTest(ExampleTest())
+        manager.registerTest(ExampleTest())
         manager.registerTest(ReroutingTest())
         manager.registerTest(RequestTest())
         manager.registerTest(RequestTestFailed())
@@ -184,13 +150,36 @@ object SystemTestRegistration {
         manager.registerTest(RushHour1Test())
         manager.registerTest(ManyEvents())
         manager.registerTest(IDontLikeHeights())
-         */
-        manager.registerTest(DoubleRealloc())
+        manager.registerTest(Reallocation())
+        manager.registerTest(ReallocationBackTest2())
+        manager.registerTest(NotEnoughStaffTest())
+        manager.registerTest(SmartAllocationWater())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(Reallocation())
         manager.registerTest(EmergencySimpleTest())
+        manager.registerTest(EmergencySameTickTest())
+        manager.registerTest(ReallocationBackTest())
+        manager.registerTest(DoubleRealloc())
+        manager.registerTest(MultipleReallocationsTest())
+        manager.registerTest(EventIDCollision())
+    }
+    fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
+        notPassingReference(manager)
+        registerSystemTest(manager)
+        // registerSystemTestsMutantValidation(manager)
+        // registerSystemTestsMutantSimulation(manager)
+    }
+
+    fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
+        manager.registerTest(CountyRoadDifferentName())
+        manager.registerTest(VehicleCapGRBaseCap())
+        registerMapParserSyntaxFail1(manager)
+        registerMapParserSyntaxFail2(manager)
+        registerMapParserSemanticFail1(manager)
+        config2(manager)
+        // registerConfig3Syntax(manager)
+        registerConfig3Semantics(manager)
         manager.registerTest(HeightNegative())
         manager.registerTest(HeightZero())
         manager.registerTest(NoMain())
@@ -201,26 +190,10 @@ object SystemTestRegistration {
         manager.registerTest(SameVertexID())
         manager.registerTest(Tunnel4())
         manager.registerTest(UnEqualWeight())
-    }
-    fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
-        notPassingReference(manager)
-        registerSystemTest(manager)
-        registerSystemTestsMutantValidation(manager)
-        registerSystemTestsMutantSimulation(manager)
-        manager.registerTest(EmergencySameTickTest())
-        manager.registerTest(ReallocationBackTest())
-        manager.registerTest(ReallocationBackTest2())
-    }
-
-    fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
-        manager.registerTest(CountyRoadDifferentName())
-        manager.registerTest(VehicleCapGRBaseCap())
-        registerMapParserSyntaxFail1(manager)
-        registerMapParserSyntaxFail2(manager)
-        registerMapParserSemanticFail1(manager)
-        config2(manager)
-        registerConfig3Syntax(manager)
-        registerConfig3Semantics(manager)
+        manager.registerTest(NoSideStreet())
+        manager.registerTest(RoadToItself())
+        manager.registerTest(FromVertexDiffrentVillage())
+        manager.registerTest(CountyVillageName())
     }
 
     fun registerConfig3Syntax(manager: SystemTestManager) {
@@ -428,5 +401,6 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser48())
         manager.registerTest(FailedParser49())
         manager.registerTest(FailedParser50())
+        manager.registerTest(AllVehiclesWrongBase())
     }
 }
