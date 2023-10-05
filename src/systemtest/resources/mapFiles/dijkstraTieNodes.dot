@@ -1,0 +1,15 @@
+digraph dijTie {
+	1;
+	2;
+	3;
+	4;
+	5;
+	6;
+
+	1->2[village=Village; name=OneTwo; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+	1->5[village=Village; name=OneFive; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+    2->3[village=Village; name=TwoThree; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+    3->4[village=Village; name=ThreeFour; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+    4->6[village=Village; name=FourSix; heightLimit=5; weight=10; primaryType=sideStreet; secondaryType=none;];
+    5->4[village=Village; name=FiveSix; heightLimit=5; weight=20; primaryType=mainStreet; secondaryType=none;];
+	}
