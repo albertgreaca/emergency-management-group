@@ -148,7 +148,7 @@ class Resource(
             2 -> {
                 filterPoliceResources()
             }
-            else {
+            else -> {
                 null
             }
         }

@@ -97,7 +97,12 @@ class LessDogsThanK9Cars : SystemTest() {
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
         assertNextLine("Simulation Statistics: 2 received emergencies.")
         assertNextLine("Simulation Statistics: 0 ongoing emergencies.")
+        continueWith()
+    }
+
+    private suspend fun continueWith() {
         assertNextLine("Simulation Statistics: 0 failed emergencies.")
         assertNextLine("Simulation Statistics: 2 resolved emergencies.")
+        assertEnd()
     }
 }
