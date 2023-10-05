@@ -6,6 +6,7 @@ import de.unisaarland.cs.se.selab.parser.JsonParser
 import de.unisaarland.cs.se.selab.parser.MapParser
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import org.junit.jupiter.api.BeforeEach
@@ -179,9 +180,11 @@ class EmergencyUtilsTest {
         em.assignedVehicles.add(vehic1)
         emUtil.updateResourcesOfAssets(em)
         // original resource wird nie gesetzt
-        val testres = Resource(vehicleList, 0, 0, 0, 0)
+        // val testres = Resource(vehicleList, 0, 0, 0, 0)
         // assertTrue(testres.isEqual(em.originalResources))
-        assertTrue(true)
+        if (vehic1 is FireTruckWater) {
+            assertTrue(vehic1.waterTransported == 100)
+        }
     }
 
     @Test
@@ -203,7 +206,7 @@ class EmergencyUtilsTest {
         val road = requireNotNull(graph.getRoad(vertex1, vertex2))
         val vehicleList =
             mutableListOf(VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER, VehicleType.FIRE_TRUCK_WATER)
-        val res = Resource(vehicleList, 1800, 0, 0, 0)
+        val res = Resource(vehicleList, 1200, 0, 0, 0)
         val em = Emergency(0, 1, road, EmergencyType.FIRE, 2, 1, 20, res)
         val emUtil = EmergencyUtils()
         val vertex3 = requireNotNull(graph.getVertexFromId(0))
@@ -214,9 +217,12 @@ class EmergencyUtilsTest {
         em.assignedVehicles.add(vehic2)
         // index out of bounds error
         emUtil.updateResourcesOfAssets(em)
-        //val testres = Resource(vehicleList, 600, 0, 0, 0)
-        //assertTrue(testres.isEqual(em.originalResources))
-        assertTrue(true)
+        if (vehic1 is FireTruckWater) {
+            assertTrue(vehic1.waterTransported == 0)
+        }
+        if (vehic2 is FireTruckWater) {
+            assertTrue(vehic2.waterTransported == 0)
+        }
     }
 
     @Test
@@ -251,7 +257,7 @@ class EmergencyUtilsTest {
         em.assignedVehicles.add(vehic3)
         emUtil.updateResourcesOfAssets(em)
         // original resource wird nie gesetzt
-        val testres = Resource(vehicleList, 0, 0, 0, 0)
+        // val testres = Resource(vehicleList, 0, 0, 0, 0)
         if (vehic1 is PoliceCar) {
             assertTrue(vehic1.transportedCriminals == 2)
         }
@@ -289,7 +295,7 @@ class EmergencyUtilsTest {
         em.assignedVehicles.add(vehic3)
         // index out of bounds error
         emUtil.updateResourcesOfAssets(em)
-        val testres = Resource(vehicleList, 0, 1, 0, 0)
+        // val testres = Resource(vehicleList, 0, 1, 0, 0)
         if (vehic1 is PoliceCar) {
             assertTrue(vehic1.transportedCriminals == 2)
         }
