@@ -22,15 +22,6 @@ import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser1
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDoctors
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDogs
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.HospitalWithDogs
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.PoliceWithDoctors
-import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.*
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.*
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.additionalattributes.*
-import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
-import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser18
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser19
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser20
@@ -65,6 +56,11 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser48
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser49
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser50
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.FailedParser51
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDoctors
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.FireWithDogs
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.HospitalWithDogs
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProperties.PoliceWithDoctors
+import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.AMatFire
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.AMatPolice
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.EDatFire
@@ -83,6 +79,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBa
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.PCatHostpital
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.PMatFire
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.PMatHostpital
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics10
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics12
@@ -98,6 +95,8 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.Faile
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics7
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics8
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.FailedParserConfig3Semantics9
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.additionalattributes.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed1
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed11
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed12
@@ -119,6 +118,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3S
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed7
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed8
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.Config3SyntaxFailed9
+import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser10
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser11
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser12
@@ -299,7 +299,7 @@ object SystemTestRegistration {
         registerEventWrongProperties(manager)
     }
 
-    private fun registerEventWrongProperties(manager: SystemTestManager){
+    private fun registerEventWrongProperties(manager: SystemTestManager) {
         manager.registerTest(ConstructionSiteHasRoadTypes())
         manager.registerTest(ConstructionSiteHasVehicleID())
         manager.registerTest(RoadClosureHasFactor())
@@ -319,7 +319,7 @@ object SystemTestRegistration {
         manager.registerTest(VehicleUnavailableHasTarget())
         manager.registerTest(VehicleUnavailableHasRoadTypes())
     }
-    private fun registerVehicleWrongProperties(manager: SystemTestManager){
+    private fun registerVehicleWrongProperties(manager: SystemTestManager) {
         manager.registerTest(AmbulanceCrimeTest())
         manager.registerTest(AmbulanceLadderTest())
         manager.registerTest(AmbulanceWater())
