@@ -93,16 +93,14 @@
       "baseID": 2,
       "vehicleType": "POLICE_MOTORCYCLE",
       "vehicleHeight": 2,
-      "staffCapacity": 5,
-      "criminalCapacity": 3
+      "staffCapacity": 5
     },
     {
       "id": 9,
       "baseID": 2,
       "vehicleType": "POLICE_MOTORCYCLE",
       "vehicleHeight": 2,
-      "staffCapacity": 5,
-      "criminalCapacity": 3
+      "staffCapacity": 5
     },
     {
       "id": 10,
