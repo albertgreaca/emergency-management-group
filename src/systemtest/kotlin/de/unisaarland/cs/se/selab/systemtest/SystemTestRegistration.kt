@@ -237,6 +237,7 @@ object SystemTestRegistration {
         manager.registerTest(MultipleReallocationsTest())
         manager.registerTest(EventIDCollision())
         manager.registerTest(NotInTimeTest())
+        manager.registerTest(RequestEverywhere())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
