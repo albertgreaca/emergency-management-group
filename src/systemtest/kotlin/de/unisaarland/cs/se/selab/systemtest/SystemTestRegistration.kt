@@ -238,6 +238,7 @@ object SystemTestRegistration {
         manager.registerTest(EventIDCollision())
         manager.registerTest(NotInTimeTest())
         manager.registerTest(RequestEverywhere())
+        manager.registerTest(ArrivalTickFailWithRequest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
