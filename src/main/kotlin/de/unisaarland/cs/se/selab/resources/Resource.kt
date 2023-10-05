@@ -135,6 +135,26 @@ class Resource(
     }
 
     /**
+     * filters out all resources that stations of the given kind can provide
+     */
+    fun filterResourcesOfKind(kind: Int): Resource? {
+        return when (kind) {
+            0 -> {
+                filterFireResources()
+            }
+            1 -> {
+                filterAmbulanceResources()
+            }
+            2 -> {
+                filterPoliceResources()
+            }
+            else {
+                null
+            }
+        }
+    }
+
+    /**
      * checks if equal
      */
     fun isEqual(other: Any?): Boolean {

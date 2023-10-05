@@ -118,7 +118,7 @@ open class Vehicle(
             vehicleHeight
         )
         pos?.isDrivingBack = true
-        targetEmergency = null
+        // targetEmergency = null
         position = pos
     }
 }
