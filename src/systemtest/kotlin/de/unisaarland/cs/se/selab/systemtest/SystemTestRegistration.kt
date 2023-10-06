@@ -87,6 +87,7 @@ object SystemTestRegistration {
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(NothingArrivesNoRequest())
+        manager.registerTest(SpecialWater())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
