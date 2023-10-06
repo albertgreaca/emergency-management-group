@@ -2,7 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
-class ValidParser() : SystemTest() {
+class ValidParser : SystemTest() {
     override val name = "ValidParser"
 
     override val map = "mapFiles/big.dot"
