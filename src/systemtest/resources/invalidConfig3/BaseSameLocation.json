@@ -1,0 +1,26 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "RUSH_HOUR",
+      "tick": 30,
+      "duration": 2,
+      "factor": 1,
+      "roadTypes": [
+        "SIDE_STREET"
+      ]
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Bergstrasse",
+      "emergencyType": "ACCIDENT",
+      "severity": 1,
+      "handleTime": 1,
+      "maxDuration": 2
+    }
+  ]
+}
