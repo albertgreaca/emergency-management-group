@@ -74,6 +74,7 @@ object SystemTestRegistration {
         manager.registerTest(VehUnavPp())
         manager.registerTest(DijTieNodesSimple())
         manager.registerTest(AllocationWithEvent())
+        manager.registerTest(OrderedSeverity())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
