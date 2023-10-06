@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.emergencies
 
 import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
@@ -14,6 +15,7 @@ class EmergencyUtils {
 
     companion object {
         const val divisor = 300
+        const val ladder40 = 40
     }
 
     /**
@@ -169,5 +171,17 @@ class EmergencyUtils {
      */
     fun checkCombinationDecider(em: Emergency, cur: MutableList<Vehicle>, withArrivalTime: Boolean, b: Base): Boolean {
         return if (withArrivalTime) b.checkCombination(em, cur) else b.checkCombinationWithoutArrivalTime(em, cur)
+    }
+
+    /**
+     * checks if the ladder length of the vehicle is high enough
+     */
+    fun validateLadderLength(em: Emergency, vehicle: Vehicle): Boolean {
+        val resource = em.currentResources
+        // if fire truck with ladder has not at least length 40 although 40 is needed, return false
+        if (vehicle is FireTruckLadder && resource.ladderLength == ladder40 && !vehicle.getLadderLength40()) {
+            return false
+        }
+        return true
     }
 }
