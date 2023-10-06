@@ -305,7 +305,6 @@ class MapParser(private val gm: GraphMap, file: File) {
     ): Boolean {
         var ret = true
         if (primarytype != PrimaryRoadType.COUNTYROAD) {
-            ret = ret && resultMap[LexerToken.VILLAGE] != graphName
             if (mapVilVer.contains(start)) {
                 ret = ret && mapVilVer[start] == resultMap[LexerToken.VILLAGE]
             } else {
