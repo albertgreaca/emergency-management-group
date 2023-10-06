@@ -84,17 +84,12 @@ object SystemTestRegistration {
         manager.registerTest(OneWay())
         manager.registerTest(LessLadderTest())
         manager.registerTest(NothingArrivesNoRequest())
-    }
-
-    private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(SpecialWater())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
-        notPassingReference(manager)
-        registerSystemTest(manager)
-        // registerSystemTestsMutantValidation(manager)
-        // registerSystemTestsMutantSimulation(manager)
+        registerSystemTestsMutantValidation(manager)
+        registerSystemTestsMutantSimulation(manager)
     }
 
     fun registerSystemTestsMutantValidation(manager: SystemTestManager) {
