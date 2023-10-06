@@ -33,6 +33,7 @@ class Emergency(
             originalResources.patientAmount,
             originalResources.patientAmount
         )
+    var trySendRequest = true
 
     /**
      * @return adds a vehicle to the vehicle list

@@ -1,8 +1,10 @@
 package de.unisaarland.cs.se.selab.emergencies
 
+import de.unisaarland.cs.se.selab.bases.Base
 import de.unisaarland.cs.se.selab.vehicles.Ambulance
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
 
 /**
@@ -160,5 +162,12 @@ class EmergencyUtils {
         updateAmbulanceBaseWaitingTicks(em)
         updatePoliceCarBaseWaitingTicks(em)
         updateWaterTruckBaseWaitingTicks(em)
+    }
+
+    /**
+     *
+     */
+    fun checkCombinationDecider(em: Emergency, cur: MutableList<Vehicle>, withArrivalTime: Boolean, b: Base): Boolean {
+        return if (withArrivalTime) b.checkCombination(em, cur) else b.checkCombinationWithoutArrivalTime(em, cur)
     }
 }

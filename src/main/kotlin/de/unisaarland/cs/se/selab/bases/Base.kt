@@ -62,12 +62,20 @@ open class Base(
         }.toMutableList()
 
         val vehiclesToAllocate: MutableList<Vehicle> = mutableListOf()
-        for (i in min(neededVehicles.size, potentialVehicles.size) downTo 0) {
+        for (i in min(neededVehicles.size, potentialVehicles.size) downTo 1) {
             vehiclesToAllocate.clear()
-            val res = trySendThisNumberOfAssets(i, em, potentialVehicles)
+            val res = trySendThisNumberOfAssets(i, em, potentialVehicles, true)
             if (res != null) {
                 vehiclesToAllocate.addAll(requireNotNull(res))
                 break
+            }
+        }
+
+        // in case we cannot allocate any assets, check if we should send request or not
+        if (vehiclesToAllocate.isEmpty() && potentialVehicles.size > 0) {
+            val resWithoutTime = trySendThisNumberOfAssets(1, em, potentialVehicles, false)
+            if (resWithoutTime != null) {
+                em.trySendRequest = false
             }
         }
 
@@ -125,7 +133,12 @@ open class Base(
     /**
      * @returns the ordered list of vehicles to be allocated if allocation of n vehicles is possible, null otherwise
      */
-    fun trySendThisNumberOfAssets(k: Int, em: Emergency, vehicles: MutableList<Vehicle>): MutableList<Vehicle>? {
+    fun trySendThisNumberOfAssets(
+        k: Int,
+        em: Emergency,
+        vehicles: MutableList<Vehicle>,
+        withArrivalTime: Boolean
+    ): MutableList<Vehicle>? {
         vehicles.sortBy { it.id }
 
         // try each combination of n vehicles starting with the lowest id's
@@ -137,7 +150,9 @@ open class Base(
             for (i in 0..k - 1) {
                 cur.add(vehicles[tries[i]])
             }
-            if (checkCombination(em, cur)) {
+            val emUt = EmergencyUtils()
+            val isCombinationValid = emUt.checkCombinationDecider(em, cur, withArrivalTime, this)
+            if (isCombinationValid) {
                 return cur
             }
             var pos = -1
