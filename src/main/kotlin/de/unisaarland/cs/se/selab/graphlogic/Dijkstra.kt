@@ -6,7 +6,7 @@ import de.unisaarland.cs.se.selab.bases.PoliceStation
 import de.unisaarland.cs.se.selab.emergencies.EmergencyType
 import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.utils.Position
-import java.util.PriorityQueue
+import java.util.*
 
 /**
  * Class representing Dijkstra
@@ -44,8 +44,21 @@ object Dijkstra {
     }
 
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
-        val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
-        for ((node, edge) in nex) {
+        for (node in requireNotNull(Simulation.map).vertexList) {
+            if (!requireNotNull(Simulation.map).adjacencyList[node.realid].contains(
+                    requireNotNull(Simulation.map)
+                        .getVertexFromRealId(cur.first)
+                )
+            ) {
+                continue
+            }
+            val edge = requireNotNull(
+                requireNotNull(Simulation.map)
+                    .adjacencyList[node.realid][
+                    requireNotNull(Simulation.map)
+                        .getVertexFromRealId(cur.first)
+                ]
+            )
             if (dist[node.realid].toLong() > dist[cur.first].toLong() + edge.getActualWeight().toLong()) {
                 dist[node.realid] = dist[cur.first] + edge.getActualWeight()
                 pq.add(Pair(node.realid, dist[node.realid]))
