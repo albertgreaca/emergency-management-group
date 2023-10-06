@@ -124,6 +124,7 @@ object SystemTestRegistration {
         manager.registerTest(FailedParser51())
         manager.registerTest(BaseSameLocation())
         manager.registerTest(ValidParser())
+        manager.registerTest(TwoOneWaySameRoad())
     }
 
     private fun registerEventWrongProperties(manager: SystemTestManager) {
