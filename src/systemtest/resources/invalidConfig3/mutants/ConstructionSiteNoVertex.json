@@ -2,10 +2,13 @@
   "events": [
     {
       "id": 0,
-      "type": "VEHICLE_UNAVAILABLE",
-      "tick": 1,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 0,
       "duration": 1,
-      "vehicleID": 99
+      "factor": 1,
+      "oneWayStreet": false,
+      "source": 50,
+      "target": 51
     }
   ],
   "emergencyCalls": [

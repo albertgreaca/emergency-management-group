@@ -2,10 +2,12 @@
   "events": [
     {
       "id": 0,
-      "type": "VEHICLE_UNAVAILABLE",
-      "tick": 1,
+      "type": "TRAFFIC_JAM",
+      "tick": 0,
       "duration": 1,
-      "vehicleID": 99
+      "factor": 1,
+      "source": 51,
+      "target": 52
     }
   ],
   "emergencyCalls": [

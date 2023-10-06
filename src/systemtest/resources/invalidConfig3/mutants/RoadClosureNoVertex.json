@@ -2,10 +2,11 @@
   "events": [
     {
       "id": 0,
-      "type": "VEHICLE_UNAVAILABLE",
-      "tick": 1,
+      "type": "ROAD_CLOSURE",
+      "tick": 0,
       "duration": 1,
-      "vehicleID": 99
+      "source": 50,
+      "target": 51
     }
   ],
   "emergencyCalls": [
