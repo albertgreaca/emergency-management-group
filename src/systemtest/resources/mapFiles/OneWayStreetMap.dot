@@ -29,7 +29,7 @@ digraph County {
 	10->12[village=VillageWest; name=TenTwelve; heightLimit=4; weight=15; primaryType=mainStreet; secondaryType=none;];
 	11->12[village=VillageWest; name=ElevenTwelve; heightLimit=4; weight=7; primaryType=sideStreet; secondaryType=none;];
 	2->3[village=VillageWest; name=TwoThree; heightLimit=4; weight=5; primaryType=mainStreet; secondaryType=oneWayStreet;];
-	3->4[village=VillageWest; name=TenEleven; heightLimit=4; weight=15; primaryType=mainStreet; secondaryType=oneWayStreet;];
+	3->4[village=VillageWest; name=ThreeFour; heightLimit=4; weight=15; primaryType=mainStreet; secondaryType=oneWayStreet;];
 
 	4->6[village=County; name=FourSix; heightLimit=4; weight=30; primaryType=countyRoad; secondaryType=oneWayStreet;];
 	5->6[village=VillageNorth; name=FiveSix; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
@@ -47,8 +47,8 @@ digraph County {
 
 	17->18[village=County; name=SeventeenEighteen; heightLimit=5; weight=20; primaryType=countyRoad; secondaryType=none;];
 	1->13[village=County; name=OneThirteen; heightLimit=5; weight=30; primaryType=countyRoad; secondaryType=none;];
-    13->14[village=VillageSouth; name=EighteenTwenty; heightLimit=5; weight=10; primaryType=sideStreet; secondaryType=none;];
-	13->15[village=VillageSouth; name=FiveNine; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=oneWayStreet;];
+    13->14[village=VillageSouth; name=ThirteenFourteen; heightLimit=5; weight=10; primaryType=sideStreet; secondaryType=none;];
+	13->15[village=VillageSouth; name=ThirteenFifteen; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=oneWayStreet;];
 	15->16[village=VillageSouth; name=FifteenSixteen; heightLimit=4; weight=5; primaryType=mainStreet; secondaryType=none;];
 	16->17[village=VillageSouth; name=SixteenSeventeen; heightLimit=4; weight=15; primaryType=mainStreet; secondaryType=none;];
 	14->17[village=VillageSouth; name=FourteenSeventeen; heightLimit=4; weight=10; primaryType=mainStreet; secondaryType=none;];
