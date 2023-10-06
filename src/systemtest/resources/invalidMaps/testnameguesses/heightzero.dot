@@ -6,7 +6,7 @@ digraph G {
 	4;
 	5;
 
-	0 -> 1 [village=Village; name=Church_Lane; heightLimit=0; weight=10; primaryType=mainStreet; secondaryType=none;];
+	0 -> 1 [village=Village; name=Church_Lane; heightLimit=0; weight=10; primaryType=mainStreet; secondaryType=tunnel;];
 	1 -> 2 [village=Village; name=Mill_Lane; heightLimit=3; weight=20; primaryType=mainStreet; secondaryType=none;];
 	2 -> 3 [village=Village; name=Birch_Way; heightLimit=3; weight=20; primaryType=mainStreet; secondaryType=none;];
 	3 -> 4 [village=Village; name=School_Lane; heightLimit=3; weight=20; primaryType=sideStreet; secondaryType=none;];

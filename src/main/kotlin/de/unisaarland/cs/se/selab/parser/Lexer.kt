@@ -38,7 +38,7 @@ class Lexer {
             "{" -> tokenList.add(LexerIDToken(LexerToken.CLPARENTHESES, Space))
             "}" -> tokenList.add(LexerIDToken(LexerToken.CRPARENTHESES, Space))
             "=" -> tokenList.add(LexerIDToken(LexerToken.EQUAL, Space))
-            "digraph" -> tokenList.add(LexerIDToken(LexerToken.DIGRAPH, Space))
+            "digraph" -> tokenList.add(LexerIDToken(LexerToken.DIGRAPH, "digraph"))
             else -> {
                 whencyclo2(element, tokenList)
             }

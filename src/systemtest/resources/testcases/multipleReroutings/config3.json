@@ -1,0 +1,55 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 1,
+      "duration": 4,
+      "factor": 3,
+      "source": 2,
+      "target": 3
+    },
+    {
+      "id": 1,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 4,
+      "duration": 3,
+      "factor": 4,
+      "oneWayStreet": false,
+      "source": 4,
+      "target": 5
+    },
+    {
+      "id": 2,
+      "type": "CONSTRUCTION_SITE",
+      "tick": 4,
+      "duration": 3,
+      "factor": 3,
+      "oneWayStreet": false,
+      "source": 5,
+      "target": 9
+    },
+    {
+      "id": 3,
+      "type": "RUSH_HOUR",
+      "tick": 8,
+      "duration": 4,
+      "factor": 2,
+      "roadTypes": [
+        "MAIN_STREET"
+      ]
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Saarbruecken",
+      "roadName": "Campus",
+      "emergencyType": "MEDICAL",
+      "severity": 2,
+      "handleTime": 2,
+      "maxDuration": 50
+    }
+  ]
+}
