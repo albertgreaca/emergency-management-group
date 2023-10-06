@@ -18,7 +18,7 @@
       "baseType": "POLICE_STATION",
       "location": 1,
       "staff": 100,
-      "dogs": 0
+      "dogs": 3
     }
   ],
   "vehicles": [
@@ -97,7 +97,7 @@
       "baseID": 2,
       "vehicleType": "FIREFIGHTER_TRANSPORTER",
       "vehicleHeight": 3,
-      "staffCapacity": 3,
+      "staffCapacity": 3
     },
     {
       "id": 10,
