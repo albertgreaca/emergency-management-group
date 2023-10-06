@@ -432,6 +432,9 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val vehicleId = currEvent.getInt(VEHICLEID)
         // need list of bases
         val vehicle: Vehicle
+        if (vehicleidlist[vehicleId] == null) {
+            logger.error { "vehicle not found, line 432" }
+        }
         vehicle = vehicleidlist[vehicleId] ?: return false
         val newEvent = VehicleUnavailableEvent(id, tick, duration, vehicle)
         Simulation.addEvent(newEvent)
@@ -450,8 +453,17 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         }
         val sourceVertexId = currEvent.getInt(SOURCE)
         val targetVertexId = currEvent.getInt(TARGET)
+        if (gm.getVertexFromId(sourceVertexId) == null) {
+            logger.error { "source vertex can't be found, line 453" }
+        }
         val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        if (gm.getVertexFromId(targetVertexId) == null) {
+            logger.error { "target vertex can't be found, line 457" }
+        }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        if (gm.getRoad(sourceVertex, targetVertex) == null) {
+            logger.error { "road can't be found, line 461" }
+        }
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = RoadClosureEvent(id, tick, duration, road)
         Simulation.addEvent(newEvent)
@@ -468,8 +480,17 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val targetVertexId = currEvent.getInt(TARGET)
         val oneWayStreet = currEvent.getBoolean(ONEWAYSTREET)
         val factor = currEvent.getInt(FACTOR)
+        if (gm.getVertexFromId(sourceVertexId) == null) {
+            logger.error { "source vertex can't be found, line 480" }
+        }
         val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        if (gm.getVertexFromId(targetVertexId) == null) {
+            logger.error { "target vertex can't be found, line 484" }
+        }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        if (gm.getRoad(sourceVertex, targetVertex) == null) {
+            logger.error { "road can't be found, line 488" }
+        }
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = ConstructionSiteEvent(
             id,
@@ -494,8 +515,17 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         val factor = currEvent.getInt(FACTOR)
         val sourceVertexId = currEvent.getInt(SOURCE)
         val targetVertexId = currEvent.getInt(TARGET)
+        if (gm.getVertexFromId(sourceVertexId) == null) {
+            logger.error { "source vertex can't be found, line 515" }
+        }
         val sourceVertex = gm.getVertexFromId(sourceVertexId) ?: return false
+        if (gm.getVertexFromId(targetVertexId) == null) {
+            logger.error { "target vertex can't be found, line 519" }
+        }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        if (gm.getRoad(sourceVertex, targetVertex) == null) {
+            logger.error { "road can't be found, line 523" }
+        }
         val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = TrafficJamEvent(id, tick, duration, road, factor)
         Simulation.addEvent(newEvent)
