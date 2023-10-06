@@ -18,6 +18,7 @@ import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.baseWrongProper
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.vehiclesWrongBase.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.*
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.additionalattributes.*
+import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.semantics.sthmissing.EmNoRoadsTest
 import de.unisaarland.cs.se.selab.systemtest.failedconfig3parser.syntax.*
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.*
 import de.unisaarland.cs.se.selab.systemtest.failedmapparser.FailedParser10
@@ -87,6 +88,7 @@ object SystemTestRegistration {
         manager.registerTest(NothingArrivesNoRequest())
         manager.registerTest(MultipleReroutings())
         manager.registerTest(FireSev3())
+        manager.registerTest(EmNoRoadsTest())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
