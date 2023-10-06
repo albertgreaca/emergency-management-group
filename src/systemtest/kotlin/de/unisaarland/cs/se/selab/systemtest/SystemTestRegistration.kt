@@ -79,14 +79,14 @@ object SystemTestRegistration {
         manager.registerTest(ReallocUnav())
         manager.registerTest(OngoingEm())
         manager.registerTest(ReallocUnav())
+        manager.registerTest(FireSev3())
+        manager.registerTest(MultipleReroutings())
+        manager.registerTest(OneWay())
+        manager.registerTest(LessLadderTest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(LessLadderTest())
-        manager.registerTest(OneWay())
         manager.registerTest(NothingArrivesNoRequest())
-        manager.registerTest(MultipleReroutings())
-        manager.registerTest(FireSev3())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
