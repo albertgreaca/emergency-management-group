@@ -3,7 +3,6 @@ package de.unisaarland.cs.se.selab.bases
 import de.unisaarland.cs.se.selab.emergencies.Emergency
 import de.unisaarland.cs.se.selab.graphlogic.Dijkstra
 import de.unisaarland.cs.se.selab.graphlogic.Vertex
-import de.unisaarland.cs.se.selab.mainlogic.Simulation
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
@@ -45,7 +44,7 @@ class PoliceStation(id: Int, staff: Int, location: Vertex, vehicles: MutableList
     /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
-    override fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
+    override fun checkCombinationWithoutArrivalTime(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
         var validCombination = true
         val resource = em.currentResources
         var staffNeeded = 0
@@ -90,27 +89,12 @@ class PoliceStation(id: Int, staff: Int, location: Vertex, vehicles: MutableList
         if (!checkIfTooManyVehicles(resource, vehicles)) {
             validCombination = false
         }
-
-        // check if all vehicles arrive in time using dijkstra
-        if (!checkAllVehiclesArriveInTime(vehicles, em)) {
-            validCombination = false
-        }
         return validCombination
     }
 
     private fun checkIfTooManyVehicles(resource: Resource, vehicles: MutableList<Vehicle>): Boolean {
         for (vehicleType in VehicleType.values()) {
             if (resource.countInstancesOf(vehicleType) < vehicles.count { it.vehicleType == vehicleType }) {
-                return false
-            }
-        }
-        return true
-    }
-
-    private fun checkAllVehiclesArriveInTime(vehicles: MutableList<Vehicle>, em: Emergency): Boolean {
-        for (vec in vehicles) {
-            val pos = Dijkstra.dijkstraHeight(this.location.realid, em.road, vec.vehicleHeight)
-            if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
                 return false
             }
         }

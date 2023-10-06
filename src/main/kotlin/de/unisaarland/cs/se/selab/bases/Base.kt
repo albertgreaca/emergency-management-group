@@ -161,7 +161,24 @@ open class Base(
     /**
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
-    open fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
+    fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
+        val validWithoutArrivalTime = checkCombinationWithoutArrivalTime(em, vehicles)
+        if (!validWithoutArrivalTime) return false
+
+        // check if all vehicles arrive in time using dijkstra
+        for (vec in vehicles) {
+            val pos = Dijkstra.dijkstraHeight(this.location.realid, em.road, vec.vehicleHeight)
+            if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
+                return false
+            }
+        }
+        return true
+    }
+
+    /**
+     * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
+     */
+    open fun checkCombinationWithoutArrivalTime(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
         var validCombination = true
         val resource = em.currentResources
         var staffNeeded = 0
@@ -203,14 +220,6 @@ open class Base(
         // for each vehicle-type, check if there are more vehicles in the combination that required
         for (vehicleType in VehicleType.values()) {
             if (resource.countInstancesOf(vehicleType) < vehicles.count { it.vehicleType == vehicleType }) {
-                return false
-            }
-        }
-
-        // check if all vehicles arrive in time using dijkstra
-        for (vec in vehicles) {
-            val pos = Dijkstra.dijkstraHeight(this.location.realid, em.road, vec.vehicleHeight)
-            if (requireNotNull(pos).arrivalTicks + Simulation.currentTick + em.handleTime > em.tick + em.maxDuration) {
                 return false
             }
         }
