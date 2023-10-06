@@ -70,7 +70,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 return false
             }
         }
-        if (res && !listBases.containsValue(false)) {
+        if (!(res && !listBases.containsValue(false))) {
             logger.error { "listBases contains a false, line 74" }
         }
         return res && !listBases.containsValue(false)
