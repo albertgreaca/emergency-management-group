@@ -22,6 +22,14 @@ digraph G {
 	20;
 	21;
 	22;
+	23;
+	24;
+	25;
+	26;
+	27;
+	28;
+	29;
+	30;
 
 
 	0 -> 1 [village=Dortmund; name=Meadow_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
@@ -46,6 +54,13 @@ digraph G {
 	19 -> 20 [village=Dortmund; name=On_the_Slope; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
 	20 -> 21 [village=Dortmund; name=Schiller_Square; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
 	21 -> 22 [village=Dortmund; name=Post_Road; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
-	22 -> 0 [village=Dortmund; name=Birch_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
-
+	22 -> 23 [village=Dortmund; name=Birch_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	23 -> 24 [village=Dortmund; name=Sopra; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+    24 -> 25 [village=Dortmund; name=Winfo; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	25 -> 26 [village=Dortmund; name=Dsai; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	26 -> 27 [village=Dortmund; name=Medieninformatik; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	27 -> 28 [village=Dortmund; name=Prog; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	28 -> 29 [village=Dortmund; name=Mfi; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	29 -> 30 [village=Dortmund; name=Mathe; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+   	30 -> 0 [village=Dortmund; name=Chemie; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
 }
