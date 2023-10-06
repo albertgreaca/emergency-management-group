@@ -4,7 +4,7 @@
       "id": 0,
       "type": "VEHICLE_UNAVAILABLE",
       "tick": 2,
-      "duration": 3,
+      "duration": 4,
       "vehicleID": 1
     }
   ],

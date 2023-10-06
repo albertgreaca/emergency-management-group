@@ -100,6 +100,9 @@ object Simulation {
     private fun simulateUpdatePhase() {
         EMCC.updateAssets()
         EMCC.updateEmergencies()
+        EMCC.policeDepartment?.updateVehicles()
+        EMCC.fireDepartment?.updateVehicles()
+        EMCC.ambulanceDepartment?.updateVehicles()
         for (ev in events) {
             if (ev.tick == currentTick && !ev.postponed) {
                 EMCC.startingEvents.add(ev)
@@ -110,9 +113,6 @@ object Simulation {
             EMCC.rerouteVehicles()
             EMCC.updatenextBases()
         }
-        EMCC.policeDepartment?.updateVehicles()
-        EMCC.fireDepartment?.updateVehicles()
-        EMCC.ambulanceDepartment?.updateVehicles()
         currentTick++
     }
 
