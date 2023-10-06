@@ -45,7 +45,7 @@
       "vehicleType": "POLICE_CAR",
       "vehicleHeight": 1,
       "staffCapacity": 1,
-      "criminalCapacity": 5
+      "criminalCapacity": 4
     },
     {
       "id": 3,
