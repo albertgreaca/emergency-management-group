@@ -76,6 +76,7 @@ object SystemTestRegistration {
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(ReallocUnav())
+        manager.registerTest(LessLadderTest())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
