@@ -20,6 +20,7 @@ open class Vehicle(
     var available: Boolean = true
     var baseWaitingTicks: Int = 0
     var targetEmergency: Emergency? = null
+    var affectedByEvent: Boolean = false
 
     /**
      * moves the vehicle, changes the position
@@ -48,7 +49,7 @@ open class Vehicle(
      */
     open fun reallocatable(em: Emergency): Boolean {
         // if vehicle is currently at base, it cannot be reallocated
-        if (position == null) {
+        if (affectedByEvent || position == null) {
             return false
         }
         // if vehicle is currently at emergency, it cannot yet be reallocated

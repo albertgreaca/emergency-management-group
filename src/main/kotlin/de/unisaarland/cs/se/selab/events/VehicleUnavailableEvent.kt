@@ -20,6 +20,7 @@ class VehicleUnavailableEvent(
      * makes vehicle unavailable if already possible
      */
     override fun executeStart(): Boolean {
+        vehicle.affectedByEvent = true
         if (vehicle.available) {
             vehicle.available = false
             Logger.logEventTriggered(id)
@@ -36,6 +37,7 @@ class VehicleUnavailableEvent(
      * logs
      */
     override fun stopEvent() {
+        vehicle.affectedByEvent = false
         postponed = false
         vehicle.available = true
         Logger.logEventEnded(id)

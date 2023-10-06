@@ -23,7 +23,7 @@ data class Ambulance(
     position
 ) {
     override fun reallocatable(em: Emergency): Boolean {
-        if (position == null) {
+        if (affectedByEvent || position == null) {
             return false
         }
         if (requireNotNull(position).arrivalTicks == 0) {
