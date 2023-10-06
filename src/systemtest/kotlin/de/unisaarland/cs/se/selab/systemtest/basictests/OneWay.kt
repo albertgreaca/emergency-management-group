@@ -28,10 +28,10 @@ class OneWay : SystemTest() {
         assertNextLine("Emergency Resolved: 0 resolved")
         assertNextLine("Simulation End")
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
-        assertNextLine("Simulation Statistics: 2 received emergencies.")
+        assertNextLine("Simulation Statistics: 1 received emergencies.")
         assertNextLine("Simulation Statistics: 0 ongoing emergencies.")
         assertNextLine("Simulation Statistics: 0 failed emergencies.")
-        assertNextLine("Simulation Statistics: 2 resolved emergencies.")
+        assertNextLine("Simulation Statistics: 1 resolved emergencies.")
         assertEnd()
     }
 }

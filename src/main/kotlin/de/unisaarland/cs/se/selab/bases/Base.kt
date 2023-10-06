@@ -285,8 +285,9 @@ open class Base(
         reallocatedList: MutableList<Vehicle>
     ) {
         for (vehic in reallocatableVehics) {
-            // if vehicle has wrong type skip to next vehicle
-            if (vehic.vehicleType != vt) continue
+            val emUtils = EmergencyUtils()
+            // if vehicle has wrong type or ladder length is too short skip to next vehicle
+            if (vehic.vehicleType != vt || !emUtils.validateLadderLength(em, vehic)) continue
 
             // calculate new position of vehicle
             val height = vehic.vehicleHeight

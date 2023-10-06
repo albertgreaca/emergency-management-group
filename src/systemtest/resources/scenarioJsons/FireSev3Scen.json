@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 100,
+      "duration": 2,
+      "factor": 2,
+      "source": 1,
+      "target": 2
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 0,
+      "tick": 1,
+      "village": "Village",
+      "roadName": "ThreeFour",
+      "emergencyType": "FIRE",
+      "severity": 3,
+      "handleTime": 1,
+      "maxDuration": 2
+    }
+  ]
+}
