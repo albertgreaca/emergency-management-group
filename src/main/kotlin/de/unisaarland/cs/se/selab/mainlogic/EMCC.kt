@@ -452,6 +452,7 @@ object EMCC {
      */
     fun updateEvents(): Boolean {
         var eventsChanged = false
+        activeEvents.sortBy { it.id }
         // first handle the ending events
         val removelistActive = mutableListOf<Event>()
         for (event in activeEvents) {
@@ -463,6 +464,7 @@ object EMCC {
         }
         activeEvents.removeAll(removelistActive)
         // then handle the starting events
+        startingEvents.sortBy { it.id }
         val removelist = mutableListOf<Event>()
         for (event in startingEvents) {
             if (event.executeStart()) {
