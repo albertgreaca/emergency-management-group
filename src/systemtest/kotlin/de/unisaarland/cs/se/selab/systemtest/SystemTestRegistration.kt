@@ -74,6 +74,7 @@ object SystemTestRegistration {
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(VehUnavPp())
         manager.registerTest(AllocationWithEvent())
+        manager.registerTest(ReallocUnav())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
