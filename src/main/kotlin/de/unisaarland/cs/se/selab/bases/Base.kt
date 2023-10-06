@@ -162,7 +162,7 @@ open class Base(
      * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
      */
     fun checkCombination(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
-        var validWithoutArrivalTime = checkCombinationWithoutArrivalTime(em, vehicles)
+        val validWithoutArrivalTime = checkCombinationWithoutArrivalTime(em, vehicles)
         if (!validWithoutArrivalTime) return false
 
         // check if all vehicles arrive in time using dijkstra
