@@ -30,7 +30,7 @@
   "vehicles": [
     {
       "id": 0,
-      "baseID": 1,
+      "baseID": 2,
       "vehicleType": "POLICE_CAR",
       "vehicleHeight": 1,
       "staffCapacity": 1,
