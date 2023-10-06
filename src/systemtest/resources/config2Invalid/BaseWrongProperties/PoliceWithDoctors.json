@@ -5,13 +5,13 @@
     {
       "id": 0,
       "baseType": "FIRE_STATION",
-      "location": 0,
+      "location": 1,
       "staff": 60
     },
     {
       "id": 1,
       "baseType": "POLICE_STATION",
-      "location": 1,
+      "location": 2,
       "staff": 60,
       "dogs": 10,
       "Doctors": 10
@@ -19,7 +19,7 @@
     {
       "id": 2,
       "baseType": "HOSPITAL",
-      "location": 2,
+      "location": 3,
       "staff": 60,
       "doctors": 10
     }
