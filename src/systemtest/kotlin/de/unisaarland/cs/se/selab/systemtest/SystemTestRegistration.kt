@@ -68,12 +68,12 @@ object SystemTestRegistration {
         manager.registerTest(RequestNotReallocate())
         manager.registerTest(LessDoctorsThanDoctorCars())
         manager.registerTest(RequestAgainStaff())
+        manager.registerTest(OrderedSeverity())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(VehUnavPp())
         manager.registerTest(AllocationWithEvent())
-        manager.registerTest(OrderedSeverity())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
