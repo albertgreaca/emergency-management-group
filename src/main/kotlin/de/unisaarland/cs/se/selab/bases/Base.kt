@@ -11,7 +11,12 @@ import de.unisaarland.cs.se.selab.resources.Request
 import de.unisaarland.cs.se.selab.resources.Resource
 import de.unisaarland.cs.se.selab.utils.Logger
 import de.unisaarland.cs.se.selab.utils.Position
-import de.unisaarland.cs.se.selab.vehicles.*
+import de.unisaarland.cs.se.selab.vehicles.Ambulance
+import de.unisaarland.cs.se.selab.vehicles.FireTruckLadder
+import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
+import de.unisaarland.cs.se.selab.vehicles.PoliceCar
+import de.unisaarland.cs.se.selab.vehicles.Vehicle
+import de.unisaarland.cs.se.selab.vehicles.VehicleType
 import kotlin.math.max
 import kotlin.math.min
 
