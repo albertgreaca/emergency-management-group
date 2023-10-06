@@ -341,4 +341,47 @@ class EmergencyUtilsTest {
             assertTrue(vehic2.patientOnBoard)
         }
     }
+
+    @Test
+    fun CriminalBaseWaitingTest1() {
+        val graph = Simulation.map
+        val parse = MapParser(graph, File("src/test/resources/mapvalid6reallocation.dot"))
+        val jsonparse = JsonParser(
+            graph,
+            File("src/test/resources/UnitTestConfig2/basesSimple.json"),
+            File("src/test/resources/UnitTestConfig3/emergencysimple.json")
+        )
+        parse.parseMap()
+        jsonparse.parseBases()
+        jsonparse.parseVehicles()
+        jsonparse.parseEmergency()
+        jsonparse.parseEvents()
+        val vertex1 = requireNotNull(graph.getVertexFromId(0))
+        val vertex2 = requireNotNull(graph.getVertexFromId(1))
+        val road = requireNotNull(graph.getRoad(vertex1, vertex2))
+        val vehicleList =
+            mutableListOf(VehicleType.POLICE_CAR, VehicleType.POLICE_CAR, VehicleType.POLICE_MOTORCYCLE)
+        val res = Resource(vehicleList, 0, 2, 0, 0)
+        val em = Emergency(0, 1, road, EmergencyType.CRIME, 2, 1, 20, res)
+        val emUtil = EmergencyUtils()
+        val vertex3 = requireNotNull(graph.getVertexFromId(1))
+        val b = requireNotNull(vertex3.base)
+        val vehic1 = b.vehicles[0]
+        val vehic2 = b.vehicles[1]
+        val vehic3 = b.vehicles[2]
+        em.assignedVehicles.add(vehic1)
+        em.assignedVehicles.add(vehic2)
+        em.assignedVehicles.add(vehic3)
+        if (vehic1 is PoliceCar && vehic3 is PoliceCar) {
+            vehic1.transportedCriminals = 2
+            vehic3.transportedCriminals = 1
+        }
+        emUtil.updateBaseWaitingTicksOfAssets(em)
+        if (vehic1 is PoliceCar) {
+            assertTrue(vehic1.baseWaitingTicks == 3)
+        }
+        if (vehic3 is PoliceCar) {
+            assertTrue(vehic3.baseWaitingTicks == 3)
+        }
+    }
 }

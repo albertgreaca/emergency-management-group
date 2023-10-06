@@ -72,10 +72,13 @@ object SystemTestRegistration {
         manager.registerTest(VehUnavPp())
         manager.registerTest(AllocationWithEvent())
         manager.registerTest(ReallocUnav())
+        manager.registerTest(OngoingEm())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(ReallocUnav())
+        manager.registerTest(LessLadderTest())
+        manager.registerTest(OneWay())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {

@@ -96,6 +96,7 @@ object EMCC {
         while (k < startingEmergencies.size) {
             // get the base assigned to the emergency
             val em = startingEmergencies[k]
+            em.trySendRequest = true
             val emBase = requireNotNull(em.base)
 
             // base tries to allocate resources for emergency
@@ -112,8 +113,9 @@ object EMCC {
             }
             k++
 
-            // if there are remaining resources after reallocating, a request to the next base has to be created
-            if (!em.currentResources.isEmpty()) {
+            // if there are remaining resources after reallocating and we are supposed to send a request, a request to
+            // the next base has to be created
+            if (!em.currentResources.isEmpty() && em.trySendRequest) {
                 makeRequest(em)
             }
         }
