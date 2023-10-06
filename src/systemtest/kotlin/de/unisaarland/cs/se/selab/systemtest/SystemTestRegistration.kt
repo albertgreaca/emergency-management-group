@@ -81,6 +81,7 @@ object SystemTestRegistration {
         manager.registerTest(OneWay())
         manager.registerTest(NothingArrivesNoRequest())
         manager.registerTest(MultipleReroutings())
+        manager.registerTest(FireSev3())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {

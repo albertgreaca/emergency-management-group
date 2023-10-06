@@ -54,16 +54,88 @@
     {
       "id": 4,
       "baseID": 1,
-      "vehicleType": "FIRE_TRUCK_TECHNICAL",
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
       "vehicleHeight": 3,
       "staffCapacity": 4
     },
     {
       "id": 5,
       "baseID": 1,
-      "vehicleType": "FIRE_TRUCK_TECHNICAL",
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
       "vehicleHeight": 3,
       "staffCapacity": 4
+    },
+    {
+      "id": 6,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "ladderLength": 40
+    },
+    {
+      "id": 7,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "ladderLength": 30
+    },
+    {
+      "id": 8,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "ladderLength": 40
+    },
+    {
+      "id": 9,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 600
+    },
+    {
+      "id": 10,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 600
+    },
+    {
+      "id": 11,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 600
+    },
+    {
+      "id": 12,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 600
+    },
+    {
+      "id": 13,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 600
+    },
+    {
+      "id": 14,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 3,
+      "staffCapacity": 4,
+      "waterCapacity": 2400
     }
   ]
 }

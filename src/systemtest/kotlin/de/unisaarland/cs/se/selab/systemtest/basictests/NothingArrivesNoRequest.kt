@@ -5,9 +5,9 @@ import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 class NothingArrivesNoRequest : SystemTest() {
     override val name = "NothingArrivesNoRequest"
 
-    override val map = "testcases/nothingArrivesNoRequest/config2.json"
-    override val assets = "EventIDConflict/assets.json"
-    override val scenario = "EventIDConflict/scenario.json"
+    override val map = "testcases/nothingArrivesNoRequest/map.dot"
+    override val assets = "testcases/nothingArrivesNoRequest/config2.json"
+    override val scenario = "testcases/nothingArrivesNoRequest/config3.json"
     override val maxTicks = 20
 
     override suspend fun run() {

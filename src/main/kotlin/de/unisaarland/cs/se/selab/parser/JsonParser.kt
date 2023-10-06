@@ -27,6 +27,7 @@ import de.unisaarland.cs.se.selab.vehicles.FireTruckWater
 import de.unisaarland.cs.se.selab.vehicles.PoliceCar
 import de.unisaarland.cs.se.selab.vehicles.Vehicle
 import de.unisaarland.cs.se.selab.vehicles.VehicleType
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.everit.json.schema.ValidationException
 import org.json.JSONArray
 import org.json.JSONObject
@@ -43,6 +44,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private var pol = false
     private var fir = false
     private val vehicleidlist = mutableMapOf<Int, Vehicle>()
+    private val logger = KotlinLogging.logger {}
 
     /**
      * function to parse the Vehicles
@@ -55,14 +57,21 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val currVehicle = vehiclesObject.getJSONObject(i)
             val id = currVehicle.getInt(ID)
             res = res && !vehicleidlist.contains(id)
+            if (res == false) {
+                logger.error { "id already exists, line 61" }
+            }
             val baseId = currVehicle.getInt("baseID")
             val vehicleType: VehicleType = parseVehicleType(currVehicle.get("vehicleType")) ?: return false
             val vehicleHeight = currVehicle.getInt("vehicleHeight")
             val staff = currVehicle.getInt("staffCapacity")
             res = res && whenstatement(vehicleType, currVehicle, id, baseId, staff, vehicleHeight)
             if (!res) {
+                logger.error { "whenstatement returns false, line 69" }
                 return false
             }
+        }
+        if (res && !listBases.containsValue(false)) {
+            logger.error { "listBases contains a false, line 74" }
         }
         return res && !listBases.containsValue(false)
     }
@@ -81,6 +90,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             VehicleType.POLICE_CAR -> {
                 base = EMCC.policeDepartment?.findBase(baseId)
                 if (base == null || currVehicle.has(LADDERLENGTH) || currVehicle.has(WATERCAPACITY)) {
+                    logger.error { "base is null or vehicle has wrong attributes, line 93" }
                     res = false
                 }
                 res = res && parsePoliceCar(currVehicle, id, baseId, staff, vehicleHeight)
@@ -89,6 +99,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             VehicleType.FIRE_TRUCK_WATER -> {
                 base = EMCC.fireDepartment?.findBase(baseId)
                 if (base == null || currVehicle.has(LADDERLENGTH) || currVehicle.has(CRIMINALCAPACITY)) {
+                    logger.error { "base is null or vehicle has wrong attributes, line 102" }
                     res = false
                 }
                 res = res && parseFireTruckWater(currVehicle, id, baseId, staff, vehicleHeight)
@@ -114,6 +125,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             VehicleType.FIRE_TRUCK_LADDER -> {
                 base = EMCC.fireDepartment?.findBase(baseId)
                 if (base == null || currVehicle.has(WATERCAPACITY) || currVehicle.has(CRIMINALCAPACITY)) {
+                    logger.error { "base is null or vehicle has wrong attributes, line 128" }
                     res = false
                 }
                 res = res && parseFireTruckLadder(currVehicle, id, baseId, staff, vehicleHeight)
@@ -122,9 +134,11 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             VehicleType.AMBULANCE -> {
                 base = EMCC.ambulanceDepartment?.findBase(baseId)
                 if (base == null || currVehicle.has(LADDERLENGTH)) {
+                    logger.error { "base is null or vehicle has wrong attributes, line 137" }
                     res = false
                 }
                 if (currVehicle.has(WATERCAPACITY) || currVehicle.has(CRIMINALCAPACITY)) {
+                    logger.error { "base is null or vehicle has wrong attributes, line 141" }
                     res = false
                 }
                 res = res && parseAmbulance(id, baseId, staff, vehicleHeight)
@@ -167,12 +181,15 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             } // K9 PoliceCar
         }
         if (base == null || base.staff < staffs) {
+            logger.error { "base is null or not enough staff, line 184" }
             return false
         }
         if (type == VehicleType.EMERGENCY_DOCTOR_CAR && base is Hospital && base.doctors == 0) {
+            logger.error { "we have doctor car and no doctors, line 188" }
             return false
         }
         if (type == VehicleType.K9_POLICE_CAR && base is PoliceStation && base.dogs == 0) {
+            logger.error { "we have k9 car and no dogs, line 192" }
             return false
         }
         val newVehicle = Vehicle(id, type, requireNotNull(base), staffs, height, null)
@@ -191,6 +208,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         listBases.replace(base, false, true)
         if (base.staff < staffs) {
             res = false
+            logger.error { "not enough staff, line 211" }
         }
         return res
     }
@@ -206,6 +224,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         listBases.replace(base, false, true)
         if (base.staff < staffs) {
             res = false
+            logger.error { "not enough staff, line 227" }
         }
         return res
     }
@@ -221,6 +240,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         listBases.replace(base, false, true)
         if (base.staff < staffs) {
             res = false
+            logger.error { "not enough staff, line 243" }
         }
         return res
     }
@@ -235,6 +255,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
         listBases.replace(base, false, true)
         if (base.staff < staffs) {
             res = false
+            logger.error { "not enough staff, line 258" }
         }
         return res
     }
@@ -323,6 +344,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val currEmer = emerArray.getJSONObject(i)
             val id = currEmer.getInt(ID)
             if (emgidlist.contains(id)) {
+                logger.error { "emergency with this id already exists, line 347" }
                 return false
             }
             emgidlist.add(id)
@@ -341,11 +363,15 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val maxDuration = currEmer.getInt("maxDuration")
             // resources
             if (maxDuration <= handleTime) {
+                logger.error { "maxDuration <= handleTime, line 366" }
                 return false
             }
             val resources = resourcesParse(type, severity)
             val newEmergency = Emergency(id, tick, road, type, severity, handleTime, maxDuration, resources)
             Simulation.addEmergency(newEmergency)
+        }
+        if (res == false) {
+            logger.error { "idk what happens here either, line 374" }
         }
         return res
     }
@@ -372,6 +398,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             val currEvent = eventArray.getJSONObject(i)
             val id = currEvent.getInt(ID)
             if (eventidlist.contains(id)) {
+                logger.error { "event with this id already exists, line 401" }
                 return false
             }
             eventidlist.add(id)
@@ -386,15 +413,20 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
                 "RUSH_HOUR" -> res = res && parseRushHour(currEvent, id, tick, duration)
             }
         }
+        if (res == false) {
+            logger.error { "no idea, line 417" }
+        }
         return res
     }
 
     private fun parseVehicleUnavailableEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         if (currEvent.has(ROADTYPES) || currEvent.has(FACTOR)) {
+            logger.error { "vehicle unavailable has roadtype or factor, line 425" }
             res = false
         }
         if (currEvent.has(SOURCE) || currEvent.has(TARGET) || currEvent.has(ONEWAYSTREET)) {
+            logger.error { "vehicle unavailable has source, target or onewaystreet, line 429" }
             res = false
         }
         val vehicleId = currEvent.getInt(VEHICLEID)
@@ -409,9 +441,11 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseRoadClosureEvent(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         if (currEvent.has(ROADTYPES) || currEvent.has(FACTOR)) {
+            logger.error { "road closure has roadtypes or factor, line 444" }
             res = false
         }
         if (currEvent.has(ONEWAYSTREET) || currEvent.has(VEHICLEID)) {
+            logger.error { "road closure has onewaystreet or vehicleid, line 448" }
             res = false
         }
         val sourceVertexId = currEvent.getInt(SOURCE)
@@ -427,6 +461,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseConstructionSite(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         if (currEvent.has(ROADTYPES) || currEvent.has(VEHICLEID)) {
+            logger.error { "construction site has roadtypes or vehicleid, line 464" }
             res = false
         }
         val sourceVertexId = currEvent.getInt(SOURCE)
@@ -453,6 +488,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseTrafficJAM(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         if (currEvent.has(ROADTYPES) || currEvent.has(ONEWAYSTREET) || currEvent.has(VEHICLEID)) {
+            logger.error { "traffic jam has roadtypes, onewaystreet or vehicleid, line 491" }
             res = false
         }
         val factor = currEvent.getInt(FACTOR)
@@ -469,9 +505,11 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
     private fun parseRushHour(currEvent: JSONObject, id: Int, tick: Int, duration: Int): Boolean {
         var res = true
         if (currEvent.has(SOURCE) || currEvent.has(TARGET)) {
+            logger.error { "rush hour has source or target, line 508" }
             res = false
         }
         if (currEvent.has(ONEWAYSTREET) || currEvent.has(VEHICLEID)) {
+            logger.error { "rush hour has onewaystreet or vehicleid, line 512" }
             res = false
         }
         val roadList = mutableListOf<Road>()
@@ -481,6 +519,7 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             roadList.addAll(gm.getListRoad(type))
         }
         if (roadList.size != roadList.distinct().count()) {
+            logger.error { "size of roadlist is not the same as number of distinct ones, line 522" }
             return false
         }
         val newEvent = RushHourEvent(id, tick, duration, roadList, factor)
