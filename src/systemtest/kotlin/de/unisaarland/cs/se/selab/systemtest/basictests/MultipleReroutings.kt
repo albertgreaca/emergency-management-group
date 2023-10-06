@@ -1,13 +1,14 @@
 package de.unisaarland.cs.se.selab.systemtest.basictests
 
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
+import de.unisaarland.cs.se.selab.utils.Logger
 
 class MultipleReroutings : SystemTest() {
     override val name = "MultipleReroutings"
 
     override val map = "testcases/multipleReroutings/map.dot"
     override val assets = "testcases/multipleReroutings/config2.json"
-    override val scenario = "testcases/multipleReroutings/config2.json"
+    override val scenario = "testcases/multipleReroutings/config3.json"
     override val maxTicks = 50
     val assetsRerouted3 = "Assets Rerouted: 3"
 
@@ -78,7 +79,7 @@ class MultipleReroutings : SystemTest() {
         assertNextLine("Asset Arrival: 0 arrived at 6.")
         assertNextLine("Asset Arrival: 1 arrived at 6.")
         assertNextLine("Asset Arrival: 2 arrived at 6.")
-
+        assertNextLine(Logger.logEmergencyHandlingStart(0))
         assertNextLine("Simulation Tick: 12")
         // rush hour event ends
         assertNextLine("Event Ended: 3 ended.")
