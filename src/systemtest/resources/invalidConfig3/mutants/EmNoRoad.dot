@@ -1,0 +1,12 @@
+digraph G {
+	0;
+	1;
+	2;
+	3;
+
+	0 -> 1 [village=Bergen; name=Valley_Path; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	1 -> 2 [village=Bergen; name=Garden_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	2 -> 3 [village=Bergen; name=Meadow_Way; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+	3 -> 0 [village=Bergen; name=Friedrich_Street; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+}
