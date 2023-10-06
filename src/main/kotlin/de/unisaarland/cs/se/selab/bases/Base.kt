@@ -175,6 +175,9 @@ open class Base(
         return true
     }
 
+    /**
+     * @returns true if the combination of vehicles can fulfill every constraint of the resource, false otherwise
+     */
     open fun checkCombinationWithoutArrivalTime(em: Emergency, vehicles: MutableList<Vehicle>): Boolean {
         var validCombination = true
         val resource = em.currentResources
