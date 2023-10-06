@@ -33,8 +33,8 @@ object Dijkstra {
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
-            if (dist[node.realid].toLong() > dist[cur.first].toLong() + edge.weight.toLong()) {
-                dist[node.realid] = dist[cur.first] + edge.weight
+            if (dist[node.realid].toLong() > dist[cur.first].toLong() + edge.getActualWeight().toLong()) {
+                dist[node.realid] = dist[cur.first] + edge.getActualWeight()
                 pq.add(Pair(node.realid, dist[node.realid]))
             }
         }
