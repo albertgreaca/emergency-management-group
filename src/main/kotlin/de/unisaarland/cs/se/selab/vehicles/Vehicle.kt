@@ -76,7 +76,7 @@ open class Vehicle(
      * @return true if changed the position, else false
      */
     fun reroute(): Boolean {
-        if (requireNotNull(position).isDrivingBack) {
+        if (requireNotNull(position).isDrivingBack && requireNotNull(position).roadList.isNotEmpty()) {
             val pos = Dijkstra.dijkstraRerouteBackToBase(
                 requireNotNull(position).roadList[0],
                 requireNotNull(position).distanceFromStart,
@@ -91,7 +91,7 @@ open class Vehicle(
             }
             return false
         }
-        if (!requireNotNull(position).isDrivingBack) {
+        if (!requireNotNull(position).isDrivingBack && requireNotNull(position).roadList.isNotEmpty()) {
             val pos = Dijkstra.dijkstraReroute(
                 requireNotNull(position).roadList[0],
                 requireNotNull(position).distanceFromStart,
