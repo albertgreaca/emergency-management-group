@@ -112,6 +112,20 @@
       "vehicleType": "AMBULANCE",
       "vehicleHeight": 4,
       "staffCapacity": 2
+    },
+    {
+      "id": 12,
+      "baseID": 0,
+      "vehicleType": "POLICE_MOTORCYCLE",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
+    },
+    {
+      "id": 13,
+      "baseID": 0,
+      "vehicleType": "POLICE_MOTORCYCLE",
+      "vehicleHeight": 4,
+      "staffCapacity": 2
     }
   ]
 }
