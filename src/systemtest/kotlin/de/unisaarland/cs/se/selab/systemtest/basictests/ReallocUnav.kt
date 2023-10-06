@@ -3,7 +3,7 @@ package de.unisaarland.cs.se.selab.systemtest.basictests
 import de.unisaarland.cs.se.selab.systemtest.api.SystemTest
 
 class ReallocUnav : SystemTest() {
-    override val name = "DijTieSimple"
+    override val name = "ReallocUnav"
 
     override val map = "mapFiles/FiveVertexMap.dot"
     override val assets = "assetsJsons/reallocUnavAsset.json"

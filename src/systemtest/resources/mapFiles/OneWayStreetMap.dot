@@ -1,0 +1,9 @@
+digraph County {
+	1;
+	2;
+	3;
+	4;
+	5;
+	1->2[village=Village; name=OneTwo; heightLimit=5; weight=10; primaryType=mainStreet; secondaryType=none;];
+
+}
