@@ -69,11 +69,12 @@ object SystemTestRegistration {
         manager.registerTest(LessDoctorsThanDoctorCars())
         manager.registerTest(RequestAgainStaff())
         manager.registerTest(OrderedSeverity())
+        manager.registerTest(VehUnavPp())
+        manager.registerTest(AllocationWithEvent())
+        manager.registerTest(ReallocUnav())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(VehUnavPp())
-        manager.registerTest(AllocationWithEvent())
         manager.registerTest(ReallocUnav())
     }
 
@@ -115,6 +116,7 @@ object SystemTestRegistration {
         manager.registerTest(HospitalWithDogs())
         registerEventWrongProperties(manager)
         manager.registerTest(FailedParser51())
+        manager.registerTest(BaseSameLocation())
     }
 
     private fun registerEventWrongProperties(manager: SystemTestManager) {
