@@ -461,10 +461,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             logger.error { "target vertex can't be found, line 457" }
         }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        val road: Road
         if (gm.getRoad(sourceVertex, targetVertex) == null) {
-            logger.error { "road can't be found, line 461" }
+            road = gm.getRoad(targetVertex, sourceVertex) ?: return false
+            logger.error { "road can't be found $sourceVertex.id and $targetVertex.id, line 461" }
+        } else {
+            road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         }
-        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = RoadClosureEvent(id, tick, duration, road)
         Simulation.addEvent(newEvent)
         return res
@@ -488,10 +491,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             logger.error { "target vertex can't be found, line 484" }
         }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        val road: Road
         if (gm.getRoad(sourceVertex, targetVertex) == null) {
-            logger.error { "road can't be found, line 488" }
+            road = gm.getRoad(targetVertex, sourceVertex) ?: return false
+            logger.error { "road can't be found $sourceVertex.id and $targetVertex.id, line 488" }
+        } else {
+            road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         }
-        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = ConstructionSiteEvent(
             id,
             tick,
@@ -523,10 +529,13 @@ class JsonParser(private val gm: GraphMap, private val file1: File, private val 
             logger.error { "target vertex can't be found, line 519" }
         }
         val targetVertex = gm.getVertexFromId(targetVertexId) ?: return false
+        val road: Road
         if (gm.getRoad(sourceVertex, targetVertex) == null) {
-            logger.error { "road can't be found, line 523" }
+            road = gm.getRoad(targetVertex, sourceVertex) ?: return false
+            logger.error { "road can't be found $sourceVertex.id and $targetVertex.id, line 523" }
+        } else {
+            road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         }
-        val road = gm.getRoad(sourceVertex, targetVertex) ?: return false
         val newEvent = TrafficJamEvent(id, tick, duration, road, factor)
         Simulation.addEvent(newEvent)
         return res
