@@ -69,6 +69,5 @@ class LessLadderTest : SystemTest() {
         assertNextLine("Simulation Statistics: 1 resolved emergencies.")
         // end of file
         assertEnd()
-
     }
 }
