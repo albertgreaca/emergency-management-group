@@ -1,6 +1,11 @@
 package de.unisaarland.cs.se.selab.systemtest
 
+import ConstructionSiteNoVertex
 import FailedParserConfig3Semantics1
+import RoadClosureNoVertex
+import RushHourNoCounty
+import TrafficJamNoVertex
+import VehicleUnavNotExisting
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
@@ -125,6 +130,11 @@ object SystemTestRegistration {
         manager.registerTest(BaseSameLocation())
         manager.registerTest(ValidParser())
         manager.registerTest(TwoOneWaySameRoad())
+        manager.registerTest(ConstructionSiteNoVertex())
+        manager.registerTest(RoadClosureNoVertex())
+        manager.registerTest(TrafficJamNoVertex())
+        manager.registerTest(RushHourNoCounty())
+        manager.registerTest(VehicleUnavNotExisting())
     }
 
     private fun registerEventWrongProperties(manager: SystemTestManager) {
