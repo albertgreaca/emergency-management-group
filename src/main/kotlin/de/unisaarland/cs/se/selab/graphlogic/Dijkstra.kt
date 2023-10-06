@@ -30,6 +30,19 @@ object Dijkstra {
         return null
     }
 
+    private fun determineAns(curans: Pair<Base?, Int>, cur: Pair<Int, Int>, b: Base?): Pair<Base?, Int> {
+        if (b == null) {
+            return curans
+        }
+        if (cur.second < curans.second || curans.first == null) {
+            return Pair(b, cur.second)
+        }
+        if (cur.second == curans.second && b.id < requireNotNull(curans.first).id) {
+            return Pair(b, cur.second)
+        }
+        return curans
+    }
+
     private fun updateNeighborsEmergency(cur: Pair<Int, Int>, dist: IntArray, pq: PriorityQueue<Pair<Int, Int>>) {
         val nex: Map<Vertex, Road> = requireNotNull(requireNotNull(Simulation.map)).adjacencyList[cur.first]
         for ((node, edge) in nex) {
@@ -56,6 +69,7 @@ object Dijkstra {
         for (i in 0..n - 1) {
             pq.add(Pair(i, dist[i]))
         }
+        var ans: Pair<Base?, Int> = Pair(null, Int.MAX_VALUE)
         while (!pq.isEmpty()) {
             val cur: Pair<Int, Int> = pq.remove()
             if (dist[cur.first] != cur.second) {
@@ -65,12 +79,12 @@ object Dijkstra {
             if (v.base != null) {
                 val b: Base = requireNotNull(v.base)
                 if (determineBaseEmergency(et, b) != null) {
-                    return determineBaseEmergency(et, b)
+                    ans = determineAns(ans, cur, determineBaseEmergency(et, b))
                 }
             }
             updateNeighborsEmergency(cur, dist, pq)
         }
-        return null
+        return ans.first
     }
 
     /**
