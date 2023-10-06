@@ -9,15 +9,15 @@ digraph G {
     8;
     9;
 
-    1 -> 2 [village=Saarbruecken; name=Road1; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
-    2 -> 3 [village=Saarbruecken; name=Road2; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    2 -> 8 [village=Saarbruecken; name=Road6; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    3 -> 4 [village=Saarbruecken; name=Road3; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    3 -> 8 [village=Saarbruecken; name=Road7; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    4 -> 5 [village=Saarbruecken; name=Road4; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    4 -> 9 [village=Saarbruecken; name=Road8; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
-    5 -> 6 [village=Saarbruecken; name=Road5; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
-    5 -> 9 [village=Saarbruecken; name=Road9; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    1 -> 2 [village=Saarbruecken; name=RoadOne; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+    2 -> 3 [village=Saarbruecken; name=RoadTwo; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    2 -> 8 [village=Saarbruecken; name=RoadSix; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    3 -> 4 [village=Saarbruecken; name=RoadThree; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    3 -> 8 [village=Saarbruecken; name=RoadSeven; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    4 -> 5 [village=Saarbruecken; name=RoadFour; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    4 -> 9 [village=Saarbruecken; name=RoadEight; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
+    5 -> 6 [village=Saarbruecken; name=RoadFive; heightLimit=3; weight=10; primaryType=mainStreet; secondaryType=none;];
+    5 -> 9 [village=Saarbruecken; name=RoadNine; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
     6 -> 7 [village=Saarbruecken; name=Campus; heightLimit=3; weight=10; primaryType=sideStreet; secondaryType=none;];
 
 }
