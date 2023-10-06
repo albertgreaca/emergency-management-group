@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": 0,
+      "type": "TRAFFIC_JAM",
+      "tick": 1,
+      "duration": 1,
+      "factor": 1,
+      "source": 2,
+      "target": 4
+    }
+  ],
+  "emergencyCalls": [
+    {
+      "id": 1,
+      "tick": 3,
+      "village": "Munich",
+      "roadName": "Field_Lane",
+      "emergencyType": "FIRE",
+      "severity": 3,
+      "handleTime": 2,
+      "maxDuration": 10
+    }
+  ]
+}

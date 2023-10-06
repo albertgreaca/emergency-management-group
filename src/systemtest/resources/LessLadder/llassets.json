@@ -1,0 +1,147 @@
+{
+  "bases": [
+    {
+      "id": 0,
+      "baseType": "FIRE_STATION",
+      "location": 0,
+      "staff": 100
+    },
+    {
+      "id": 2,
+      "baseType": "POLICE_STATION",
+      "location": 4,
+      "staff": 100,
+      "dogs": 1
+    },
+    {
+      "id": 3,
+      "baseType": "HOSPITAL",
+      "location": 2,
+      "staff": 100,
+      "doctors": 1
+    },
+    {
+      "id": 1,
+      "baseType": "FIRE_STATION",
+      "location": 3,
+      "staff": 100
+    }
+  ],
+  "vehicles": [
+    {
+      "id": 0,
+      "baseID": 1,
+      "vehicleType": "POLICE_CAR",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "criminalCapacity": 1
+    },
+    {
+      "id": 5,
+      "baseID": 3,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 1,
+      "staffCapacity": 1
+    },
+    {
+      "id": 1,
+      "baseID": 3,
+      "vehicleType": "AMBULANCE",
+      "vehicleHeight": 1,
+      "staffCapacity": 1
+    },
+    {
+      "id": 2,
+      "baseID": 3,
+      "vehicleType": "EMERGENCY_DOCTOR_CAR",
+      "vehicleHeight": 1,
+      "staffCapacity": 1
+    },
+    {
+      "id": 3,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 4,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 6,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 7,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 8,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 600
+    },
+    {
+      "id": 9,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_WATER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "waterCapacity": 2400
+    },
+    {
+      "id": 10,
+      "baseID": 0,
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1
+    },
+    {
+      "id": 11,
+      "baseID": 0,
+      "vehicleType": "FIREFIGHTER_TRANSPORTER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1
+    },
+    {
+      "id": 12,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "ladderLength": 30
+    },
+    {
+      "id": 13,
+      "baseID": 0,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "ladderLength": 40
+    },
+    {
+      "id": 14,
+      "baseID": 1,
+      "vehicleType": "FIRE_TRUCK_LADDER",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "ladderLength": 40
+    }
+  ]
+}
