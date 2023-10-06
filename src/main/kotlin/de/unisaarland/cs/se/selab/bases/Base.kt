@@ -213,7 +213,7 @@ open class Base(
             }
         }
 
-        validCombination = validCombination && ladderlength(resource)
+        validCombination = validCombination && ladderlength(resource, vehicles)
         if (staffNeeded > this.staff) validCombination = false
         if (resource.criminalAmount - fittingCriminals >
             MaxCriminalCapacity * (
@@ -241,9 +241,9 @@ open class Base(
         return validCombination
     }
 
-    private fun ladderlength(re: Resource): Boolean {
+    private fun ladderlength(re: Resource, potentialvehicles: MutableList<Vehicle>): Boolean {
         if (re.ladderLength == ladder40) {
-            for (vec in vehicles) {
+            for (vec in potentialvehicles) {
                 if (vec is FireTruckLadder && !vec.getLadderLength40()) {
                     return false
                 }
