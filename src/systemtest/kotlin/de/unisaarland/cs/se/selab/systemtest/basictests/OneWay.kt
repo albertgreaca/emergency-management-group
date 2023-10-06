@@ -25,7 +25,7 @@ class OneWay : SystemTest() {
         assertNextLine("Asset Arrival: 1 arrived at 3.")
         assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Simulation Tick: 5")
-        assertNextLine("Emergency Resolved: 0 resolved")
+        assertNextLine("Emergency Resolved: 0 resolved.")
         assertNextLine("Simulation End")
         assertNextLine("Simulation Statistics: 0 assets rerouted.")
         assertNextLine("Simulation Statistics: 1 received emergencies.")
