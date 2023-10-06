@@ -2,6 +2,7 @@ package de.unisaarland.cs.se.selab.systemtest
 
 import FailedParserConfig3Semantics1
 import de.unisaarland.cs.se.selab.systemtest.basictests.*
+import de.unisaarland.cs.se.selab.systemtest.checkingstuff.VillageGraphName
 import de.unisaarland.cs.se.selab.systemtest.complicated.DoubleRealloc
 import de.unisaarland.cs.se.selab.systemtest.complicated.ManyEvents
 import de.unisaarland.cs.se.selab.systemtest.failedconfig2parser.*
@@ -81,6 +82,7 @@ object SystemTestRegistration {
         manager.registerTest(OneWay())
         manager.registerTest(NothingArrivesNoRequest())
         manager.registerTest(MultipleReroutings())
+        manager.registerTest(VillageGraphName())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
