@@ -52,15 +52,15 @@
       "criminalCapacity": 3
     },
     {
-      "id": 10,
-      "baseID": 2,
+      "id": 4,
+      "baseID": 1,
       "vehicleType": "FIRE_TRUCK_TECHNICAL",
       "vehicleHeight": 3,
       "staffCapacity": 4
     },
     {
-      "id": 20,
-      "baseID": 2,
+      "id": 5,
+      "baseID": 1,
       "vehicleType": "FIRE_TRUCK_TECHNICAL",
       "vehicleHeight": 3,
       "staffCapacity": 4

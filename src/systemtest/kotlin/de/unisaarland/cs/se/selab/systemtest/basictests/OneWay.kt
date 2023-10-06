@@ -18,7 +18,7 @@ class OneWay : SystemTest() {
         assertNextLine("Simulation Tick: 0")
         assertNextLine("Simulation Tick: 1")
         assertNextLine("Emergency Assignment: 0 assigned to 1")
-        assertNextLine("Asset Allocation: 1 allocated to 0; 3 ticks to arrive")
+        assertNextLine("Asset Allocation: 1 allocated to 0; 3 ticks to arrive.")
         assertNextLine("Simulation Tick: 2")
         assertNextLine("Simulation Tick: 3")
         assertNextLine("Simulation Tick: 4")
