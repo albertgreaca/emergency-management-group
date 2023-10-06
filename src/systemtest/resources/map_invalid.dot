@@ -1,0 +1,16 @@
+digraph Saarbruecken {
+1;
+2;
+3;
+4;
+5;
+6;
+1->2[village=Saarbruecken; name=An_der_Trift; heightLimit=10; weight = 20; primaryType=sideStreet; secondaryType=none;];
+2->3[village=Saarbruecken; name=Waldhausweg; heightLimit=10; weight = 500; primaryType=sideStreet; secondaryType=none;];
+2->4[village=Saarbruecken; name=Campus; heightLimit=10; weight = 500; primaryType=sideStreet; secondaryType=none;];
+2->6[village=Saarbruecken; name=Stuhlsatzenhausweg; heightLimit=10; weight = 10; primaryType=sideStreet; secondaryType=none;];
+3->5[village=Saarbruecken; name=Hellwigstrasse; heightLimit=10; weight = 500; primaryType=mainStreet; secondaryType=none;];
+5->6[village=Saarbruecken; name=Rathausstrasse; heightLimit=10; weight = 500; primaryType=mainStreet; secondaryType=none;];
+5->4[village=Saarbruecken; name=Hauptbahnhof; heightLimit=10; weight = 500; primaryType=sideStreet; secondaryType=none;];
+4->6[village=Saarbruecken; name=Busterminal; heightLimit=10; weight = 500; primaryType=sideStreet; secondaryType=none;];
+}
