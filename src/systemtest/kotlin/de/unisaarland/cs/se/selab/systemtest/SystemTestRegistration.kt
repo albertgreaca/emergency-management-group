@@ -42,7 +42,6 @@ object SystemTestRegistration {
         manager.registerTest(RequestTest())
         manager.registerTest(RequestTestFailed())
         manager.registerTest(RequestTestPartial())
-        manager.registerTest(FailedParser51())
         manager.registerTest(EventIdTest())
         manager.registerTest(RoadClosureTest())
         manager.registerTest(RushHour1Test())
@@ -65,7 +64,6 @@ object SystemTestRegistration {
         manager.registerTest(EmergencySameTickTest())
         manager.registerTest(DoubleRealloc())
         manager.registerTest(DijTieNodesSimple())
-        manager.registerTest(OrderedSeverity())
         manager.registerTest(ArrivalTickFailWithRequest())
         manager.registerTest(RequestNotReallocate())
         manager.registerTest(LessDoctorsThanDoctorCars())
@@ -75,6 +73,7 @@ object SystemTestRegistration {
     private fun notPassingReference(manager: SystemTestManager) {
         manager.registerTest(VehUnavPp())
         manager.registerTest(AllocationWithEvent())
+        manager.registerTest(OrderedSeverity())
     }
 
     fun registerSystemTestsReferenceImpl(manager: SystemTestManager) {
@@ -114,6 +113,7 @@ object SystemTestRegistration {
         manager.registerTest(PoliceWithDoctors())
         manager.registerTest(HospitalWithDogs())
         registerEventWrongProperties(manager)
+        manager.registerTest(FailedParser51())
     }
 
     private fun registerEventWrongProperties(manager: SystemTestManager) {
