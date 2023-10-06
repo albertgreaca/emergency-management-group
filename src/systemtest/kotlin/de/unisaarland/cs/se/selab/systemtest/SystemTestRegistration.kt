@@ -83,10 +83,10 @@ object SystemTestRegistration {
         manager.registerTest(MultipleReroutings())
         manager.registerTest(OneWay())
         manager.registerTest(LessLadderTest())
+        manager.registerTest(NothingArrivesNoRequest())
     }
 
     private fun notPassingReference(manager: SystemTestManager) {
-        manager.registerTest(NothingArrivesNoRequest())
         manager.registerTest(SpecialWater())
     }
 
