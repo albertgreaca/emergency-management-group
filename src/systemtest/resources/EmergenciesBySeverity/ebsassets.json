@@ -14,7 +14,7 @@
       "dogs": 1
     },
     {
-      "id": 3,
+      "id": 2,
       "baseType": "HOSPITAL",
       "location": 5,
       "staff": 100,
@@ -54,18 +54,34 @@
       "staffCapacity": 1
     },
     {
-      "id": 5,
-      "baseID": 3,
+      "id": 4,
+      "baseID": 2,
       "vehicleType": "AMBULANCE",
       "vehicleHeight": 1,
       "staffCapacity": 1
     },
     {
-      "id": 6,
+      "id": 5,
       "baseID": 0,
       "vehicleType": "FIRE_TRUCK_TECHNICAL",
       "vehicleHeight": 1,
       "staffCapacity": 1
+    },
+    {
+      "id": 6,
+      "baseID": 1,
+      "vehicleType": "POLICE_CAR",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "criminalCapacity": 1
+    },
+    {
+      "id": 7,
+      "baseID": 1,
+      "vehicleType": "POLICE_CAR",
+      "vehicleHeight": 1,
+      "staffCapacity": 1,
+      "criminalCapacity": 1
     }
   ]
 }

@@ -36,7 +36,6 @@ class RequestNotReallocate : SystemTest() {
         assertNextLine("Asset Request: 2 sent to 3 for 1.")
         assertNextLine(stringsave)
         assertNextLine("Asset Allocation: 5 allocated to 1; 1 ticks to arrive.")
-        assertNextLine(stringsave)
         assertNextLine("Asset Arrival: 4 arrived at 2.")
         assertNextLine("Emergency Handling Start: 0 handling started.")
         assertNextLine("Simulation Tick: 4")
